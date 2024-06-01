@@ -1,4 +1,4 @@
-# TravisCI configuration for php-stubs/phpstan-dokan-stubs
+# TravisCI configuration for mralaminahamed/phpstan-fluent-forms-stubs
 
 language: "php"
 os:
@@ -28,12 +28,12 @@ install:
     unzip -q -d source/ "source/dokan-lite.${LATEST}.zip"
 
 before_script:
-  - "cat ./source/dokan-lite/dokan.php"
+  - "cat ./source/fluentform/fluentform.php"
 
 script:
   - "bash -x ./generate.sh"
-  - "php -l dokan-constants-stubs.php"
-  - "php -l dokan-stubs.php"
+  - "php -l fluent-forms-constants-stubs.php"
+  - "php -l fluent-forms-stubs.php"
   - "git diff --exit-code"
   - |
-    php -r 'require "vendor/php-stubs/wordpress-stubs/wordpress-stubs.php"; require "vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php"; require "dokan-constants-stubs.php"; require "dokan-stubs.php";'
+    php -r 'require "vendor/php-stubs/wordpress-stubs/wordpress-stubs.php"; require "fluent-forms-constants-stubs.php"; require "fluent-forms-stubs.php";'
