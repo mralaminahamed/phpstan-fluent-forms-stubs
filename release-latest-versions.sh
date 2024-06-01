@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Generate dokan stubs from all the latest versions.
+# Generate Fluent Forms stubs from all the latest versions.
 #
 
 set -e
