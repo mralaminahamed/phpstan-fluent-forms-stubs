@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Generate dokan stubs from the source directory.
+# Generate Fluent Forms stubs from the source directory.
 #
 
 HEADER=$'/**\n * Generated stub declarations for Fluent Forms.\n * @see https://fluentforms.com/\n * @see https://github.com/mralaminahamed/phpstan-fluent-forms-stubs\n */'
