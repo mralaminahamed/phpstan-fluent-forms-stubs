@@ -23,9 +23,9 @@ install:
   ## Reinstall sub-packages into /packages/
   #- "composer update --no-interaction"
   - |
-    LATEST="$(jq -r '."require"."dokan-lite/dokan"' source/composer.json)"
-    wget -P source/ "https://downloads.wordpress.org/plugin/dokan-lite.${LATEST}.zip"
-    unzip -q -d source/ "source/dokan-lite.${LATEST}.zip"
+    LATEST="$(jq -r '."require"."fluentform/fluentform"' source/composer.json)"
+    wget -P source/ "https://downloads.wordpress.org/plugin/fluentform.${LATEST}.zip"
+    unzip -q -d source/ "source/fluentform.${LATEST}.zip"
 
 before_script:
   - "cat ./source/fluentform/fluentform.php"
