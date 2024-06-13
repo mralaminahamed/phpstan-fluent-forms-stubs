@@ -1,4 +1,4 @@
-# TravisCI configuration for mralaminahamed/phpstan-fluent-forms-stubs
+# TravisCI configuration for mralaminahamed/phpstan-fluent-form-stubs
 
 language: "php"
 os:
