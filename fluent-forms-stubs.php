@@ -195,6 +195,51 @@ namespace FluentForm\App\Modules {
         {
         }
     }
+    class AddOnModule
+    {
+        /**
+         * The number of days we'll cached the add-ons got from remote server.
+         *
+         * @var integer
+         */
+        protected $cacheDays = 1;
+        /**
+         * The URL to fetch the add-ons
+         *
+         * @var string
+         */
+        protected $addOnsFetchUrl = 'https://wpfluentform.com/add-ons.json';
+        /**
+         * Render the add-ons list page.
+         */
+        public function render()
+        {
+        }
+        /**
+         * Show the add-ons list.
+         */
+        public function showFluentAddOns()
+        {
+        }
+        /**
+         * Get the add-ons from the appropriate source
+         * e.g. `options` table or, remote server.
+         *
+         * @return array $addOns
+         */
+        private function getAddOns()
+        {
+        }
+        /**
+         * Request to the remote server to fetch the add-ons,
+         * then store it to the options table for caching.
+         *
+         * @return array $addOns
+         */
+        private function prepareAddOnsFromRemoteServer()
+        {
+        }
+    }
 }
 namespace FluentForm\App\Modules\Component {
     class Component
@@ -1283,6 +1328,9 @@ namespace FluentForm\App\Modules\Registerer {
         {
         }
         public function renderDocs()
+        {
+        }
+        public function renderAddOns()
         {
         }
         private function enqueueEditorAssets()
