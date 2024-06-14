@@ -91,6 +91,17 @@ namespace FluentForm\App\Databases\Migrations {
         {
         }
     }
+    class ScheduledActions
+    {
+        /**
+         * Migrate the table.
+         *
+         * @return void
+         */
+        public static function migrate()
+        {
+        }
+    }
 }
 namespace FluentForm\App\Helpers {
     class Helper
@@ -212,6 +223,16 @@ namespace FluentForm\App\Helpers {
         public static function contains($haystack, $needles)
         {
         }
+        /**
+         * Determine if a given string does not contain a given substring.
+         *
+         * @param string $haystack
+         * @param string|array $needles
+         * @return bool
+         */
+        public static function doNotContains($haystack, $needles)
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules\Acl {
@@ -285,6 +306,9 @@ namespace FluentForm\App\Modules {
         {
         }
         private function setCurrentVersion()
+        {
+        }
+        public static function setCronSchedule()
         {
         }
     }
@@ -736,12 +760,9 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Add inline scripts [Add localized script using same var]
          *
-         * @param array $vars
-         * @param int $form_id
-         *
          * @return  void
          */
-        private function addInlineVars($vars, $form_id)
+        private function addInlineVars()
         {
         }
         private function getDatei18n()
@@ -775,6 +796,9 @@ namespace FluentForm\App\Modules {
          * @return void
          */
         public function handleDeactivation()
+        {
+        }
+        public static function disableCronSchedule()
         {
         }
     }
@@ -901,6 +925,9 @@ namespace FluentForm\App\Modules\Entries {
         {
         }
         public function deleteEntryById($entryId, $formId = false)
+        {
+        }
+        private function getSubmissionAttachments($submissionId, $form)
         {
         }
         public function favoriteChange()
@@ -1190,7 +1217,7 @@ namespace FluentForm\App\Modules\Form {
         public static function formatRepeatFieldValue($value, $field, $form_id)
         {
         }
-        public static function formatTabularGridFieldValue($value, $field, $form_id)
+        public static function formatTabularGridFieldValue($value, $field, $form_id, $isHtml = false)
         {
         }
         public static function makeTabularData($data)
@@ -1215,6 +1242,7 @@ namespace FluentForm\App\Modules\Form {
      * @method boolean hasPaymentFields(\stdClass $form)
      * @method array getPaymentFields(\stdClass $form, $with = [])
      * @method array getPaymentInputFields(\stdClass $form, $with = [])
+     * @method array getAttachmentInputFields(\stdClass $form, $with = [])
      * @method boolean hasRequiredFields(\stdClass $form, array $fields)
      * @method array|null getField(\stdClass $form, string|array $element, string|array $attribute, array $with = [])
      */
@@ -1736,13 +1764,19 @@ namespace FluentForm\App\Modules\Logger {
         public function log($data)
         {
         }
-        public function getLogsByEntry($entry_id, $sourceType = 'submission_item')
+        public function getLogsByEntry($entry_id, $log_type = 'logs', $sourceType = 'submission_item')
         {
         }
         public function getAllLogs()
         {
         }
+        public function getApiLogs()
+        {
+        }
         public function deleteLogsByIds($ids = [])
+        {
+        }
+        public function deleteApiLogsByIds($ids = [])
         {
         }
     }
@@ -4049,6 +4083,9 @@ namespace FluentForm\App\Services\FormBuilder {
         public function getEditorCustomizationSettings()
         {
         }
+        public function pushTags($tags, $form)
+        {
+        }
         abstract function getComponent();
         abstract function render($element, $form);
     }
@@ -4846,9 +4883,6 @@ namespace FluentForm\App\Services\Integrations {
         private function getEntry($id, $form)
         {
         }
-        public function handleGlobalAsyncNotifications($insertId, $feedIds, $form)
-        {
-        }
     }
     abstract class IntegrationManager
     {
@@ -5617,6 +5651,14 @@ namespace FluentForm\App\Services\Parser {
          * @return array|null
          */
         public function getField($element, $attribute, $with = [])
+        {
+        }
+        /**
+         * Get Payment Input Fields
+         *
+         * @return array
+         */
+        public function getAttachmentInputFields($with = ['element'])
         {
         }
     }
@@ -12765,125 +12807,18 @@ namespace Box\Spout\Writer\XLSX {
     }
 }
 namespace FluentForm\App\Services\WPAsync {
-    /**
-     * Abstract WPAsyncRequest class.
-     *
-     * @abstract
-     */
-    abstract class WPAsyncRequest
-    {
-        /**
-         * Prefix
-         *
-         * (default value: 'wp')
-         *
-         * @var string
-         * @access protected
-         */
-        protected $prefix = 'wp';
-        /**
-         * Action
-         *
-         * (default value: 'async_request')
-         *
-         * @var string
-         * @access protected
-         *
-         * Must Declare this Property in Derrived Class
-         * protected $action = 'some_unique_async_request';
-         */
-        /**
-         * Identifier
-         *
-         * @var mixed
-         * @access protected
-         */
-        protected $identifier;
-        /**
-         * Data
-         *
-         * (default value: array())
-         *
-         * @var array
-         * @access protected
-         */
-        protected $data = array();
-        /**
-         * Initiate new async request
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Set data used during the request
-         *
-         * @param array $data Data.
-         *
-         * @return $this
-         */
-        public function data($data)
-        {
-        }
-        /**
-         * Dispatch the async request
-         *
-         * @return array|WP_Error
-         */
-        public function dispatch()
-        {
-        }
-        /**
-         * Get query args
-         *
-         * @return array
-         */
-        protected function get_query_args()
-        {
-        }
-        /**
-         * Get query URL
-         *
-         * @return string
-         */
-        protected function get_query_url()
-        {
-        }
-        /**
-         * Get post args
-         *
-         * @return array
-         */
-        protected function get_post_args()
-        {
-        }
-        /**
-         * Maybe handle
-         *
-         * Check for correct nonce and pass to handler.
-         */
-        public function maybe_handle()
-        {
-        }
-        /**
-         * Handle
-         *
-         * Override this method to perform any actions required
-         * during the async request.
-         */
-        protected abstract function handle();
-    }
-    class FluentFormAsyncRequest extends \FluentForm\App\Services\WPAsync\WPAsyncRequest
+    class FluentFormAsyncRequest
     {
         /**
          * $prefix The prefix for the identifier
          * @var string
          */
-        protected $prefix = 'fluentform';
+        protected $table = 'ff_scheduled_actions';
         /**
          * $action The action for the identifier
          * @var string
          */
-        protected $action = 'async_request';
+        protected $action = 'fluentform_background_process';
         /**
          * $actions Actions to be fired when an async request is sent
          * @var array
@@ -12901,290 +12836,21 @@ namespace FluentForm\App\Services\WPAsync {
         public function __construct(\FluentForm\Framework\Foundation\Application $app)
         {
         }
-        /**
-         * Add the action to be fired when an async request is sent
-         * @return void
-         */
-        public function shouldBeAsync($action, $data)
+        public function queueFeeds($feeds)
         {
         }
-        /**
-         * Get the actions to be fired when an async request is sent
-         * @return int
-         */
-        public function hasActions()
+        public function dispatchAjax($data = [])
         {
         }
-        /**
-         * Handle the async request
-         * @return void
-         */
-        protected function handle()
+        public function handleBackgroundCall()
         {
         }
-    }
-    /**
-     * Abstract WPBackgroundProcess class.
-     *
-     * @abstract
-     * @extends WP_Async_Request
-     */
-    abstract class WPBackgroundProcess extends \FluentForm\App\Services\WPAsync\WPAsyncRequest
-    {
-        /**
-         * Action
-         *
-         * (default value: 'background_process')
-         *
-         * @var string
-         * @access protected
-         */
-        protected $action = 'background_process';
-        /**
-         * Start time of current process.
-         *
-         * (default value: 0)
-         *
-         * @var int
-         * @access protected
-         */
-        protected $start_time = 0;
-        /**
-         * Cron_hook_identifier
-         *
-         * @var mixed
-         * @access protected
-         */
-        protected $cron_hook_identifier;
-        /**
-         * Cron_interval_identifier
-         *
-         * @var mixed
-         * @access protected
-         */
-        protected $cron_interval_identifier;
-        /**
-         * Initiate new background process
-         */
-        public function __construct()
+        public function processActions($originId = false)
         {
         }
-        /**
-         * Dispatch
-         *
-         * @access public
-         * @return void
-         */
-        public function dispatch()
+        private function getEntry($submission, $form)
         {
         }
-        /**
-         * Push to queue
-         *
-         * @param mixed $data Data.
-         *
-         * @return $this
-         */
-        public function push_to_queue($data)
-        {
-        }
-        /**
-         * Save queue
-         *
-         * @return $this
-         */
-        public function save()
-        {
-        }
-        /**
-         * Update queue
-         *
-         * @param string $key Key.
-         * @param array  $data Data.
-         *
-         * @return $this
-         */
-        public function update($key, $data)
-        {
-        }
-        /**
-         * Delete queue
-         *
-         * @param string $key Key.
-         *
-         * @return $this
-         */
-        public function delete($key)
-        {
-        }
-        /**
-         * Generate key
-         *
-         * Generates a unique key based on microtime. Queue items are
-         * given a unique key so that they can be merged upon save.
-         *
-         * @param int $length Length.
-         *
-         * @return string
-         */
-        protected function generate_key($length = 64)
-        {
-        }
-        /**
-         * Maybe process queue
-         *
-         * Checks whether data exists within the queue and that
-         * the process is not already running.
-         */
-        public function maybe_handle()
-        {
-        }
-        /**
-         * Is queue empty
-         *
-         * @return bool
-         */
-        protected function is_queue_empty()
-        {
-        }
-        /**
-         * Is process running
-         *
-         * Check whether the current process is already running
-         * in a background process.
-         */
-        protected function is_process_running()
-        {
-        }
-        /**
-         * Lock process
-         *
-         * Lock the process so that multiple instances can't run simultaneously.
-         * Override if applicable, but the duration should be greater than that
-         * defined in the time_exceeded() method.
-         */
-        protected function lock_process()
-        {
-        }
-        /**
-         * Unlock process
-         *
-         * Unlock the process so that other instances can spawn.
-         *
-         * @return $this
-         */
-        protected function unlock_process()
-        {
-        }
-        /**
-         * Get batch
-         *
-         * @return stdClass Return the first batch from the queue
-         */
-        protected function get_batch()
-        {
-        }
-        /**
-         * Handle
-         *
-         * Pass each queue item to the task handler, while remaining
-         * within server memory and time limit constraints.
-         */
-        protected function handle()
-        {
-        }
-        /**
-         * Memory exceeded
-         *
-         * Ensures the batch process never exceeds 90%
-         * of the maximum WordPress memory.
-         *
-         * @return bool
-         */
-        protected function memory_exceeded()
-        {
-        }
-        /**
-         * Get memory limit
-         *
-         * @return int
-         */
-        protected function get_memory_limit()
-        {
-        }
-        /**
-         * Time exceeded.
-         *
-         * Ensures the batch never exceeds a sensible time limit.
-         * A timeout limit of 30s is common on shared hosting.
-         *
-         * @return bool
-         */
-        protected function time_exceeded()
-        {
-        }
-        /**
-         * Complete.
-         *
-         * Override if applicable, but ensure that the below actions are
-         * performed, or, call parent::complete().
-         */
-        protected function complete()
-        {
-        }
-        /**
-         * Schedule cron healthcheck
-         *
-         * @access public
-         * @param mixed $schedules Schedules.
-         * @return mixed
-         */
-        public function schedule_cron_healthcheck($schedules)
-        {
-        }
-        /**
-         * Handle cron healthcheck
-         *
-         * Restart the background process if not already running
-         * and data exists in the queue.
-         */
-        public function handle_cron_healthcheck()
-        {
-        }
-        /**
-         * Schedule event
-         */
-        protected function schedule_event()
-        {
-        }
-        /**
-         * Clear scheduled event
-         */
-        protected function clear_scheduled_event()
-        {
-        }
-        /**
-         * Cancel Process
-         *
-         * Stop processing queue items, clear cronjob and delete batch.
-         *
-         */
-        public function cancel_process()
-        {
-        }
-        /**
-         * Task
-         *
-         * Override this method to perform any actions required on each
-         * queue item. Return the modified item for further processing
-         * in the next pass through. Or, return false to remove the
-         * item from the queue.
-         *
-         * @param mixed $item Queue item to iterate over.
-         *
-         * @return mixed
-         */
-        protected abstract function task($item);
     }
 }
 namespace FluentValidator {
@@ -16476,11 +16142,17 @@ namespace FluentForm\Framework\Foundation {
         public static function registerActivationHook()
         {
         }
+        public static function registerDeactivationHook()
+        {
+        }
         /**
          * Validate and activate the plugin
          * @return void
          */
         public static function activate($netowrkwide = false)
+        {
+        }
+        public static function deactivate()
         {
         }
         /**
@@ -17176,6 +16848,9 @@ namespace {
     {
     }
     function fluentform_mb_strpos($haystack, $needle)
+    {
+    }
+    function fluentformHandleScheduledTasks()
     {
     }
     function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
