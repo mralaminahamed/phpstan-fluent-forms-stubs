@@ -2420,6 +2420,9 @@ namespace FluentForm\App\Modules\Registerer {
         public function register()
         {
         }
+        public static function isDisabled()
+        {
+        }
         public function addMenuBar($wpAdminBar)
         {
         }
@@ -5924,6 +5927,16 @@ namespace FluentForm\App\Services\FormBuilder {
          * @return string [Compiled key='value' attributes]
          */
         protected function buildAttributes($attributes, $form = null)
+        {
+        }
+        /**
+         * Get hidden fieldset html
+         *
+         * @param $form
+         *
+         * @return string
+         */
+        private function fieldsetHtml($form)
         {
         }
     }
