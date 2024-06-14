@@ -5,3 +5,4 @@
  * @see https://github.com/mralaminahamed/phpstan-fluent-forms-stubs
  */
 
+\define('FLUENTFORM_HAS_NIA', \true);
