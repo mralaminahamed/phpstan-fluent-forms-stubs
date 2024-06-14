@@ -4108,7 +4108,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Build unique ID concating form id and name attribute
-         * @param  array  $data $form
+         * @param array $data $form
          * @return string for id value
          */
         protected function makeElementId($data, $form)
@@ -4116,7 +4116,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Build attributes for any html element
-         * @param  array  $attributes
+         * @param array $attributes
          * @return string [Compiled key='value' attributes]
          */
         protected function buildAttributes($attributes, $form = null)
@@ -4124,15 +4124,18 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Extract value attribute from attribute list
-         * @param  array  &$element
+         * @param array  &$element
          * @return string
          */
         protected function extractValueFromAttributes(&$element)
         {
         }
+        protected function extractDynamicValues($data, $form)
+        {
+        }
         /**
          * Determine if the given element has conditions bound
-         * @param  array   $element [Html element being compiled]
+         * @param array $element [Html element being compiled]
          * @return boolean
          */
         protected function hasConditions($element)
@@ -4140,7 +4143,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate a unique id for an element
-         * @param  string $str [preix]
+         * @param string $str [preix]
          * @return string [Unique id]
          */
         protected function getUniqueId($str)
@@ -4155,7 +4158,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Get required class for form element wrapper
-         * @param  array $rules [Validation rules]
+         * @param array $rules [Validation rules]
          * @return mixed
          */
         protected function getRequiredClass($rules)
@@ -4170,7 +4173,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate a label for any element
-         * @param  array  $data
+         * @param array $data
          * @return string [label Html element]
          */
         protected function buildElementLabel($data, $form)
@@ -4178,9 +4181,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate html/markup for any element
-         * @param  string   $elMarkup [Predifined partial markup]
-         * @param  array    $data
-         * @param  StdClass $form     [Form object]
+         * @param string $elMarkup [Predifined partial markup]
+         * @param array $data
+         * @param StdClass $form [Form object]
          * @return string   [Compiled markup]
          */
         protected function buildElementMarkup($elMarkup, $data, $form)
@@ -4188,7 +4191,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate a help message for any element beside label
-         * @param  array  $data
+         * @param array $data
          * @return string [Html]
          */
         protected function getLabelHelpMessage($data)
@@ -4196,7 +4199,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate a help message for any element beside form element
-         * @param  array  $data
+         * @param array $data
          * @return string [Html]
          */
         protected function getInputHelpMessage($data, $hideClass = '')
