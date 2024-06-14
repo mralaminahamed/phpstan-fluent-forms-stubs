@@ -367,7 +367,7 @@ namespace FluentForm\App\Modules\Component {
         {
         }
         /**
-         * Register fluentform_submission_inserted action
+         * Register fluentform_submission_inserted actions
          *
          * @return  void
          */
@@ -3750,6 +3750,25 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         {
         }
     }
+    class EmailNotificationActions
+    {
+        protected $app = null;
+        public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        {
+        }
+        public function register()
+        {
+        }
+        public function sendEmail($entryId, $data, $form)
+        {
+        }
+        public function sendEmailAsync($entryId, $data, $form)
+        {
+        }
+        public function handleNotification($entryId, $data, $form)
+        {
+        }
+    }
 }
 namespace FluentForm\App\Services\FormBuilder {
     class ShortCodeParser
@@ -4390,6 +4409,28 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         {
         }
     }
+    class MailChimpNotificationActions
+    {
+        protected $app = null;
+        public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        {
+        }
+        public function register()
+        {
+        }
+        public function notify($entryId, $data, $form)
+        {
+        }
+        public function notifyAsync($entryId, $data, $form)
+        {
+        }
+        public function handleNotification($entryId, $data, $form)
+        {
+        }
+        protected function isMailChimpEnabled()
+        {
+        }
+    }
 }
 namespace FluentForm\App\Services\Integrations\Slack {
     class Slack
@@ -4449,6 +4490,28 @@ namespace FluentForm\App\Services\Integrations\Slack {
          * during the async request.
          */
         public function handle()
+        {
+        }
+    }
+    class SlackNotificationActions
+    {
+        protected $app = null;
+        public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        {
+        }
+        public function register()
+        {
+        }
+        public function notify($entryId, $data, $form)
+        {
+        }
+        public function notifyAsync($entryId, $data, $form)
+        {
+        }
+        public function handleNotification($entryId, $data, $form)
+        {
+        }
+        protected function isSlackEnabled()
         {
         }
     }
@@ -5710,6 +5773,57 @@ namespace FluentForm\App\Services {
     }
 }
 namespace FluentForm\App\Services\WPAsync {
+    class FluentFormAsyncRequest extends \FluentForm\App\Services\WPAsync\WPAsyncRequest
+    {
+        /**
+         * $prefix The prefix for the identifier
+         * @var string
+         */
+        protected $prefix = 'fluentform';
+        /**
+         * $action The action for the identifier
+         * @var string
+         */
+        protected $action = 'async_request';
+        /**
+         * $actions Actions to be fired when an async request is sent
+         * @var array
+         */
+        protected $actions = array();
+        /**
+         * $app Instance of Application/Framework 
+         * @var FluentForm\Framework\Foundation\Application
+         */
+        protected $app = null;
+        /**
+         * Construct the Object
+         * @param FluentForm\Framework\Foundation\Application $app
+         */
+        public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        {
+        }
+        /**
+         * Add the action to be fired when an async request is sent
+         * @return void
+         */
+        public function shouldBeAsync($action, $data)
+        {
+        }
+        /**
+         * Get the actions to be fired when an async request is sent
+         * @return void
+         */
+        public function hasActions()
+        {
+        }
+        /**
+         * Handle the async request
+         * @return void
+         */
+        protected function handle()
+        {
+        }
+    }
     /**
      * Abstract WPBackgroundProcess class.
      *
@@ -11421,6 +11535,9 @@ namespace {
     {
     }
     function isWpAsyncRequest($action)
+    {
+    }
+    function fluentFormIsHandlingSubmission()
     {
     }
     function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
