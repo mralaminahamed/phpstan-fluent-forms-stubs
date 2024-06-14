@@ -177,6 +177,21 @@ namespace FluentForm\App\Modules\Acl {
         {
         }
     }
+    class RoleManager
+    {
+        public function getRoles()
+        {
+        }
+        public function setRoles()
+        {
+        }
+        public function verifyPermissionSet()
+        {
+        }
+        public function currentUserFormFormCapability()
+        {
+        }
+    }
 }
 namespace FluentForm\App\Modules {
     class Activator
@@ -483,6 +498,9 @@ namespace FluentForm\App\Modules\Entries {
         public function getEntriesGroup()
         {
         }
+        public function _getEntries($formId, $currentPage, $perPage, $sortBy, $entryType, $search)
+        {
+        }
         public function getEntries()
         {
         }
@@ -642,6 +660,14 @@ namespace FluentForm\App\Modules\Form {
          * @return void
          */
         public function find()
+        {
+        }
+        /**
+         * Fetch a from from the database
+         * Note: required for ninja-tables
+         * @return mixed
+         */
+        public function fetchForm($formId)
         {
         }
         /**
@@ -1384,7 +1410,7 @@ namespace FluentForm\App\Modules\Registerer {
         }
         /**
          * Remove the inactive addOn menu items
-         * @param  string  $addOn
+         * @param  string $addOn
          * @return boolean
          */
         public function filterFormSettingsMenu($settingsMenus, $form_id)
@@ -5791,7 +5817,7 @@ namespace FluentForm\App\Services\WPAsync {
          */
         protected $actions = array();
         /**
-         * $app Instance of Application/Framework 
+         * $app Instance of Application/Framework
          * @var FluentForm\Framework\Foundation\Application
          */
         protected $app = null;
@@ -5811,7 +5837,7 @@ namespace FluentForm\App\Services\WPAsync {
         }
         /**
          * Get the actions to be fired when an async request is sent
-         * @return void
+         * @return int
          */
         public function hasActions()
         {
