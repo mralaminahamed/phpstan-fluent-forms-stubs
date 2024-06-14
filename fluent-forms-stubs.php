@@ -139,6 +139,9 @@ namespace FluentForm\App\Helpers {
         public static function setFormMeta($formId, $metaKey, $value)
         {
         }
+        public static function isEntryAutoDeleteEnabled($formId)
+        {
+        }
     }
     class Str
     {
@@ -848,6 +851,9 @@ namespace FluentForm\App\Modules\Entries {
         {
         }
         public function deleteEntry()
+        {
+        }
+        public function deleteEntryById($entryId, $formId = false)
         {
         }
         public function favoriteChange()
@@ -4498,7 +4504,7 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static $entry = null;
         protected static $browser = null;
         protected static $formFields = null;
-        protected static $store = ['inputs' => null, 'user' => null, 'post' => null, 'other' => null, 'submission' => null];
+        protected static $store = ['inputs' => null, 'original_inputs' => null, 'user' => null, 'post' => null, 'other' => null, 'submission' => null];
         public static function parse($parsable, $entryId, $data = null, $form = null)
         {
         }
