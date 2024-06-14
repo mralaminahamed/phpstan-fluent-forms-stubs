@@ -405,6 +405,10 @@ namespace FluentForm\App\Helpers {
         public static function shouldHidePassword($formId)
         {
         }
+        // make tabular-grid value markdown format
+        public static function getTabularGridMarkdownValue($girdData, $field, $rowJoiner = '<br />', $colJoiner = ', ')
+        {
+        }
         public static function getInputNameFromShortCode($value)
         {
         }
@@ -6699,11 +6703,6 @@ namespace FluentForm\App\Services\Integrations\Slack {
         public static function handle($feed, $formData, $form, $entry)
         {
         }
-        // @todo make helper function for formatting in MarkDown Format
-        // make tabular-grid value markdown format
-        protected static function getTabularGridMarkdownValue($girdData, $field = [], $rowJoiner = '<br />', $colJoiner = ', ')
-        {
-        }
     }
     class SlackNotificationActions
     {
@@ -7032,11 +7031,23 @@ namespace FluentForm\App\Services\Migrator\Classes {
         protected function getFormName($form)
         {
         }
+        public function getEntries($formId)
+        {
+        }
         /**
          * @param $form
          * @return mixed
          */
         protected function getFormId($form)
+        {
+        }
+        protected function getSubmissionArrayValue($type, $field, $inputs, $submission)
+        {
+        }
+        protected function getSubmissionValue($id, $submission)
+        {
+        }
+        protected function handleFileValue($url)
         {
         }
     }
