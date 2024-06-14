@@ -549,7 +549,7 @@ namespace FluentForm\App\Modules\Form {
         public static function parseFormEntry($entry, $form, $fields = null)
         {
         }
-        public static function parseFormSubmission($submition, $form, $fields)
+        public static function parseFormSubmission($submission, $form, $fields)
         {
         }
         public static function parseData($response, $fields, $formId)
@@ -565,13 +565,13 @@ namespace FluentForm\App\Modules\Form {
         public static function getFields($form, $asArray = false)
         {
         }
-        public function getInputs($form, $with = [])
+        public static function getInputs($form, $with = [])
         {
         }
-        public function getEntryInputs($form, $with = ['admin_label'])
+        public static function getEntryInputs($form, $with = ['admin_label'])
         {
         }
-        public function parse($key, $form, $with)
+        public static function parse($key, $form, $with)
         {
         }
         public static function getAdminLabels($form, $fields = [])
@@ -1258,6 +1258,9 @@ namespace FluentForm\App\Modules\Settings {
         public function storeMailChimpSettings()
         {
         }
+        public function storeActiveCampaignSettings()
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules\Track {
@@ -1317,6 +1320,12 @@ namespace FluentForm\Framework\Foundation {
     }
 }
 namespace FluentForm\App\Providers {
+    class ActiveCampaignApiProvider extends \FluentForm\Framework\Foundation\Provider
+    {
+        public function booting()
+        {
+        }
+    }
     class AdminNoticeProvider extends \FluentForm\Framework\Foundation\Provider
     {
         /**
@@ -3025,93 +3034,6 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         {
         }
     }
-    class ActionHook extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
-    {
-        /**
-         * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
-         */
-        public function compile($data, $form)
-        {
-        }
-    }
-    class FormStep extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
-    {
-        /**
-         * Compile and echo step header
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
-         */
-        public function stepStart($data, $form)
-        {
-        }
-        /**
-         * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
-         */
-        public function compile($data, $form)
-        {
-        }
-        /**
-         * Compile and echo step footer
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
-         */
-        public function stepEnd($data, $form)
-        {
-        }
-        /**
-         * Compile next and prev buttons
-         * @param  array $data [element data]
-         * @return viod
-         */
-        protected function compileButtons($data)
-        {
-        }
-    }
-    class Repeat extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
-    {
-        /**
-         * Wrapper class for repeat element
-         * @var string
-         */
-        protected $wrapperClass = 'ff-el-repeat';
-        /**
-         * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
-         */
-        public function compile($data, $form)
-        {
-        }
-        /**
-         * Compile repeater buttons
-         * @param  string $el [element name]
-         * @return string
-         */
-        protected function getRepeater($el)
-        {
-        }
-    }
-    class Shortcode extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
-    {
-        /**
-         * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
-         */
-        public function compile($data, $form)
-        {
-        }
-    }
 }
 namespace FluentForm\App\Services\FormBuilder {
     class EditorShortcodeParser
@@ -3701,6 +3623,800 @@ namespace FluentForm\App\Services\Integrations {
         }
     }
 }
+namespace {
+    /**
+     * Class AC_Connector
+     */
+    class AC_Connector
+    {
+        /**
+         * Default curl timeout
+         */
+        const DEFAULT_TIMEOUT = 30;
+        /**
+         * @var string
+         */
+        public $url;
+        /**
+         * @var
+         */
+        public $api_key;
+        /**
+         * @var string
+         */
+        public $output = "json";
+        /**
+         * @var int
+         */
+        private $timeout = self::DEFAULT_TIMEOUT;
+        /**
+         * AC_Connector constructor.
+         *
+         * @param        $url
+         * @param        $api_key
+         * @param string $api_user
+         * @param string $api_pass
+         */
+        function __construct($url, $api_key, $api_user = "", $api_pass = "")
+        {
+        }
+        /**
+         * Test the api credentials
+         *
+         * @return bool|mixed
+         * @throws \RequestException
+         */
+        public function credentials_test()
+        {
+        }
+        /**
+         * Debug helper function
+         *
+         * @param        $var
+         * @param int    $continue
+         * @param string $element
+         * @param string $extra
+         */
+        public function dbg($var, $continue = 0, $element = "pre", $extra = "")
+        {
+        }
+        /**
+         * Set curl timeout
+         *
+         * @param $seconds
+         */
+        public function set_curl_timeout($seconds)
+        {
+        }
+        /**
+         * Get curl timeout
+         *
+         * @return int
+         */
+        public function get_curl_timeout()
+        {
+        }
+        /**
+         * Make the curl request
+         *
+         * @param        $url
+         * @param array  $params_data
+         * @param string $verb
+         * @param string $custom_method
+         *
+         * @return mixed
+         * @throws \RequestException
+         */
+        public function curl($url, $params_data = array(), $verb = "", $custom_method = "")
+        {
+        }
+        /**
+         * Throw the request exception
+         *
+         * @param $message
+         *
+         * @throws \RequestException
+         */
+        protected function throwRequestException($message)
+        {
+        }
+    }
+    /**
+     * Class ActiveCampaign
+     */
+    class ActiveCampaign extends \AC_Connector
+    {
+        /**
+         * @var
+         */
+        public $url_base;
+        /**
+         * @var
+         */
+        public $url;
+        /**
+         * @var
+         */
+        public $api_key;
+        /**
+         * @var
+         */
+        public $track_email;
+        /**
+         * @var
+         */
+        public $track_actid;
+        /**
+         * @var
+         */
+        public $track_key;
+        /**
+         * @var int
+         */
+        public $version = 1;
+        /**
+         * @var bool
+         */
+        public $debug = \false;
+        /**
+         * @var string
+         */
+        public $curl_response_error = "";
+        /**
+         * ActiveCampaign constructor.
+         *
+         * @param        $url
+         * @param        $api_key
+         * @param string $api_user
+         * @param string $api_pass
+         */
+        function __construct($url, $api_key, $api_user = "", $api_pass = "")
+        {
+        }
+        /**
+         * Set the version on the url
+         *
+         * @param $version
+         */
+        function version($version)
+        {
+        }
+        /**
+         * Make api calls
+         *
+         * @param       $path
+         * @param array $post_data
+         *
+         * @return mixed
+         */
+        function api($path, $post_data = array())
+        {
+        }
+    }
+    class AC_Account extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function add($params, $post_data)
+        {
+        }
+        function cancel($params)
+        {
+        }
+        function edit($params, $post_data)
+        {
+        }
+        function list_($params)
+        {
+        }
+        function name_check($params)
+        {
+        }
+        function plans($params)
+        {
+        }
+        function status($params)
+        {
+        }
+        function status_set($params)
+        {
+        }
+        function view()
+        {
+        }
+    }
+    class AC_Auth extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function singlesignon($params)
+        {
+        }
+    }
+    class AC_Automation extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function list_($params)
+        {
+        }
+        function contact_add($params, $post_data)
+        {
+        }
+        function contact_remove($params, $post_data)
+        {
+        }
+        function contact_list($params)
+        {
+        }
+        function contact_view($params)
+        {
+        }
+    }
+    class AC_Campaign extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function create($params, $post_data)
+        {
+        }
+        function delete_list($params)
+        {
+        }
+        function delete($params)
+        {
+        }
+        function list_($params)
+        {
+        }
+        function paginator($params)
+        {
+        }
+        function report_bounce_list($params)
+        {
+        }
+        function report_bounce_totals($params)
+        {
+        }
+        function report_forward_list($params)
+        {
+        }
+        function report_forward_totals($params)
+        {
+        }
+        function report_link_list($params)
+        {
+        }
+        function report_link_totals($params)
+        {
+        }
+        function report_open_list($params)
+        {
+        }
+        function report_open_totals($params)
+        {
+        }
+        function report_totals($params)
+        {
+        }
+        function report_unopen_list($params)
+        {
+        }
+        function report_unsubscription_list($params)
+        {
+        }
+        function report_unsubscription_totals($params)
+        {
+        }
+        function send($params)
+        {
+        }
+        function status($params)
+        {
+        }
+    }
+    class AC_Contact extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function add($params, $post_data)
+        {
+        }
+        function automation_list($params)
+        {
+        }
+        function delete_list($params)
+        {
+        }
+        function delete($params)
+        {
+        }
+        function edit($params, $post_data)
+        {
+        }
+        function list_($params)
+        {
+        }
+        function note_add($params, $post_data)
+        {
+        }
+        function note_edit($params, $post_data)
+        {
+        }
+        function note_delete($params)
+        {
+        }
+        function paginator($params)
+        {
+        }
+        function sync($params, $post_data)
+        {
+        }
+        function tag_add($params, $post_data)
+        {
+        }
+        function tag_remove($params, $post_data)
+        {
+        }
+        function view($params)
+        {
+        }
+    }
+    class AC_Deal extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function add($params, $post_data)
+        {
+        }
+        function edit($params, $post_data)
+        {
+        }
+        function delete($params, $post_data)
+        {
+        }
+        function get($params)
+        {
+        }
+        function list_($params)
+        {
+        }
+        function note_add($params, $post_data)
+        {
+        }
+        function note_edit($params, $post_data)
+        {
+        }
+        function pipeline_add($params, $post_data)
+        {
+        }
+        function pipeline_edit($params, $post_data)
+        {
+        }
+        function pipeline_delete($params, $post_data)
+        {
+        }
+        function pipeline_list($params)
+        {
+        }
+        function stage_add($params, $post_data)
+        {
+        }
+        function stage_edit($params, $post_data)
+        {
+        }
+        function stage_delete($params, $post_data)
+        {
+        }
+        function stage_list($params)
+        {
+        }
+        function task_add($params, $post_data)
+        {
+        }
+        function task_edit($params, $post_data)
+        {
+        }
+        function tasktype_add($params, $post_data)
+        {
+        }
+        function tasktype_edit($params, $post_data)
+        {
+        }
+        function tasktype_delete($params, $post_data)
+        {
+        }
+    }
+    class AC_Design extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function edit($params, $post_data)
+        {
+        }
+        function view($params, $post_data)
+        {
+        }
+    }
+    class AC_Form extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function getforms($params)
+        {
+        }
+        function html($params)
+        {
+        }
+        function embed($params)
+        {
+        }
+        function process($params)
+        {
+        }
+    }
+    class AC_Group extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function add($params, $post_data)
+        {
+        }
+        function delete_list($params)
+        {
+        }
+        function delete($params)
+        {
+        }
+        function edit($params, $post_data)
+        {
+        }
+        function list_($params)
+        {
+        }
+        function view($params)
+        {
+        }
+    }
+    class AC_List_ extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function add($params, $post_data)
+        {
+        }
+        function delete_list($params)
+        {
+        }
+        function delete($params)
+        {
+        }
+        function edit($params, $post_data)
+        {
+        }
+        function field_add($params, $post_data)
+        {
+        }
+        function field_delete($params)
+        {
+        }
+        function field_edit($params, $post_data)
+        {
+        }
+        function field_view($params)
+        {
+        }
+        function list_($params, $post_data)
+        {
+        }
+        function paginator($params)
+        {
+        }
+        function view($params)
+        {
+        }
+    }
+    class AC_Message extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function add($params, $post_data)
+        {
+        }
+        function delete_list($params)
+        {
+        }
+        function delete($params)
+        {
+        }
+        function edit($params, $post_data)
+        {
+        }
+        function list_($params)
+        {
+        }
+        function template_add($params, $post_data)
+        {
+        }
+        function template_delete_list($params)
+        {
+        }
+        function template_delete($params)
+        {
+        }
+        function template_edit($params, $post_data)
+        {
+        }
+        function template_export($params)
+        {
+        }
+        function template_import($params, $post_data)
+        {
+        }
+        function template_list($params)
+        {
+        }
+        function template_view($params)
+        {
+        }
+        function view($params)
+        {
+        }
+    }
+    class AC_Organization extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function list_($params, $post_data)
+        {
+        }
+    }
+    class AC_Segment extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function list_($params)
+        {
+        }
+    }
+    class AC_Settings extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function edit($params, $post_data)
+        {
+        }
+    }
+    class AC_Subscriber extends \AC_Contact
+    {
+    }
+    class AC_Tag extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function list_($params)
+        {
+        }
+    }
+    class AC_Tracking extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        /*
+         * Update the status (enabled or disabled) for site tracking.
+         */
+        function site_status($params, $post_data)
+        {
+        }
+        /*
+         * Update the status (enabled or disabled) for event tracking.
+         */
+        function event_status($params, $post_data)
+        {
+        }
+        /*
+         * Returns existing whitelisted domains.
+         */
+        function site_list($params)
+        {
+        }
+        /*
+         * Returns existing tracked events.
+         */
+        function event_list($params)
+        {
+        }
+        /*
+         * Adds a domain to the site tracking whitelist.
+         */
+        function whitelist($params, $post_data)
+        {
+        }
+        /*
+         * Removes a domain from the site tracking whitelist.
+         */
+        function whitelist_remove($params, $post_data)
+        {
+        }
+        /*
+         * Removes an event.
+         */
+        function event_remove($params, $post_data)
+        {
+        }
+        /*
+         * Adds a new event.
+         */
+        function log($params, $post_data)
+        {
+        }
+    }
+    class AC_User extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function add($params, $post_data)
+        {
+        }
+        function delete_list($params)
+        {
+        }
+        function delete($params)
+        {
+        }
+        function edit($params, $post_data)
+        {
+        }
+        function list_($params)
+        {
+        }
+        function me()
+        {
+        }
+        function view($params)
+        {
+        }
+    }
+    class AC_Webhook extends \ActiveCampaign
+    {
+        public $version;
+        public $url_base;
+        public $url;
+        public $api_key;
+        function __construct($version, $url_base, $url, $api_key)
+        {
+        }
+        function add($params, $post_data)
+        {
+        }
+        function delete($params)
+        {
+        }
+        function delete_list($params)
+        {
+        }
+        function edit($params, $post_data)
+        {
+        }
+        function list_($params)
+        {
+        }
+        function view($params)
+        {
+        }
+        function events($params)
+        {
+        }
+        function process($params)
+        {
+        }
+    }
+    class RequestException extends \Exception
+    {
+        private $failedRequestMessage;
+        /**
+         * @param string message	Response error message from the server.
+         *
+         * Set the failure message for this exception.
+         */
+        public function setFailedMessage($message)
+        {
+        }
+        /**
+         * @return string	Response error message from the server.
+         *
+         * Get the failure message for this exception.
+         */
+        public function getFailedMessage()
+        {
+        }
+    }
+}
 namespace FluentForm\App\Services {
     class Slack
     {
@@ -3771,6 +4487,12 @@ namespace League\Csv\Config {
          */
         protected $escape = '\\';
         /**
+         * the \SplFileObject flags holder
+         *
+         * @var int
+         */
+        protected $flags;
+        /**
          * newline character
          *
          * @var string
@@ -3807,6 +4529,28 @@ namespace League\Csv\Config {
         {
         }
         /**
+         * Detects the CSV file delimiters
+         *
+         * Returns a associative array where each key represents
+         * the number of occurences and each value a delimiter with the
+         * given occurence
+         *
+         * This method returns incorrect informations when two delimiters
+         * have the same occurrence count
+         *
+         * DEPRECATION WARNING! This method will be removed in the next major point release
+         *
+         * @deprecated deprecated since version 7.2
+         *
+         * @param int      $nb_rows
+         * @param string[] $delimiters additional delimiters
+         *
+         * @return string[]
+         */
+        public function detectDelimiterList($nb_rows = 1, array $delimiters = [])
+        {
+        }
+        /**
          * Detect Delimiters occurences in the CSV
          *
          * Returns a associative array where each key represents
@@ -3815,23 +4559,11 @@ namespace League\Csv\Config {
          * @param string[] $delimiters the delimiters to consider
          * @param int      $nb_rows    Detection is made using $nb_rows of the CSV
          *
+         * @throws InvalidArgumentException If $nb_rows value is invalid
+         *
          * @return array
          */
         public function fetchDelimitersOccurrence(array $delimiters, $nb_rows = 1)
-        {
-        }
-        /**
-         * Validate an integer
-         *
-         * @param int    $int
-         * @param int    $minValue
-         * @param string $errorMessage
-         *
-         * @throws InvalidArgumentException If the value is invalid
-         *
-         * @return int
-         */
-        protected function validateInteger($int, $minValue, $errorMessage)
         {
         }
         /**
@@ -3881,6 +4613,30 @@ namespace League\Csv\Config {
         {
         }
         /**
+         * Sets the Flags associated to the CSV SplFileObject
+         *
+         * @param int $flags
+         *
+         * @throws InvalidArgumentException If the argument is not a valid integer
+         *
+         * @return $this
+         */
+        public function setFlags($flags)
+        {
+        }
+        /**
+         * @inheritdoc
+         */
+        protected abstract function filterInteger($int, $minValue, $errorMessage);
+        /**
+         * Returns the file Flags
+         *
+         * @return int
+         */
+        public function getFlags()
+        {
+        }
+        /**
          * Sets the newline sequence characters
          *
          * @param string $newline
@@ -3913,7 +4669,7 @@ namespace League\Csv\Config {
          *
          * @var string
          */
-        protected $input_encoding = 'UTF-8';
+        protected $encodingFrom = 'UTF-8';
         /**
          * The Input file BOM character
          * @var string
@@ -3923,23 +4679,21 @@ namespace League\Csv\Config {
          * The Output file BOM character
          * @var string
          */
-        protected $output_bom = '';
+        protected $output_bom;
         /**
-         * Sets the CSV encoding charset
+         * Returns the CSV Iterator
          *
-         * @param string $str
-         *
-         * @return static
+         * @return Iterator
          */
-        public function setInputEncoding($str)
-        {
-        }
+        protected abstract function getConversionIterator();
+        /**
+         * Returns the CSV Iterator
+         *
+         * @return Iterator
+         */
+        public abstract function getIterator();
         /**
          * Sets the CSV encoding charset
-         *
-         * DEPRECATION WARNING! This method will be removed in the next major point release
-         *
-         * @deprecated deprecated since version 8.1
          *
          * @param string $str
          *
@@ -3953,18 +4707,6 @@ namespace League\Csv\Config {
          *
          * @return string
          */
-        public function getInputEncoding()
-        {
-        }
-        /**
-         * Gets the source CSV encoding charset
-         *
-         * DEPRECATION WARNING! This method will be removed in the next major point release
-         *
-         * @deprecated deprecated since version 8.1
-         *
-         * @return string
-         */
         public function getEncodingFrom()
         {
         }
@@ -3975,7 +4717,7 @@ namespace League\Csv\Config {
          *
          * @return static
          */
-        public function setOutputBOM($str)
+        public function setOutputBOM($str = null)
         {
         }
         /**
@@ -3994,10 +4736,6 @@ namespace League\Csv\Config {
         public function getInputBOM()
         {
         }
-        /**
-         * @inheritdoc
-         */
-        public abstract function getIterator();
         /**
          * Outputs all data on the CSV file
          *
@@ -4027,17 +4765,13 @@ namespace League\Csv\Config {
         {
         }
         /**
-         * @inheritdoc
+         * JsonSerializable Interface
+         *
+         * @return array
          */
         public function jsonSerialize()
         {
         }
-        /**
-         * Returns the CSV Iterator
-         *
-         * @return Iterator
-         */
-        protected abstract function getQueryIterator();
         /**
          * Convert Csv file into UTF-8
          *
@@ -4051,11 +4785,11 @@ namespace League\Csv\Config {
         /**
          * Returns a HTML table representation of the CSV Table
          *
-         * @param string $class_attr optional classname
+         * @param string $class_name optional classname
          *
          * @return string
          */
-        public function toHTML($class_attr = 'table-csv-data')
+        public function toHTML($class_name = 'table-csv-data')
         {
         }
         /**
@@ -4123,9 +4857,17 @@ namespace League\Csv\Modifier {
         {
         }
         /**
-         * @inheritdoc
+         * Tell whether we can strip or not the leading BOM sequence
+         *
+         * @return bool
          */
-        public abstract function getInputBOM();
+        protected function isBomStrippable()
+        {
+        }
+        /**
+         * {@inheritdoc}
+         */
+        public abstract function getInputBom();
         /**
          * Set LimitIterator Offset
          *
@@ -4139,7 +4881,7 @@ namespace League\Csv\Modifier {
         /**
          * @inheritdoc
          */
-        protected abstract function validateInteger($int, $minValue, $errorMessage);
+        protected abstract function filterInteger($int, $minValue, $errorMessage);
         /**
          * Set LimitIterator Count
          *
@@ -4161,6 +4903,34 @@ namespace League\Csv\Modifier {
         {
         }
         /**
+         * Remove a callable from the collection
+         *
+         * @param callable $callable
+         *
+         * @return $this
+         */
+        public function removeSortBy(callable $callable)
+        {
+        }
+        /**
+         * Detect if the callable is already registered
+         *
+         * @param callable $callable
+         *
+         * @return bool
+         */
+        public function hasSortBy(callable $callable)
+        {
+        }
+        /**
+         * Remove all registered callable
+         *
+         * @return $this
+         */
+        public function clearSortBy()
+        {
+        }
+        /**
          * Set the Iterator filter method
          *
          * @param callable $callable
@@ -4171,37 +4941,41 @@ namespace League\Csv\Modifier {
         {
         }
         /**
-         * @inheritdoc
-         */
-        public abstract function getEnclosure();
-        /**
-         * Returns the CSV Iterator
+         * Remove a filter from the callable collection
          *
-         * @return Iterator
+         * @param callable $callable
+         *
+         * @return $this
          */
-        protected function getQueryIterator()
+        public function removeFilter(callable $callable)
         {
         }
         /**
-         * @inheritdoc
+         * Detect if the callable filter is already registered
+         *
+         * @param callable $callable
+         *
+         * @return bool
          */
-        public abstract function getIterator();
+        public function hasFilter(callable $callable)
+        {
+        }
+        /**
+         * Remove all registered callable filter
+         *
+         * @return $this
+         */
+        public function clearFilter()
+        {
+        }
         /**
          * Remove the BOM sequence from the CSV
          *
          * @param Iterator $iterator
          *
-         * @return Iterator
+         * @return \Iterator
          */
         protected function applyBomStripping(\Iterator $iterator)
-        {
-        }
-        /**
-         * Tell whether we can strip or not the leading BOM sequence
-         *
-         * @return bool
-         */
-        protected function isBomStrippable()
         {
         }
         /**
@@ -4215,11 +4989,15 @@ namespace League\Csv\Modifier {
         {
         }
         /**
+         * {@inheritdoc}
+         */
+        public abstract function getEnclosure();
+        /**
          * Filter the Iterator
          *
-         * @param Iterator $iterator
+         * @param \Iterator $iterator
          *
-         * @return Iterator
+         * @return \Iterator
          */
         protected function applyIteratorFilter(\Iterator $iterator)
         {
@@ -4227,21 +5005,21 @@ namespace League\Csv\Modifier {
         /**
          * Sort the Iterator
          *
-         * @param Iterator $iterator
+         * @param \Iterator $iterator
          *
-         * @return Iterator
+         * @return \Iterator
          */
-        protected function applyIteratorSortBy(\Iterator $iterator)
+        protected function applyIteratorInterval(\Iterator $iterator)
         {
         }
         /**
          * Sort the Iterator
          *
-         * @param Iterator $iterator
+         * @param \Iterator $iterator
          *
-         * @return Iterator
+         * @return \Iterator
          */
-        protected function applyIteratorInterval(\Iterator $iterator)
+        protected function applyIteratorSortBy(\Iterator $iterator)
         {
         }
     }
@@ -4292,7 +5070,7 @@ namespace League\Csv\Modifier {
          * an object that implements the `__toString` method
          * a path to a file
          *
-         * @param StreamIterator|SplFileObject|string $path The file path
+         * @param \SplFileObject|string $path The file path
          */
         protected function initStreamFilter($path)
         {
@@ -4377,10 +5155,6 @@ namespace League\Csv\Modifier {
         {
         }
         /**
-         * @inheritdoc
-         */
-        public abstract function validateString($str);
-        /**
          * Detect if the stream filter is already present
          *
          * @param string $filter_name
@@ -4459,13 +5233,13 @@ namespace League\Csv {
         /**
          * UTF-32 LE BOM sequence
          */
-        const BOM_UTF32_LE = "\xff\xfe\x00\x00";
+        const BOM_UTF32_LE = "\x00\x00\xff\xfe";
         /**
-         * The path
+         * The constructor path
          *
-         * can be a StreamIterator object, a SplFileObject object or the string path to a file
+         * can be a SplFileInfo object or the string path to a file
          *
-         * @var StreamIterator|SplFileObject|string
+         * @var SplFileObject|string
          */
         protected $path;
         /**
@@ -4475,14 +5249,20 @@ namespace League\Csv {
          */
         protected $open_mode;
         /**
+         * Default SplFileObject flags settings
+         *
+         * @var int
+         */
+        protected $defaultFlags;
+        /**
          * Creates a new instance
          *
          * The path must be an SplFileInfo object
          * an object that implements the `__toString` method
          * a path to a file
          *
-         * @param StreamIterator|SplFileObject|string $path      The file path
-         * @param string                              $open_mode The file open mode flag
+         * @param SplFileObject|string $path      The file path
+         * @param string               $open_mode the file open mode flag
          */
         protected function __construct($path, $open_mode = 'r+')
         {
@@ -4494,36 +5274,49 @@ namespace League\Csv {
         {
         }
         /**
-         * Return a new {@link AbstractCsv} from a SplFileObject
+         * Returns the CSV Iterator
          *
-         * @param SplFileObject $file
-         *
-         * @return static
+         * @return SplFileObject
          */
-        public static function createFromFileObject(\SplFileObject $file)
+        public function getIterator()
         {
         }
         /**
-         * Return a new {@link AbstractCsv} from a PHP resource stream or a StreamIterator
+         * Returns the CSV Iterator for conversion
          *
-         * @param resource $stream
-         *
-         * @return static
+         * @return Iterator
          */
-        public static function createFromStream($stream)
+        protected function getConversionIterator()
         {
         }
         /**
-         * Return a new {@link AbstractCsv} from a string
+         * Creates a {@link AbstractCsv} from a string
          *
-         * The string must be an object that implements the `__toString` method,
-         * or a string
+         * The path can be:
+         * - an SplFileInfo,
+         * - a SplFileObject,
+         * - an object that implements the `__toString` method,
+         * - a string
          *
-         * @param string $str the string
+         * BUT NOT a SplTempFileObject
+         *
+         * <code>
+         *<?php
+         * $csv = new Reader::createFromPath('/path/to/file.csv', 'a+');
+         * $csv = new Reader::createFromPath(new SplFileInfo('/path/to/file.csv'));
+         * $csv = new Reader::createFromPath(new SplFileObject('/path/to/file.csv'), 'rb');
+         *
+         * ?>
+         * </code>
+         *
+         * @param mixed  $path      file path
+         * @param string $open_mode the file open mode flag
+         *
+         * @throws InvalidArgumentException If $path is a \SplTempFileObject object
          *
          * @return static
          */
-        public static function createFromString($str)
+        public static function createFromPath($path, $open_mode = 'r+')
         {
         }
         /**
@@ -4539,31 +5332,54 @@ namespace League\Csv {
         {
         }
         /**
-         * Return a new {@link AbstractCsv} from a file path
+         * Creates a {@link AbstractCsv} from a SplFileObject
          *
-         * @param mixed  $path      file path
-         * @param string $open_mode the file open mode flag
+         * The path can be:
+         * - a SplFileObject,
+         * - a SplTempFileObject
          *
-         * @throws InvalidArgumentException If $path is a SplTempFileObject object
+         * <code>
+         *<?php
+         * $csv = new Writer::createFromFileObject(new SplFileInfo('/path/to/file.csv'));
+         * $csv = new Writer::createFromFileObject(new SplTempFileObject);
          *
-         * @return static
-         */
-        public static function createFromPath($path, $open_mode = 'r+')
-        {
-        }
-        /**
-         * Return a new {@link AbstractCsv} instance from another {@link AbstractCsv} object
+         * ?>
+         * </code>
          *
-         * @param string $class     the class to be instantiated
-         * @param string $open_mode the file open mode flag
+         * @param SplFileObject $file
          *
          * @return static
          */
-        protected function newInstance($class, $open_mode)
+        public static function createFromFileObject(\SplFileObject $file)
         {
         }
         /**
-         * Return a new {@link Writer} instance from a {@link AbstractCsv} object
+         * Creates a {@link AbstractCsv} from a string
+         *
+         * The string must be an object that implements the `__toString` method,
+         * or a string
+         *
+         * @param string $str     the string
+         * @param string $newline the newline character
+         *
+         * @return static
+         */
+        public static function createFromString($str, $newline = "\n")
+        {
+        }
+        /**
+         * Creates a {@link AbstractCsv} instance from another {@link AbstractCsv} object
+         *
+         * @param string $class_name the class to be instantiated
+         * @param string $open_mode  the file open mode flag
+         *
+         * @return static
+         */
+        protected function newInstance($class_name, $open_mode)
+        {
+        }
+        /**
+         * Creates a {@link Writer} instance from a {@link AbstractCsv} object
          *
          * @param string $open_mode the file open mode flag
          *
@@ -4573,7 +5389,7 @@ namespace League\Csv {
         {
         }
         /**
-         * Return a new {@link Reader} instance from a {@link AbstractCsv} object
+         * Creates a {@link Reader} instance from a {@link AbstractCsv} object
          *
          * @param string $open_mode the file open mode flag
          *
@@ -4583,19 +5399,17 @@ namespace League\Csv {
         {
         }
         /**
-         * Returns the inner CSV Document Iterator object
+         * Validate the submitted integer
          *
-         * @return StreamIterator|SplFileObject
-         */
-        public function getIterator()
-        {
-        }
-        /**
-         * Set the Inner Iterator
+         * @param int    $int
+         * @param int    $minValue
+         * @param string $errorMessage
          *
-         * @return StreamIterator|SplFileObject
+         * @throws InvalidArgumentException If the value is invalid
+         *
+         * @return int
          */
-        protected function setIterator()
+        protected function filterInteger($int, $minValue, $errorMessage)
         {
         }
     }
@@ -4752,10 +5566,6 @@ namespace League\Csv\Modifier {
         {
         }
         /**
-         * @inheritdoc
-         */
-        protected abstract function validateString($str);
-        /**
          * Remove a validator from the collection
          *
          * @param string $name the validator name
@@ -4786,7 +5596,7 @@ namespace League\Csv\Modifier {
         /**
          * Format the given row
          *
-         * @param array $row
+         * @param array|string $row
          *
          * @return array
          */
@@ -4794,228 +5604,13 @@ namespace League\Csv\Modifier {
         {
         }
         /**
-         * Validate a row
+         * validate a row
          *
          * @param array $row
          *
          * @throws InvalidRowException If the validation failed
          */
         protected function validateRow(array $row)
-        {
-        }
-    }
-    /**
-     *  A Stream Iterator
-     *
-     * @package League.csv
-     * @since  8.2.0
-     * @internal used internally to iterate over a stream resource
-     *
-     */
-    class StreamIterator implements \Iterator
-    {
-        /**
-         * Stream pointer
-         *
-         * @var resource
-         */
-        protected $stream;
-        /**
-         * Current iterator value
-         *
-         * @var mixed
-         */
-        protected $current_line;
-        /**
-         * Current iterator key
-         *
-         * @var int
-         */
-        protected $current_line_number;
-        /**
-         * Flags for the StreamIterator
-         *
-         * @var int
-         */
-        protected $flags = 0;
-        /**
-         * the field delimiter (one character only)
-         *
-         * @var string
-         */
-        protected $delimiter = ',';
-        /**
-         * the field enclosure character (one character only)
-         *
-         * @var string
-         */
-        protected $enclosure = '"';
-        /**
-         * the field escape character (one character only)
-         *
-         * @var string
-         */
-        protected $escape = '\\';
-        /**
-         * New instance
-         *
-         * @param resource $stream stream type resource
-         */
-        public function __construct($stream)
-        {
-        }
-        /**
-         * Set CSV control
-         *
-         * @see http://php.net/manual/en/splfileobject.setcsvcontrol.php
-         *
-         * @param string $delimiter
-         * @param string $enclosure
-         * @param string $escape
-         */
-        public function setCsvControl($delimiter = ',', $enclosure = '"', $escape = '\\')
-        {
-        }
-        /**
-         * Filter Csv control character
-         *
-         * @param string $char Csv control character
-         * @param string $type Csv control character type
-         *
-         * @throws InvalidArgumentException If the Csv control character is not one character only.
-         *
-         * @return string
-         */
-        private function filterControl($char, $type)
-        {
-        }
-        /**
-         * Set Flags
-         *
-         * @see http://php.net/manual/en/splfileobject.setflags.php
-         *
-         * @param int $flags
-         */
-        public function setFlags($flags)
-        {
-        }
-        /**
-         * Write a field array as a CSV line
-         *
-         * @see http://php.net/manual/en/splfileobject.fputcsv.php
-         *
-         * @param array  $fields
-         * @param string $delimiter
-         * @param string $enclosure
-         * @param string $escape
-         *
-         * @return int
-         */
-        public function fputcsv(array $fields, $delimiter = ',', $enclosure = '"', $escape = '\\')
-        {
-        }
-        /**
-         * Retrieves the current line of the file.
-         *
-         * @return mixed
-         */
-        public function current()
-        {
-        }
-        /**
-         * Retrieves the current line as a CSV Record
-         *
-         * @return array
-         */
-        protected function getCurrentRecord()
-        {
-        }
-        /**
-         * Retrieves the current line as a string
-         *
-         * @return string
-         */
-        protected function getCurrentLine()
-        {
-        }
-        /**
-         * Get line number
-         *
-         * @return int
-         */
-        public function key()
-        {
-        }
-        /**
-         * Read next line
-         */
-        public function next()
-        {
-        }
-        /**
-         * Rewind the file to the first line
-         */
-        public function rewind()
-        {
-        }
-        /**
-         * Not at EOF
-         *
-         * @return bool
-         */
-        public function valid()
-        {
-        }
-        /**
-         * Gets line from file
-         *
-         * @see http://php.net/manual/en/splfileobject.fgets.php
-         *
-         * @return string
-         */
-        public function fgets()
-        {
-        }
-        /**
-         * Output all remaining data on a file pointer
-         *
-         * @see http://php.net/manual/en/splfileobject.fpatssthru.php
-         *
-         * @return int
-         */
-        public function fpassthru()
-        {
-        }
-        /**
-         * Seek to a position
-         *
-         * @see http://php.net/manual/en/splfileobject.fseek.php
-         *
-         * @param int $offset
-         * @param int $whence
-         *
-         * @return int
-         */
-        public function fseek($offset, $whence = SEEK_SET)
-        {
-        }
-        /**
-         * Write to stream
-         *
-         * @see http://php.net/manual/en/splfileobject.fwrite.php
-         *
-         * @param string $str
-         * @param int    $length
-         *
-         * @return int
-         */
-        public function fwrite($str, $length = 0)
-        {
-        }
-        /**
-         * close the file pointer
-         */
-        public function __destruct()
         {
         }
     }
@@ -5137,36 +5732,25 @@ namespace League\Csv {
          */
         protected $stream_filter_mode = STREAM_FILTER_READ;
         /**
-         * Returns a sequential array of all CSV lines
+         * Returns a Filtered Iterator
          *
-         * The callable function will be applied to each Iterator item
+         * DEPRECATION WARNING! This method will be removed in the next major point release
          *
-         * @param callable|null $callable a callable function
+         * @deprecated deprecated since version 7.2
          *
-         * @return array
+         * @return Iterator
          */
-        public function fetchAll(callable $callable = null)
+        public function query(callable $callable = null)
         {
         }
         /**
-         * Fetch the next row from a result set
+         * Return a Filtered Iterator
          *
-         * @param callable|null $callable a callable function to be applied to each Iterator item
+         * @param callable $callable a callable function to be applied to each Iterator item
          *
          * @return Iterator
          */
         public function fetch(callable $callable = null)
-        {
-        }
-        /**
-         * Apply The callable function
-         *
-         * @param Iterator      $iterator
-         * @param callable|null $callable
-         *
-         * @return Iterator
-         */
-        protected function applyCallable(\Iterator $iterator, callable $callable = null)
         {
         }
         /**
@@ -5175,7 +5759,7 @@ namespace League\Csv {
          * The callback function must return TRUE in order to continue
          * iterating over the iterator.
          *
-         * @param callable $callable a callable function to apply to each selected CSV rows
+         * @param callable $callable The callback function
          *
          * @return int the iteration count
          */
@@ -5185,9 +5769,9 @@ namespace League\Csv {
         /**
          * Returns a single row from the CSV
          *
-         * By default if no offset is provided the first row of the CSV is selected
+         * @param int $offset
          *
-         * @param int $offset the CSV row offset
+         * @throws InvalidArgumentException If the $offset is not a valid Integer
          *
          * @return array
          */
@@ -5195,74 +5779,42 @@ namespace League\Csv {
         {
         }
         /**
-         * Returns the next value from a single CSV column
+         * Returns a sequential array of all CSV lines
+         *
+         * The callable function will be applied to each Iterator item
+         *
+         * @param callable $callable a callable function
+         *
+         * @return array
+         */
+        public function fetchAll(callable $callable = null)
+        {
+        }
+        /**
+         * Returns a single column from the CSV data
          *
          * The callable function will be applied to each value to be return
          *
-         * By default if no column index is provided the first column of the CSV is selected
+         * @param int      $column_index field Index
+         * @param callable $callable     a callable function
          *
-         * @param int           $column_index CSV column index
-         * @param callable|null $callable     A callable to be applied to each of the value to be returned.
+         * @throws InvalidArgumentException If the column index is not a positive integer or 0
          *
-         * @return Iterator
+         * @return array
          */
         public function fetchColumn($column_index = 0, callable $callable = null)
         {
         }
         /**
-         * Retrieve CSV data as pairs
-         *
-         * DEPRECATION WARNING! This method will be removed in the next major point release
-         *
-         * @deprecated deprecated since version 8.2
-         * @see Reader::fetchPairs
-         *
-         * Fetches an associative array of all rows as key-value pairs (first
-         * column is the key, second column is the value).
-         *
-         * By default if no column index is provided:
-         * - the first CSV column is used to provide the keys
-         * - the second CSV column is used to provide the value
-         *
-         * If the value from the column key index is duplicated its corresponding value will
-         * be overwritten
-         *
-         * @param int           $offset_index The column index to serve as offset
-         * @param int           $value_index  The column index to serve as value
-         * @param callable|null $callable     A callable to be applied to each of the rows to be returned.
-         *
-         * @return array
-         */
-        public function fetchPairsWithoutDuplicates($offset_index = 0, $value_index = 1, callable $callable = null)
-        {
-        }
-        /**
-         * Fetches the next key-value pairs from a result set (first
-         * column is the key, second column is the value).
-         *
-         * By default if no column index is provided:
-         * - the first CSV column is used to provide the keys
-         * - the second CSV column is used to provide the value
-         *
-         * @param int           $offset_index The column index to serve as offset
-         * @param int           $value_index  The column index to serve as value
-         * @param callable|null $callable     A callable to be applied to each of the rows to be returned.
-         *
-         * @return Generator
-         */
-        public function fetchPairs($offset_index = 0, $value_index = 1, callable $callable = null)
-        {
-        }
-        /**
-         * Fetch the next row from a result set
+         * Returns a sequential array of all CSV lines;
          *
          * The rows are presented as associated arrays
-         * The callable function will be applied to each row
+         * The callable function will be applied to each Iterator item
          *
          * @param int|array $offset_or_keys the name for each key member OR the row Index to be
          *                                  used as the associated named keys
          *
-         * @param callable $callable A callable to be applied to each of the rows to be returned.
+         * @param callable $callable a callable function
          *
          * @throws InvalidArgumentException If the submitted keys are invalid
          *
@@ -5290,20 +5842,8 @@ namespace League\Csv {
          * @param array $keys
          *
          * @throws InvalidArgumentException If the submitted array fails the assertion
-         *
-         * @return array
          */
-        protected function validateKeys(array $keys)
-        {
-        }
-        /**
-         * Returns whether the submitted value can be used as string
-         *
-         * @param mixed $value
-         *
-         * @return bool
-         */
-        protected function isValidKey($value)
+        protected function validateAssocKeys(array $keys)
         {
         }
         /**
@@ -5336,21 +5876,33 @@ namespace League\Csv {
         /**
          * The CSV object holder
          *
-         * @var SplFileObject|StreamIterator
+         * @var \SplFileObject
          */
         protected $csv;
         /**
-         * fputcsv method from SplFileObject or StreamIterator
+         * fputcsv method from SplFileObject
          *
          * @var ReflectionMethod
          */
-        protected $fputcsv;
+        protected static $fputcsv;
         /**
          * Nb parameters for SplFileObject::fputcsv method
          *
          * @var integer
          */
-        protected $fputcsv_param_count;
+        protected static $fputcsv_param_count;
+        /**
+         * @inheritdoc
+         */
+        protected function __construct($path, $open_mode = 'r+')
+        {
+        }
+        /**
+         * initiate a SplFileObject::fputcsv method
+         */
+        protected static function initFputcsv()
+        {
+        }
         /**
          * Adds multiple lines to the CSV document
          *
@@ -5373,20 +5925,6 @@ namespace League\Csv {
          * @return static
          */
         public function insertOne($row)
-        {
-        }
-        /**
-         * Add new record to the CSV document
-         *
-         * @param array $row record to add
-         */
-        protected function addRow(array $row)
-        {
-        }
-        /**
-         * Initialize the CSV object and settings
-         */
-        protected function initCsv()
         {
         }
         /**
