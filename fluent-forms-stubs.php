@@ -294,6 +294,16 @@ namespace FluentForm\App\Modules\Component {
         {
         }
         /**
+         * Process the output HTML to generate the default values.
+         *
+         * @param string $output
+         * @param \stdClass $form
+         * @return void
+         */
+        private function processOutput($output, $form)
+        {
+        }
+        /**
          * Register renderer actions for compiling each element
          *
          * @return  void
@@ -1379,6 +1389,9 @@ namespace FluentForm\App\Modules\Registerer {
         {
         }
         public function addPreviewButton($formId)
+        {
+        }
+        public function addCopyShortcodeButton($formId)
         {
         }
     }
@@ -2926,7 +2939,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Build unique ID concating form id and name attribute
-         * @param  array $data $form
+         * @param  array  $data $form
          * @return string for id value
          */
         protected function makeElementId($data, $form)
@@ -2934,7 +2947,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Build attributes for any html element
-         * @param  array $attributes
+         * @param  array  $attributes
          * @return string [Compiled key='value' attributes]
          */
         protected function buildAttributes($attributes, $form = null)
@@ -2942,7 +2955,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Extract value attribute from attribute list
-         * @param  array &$element
+         * @param  array  &$element
          * @return string
          */
         protected function extractValueFromAttributes(&$element)
@@ -2950,7 +2963,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Determine if the given element has conditions bound
-         * @param  array $element [Html element being compiled]
+         * @param  array   $element [Html element being compiled]
          * @return boolean
          */
         protected function hasConditions($element)
@@ -2980,8 +2993,15 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         {
         }
         /**
+         * Get asterisk placement for the required form elements
+         * @return String
+         */
+        protected function getAsteriskPlacement($form)
+        {
+        }
+        /**
          * Generate a label for any element
-         * @param  array $data
+         * @param  array  $data
          * @return string [label Html element]
          */
         protected function buildElementLabel($data)
@@ -2989,17 +3009,17 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate html/markup for any element
-         * @param  string $elMarkup [Predifined partial markup]
-         * @param  array $data
-         * @param  StdClass $form [Form object]
-         * @return string [Compiled markup]
+         * @param  string   $elMarkup [Predifined partial markup]
+         * @param  array    $data
+         * @param  StdClass $form     [Form object]
+         * @return string   [Compiled markup]
          */
         protected function buildElementMarkup($elMarkup, $data, $form)
         {
         }
         /**
          * Generate a help message for any element beside label
-         * @param  array $data
+         * @param  array  $data
          * @return string [Html]
          */
         protected function getLabelHelpMessage($data)
@@ -3007,7 +3027,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate a help message for any element beside form element
-         * @param  array $data
+         * @param  array  $data
          * @return string [Html]
          */
         protected function getInputHelpMessage($data, $hideClass = '')
@@ -3102,6 +3122,18 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
     }
     class Name extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
+    {
+        /**
+         * Compile and echo the html element
+         * @param  array $data [element data]
+         * @param  stdClass $form [Form Object]
+         * @return viod
+         */
+        public function compile($data, $form)
+        {
+        }
+    }
+    class Rating extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
     {
         /**
          * Compile and echo the html element
@@ -3220,14 +3252,21 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         public function compile($data, $form)
         {
         }
+        /**
+         * Enqueue style and script for datetime element
+         * @return void
+         */
+        protected function enqueueStyleAndScripts()
+        {
+        }
     }
     class TextArea extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         * @param  array     $data [element data]
+         * @param  \stdClass $form [Form Object]
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -3246,7 +3285,7 @@ namespace FluentForm\App\Services\FormBuilder {
          * mappings of methods to parse the shortcode
          * @var array
          */
-        private static $handlers = array('ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties');
+        private static $handlers = ['ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties', 'get.param_name' => 'parseQueryParam'];
         /**
          * Filter dynamic shortcodes in input value
          * @param  string $value
@@ -3304,6 +3343,16 @@ namespace FluentForm\App\Services\FormBuilder {
          * @return string
          */
         private static function parseDate($value, $form = null)
+        {
+        }
+        /**
+         * Parse request query param.
+         *
+         * @param  string    $value
+         * @param  \stdClass $form
+         * @return string
+         */
+        public static function parseQueryParam($value)
         {
         }
     }
@@ -8948,6 +8997,62 @@ namespace FluentForm\Framework\Foundation {
         public function offsetUnset($offset)
         {
         }
+        /**
+         * Determine whether a shared entity is resolved.
+         * @param  string $key
+         * @return bool
+         */
+        public function resolved($key)
+        {
+        }
+        /**
+         * Get one or all resolved instance(s)
+         * @param  string $key
+         * @return mixed
+         */
+        public function getResolved($key = null)
+        {
+        }
+        /**
+         * Clear one or all resolved instance(s)
+         * @param  string $key
+         * @return void
+         */
+        public function clearResolved($key = null)
+        {
+        }
+        /**
+         * Get one or all binding(s)
+         * @param  string $key
+         * @return void
+         */
+        public function getBindings($key = null)
+        {
+        }
+        /**
+         * Clear one or all binding(s)
+         * @param  string $key
+         * @return void
+         */
+        public function clearBindings($key = null)
+        {
+        }
+        /**
+         * Get one or all singletons(s)
+         * @param  string $key
+         * @return void
+         */
+        public function getSingletons($key = null)
+        {
+        }
+        /**
+         * Clear one or all singletons(s)
+         * @param  string $key
+         * @return void
+         */
+        public function clearSingletons($key = null)
+        {
+        }
     }
     trait PathsAndUrlsTrait
     {
@@ -9453,6 +9558,15 @@ namespace FluentForm\Framework\Foundation {
          * @return string
          */
         public function version()
+        {
+        }
+        /**
+         * Static interface to initiate the application
+         * @param string $baseFile (root plugin file path)
+         * @param array $appConfig (/config/app.php)
+         * @return $this
+         */
+        public static function run($baseFile, $appConfig)
         {
         }
         /**
@@ -10068,14 +10182,144 @@ namespace FluentForm\Framework\Request {
 namespace FluentForm\Framework\View {
     class View
     {
-        protected $app = null;
+        /**
+         * The Application (Framework)
+         * @var FluentForm\Framework\Foundation\Application
+         */
+        protected $app;
+        /**
+         * Resolved path of view
+         * @var string
+         */
+        protected $path;
+        /**
+         * Passed data for the view
+         * @var array
+         */
+        protected $data = [];
+        /**
+         * Shared data for the view
+         * @var array
+         */
+        protected static $sharedData = [];
+        /**
+         * Registered composer callbacks for the view
+         * @var array
+         */
+        protected static $composerCallbacks = [];
+        /**
+         * Make an instance of the the class
+         * @param FluentForm\Framework\Foundation\Application $app
+         */
         public function __construct($app)
         {
         }
+        /**
+         * Add aditional view path mapped by a namespace
+         * 
+         * This will allow a developer to add additional view location from any
+         * service provider (basically in booted method), so instead of loading
+         * the view from resources/views directory, one can instruct the framework
+         * to load a view from a different place registerd using following method:
+         * add a namespaced path: $this->app->addNamespace('Public', path('public'));
+         * once it is registered, then one can use: View::make('Public::view_name');
+         * 
+         * @param string $namespace
+         * @param string $path
+         */
+        public function addNamespace($namespace, $path)
+        {
+        }
+        /**
+         * Generate and echo/print a view file
+         * @param  string $path
+         * @param  array  $data
+         * @return void
+         */
+        public function render($path, $data = [])
+        {
+        }
+        /**
+         * Generate a view file
+         * @param  string $path
+         * @param  array  $data
+         * @return string [generated html]
+         * @throws InvalidArgumentException
+         */
         public function make($path, $data = [])
         {
         }
-        public function render($path, $data = [])
+        /**
+         * Resolve the view file path
+         * @param  string $path
+         * @return string
+         */
+        protected function resolveFilePath($path)
+        {
+        }
+        /**
+         * Evaluate the view file
+         * @param  string $path
+         * @param  string $data
+         * @return $this
+         */
+        protected function renderContent()
+        {
+        }
+        /**
+         * Call registered composer callbacks for this view
+         * @return void
+         */
+        protected function callComposerCallbacks()
+        {
+        }
+        /**
+         * Gether shared & view data
+         * @return array
+         */
+        protected function gatherData()
+        {
+        }
+        /**
+         * Share global data for any view
+         * @param  string $key
+         * @param  mixed $value
+         * @return void
+         */
+        public function share($key, $value)
+        {
+        }
+        /**
+         * Register view composer calbacks for specific view
+         * @param  string $viewName
+         * @param  closure $callback
+         * @return void
+         */
+        public function composer($viewName, $callback)
+        {
+        }
+        /**
+         * Provides a fluent interface to set data
+         * @param  mixed $key
+         * @param  mixed $data
+         * @return $this
+         */
+        public function with($name, $data = [])
+        {
+        }
+        /**
+         * Setter for the view
+         * @param string $key
+         * @param mixed $value
+         */
+        public function __set($key, $value)
+        {
+        }
+        /**
+         * Dump the view result
+         * @return string
+         */
+        public function __toString()
         {
         }
     }
