@@ -4723,6 +4723,7 @@ namespace FluentForm\App\Services\FormBuilder {
         public $validationRules = array();
         public $tabIndex = 1;
         public $fieldLists = [];
+        public $containerCounter;
         /**
          * Construct the form builder instance
          * @param Framework\Foundation\Application $app
@@ -5962,6 +5963,14 @@ namespace FluentForm\App\Services\Parser {
          * @return string
          */
         protected function getLogic($ruleName, $rule)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Scheduler {
+    class Scheduler
+    {
+        public static function processEmailReport()
         {
         }
     }
