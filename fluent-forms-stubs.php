@@ -31,8 +31,10 @@ namespace FluentForm\App\Api {
         {
         }
         /**
-         * get Form Properties instance
+         * Get Form Properties instance
+         *
          * @param int|object $form
+         *
          * @return \FluentForm\App\Api\FormProperties
          */
         public function form($form)
@@ -50,7 +52,9 @@ namespace FluentForm\App\Api {
         }
         /**
          * Get Form formatted inputs
+         *
          * @param string[] $with
+         *
          * @return array
          */
         public function inputs($with = ['admin_label', 'raw'])
@@ -58,6 +62,7 @@ namespace FluentForm\App\Api {
         }
         /**
          * Get Form Input labels
+         *
          * @return array
          */
         public function labels()
@@ -65,6 +70,7 @@ namespace FluentForm\App\Api {
         }
         /**
          * Get Form Fields
+         *
          * @return array
          */
         public function fields()
@@ -72,6 +78,7 @@ namespace FluentForm\App\Api {
         }
         /**
          * Get Form Settings
+         *
          * @return array
          */
         public function settings()
@@ -79,23 +86,28 @@ namespace FluentForm\App\Api {
         }
         /**
          * Get Email Notifications as an array
+         *
          * @return array
+         *
          * @throws \WpFluent\Exception
          */
         public function emailNotifications()
         {
         }
         /**
-         * get Form metas
+         * Get Form metas
+         *
          * @param $metaName
          * @param false $default
+         *
          * @return mixed|string
          */
         public function meta($metaName, $default = false)
         {
         }
         /**
-         * get form renerable pass settings as an array
+         * Get form renerable pass settings as an array
+         *
          * @return array
          */
         public function renderable()
@@ -393,6 +405,9 @@ namespace FluentForm\App\Helpers {
         public static function shouldHidePassword($formId)
         {
         }
+        public static function getInputNameFromShortCode($value)
+        {
+        }
     }
     class Protector
     {
@@ -404,8 +419,9 @@ namespace FluentForm\App\Helpers {
         }
         /**
          * Encryp a text using a predefined salt.
-         * 
+         *
          * @param string $text
+         *
          * @return string $text
          */
         public static function encrypt($text)
@@ -413,8 +429,9 @@ namespace FluentForm\App\Helpers {
         }
         /**
          * Decrypt a text using a predefined salt.
-         * 
+         *
          * @param string $text
+         *
          * @return string $text
          */
         public static function decrypt($text)
@@ -426,8 +443,9 @@ namespace FluentForm\App\Helpers {
         /**
          * Determine if a given string starts with a given substring.
          *
-         * @param string $haystack
+         * @param string       $haystack
          * @param string|array $needles
+         *
          * @return bool
          */
         public static function startsWith($haystack, $needles)
@@ -436,8 +454,9 @@ namespace FluentForm\App\Helpers {
         /**
          * Determine if a given string ends with a given substring.
          *
-         * @param string $haystack
+         * @param string       $haystack
          * @param string|array $needles
+         *
          * @return bool
          */
         public static function endsWith($haystack, $needles)
@@ -446,8 +465,9 @@ namespace FluentForm\App\Helpers {
         /**
          * Determine if a given string contains a given substring.
          *
-         * @param string $haystack
+         * @param string       $haystack
          * @param string|array $needles
+         *
          * @return bool
          */
         public static function contains($haystack, $needles)
@@ -456,8 +476,9 @@ namespace FluentForm\App\Helpers {
         /**
          * Determine if a given string does not contain a given substring.
          *
-         * @param string $haystack
+         * @param string       $haystack
          * @param string|array $needles
+         *
          * @return bool
          */
         public static function doNotContains($haystack, $needles)
@@ -468,8 +489,8 @@ namespace FluentForm\App\Helpers {
 namespace FluentForm\App\Modules\Acl {
     class Acl
     {
-        static $capability = '';
-        static $role = '';
+        public static $capability = '';
+        public static $role = '';
         public static function getPermissionSet()
         {
         }
@@ -483,9 +504,9 @@ namespace FluentForm\App\Modules\Acl {
          * Verify if current user has a fluentform permission.
          *
          * @param $permission
-         * @param null $formId
+         * @param null   $formId
          * @param string $message
-         * @param bool $json
+         * @param bool   $json
          *
          * @throws \Exception
          */
@@ -529,6 +550,8 @@ namespace FluentForm\App\Modules\Acl {
     class Managers
     {
         /**
+         * Request object
+         *
          * @var \FluentForm\Framework\Request\Request $request
          */
         protected $request;
@@ -575,6 +598,7 @@ namespace FluentForm\App\Modules {
     {
         /**
          * This method will be called on plugin activation
+         *
          * @return void
          */
         public function handleActivation($network_wide)
@@ -662,7 +686,7 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Validate certain required properties
-         * 
+         *
          * @return void
          */
         private function _fluentFormValidateComponent()
@@ -671,7 +695,8 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Add the component in fluentform editor's components array.
          *
-         * @param  array $components
+         * @param array $components
+         *
          * @return array $components
          */
         public function _fluentEditorComponenstCallback($components)
@@ -679,8 +704,9 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Add the keywords for the component to search in the editor.
-         * 
-         * @param  array $keywords
+         *
+         * @param array $keywords
+         *
          * @return array $keywords
          */
         public function _fluentEditorElementSearchTagsCallback($keywords)
@@ -688,8 +714,9 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Configure placements of input customization options in editor.
-         * 
-         * @param  array $placemenSettings
+         *
+         * @param array $placemenSettings
+         *
          * @return array $placemenSettings
          */
         public function _fluentEditorElementSettingsPlacementCallback($placementSettings)
@@ -697,8 +724,9 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Configure input customization options/items in the editor.
-         * 
-         * @param  array $customizationSettings
+         *
+         * @param array $customizationSettings
+         *
          * @return array $customizationSettings
          */
         public function _fluentEditorElementCustomizationSettingsCallback($customizationSettings)
@@ -707,9 +735,10 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Prepare the submission data for the element on Form Submission.
          *
-         * @param  array $formData
-         * @param  int   $formId
-         * @param  array $inputConfigs
+         * @param array $formData
+         * @param int   $formId
+         * @param array $inputConfigs
+         *
          * @return array $formData
          */
         public function _fluentformInsertResponseDataCallback($formData, $formId, $inputConfigs)
@@ -718,8 +747,9 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Add the component type in fluentform field
          * types to be available in FormFieldParser.
-         * 
-         * @param  array $types
+         *
+         * @param array $types
+         *
          * @return array $types
          */
         public function _fluentformFormInputTypesCallback($types)
@@ -728,8 +758,9 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Render the component.
          *
-         * @param array $data
-         * @param stdClass $form
+         * @param array    $data
+         * @param \stdClass $form
+         *
          * @return void
          */
         public function _elementRenderHookCallback($item, $form)
@@ -737,10 +768,11 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Element's entry value transformation.
-         * 
-         * @param  mixed $value
-         * @param  string $field
-         * @param  int $formId
+         *
+         * @param mixed  $value
+         * @param string $field
+         * @param int    $formId
+         *
          * @return mixed $value
          */
         public function _elementEntryFormatCallback($value, $field, $formId)
@@ -752,46 +784,46 @@ namespace FluentForm\App\Modules\Component {
         use \FluentForm\App\Modules\Component\ComponentInitTrait;
         /**
          * The unique name of the component.
-         * 
+         *
          * @return string
          */
         public abstract function name();
         /**
          * The label of the component.
-         * 
+         *
          * @return string
          */
         public abstract function label();
         /**
          * The element type of the component from already
          * available elements (input_text, textarea e.t.c).
-         * 
+         *
          * @return string
          */
         public abstract function element();
         /**
          * The template type of the component to display preview in editor dropzone from
          * already available templates (inputText, selectCountry, addressFields e.t.c).
-         * 
+         *
          * @return string
          */
         public abstract function template();
         /**
          * Render the element on frontend form.
-         * 
-         * @param  array $component Element Config
-         * @param  object $form The Form Object
-         * 
+         *
+         * @param array  $component Element Config
+         * @param object $form      The Form Object
+         *
          * @return void
          */
         public abstract function render($component, $form);
         /**
          * Form submission callback.
-         * 
-         * @param  array $formData Submitted form data
-         * @param  int $formId Submitted form id
-         * @param  array $config Form elements config
-         * 
+         *
+         * @param array $formData Submitted form data
+         * @param int   $formId   Submitted form id
+         * @param array $config   Form elements config
+         *
          * @return array $formData
          */
         public abstract function onSubmit($formData, $formId, $config);
@@ -799,7 +831,7 @@ namespace FluentForm\App\Modules\Component {
          * Component position in editor. If null is returned then
          * the element will be pushed at last but the derived class
          * will override this method if any customization is needed.
-         * 
+         *
          * @return int|null
          */
         public function index()
@@ -809,7 +841,7 @@ namespace FluentForm\App\Modules\Component {
          * The group, where the component should be added. By default,
          * the element will be added in "general" group and the derived
          *  class will override this method if any customization is needed.
-         * 
+         *
          * @return string general|advanced|container
          */
         public function group()
@@ -818,7 +850,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * The element icon class for the component to display in the button in
          * the editor element list which is mapped to editor_options.icon_class.
-         * 
+         *
          * @return string
          */
         public function elementIconClass()
@@ -828,7 +860,8 @@ namespace FluentForm\App\Modules\Component {
          * Element editor/form attributes and the derived class will
          * override this method if any customization is needed.
          *
-         * @param  array $dafault
+         * @param array $dafault
+         *
          * @return array $default
          */
         public function attributes($default)
@@ -837,8 +870,9 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Element editor settings and the derived class will
          * override this method if any customization is needed.
-         * 
-         * @param  array $dafault
+         *
+         * @param array $dafault
+         *
          * @return array $default
          */
         public function settings($default)
@@ -847,8 +881,9 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Element editor options and the derived class will
          * override this method if any customization is needed.
-         * 
-         * @param  array $dafault
+         *
+         * @param array $dafault
+         *
          * @return array $default
          */
         public function options($default)
@@ -857,7 +892,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Element's form submission validation rules and the derived
          * class will override this method if needed any customization.
-         * 
+         *
          * @return array
          */
         public function validationRules()
@@ -866,8 +901,9 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Element editor placement settings and the derived class
          * will override this method if any customization is needed.
-         * 
+         *
          * @param array $placemenSettings
+         *
          * @return array $placemenSettings
          */
         public function placementSettings($placemenSettings)
@@ -876,8 +912,9 @@ namespace FluentForm\App\Modules\Component {
         /**
          * The customization for the component and derived class can
          * override this method if any customization is needed.
-         * 
-         * @param  array $customizationSettings
+         *
+         * @param array $customizationSettings
+         *
          * @return array $customizationSettings
          */
         public function customizationSettings($customizationSettings)
@@ -887,8 +924,9 @@ namespace FluentForm\App\Modules\Component {
          * Add the component type in fluentform field types to
          * be available in FormFieldParser and derived class can
          * override this method if any customization is needed.
-         * 
-         * @param  array $types
+         *
+         * @param array $types
+         *
          * @return array $types
          */
         public function addType($types)
@@ -897,7 +935,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * The keywords to search the element in the editor and
          * the derived class will override this method if needed.
-         * 
+         *
          * @return array
          */
         public function searchBy()
@@ -905,15 +943,16 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Transform the element's submitted value saved in database
-         * to show it properly/formatted in entry page if needed and 
+         * to show it properly/formatted in entry page if needed and
          * this method implementation optional so a default method is
          * implemented here and original value is returned. In any case
          * if any customization of the value is needed then the derived
          * class will override it and will format and return the the value.
-         * 
-         * @param  mixed $value   [description]
-         * @param  string $field
-         * @param  int $formId
+         *
+         * @param mixed  $value  [description]
+         * @param string $field
+         * @param int    $formId
+         *
          * @return mixed $value
          */
         public function formatEntryValue($value, $field, $formId)
@@ -951,7 +990,8 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Get all the available components
          *
-         * @return  void
+         * @return void
+         *
          * @throws \Exception
          * @throws \FluentForm\Framework\Exception\UnResolveableEntityException
          */
@@ -970,6 +1010,7 @@ namespace FluentForm\App\Modules\Component {
          * Get available shortcodes for editor
          *
          * @return void
+         *
          * @throws \Exception
          */
         public function getEditorShortcodes()
@@ -979,6 +1020,7 @@ namespace FluentForm\App\Modules\Component {
          * Get all available shortcodes for editor
          *
          * @return void
+         *
          * @throws \Exception
          */
         public function getAllEditorShortcodes()
@@ -987,7 +1029,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Register the form renderer shortcode
          *
-         * @return  void
+         * @return void
          */
         public function addFluentFormShortCode()
         {
@@ -998,8 +1040,9 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Process the output HTML to generate the default values.
          *
-         * @param string $output
+         * @param string    $output
          * @param \stdClass $form
+         *
          * @return string
          */
         public function replaceEditorSmartCodes($output, $form)
@@ -1008,7 +1051,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Register renderer actions for compiling each element
          *
-         * @return  void
+         * @return void
          */
         public function addRendererActions()
         {
@@ -1016,7 +1059,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Register dynamic value shortcode parser (filter default value)
          *
-         * @return  void
+         * @return void
          */
         public function addFluentFormDefaultValueParser()
         {
@@ -1024,7 +1067,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Register filter to check whether the form is renderable
          *
-         * @return  mixed
+         * @return mixed
          */
         public function addIsRenderableFilter()
         {
@@ -1062,7 +1105,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Register fluentform_submission_inserted actions
          *
-         * @return  void
+         * @return void
          */
         public function addFluentformSubmissionInsertedFilter()
         {
@@ -1070,7 +1113,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Add inline scripts [Add localized script using same var]
          *
-         * @return  void
+         * @return void
          */
         private function addInlineVars()
         {
@@ -1109,6 +1152,7 @@ namespace FluentForm\App\Modules {
     {
         /**
          * This method will be called on plugin deactivation
+         *
          * @return void
          */
         public function handleDeactivation()
@@ -1147,6 +1191,8 @@ namespace FluentForm\App\Modules\Entries {
     class EntryQuery
     {
         /**
+         * Request object
+         *
          * @var \FluentForm\Framework\Request\Request $request
          */
         protected $request;
@@ -1159,7 +1205,7 @@ namespace FluentForm\App\Modules\Entries {
         protected $is_favourite = null;
         protected $sort_by = 'ASC';
         protected $search = false;
-        protected $wheres = array();
+        protected $wheres = [];
         protected $startDate;
         protected $endDate;
         public function __construct()
@@ -1229,6 +1275,7 @@ namespace FluentForm\App\Modules\Entries {
          * @param array $with
          *
          * @return array
+         *
          * @todo: Implement Caching mechanism so we don't have to parse these things for every request
          */
         public function getFormInputsAndLabels($form, $with = ['admin_label', 'raw'])
@@ -1277,14 +1324,20 @@ namespace FluentForm\App\Modules\Entries {
     class Export
     {
         /**
+         * App instance
+         *
          * @var \FluentForm\Framework\Foundation\Application
          */
         protected $app;
         /**
+         * Request object
+         *
          * @var \FluentForm\Framework\Request\Request
          */
         protected $request;
         /**
+         * Table name
+         *
          * @var String table/data source name
          */
         protected $tableName;
@@ -1322,6 +1375,8 @@ namespace FluentForm\App\Modules\Entries {
         {
         }
         /**
+         * Get report
+         *
          * @param bool $formId
          */
         public function getReport($formId = false)
@@ -1378,6 +1433,8 @@ namespace FluentForm\App\Modules\Form {
     class Analytics
     {
         /**
+         * App instance
+         *
          * @var \FluentForm\Framework\Foundation\Application
          */
         protected $app;
@@ -1391,8 +1448,6 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Save form view analytics data
-         * 
-         * @return json respoonse
          */
         public function record($formId)
         {
@@ -1402,15 +1457,14 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Save form view analytics data
-         * @return void
          */
         private function saveViewAnalytics($formId)
         {
         }
         /**
          * Store (create/update) total view of a form
-         * @param  int $formId
-         * @return void
+         *
+         * @param int $formId
          */
         private function increaseTotalViews($formId)
         {
@@ -1419,6 +1473,8 @@ namespace FluentForm\App\Modules\Form {
     class Form
     {
         /**
+         * Request object
+         *
          * @var \FluentForm\Framework\Request\Request $request
          */
         protected $request;
@@ -1456,7 +1512,6 @@ namespace FluentForm\App\Modules\Form {
         /**
          * Get all forms from database
          *
-         * @return  void
          * @throws \Exception
          */
         public function index()
@@ -1464,6 +1519,7 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Create a form from backend/editor
+         *
          * @return void|array
          */
         public function store($returnJSON = true)
@@ -1486,7 +1542,6 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Find/Read a from from the database
-         * @return void
          */
         public function find()
         {
@@ -1494,6 +1549,7 @@ namespace FluentForm\App\Modules\Form {
         /**
          * Fetch a from from the database
          * Note: required for ninja-tables
+         *
          * @return mixed
          */
         public function fetchForm($formId)
@@ -1501,7 +1557,7 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Save/update a form from backend/editor
-         * @return void
+         *
          * @throws \WpFluent\Exception
          */
         public function update()
@@ -1515,7 +1571,7 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Delete a from from database
-         * @return void
+         *
          * @throws \WpFluent\Exception
          */
         public function delete()
@@ -1526,7 +1582,7 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Duplicate a from
-         * @return void
+         *
          * @throws \WpFluent\Exception
          */
         public function duplicate()
@@ -1534,7 +1590,6 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Validate a form  by form title & for duplicate name attributes
-         * @return void
          */
         private function validate()
         {
@@ -1553,8 +1608,10 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Map pdf feed ID to replace with duplicated PDF feed ID when duplicating form
+         *
          * @param array $extras
          * @param array $newFormId
+         *
          * @return array
          */
         private function getPdfFeedMap($extras, $newFormId)
@@ -1562,8 +1619,10 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Map notification data with PDF feed map
+         *
          * @param array $extras
          * @param array $pdfFeedMap
+         *
          * @return array
          */
         private function notificationWithPdfMap($extras, $pdfFeedMap)
@@ -1621,16 +1680,18 @@ namespace FluentForm\App\Modules\Form {
         }
     }
     /**
-     * @method array getShortCodeInputs(\stdClass $form, array $with = ['admin_label'])
-     * @method array getValidations(\stdClass $form, array $inputs, array $fields = [])
-     * @method array getElement(\stdClass $form, string|array $name, array $with = [])
-     * @method boolean hasElement(\stdClass $form, string $name)
-     * @method boolean hasPaymentFields(\stdClass $form)
-     * @method array getPaymentFields(\stdClass $form, $with = [])
-     * @method array getPaymentInputFields(\stdClass $form, $with = [])
-     * @method array getAttachmentInputFields(\stdClass $form, $with = [])
-     * @method boolean hasRequiredFields(\stdClass $form, array $fields)
-     * @method array getInputsByElementTypes(\stdClass $form, array $elements, array $with = [])
+     * Available methods
+     *
+     * @method array      getShortCodeInputs(\stdClass $form, array $with = ['admin_label'])
+     * @method array      getValidations(\stdClass $form, array $inputs, array $fields = [])
+     * @method array      getElement(\stdClass $form, string|array $name, array $with = [])
+     * @method boolean    hasElement(\stdClass $form, string $name)
+     * @method boolean    hasPaymentFields(\stdClass $form)
+     * @method array      getPaymentFields(\stdClass $form, $with = [])
+     * @method array      getPaymentInputFields(\stdClass $form, $with = [])
+     * @method array      getAttachmentInputFields(\stdClass $form, $with = [])
+     * @method boolean    hasRequiredFields(\stdClass $form, array $fields)
+     * @method array      getInputsByElementTypes(\stdClass $form, array $elements, array $with = [])
      * @method array|null getField(\stdClass $form, string|array $element, string|array $attribute, array $with = [])
      */
     class FormFieldsParser
@@ -1659,8 +1720,9 @@ namespace FluentForm\App\Modules\Form {
          * Deligate dynamic static method calls to FormParser method.
          * And set the result to the store before returning to dev.
          *
-         * @param  string $method
-         * @param  array  $parameters
+         * @param string $method
+         * @param array  $parameters
+         *
          * @return mixed
          */
         public static function __callStatic($method, $parameters)
@@ -1673,14 +1735,20 @@ namespace FluentForm\App\Modules\Form {
     class FormHandler
     {
         /**
+         * App instance
+         *
          * @var \FluentForm\Framework\Foundation\Application
          */
         protected $app;
         /**
+         * Request object
+         *
          * @var \FluentForm\Framework\Request\Request
          */
         protected $request;
         /**
+         * Form Data
+         *
          * @var array $formData
          */
         protected $formData;
@@ -1702,6 +1770,7 @@ namespace FluentForm\App\Modules\Form {
          * Set the form using it's ID.
          *
          * @param $formId
+         *
          * @return $this
          */
         public function setForm($formId)
@@ -1723,6 +1792,7 @@ namespace FluentForm\App\Modules\Form {
          * Validate form data.
          *
          * @param $fields
+         *
          * @return bool
          */
         private function validate(&$fields)
@@ -1779,6 +1849,7 @@ namespace FluentForm\App\Modules\Form {
          * Prepare the data to be inserted to the database.
          *
          * @param boolean $formData
+         *
          * @return array
          */
         public function prepareInsertData($formData = false)
@@ -1788,8 +1859,9 @@ namespace FluentForm\App\Modules\Form {
          * Delegate the validation rules & messages to the
          * ones that the validation library recognizes.
          *
-         * @param  $rules
-         * @param  $messages
+         * @param $rules
+         * @param $messages
+         *
          * @return array
          */
         protected function delegateValidations($rules, $messages, $search = [], $replace = [])
@@ -1825,11 +1897,14 @@ namespace FluentForm\App\Modules\Form {
     class Inputs
     {
         /**
+         * Request object
+         *
          * @var \FluentForm\Framework\Request\Request
          */
         private $request;
         /**
          * Build the class instance
+         *
          * @throws \Exception
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $application)
@@ -1852,7 +1927,8 @@ namespace FluentForm\App\Modules\Form {
     {
         /**
          * all JSON data will be stored here
-         * @return  array
+         *
+         * @return array
          */
         private function getPredefinedForms()
         {
@@ -1868,6 +1944,7 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Create a predefined form
+         *
          * @param $name
          */
         public function create()
@@ -1885,7 +1962,17 @@ namespace FluentForm\App\Modules\Form\Settings {
     class EntryColumnViewSettings
     {
         /**
+         * Request object
+         *
+         * @var \FluentForm\Framework\Request\Request $request
+         */
+        protected $request;
+        public function __construct()
+        {
+        }
+        /**
          * Save settings for visible entry columns
+         *
          * @return void
          */
         public function saveVisibleColumnsAjax()
@@ -1910,38 +1997,39 @@ namespace FluentForm\App\Modules\Form\Settings {
     class ExtraSettings
     {
         /**
+         * Request Object
+         *
          * @var \FluentForm\Framework\Request\Request $request
          */
         protected $request;
         /**
+         * Query Builder Handler Object
+         *
          * @var \WpFluent\QueryBuilder\QueryBuilderHandler
          */
         protected $form_model;
         /**
          * Construct the object
+         *
          * @throws \Exception
-         * @return  void
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $application)
         {
         }
         /**
          * Get extra settig navigations
-         * @return void
          */
         public function getExtraSettingNavs()
         {
         }
         /**
          * Get extra settigs component
-         * @return void
          */
         public function getExtraSettingsComponent()
         {
         }
         /**
          * Get trello settigs
-         * @return void
          */
         public function getTrelloSettingsComponent($component, $formId)
         {
@@ -1949,6 +2037,15 @@ namespace FluentForm\App\Modules\Form\Settings {
     }
     class FormCssJs
     {
+        /**
+         * Request object
+         *
+         * @var \FluentForm\Framework\Request\Request $request
+         */
+        protected $request;
+        public function __construct()
+        {
+        }
         public function addCssJs($formId)
         {
         }
@@ -1966,19 +2063,14 @@ namespace FluentForm\App\Modules\Form\Settings {
         }
         /**
          * Get settings for a particular form by id
-         * @return void
          */
         public function getSettingsAjax()
         {
         }
         /**
          * Save settings for a particular form by id
-         * @return void
          */
         public function saveSettingsAjax()
-        {
-        }
-        protected function escCss($css)
         {
         }
         protected function getData($formId, $metaKey)
@@ -1991,13 +2083,12 @@ namespace FluentForm\App\Modules\Form\Settings {
     class FormSettings
     {
         /**
+         * Request object
+         *
          * @var \FluentForm\Framework\Request\Request
          */
         private $request;
         private $app;
-        /**
-         * @var int form ID.
-         */
         private $formId;
         /**
          * The settings (fluentform_form_meta) query builder.
@@ -2007,6 +2098,7 @@ namespace FluentForm\App\Modules\Form\Settings {
         private $settingsQuery;
         /**
          * Construct the object
+         *
          * @throws \Exception
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $application)
@@ -2014,7 +2106,6 @@ namespace FluentForm\App\Modules\Form\Settings {
         }
         /**
          * Get settings for a particular form by id
-         * @return void
          */
         public function index()
         {
@@ -2033,15 +2124,10 @@ namespace FluentForm\App\Modules\Form\Settings {
         }
         /**
          * Delete settings/meta from database for a given form
-         * @return void
          */
         public function remove()
         {
         }
-        /**
-         * @param $formSettings
-         * @return array
-         */
         private function sanitizeData($settings, $sanitizerMap)
         {
         }
@@ -2189,6 +2275,8 @@ namespace FluentForm\App\Modules\Form {
     class Transfer
     {
         /**
+         * Request object
+         *
          * @var \FluentForm\Framework\Request\Request $request
          */
         protected $request;
@@ -2223,8 +2311,8 @@ namespace FluentForm\App\Modules\HCaptcha {
         /**
          * Verify hCaptcha response.
          *
-         * @param string $token response from the user.
-         * @param null $secret provided or already stored secret key.
+         * @param string $token  response from the user.
+         * @param null   $secret provided or already stored secret key.
          *
          * @return bool
          */
@@ -2316,6 +2404,8 @@ namespace FluentForm\App\Modules\Registerer {
     class Menu
     {
         /**
+         * App instance
+         *
          * @var \FluentForm\Framework\Foundation\Application
          */
         protected $app;
@@ -2359,7 +2449,9 @@ namespace FluentForm\App\Modules\Registerer {
         }
         /**
          * Remove the inactive addOn menu items
+         *
          * @param string $addOn
+         *
          * @return boolean
          */
         public function filterFormSettingsMenu($settingsMenus, $form_id)
@@ -2448,6 +2540,8 @@ namespace FluentForm\App\Modules\Renderer\GlobalSettings {
     class Settings
     {
         /**
+         * App instance
+         *
          * @var \FluentForm\Framework\Foundation\Application
          */
         protected $app;
@@ -2486,6 +2580,8 @@ namespace FluentForm\App\Modules\Settings {
     class Settings
     {
         /**
+         * Request Object
+         *
          * @var \FluentForm\Framework\Request\Request
          */
         protected $request;
@@ -2577,8 +2673,8 @@ namespace FluentForm\App\Modules\Turnstile {
         /**
          * Verify turnstile response.
          *
-         * @param string $token response from the user.
-         * @param null $secret provided or already stored secret key.
+         * @param string $token  response from the user.
+         * @param null   $secret provided or already stored secret key.
          *
          * @return bool
          */
@@ -2815,7 +2911,7 @@ namespace FluentForm\App\Modules\Widgets {
     }
     class SidebarWidgets extends \WP_Widget
     {
-        function __construct()
+        public function __construct()
         {
         }
         public function widget($args, $instance)
@@ -4726,7 +4822,7 @@ namespace FluentForm\App\Services\Emogrifier {
             $message,
             $file,
             $line,
-            array $context
+            array $context = []
         )
         {
         }
@@ -4765,7 +4861,9 @@ namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
         }
         /**
          * Load country list from file
+         *
          * @param array $data
+         *
          * @return array
          */
         public static function loadCountries($data)
@@ -4794,7 +4892,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Build unique ID concating form id and name attribute
+         *
          * @param array $data $form
+         *
          * @return string for id value
          */
         protected function makeElementId($data, $form)
@@ -4802,7 +4902,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Build attributes for any html element
+         *
          * @param array $attributes
+         *
          * @return string [Compiled key='value' attributes]
          */
         protected function buildAttributes($attributes, $form = null)
@@ -4810,7 +4912,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Extract value attribute from attribute list
-         * @param array  &$element
+         *
+         * @param array &$element
+         *
          * @return string
          */
         protected function extractValueFromAttributes(&$element)
@@ -4821,7 +4925,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Determine if the given element has conditions bound
+         *
          * @param array $element [Html element being compiled]
+         *
          * @return boolean
          */
         protected function hasConditions($element)
@@ -4829,7 +4935,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate a unique id for an element
+         *
          * @param string $str [preix]
+         *
          * @return string [Unique id]
          */
         protected function getUniqueId($str)
@@ -4837,6 +4945,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Get a default class for each form element wrapper
+         *
          * @return string
          */
         protected function getDefaultContainerClass()
@@ -4844,7 +4953,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Get required class for form element wrapper
+         *
          * @param array $rules [Validation rules]
+         *
          * @return mixed
          */
         protected function getRequiredClass($rules)
@@ -4852,14 +4963,17 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Get asterisk placement for the required form elements
-         * @return String
+         *
+         * @return string
          */
         protected function getAsteriskPlacement($form)
         {
         }
         /**
          * Generate a label for any element
+         *
          * @param array $data
+         *
          * @return string [label Html element]
          */
         protected function buildElementLabel($data, $form)
@@ -4867,17 +4981,21 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate html/markup for any element
-         * @param string $elMarkup [Predifined partial markup]
-         * @param array $data
-         * @param StdClass $form [Form object]
-         * @return string   [Compiled markup]
+         *
+         * @param string    $elMarkup [Predifined partial markup]
+         * @param array     $data
+         * @param \stdClass $form     [Form object]
+         *
+         * @return string [Compiled markup]
          */
         protected function buildElementMarkup($elMarkup, $data, $form)
         {
         }
         /**
          * Generate a help message for any element beside label
+         *
          * @param array $data
+         *
          * @return string [Html]
          */
         protected function getLabelHelpMessage($data)
@@ -4885,13 +5003,18 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate a help message for any element beside form element
+         *
          * @param array $data
+         *
          * @return string [Html]
          */
         protected function getInputHelpMessage($data, $hideClass = '')
         {
         }
         protected function parseEditorSmartCode($text, $form)
+        {
+        }
+        protected function printContent($hook, $html, $data, $form)
         {
         }
     }
@@ -4939,8 +5062,8 @@ namespace FluentForm\App\Services\FormBuilder {
         public function pushTags($tags, $form)
         {
         }
-        abstract function getComponent();
-        abstract function render($element, $form);
+        public abstract function getComponent();
+        public abstract function render($element, $form);
     }
 }
 namespace FluentForm\App\Services\FluentConversational\Classes\Elements {
@@ -5070,11 +5193,13 @@ namespace FluentForm\App\Services\FormBuilder {
     {
         /**
          * $items [Components list]
+         *
          * @var array
          */
-        protected $items = array();
+        protected $items = [];
         /**
          * Build the object instance
+         *
          * @param array $items
          */
         public function __construct(array $items)
@@ -5082,9 +5207,11 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Add a component into list [$items]
+         *
          * @param string $name
          * @param array  $component
-         * @param string $group ['general'|'advanced']
+         * @param string $group     ['general'|'advanced']
+         *
          * @return $this
          */
         public function add($name, array $component, $group)
@@ -5092,8 +5219,10 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Remove a component from the list [$items]
-         * @param  string $name
-         * @param  string $group ['general'|'advanced']
+         *
+         * @param string $name
+         * @param string $group ['general'|'advanced']
+         *
          * @return $this
          */
         public function remove($name, $group)
@@ -5101,9 +5230,11 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Modify an existing component
-         * @param  string $name
-         * @param  Closure $callback [to modify the component within]
-         * @param  string $group
+         *
+         * @param string  $name
+         * @param Closure $callback [to modify the component within]
+         * @param string  $group
+         *
          * @return $this
          */
         public function update($name, \Closure $callback, $group)
@@ -5111,7 +5242,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Sort the components in list [$items]
-         * @param  string $sortBy [key to sort by]
+         *
+         * @param string $sortBy [key to sort by]
+         *
          * @return $this
          */
         public function sort($sortBy = 'index')
@@ -5119,6 +5252,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Return array [$items]
+         *
          * @return array
          */
         public function toArray()
@@ -5126,6 +5260,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Return array [$items]
+         *
          * @return array
          */
         public function jsonSerialize()
@@ -5133,6 +5268,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Getter to hook proxy call
+         *
          * @return mixed
          */
         public function __get($key)
@@ -5145,14 +5281,17 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Wrapper class for address element
+         *
          * @var string
          */
         protected $wrapperClass = 'fluent-address';
         /**
          * Compile and echo the html element
-         * @param array $data [element data]
-         * @param stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5162,9 +5301,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5174,24 +5315,29 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Max columns for container
+         *
          * @var integer
          */
         protected $maxColumns = 12;
         /**
          * Container column class
+         *
          * @var string
          */
         protected $columnClass = 'ff-t-cell';
         /**
          * Container wrapper class
+         *
          * @var string
          */
         protected $wrapperClass = 'ff-t-container ff-column-container';
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5201,9 +5347,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5217,7 +5365,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         public function pushFormInputType($types)
         {
         }
-        function getComponent()
+        public function getComponent()
         {
         }
         public function pushConditionalSupport($conditonalItems)
@@ -5237,9 +5385,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5267,9 +5417,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5279,16 +5431,20 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param array $data [element data]
-         * @param stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
         }
         /**
          * Build options for select
+         *
          * @param array $options
+         *
          * @return string/html [compiled options]
          */
         protected function buildOptions($data, $defaultValues)
@@ -5299,9 +5455,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5311,9 +5469,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5323,9 +5483,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5335,9 +5497,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5347,16 +5511,20 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param array $data [element data]
-         * @param stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
         }
         /**
          * Load countt list from file
+         *
          * @param array $data
+         *
          * @return array
          */
         public function loadCountries($data)
@@ -5364,7 +5532,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Build options for country list/select
+         *
          * @param array $options
+         *
          * @return string/html [compiled options]
          */
         protected function buildOptions($options, $defaultValues = [])
@@ -5378,9 +5548,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param array $data [element data]
-         * @param stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5390,9 +5562,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5411,9 +5585,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5423,9 +5599,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5438,8 +5616,10 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array     $data [element data]
-         * @param  \stdClass $form [Form Object]
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
          * @return void
          */
         public function compile($data, $form)
@@ -5450,8 +5630,10 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
          * @return void
          */
         public function compile($data, $form)
@@ -5494,17 +5676,21 @@ namespace FluentForm\App\Services\FormBuilder {
     {
         /**
          * Available dynamic short codes
+         *
          * @var null
          */
         private static $dynamicShortcodes = null;
         /**
          * mappings of methods to parse the shortcode
+         *
          * @var array
          */
         private static $handlers = ['ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'http_referer' => 'parseWPProperties', 'wp.admin_email' => 'parseWPProperties', 'wp.site_url' => 'parseWPProperties', 'wp.site_title' => 'parseWPProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties', 'get.param_name' => 'parseQueryParam', 'random_string.param_name' => 'parseRandomString'];
         /**
          * Filter dynamic shortcodes in input value
+         *
          * @param string $value
+         *
          * @return string
          */
         public static function filter($value, $form)
@@ -5512,7 +5698,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse the curly braced shortcode into array
+         *
          * @param string $value
+         *
          * @return mixed
          */
         public static function parseValue($value)
@@ -5523,7 +5711,9 @@ namespace FluentForm\App\Services\FormBuilder {
          */
         /**
          * Parse loggedin user properties
+         *
          * @param string $value
+         *
          * @return string
          */
         private static function parseUserProperties($value, $form = null)
@@ -5531,7 +5721,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse embedded post properties
+         *
          * @param string $value
+         *
          * @return string
          */
         private static function parsePostProperties($value, $form = null)
@@ -5539,7 +5731,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse WP Properties
+         *
          * @param string $value
+         *
          * @return string
          */
         private static function parseWPProperties($value, $form = null)
@@ -5547,7 +5741,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse browser/user-agent properties
+         *
          * @param string $value
+         *
          * @return string
          */
         private static function parseBrowserProperties($value, $form = null)
@@ -5555,7 +5751,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse ip shortcode
+         *
          * @param string $value
+         *
          * @return string
          */
         private static function parseIp($value, $form = null)
@@ -5563,7 +5761,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse date shortcode
+         *
          * @param string $value
+         *
          * @return string
          */
         private static function parseDate($value, $form = null)
@@ -5572,8 +5772,9 @@ namespace FluentForm\App\Services\FormBuilder {
         /**
          * Parse request query param.
          *
-         * @param string $value
+         * @param string    $value
          * @param \stdClass $form
+         *
          * @return string
          */
         public static function parseQueryParam($value)
@@ -5583,6 +5784,7 @@ namespace FluentForm\App\Services\FormBuilder {
          * Generate random a string with prefix
          *
          * @param $value
+         *
          * @return string
          */
         public static function parseRandomString($value)
@@ -5593,25 +5795,29 @@ namespace FluentForm\App\Services\FormBuilder {
     {
         /**
          * The Applivcation instance
+         *
          * @var \FluentForm\Framework\Foundation\Application
          */
         protected $app = null;
         protected $form = null;
         /**
          * Conditional logic for elements
+         *
          * @var array
          */
-        public $conditions = array();
+        public $conditions = [];
         /**
          * Validation rules for elements
+         *
          * @var array
          */
-        public $validationRules = array();
+        public $validationRules = [];
         public $tabIndex = 1;
         public $fieldLists = [];
         public $containerCounter;
         /**
          * Construct the form builder instance
+         *
          * @param \FluentForm\Framework\Foundation\Application $app
          */
         public function __construct($app)
@@ -5619,26 +5825,37 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Render the form
-         * @param  \StdClass $form [Form entry from database]
+         *
+         * @param \StdClass $form [Form entry from database]
+         *
          * @return mixed
          */
         public function build($form, $extraCssClass = '', $instanceCssClass = '', $atts = [])
         {
         }
+        /**
+         * @param \stdClass $form
+         * 
+         * @return string form body
+         */
         public function buildFormBody($form)
         {
         }
         /**
          * Set unique name/data-name for an element
+         *
          * @param array &$item
-         * @return  void
+         *
+         * @return void
          */
         protected function setUniqueIdentifier(&$item)
         {
         }
         /**
          * Recursively extract validation rules from a given element
+         *
          * @param array $item
+         *
          * @return void
          */
         protected function extractValidationRules($item)
@@ -5646,7 +5863,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Extract validation rules from a given element
+         *
          * @param array $item
+         *
          * @return void
          */
         protected function extractValidationRule($item)
@@ -5654,7 +5873,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Extract conditipnal logic from a given element
+         *
          * @param array $item
+         *
          * @return void
          */
         protected function extractConditionalLogic($item)
@@ -5662,7 +5883,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Build attributes for any html element
-         * @param  array  $attributes
+         *
+         * @param array $attributes
+         *
          * @return string [Compiled key='value' attributes]
          */
         protected function buildAttributes($attributes, $form = null)
@@ -5673,10 +5896,13 @@ namespace FluentForm\App\Services\FormBuilder {
     {
         /**
          * Element group
+         *
          * @var string
          */
         protected $group = null;
         /**
+         * Form builder components collection
+         *
          * @var \FluentForm\App\Services\FormBuilder\Components
          */
         protected $collection = null;
@@ -5685,8 +5911,10 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Dynamic call method
-         * @param  string $method
-         * @param  array $params
+         *
+         * @param string $method
+         * @param array  $params
+         *
          * @return \FluentForm\App\Services\FormBuilder\Components
          */
         public function __call($method, $params)
@@ -5698,11 +5926,13 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static $cache = null;
         /**
          * Parse Norifications
-         * @param array $notifications
-         * @param int $insertId
-         * @param array $data
+         *
+         * @param array  $notifications
+         * @param int    $insertId
+         * @param array  $data
          * @param object $form
-         * @return  bool $cache
+         *
+         * @return bool $cache
          */
         public static function parse($notifications, $insertId, $data, $form, $cache = true)
         {
@@ -5717,12 +5947,15 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
     {
         /**
          * FluentForm\Framework\Foundation\Application
+         *
          * @var $app
          */
         protected $app = null;
         /**
          * Biuld the instance of this class
+         *
          * @param \FluentForm\Framework\Foundation\Application $app
+         *
          * @return $this
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $app)
@@ -5730,9 +5963,11 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         }
         /**
          * Send the email notification
-         * @param array $notification [Notification settings from form meta]
-         * @param array $submittedData [User submitted form data]
-         * @param \StdClass $form [The form object from database]
+         *
+         * @param array     $notification  [Notification settings from form meta]
+         * @param array     $submittedData [User submitted form data]
+         * @param \StdClass $form          [The form object from database]
+         *
          * @return bool
          */
         public function notify($notification, $submittedData, $form, $entryId = false)
@@ -5746,7 +5981,9 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         }
         /**
          * @param $formId
+         *
          * @return array
+         *
          * @todo: Implement Caching mechanism so we don't have to parse these things for every request
          */
         private function getFormInputsAndLabels($form)
@@ -5782,6 +6019,7 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
          * @param $formData
          * @param $entry
          * @param $form
+         *
          * @return array
          */
         private function getAttachments($emailData, $formData, $entry, $form)
@@ -5914,7 +6152,12 @@ namespace FluentForm\App\Services\Integrations {
     }
     class GlobalIntegrationManager
     {
-        private $app;
+        /**
+         * Request object
+         *
+         * @var \FluentForm\Framework\Request\Request $request
+         */
+        protected $request;
         public function __construct(\FluentForm\Framework\Foundation\Application $app)
         {
         }
@@ -5968,6 +6211,7 @@ namespace FluentForm\App\Services\Integrations {
          * @param $feeds
          * @param $formData
          * @param $insertId
+         *
          * @return array
          */
         public function getEnabledFeeds($feeds, $formData, $insertId)
@@ -6064,13 +6308,14 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
      * This wrapper: https://github.com/drewm/mailchimp-api
      *
      * @author Drew McLellan <drew.mclellan@gmail.com>
+     *
      * @version 2.4
      */
     class MailChimp
     {
         private $api_key;
         private $api_endpoint = 'https://<dc>.api.mailchimp.com/3.0';
-        const TIMEOUT = 10;
+        public const TIMEOUT = 10;
         /*  SSL Verification
                 Read before disabling:
                 http://snippets.webaware.com.au/howto/stop-turning-off-curlopt_ssl_verifypeer-and-fix-your-php-config/
@@ -6078,12 +6323,14 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         public $verify_ssl = true;
         private $request_successful = false;
         private $last_error = '';
-        private $last_response = array();
-        private $last_request = array();
+        private $last_response = [];
+        private $last_request = [];
         /**
          * Create a new instance
-         * @param string $api_key Your MailChimp API key
+         *
+         * @param string $api_key      Your MailChimp API key
          * @param string $api_endpoint Optional custom API endpoint
+         *
          * @throws \Exception
          */
         public function __construct($api_key, $api_endpoint = null)
@@ -6097,15 +6344,18 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         }
         /**
          * Convert an email address into a 'subscriber hash' for identifying the subscriber in a method URL
-         * @param   string $email The subscriber's email address
-         * @return  string          Hashed version of the input
+         *
+         * @param string $email The subscriber's email address
+         *
+         * @return string Hashed version of the input
          */
         public function subscriberHash($email)
         {
         }
         /**
          * Was the last request successful?
-         * @return bool  True for success, false for failure
+         *
+         * @return bool True for success, false for failure
          */
         public function success()
         {
@@ -6113,92 +6363,109 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         /**
          * Get the last error returned by either the network transport, or by the API.
          * If something didn't work, this should contain the string describing the problem.
-         * @return  string|false  describing the error
+         *
+         * @return string|false describing the error
          */
         public function getLastError()
         {
         }
         /**
          * Get an array containing the HTTP headers and the body of the API response.
-         * @return array  Assoc array with keys 'headers' and 'body'
+         *
+         * @return array Assoc array with keys 'headers' and 'body'
          */
         public function getLastResponse()
         {
         }
         /**
          * Get an array containing the HTTP headers and the body of the API request.
-         * @return array  Assoc array
+         *
+         * @return array Assoc array
          */
         public function getLastRequest()
         {
         }
         /**
          * Make an HTTP DELETE request - for deleting data
-         * @param   string $method URL of the API request method
-         * @param   array $args Assoc array of arguments (if any)
-         * @param   int $timeout Timeout limit for request in seconds
-         * @return  array|false   Assoc array of API response, decoded from JSON
+         *
+         * @param string $method  URL of the API request method
+         * @param array  $args    Assoc array of arguments (if any)
+         * @param int    $timeout Timeout limit for request in seconds
+         *
+         * @return array|false Assoc array of API response, decoded from JSON
          */
-        public function delete($method, $args = array(), $timeout = self::TIMEOUT)
+        public function delete($method, $args = [], $timeout = self::TIMEOUT)
         {
         }
         /**
          * Make an HTTP GET request - for retrieving data
-         * @param   string $method URL of the API request method
-         * @param   array $args Assoc array of arguments (usually your data)
-         * @param   int $timeout Timeout limit for request in seconds
-         * @return  array|false   Assoc array of API response, decoded from JSON
+         *
+         * @param string $method  URL of the API request method
+         * @param array  $args    Assoc array of arguments (usually your data)
+         * @param int    $timeout Timeout limit for request in seconds
+         *
+         * @return array|false Assoc array of API response, decoded from JSON
          */
-        public function get($method, $args = array(), $timeout = self::TIMEOUT)
+        public function get($method, $args = [], $timeout = self::TIMEOUT)
         {
         }
         /**
          * Make an HTTP PATCH request - for performing partial updates
-         * @param   string $method URL of the API request method
-         * @param   array $args Assoc array of arguments (usually your data)
-         * @param   int $timeout Timeout limit for request in seconds
-         * @return  array|false   Assoc array of API response, decoded from JSON
+         *
+         * @param string $method  URL of the API request method
+         * @param array  $args    Assoc array of arguments (usually your data)
+         * @param int    $timeout Timeout limit for request in seconds
+         *
+         * @return array|false Assoc array of API response, decoded from JSON
          */
-        public function patch($method, $args = array(), $timeout = self::TIMEOUT)
+        public function patch($method, $args = [], $timeout = self::TIMEOUT)
         {
         }
         /**
          * Make an HTTP POST request - for creating and updating items
-         * @param   string $method URL of the API request method
-         * @param   array $args Assoc array of arguments (usually your data)
-         * @param   int $timeout Timeout limit for request in seconds
-         * @return  array|false   Assoc array of API response, decoded from JSON
+         *
+         * @param string $method  URL of the API request method
+         * @param array  $args    Assoc array of arguments (usually your data)
+         * @param int    $timeout Timeout limit for request in seconds
+         *
+         * @return array|false Assoc array of API response, decoded from JSON
          */
-        public function post($method, $args = array(), $timeout = self::TIMEOUT)
+        public function post($method, $args = [], $timeout = self::TIMEOUT)
         {
         }
         /**
          * Make an HTTP PUT request - for creating new items
-         * @param string $method URL of the API request method
-         * @param array $args Assoc array of arguments (usually your data)
-         * @param int $timeout Timeout limit for request in seconds
-         * @return  array|false   Assoc array of API response, decoded from JSON
+         *
+         * @param string $method  URL of the API request method
+         * @param array  $args    Assoc array of arguments (usually your data)
+         * @param int    $timeout Timeout limit for request in seconds
+         *
+         * @return array|false Assoc array of API response, decoded from JSON
+         *
          * @throws \Exception
          */
-        public function put($method, $args = array(), $timeout = self::TIMEOUT)
+        public function put($method, $args = [], $timeout = self::TIMEOUT)
         {
         }
         /**
          * Performs the underlying HTTP request. Not very exciting.
-         * @param  string $http_verb The HTTP verb to use: get, post, put, patch, delete
-         * @param  string $method The API method to be called
-         * @param  array $args Assoc array of parameters to be passed
-         * @param int $timeout
+         *
+         * @param string $http_verb The HTTP verb to use: get, post, put, patch, delete
+         * @param string $method    The API method to be called
+         * @param array  $args      Assoc array of parameters to be passed
+         * @param int    $timeout
+         *
          * @return array|false Assoc array of decoded result
+         *
          * @throws \Exception
          */
-        private function makeRequest($http_verb, $method, $args = array(), $timeout = self::TIMEOUT)
+        private function makeRequest($http_verb, $method, $args = [], $timeout = self::TIMEOUT)
         {
         }
         /**
-         * @param string $http_verb
-         * @param string $method
-         * @param string $url
+         * @param string  $http_verb
+         * @param string  $method
+         * @param string  $url
          * @param integer $timeout
          */
         private function prepareStateForRequest($http_verb, $method, $url, $timeout)
@@ -6206,12 +6473,13 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         }
         /**
          * Get the HTTP headers as an array of header-name => header-value pairs.
-         * 
+         *
          * The "Link" header is parsed into an associative array based on the
          * rel names it contains. The original value is available under
          * the "_raw" key.
-         * 
+         *
          * @param string $headersAsString
+         *
          * @return array
          */
         private function getHeadersAsArray($headersAsString)
@@ -6219,13 +6487,14 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         }
         /**
          * Extract all rel => URL pairs from the provided Link header value
-         * 
+         *
          * Mailchimp only implements the URI reference and relation type from
          * RFC 5988, so the value of the header is something like this:
-         * 
+         *
          * 'https://us13.api.mailchimp.com/schema/3.0/Lists/Instance.json; rel="describedBy", <https://us13.admin.mailchimp.com/lists/members/?id=XXXX>; rel="dashboard"'
-         * 
+         *
          * @param string $linkHeaderAsString
+         *
          * @return array
          */
         private function getLinkHeaderAsArray($linkHeaderAsString)
@@ -6233,24 +6502,29 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         }
         /**
          * Encode the data and attach it to the request
-         * @param   resource $ch cURL session handle, used by reference
-         * @param   array $data Assoc array of data to attach
+         *
+         * @param resource $ch   cURL session handle, used by reference
+         * @param array    $data Assoc array of data to attach
          */
         private function attachRequestPayload(&$ch, $data)
         {
         }
         /**
          * Decode the response and format any error messages for debugging
+         *
          * @param array $response The response from the curl request
-         * @return array|false    The JSON decoded into an array
+         *
+         * @return array|false The JSON decoded into an array
          */
         private function formatResponse($response)
         {
         }
         /**
          * Do post-request formatting and setting state from the response
-         * @param array $response The response from the curl request
+         *
+         * @param array  $response        The response from the curl request
          * @param string $responseContent The body of the response from the curl request
+         *
          * * @return array    The modified response
          */
         private function setResponseState($response, $responseContent, $ch)
@@ -6258,19 +6532,23 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         }
         /**
          * Check if the response was successful or a failure. If it failed, store the error.
-         * @param array $response The response from the curl request
+         *
+         * @param array       $response          The response from the curl request
          * @param array|false $formattedResponse The response body payload from the curl request
-         * @param int $timeout The timeout supplied to the curl request.
-         * @return bool     If the request was successful
+         * @param int         $timeout           The timeout supplied to the curl request.
+         *
+         * @return bool If the request was successful
          */
         private function determineSuccess($response, $formattedResponse, $timeout)
         {
         }
         /**
          * Find the HTTP status code from the headers or API response body
-         * @param array $response The response from the curl request
+         *
+         * @param array       $response          The response from the curl request
          * @param array|false $formattedResponse The response body payload from the curl request
-         * @return int  HTTP status code
+         *
+         * @return int HTTP status code
          */
         private function findHTTPStatus($response, $formattedResponse)
         {
@@ -6287,6 +6565,7 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         protected $feeds = [];
         /**
          * Required for api response logging
+         *
          * @var string
          */
         protected $metaKey = 'fluentform_mailchimp_feed';
@@ -6316,7 +6595,9 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
          * @param $formData
          * @param $entry
          * @param $form
+         *
          * @return array|bool|false
+         *
          * @throws \Exception
          */
         public function subscribe($feed, $formData, $entry, $form)
@@ -14451,7 +14732,7 @@ namespace FluentValidator {
          * Check if an item or items exist in an array using "dot" notation.
          *
          * @param \ArrayAccess|array $array
-         * @param string|array $keys
+         * @param string|array       $keys
          *
          * @return bool
          */
@@ -14462,8 +14743,8 @@ namespace FluentValidator {
          * Get an item from an array using "dot" notation.
          *
          * @param \ArrayAccess|array $array
-         * @param string $key
-         * @param mixed $default
+         * @param string             $key
+         * @param mixed              $default
          *
          * @return mixed
          */
@@ -14475,9 +14756,9 @@ namespace FluentValidator {
          *
          * If no key is given to the method, the entire array will be replaced.
          *
-         * @param array $array
+         * @param array  $array
          * @param string $key
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return array
          */
@@ -14487,7 +14768,7 @@ namespace FluentValidator {
         /**
          * Get a subset of the items from the given array.
          *
-         * @param array $array
+         * @param array        $array
          * @param array|string $keys
          *
          * @return array
@@ -14498,7 +14779,7 @@ namespace FluentValidator {
         /**
          * Get all of the given array except for a specified array of items.
          *
-         * @param array $array
+         * @param array        $array
          * @param array|string $keys
          *
          * @return array
@@ -14509,7 +14790,7 @@ namespace FluentValidator {
         /**
          * Remove one or many array items from a given array using "dot" notation.
          *
-         * @param array $array
+         * @param array        $array
          * @param array|string $keys
          *
          * @return void
@@ -14531,7 +14812,7 @@ namespace FluentValidator {
          * Determine if the given key exists in the provided array.
          *
          * @param \ArrayAccess|array $array
-         * @param string|int $key
+         * @param string|int         $key
          *
          * @return bool
          */
@@ -14551,7 +14832,7 @@ namespace FluentValidator {
         /**
          * Flatten a multi-dimensional associative array with dots.
          *
-         * @param array $array
+         * @param array  $array
          * @param string $prepend
          *
          * @return array
@@ -14760,8 +15041,8 @@ namespace FluentValidator {
         /**
          * Require a certain number of parameters to be present.
          *
-         * @param int $count
-         * @param array $parameters
+         * @param int    $count
+         * @param array  $parameters
          * @param string $rule
          *
          * @return void
@@ -14775,7 +15056,7 @@ namespace FluentValidator {
          * Get the size of an attribute.
          *
          * @param string $attribute
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return mixed
          */
@@ -14806,7 +15087,7 @@ namespace FluentValidator {
          * Validate that a required attribute exists.
          *
          * @param string $attribute
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return bool
          */
@@ -14817,8 +15098,8 @@ namespace FluentValidator {
          * Validate that an attribute exists when another attribute has a given value.
          *
          * @param string $attribute
-         * @param mixed $value
-         * @param mixed $parameters
+         * @param mixed  $value
+         * @param mixed  $parameters
          *
          * @return bool
          */
@@ -14829,7 +15110,7 @@ namespace FluentValidator {
          * Validate that an attribute is a valid e-mail address.
          *
          * @param string $attribute
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return bool
          */
@@ -14840,8 +15121,8 @@ namespace FluentValidator {
          * Validate the size of an attribute.
          *
          * @param string $attribute
-         * @param mixed $value
-         * @param array $parameters
+         * @param mixed  $value
+         * @param array  $parameters
          *
          * @return bool
          */
@@ -14852,8 +15133,8 @@ namespace FluentValidator {
          * Validate the size of an attribute is greater than a minimum value.
          *
          * @param string $attribute
-         * @param mixed $value
-         * @param array $parameters
+         * @param mixed  $value
+         * @param array  $parameters
          *
          * @return bool
          */
@@ -14864,8 +15145,8 @@ namespace FluentValidator {
          * Validate the size of an attribute is less than a maximum value.
          *
          * @param string $attribute
-         * @param mixed $value
-         * @param array $parameters
+         * @param mixed  $value
+         * @param array  $parameters
          *
          * @return bool
          */
@@ -14876,8 +15157,8 @@ namespace FluentValidator {
          * Validate that two attributes match.
          *
          * @param string $attribute
-         * @param mixed $value
-         * @param array $parameters
+         * @param mixed  $value
+         * @param array  $parameters
          *
          * @return bool
          */
@@ -14888,7 +15169,7 @@ namespace FluentValidator {
          * Validate that an attribute is a valid URL.
          *
          * @param string $attribute
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return bool
          */
@@ -14899,7 +15180,7 @@ namespace FluentValidator {
          * Validate that an attribute is numeric.
          *
          * @param string $attribute
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return bool
          */
@@ -14910,8 +15191,8 @@ namespace FluentValidator {
          * Validate the guessed extension of a file upload is in a set of file extensions.
          *
          * @param string $attribute
-         * @param mixed $value
-         * @param array $parameters
+         * @param mixed  $value
+         * @param array  $parameters
          *
          * @return bool
          */
@@ -14943,7 +15224,7 @@ namespace FluentValidator {
          * Validate that an attribute exists even if not filled.
          *
          * @param string $attribute
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return bool
          */
@@ -14954,9 +15235,9 @@ namespace FluentValidator {
          * Validate that an attribute has a given number of digits.
          *
          * @param string $attribute
-         * @param mixed $value
-         * @param array $parameters
-         * 
+         * @param mixed  $value
+         * @param array  $parameters
+         *
          * @return bool
          */
         public function validateDigits($attribute, $value, $parameters)
@@ -14972,7 +15253,7 @@ namespace FluentValidator {
          * Gather a copy of the attribute data filled with any missing attributes.
          *
          * @param string $attribute
-         * @param array $masterData
+         * @param array  $masterData
          *
          * @return array
          */
@@ -14982,8 +15263,8 @@ namespace FluentValidator {
         /**
          * Get all of the exact attribute values for a given wildcard attribute.
          *
-         * @param array $masterData
-         * @param array $data
+         * @param array  $masterData
+         * @param array  $data
          * @param string $attribute
          *
          * @return array
@@ -14997,7 +15278,7 @@ namespace FluentValidator {
          * Used to extract a sub-section of the data for faster iteration.
          *
          * @param string $attribute
-         * @param array $masterData
+         * @param array  $masterData
          *
          * @return array
          */
@@ -15021,14 +15302,14 @@ namespace FluentValidator {
         /**
          * Set an item on an array or object using dot notation.
          *
-         * @param mixed $target
+         * @param mixed        $target
          * @param string|array $key
-         * @param mixed $value
-         * @param bool $overwrite
+         * @param mixed        $value
+         * @param bool         $overwrite
          *
          * @return mixed
          */
-        function data_set(&$target, $key, $value, $overwrite = true)
+        public function data_set(&$target, $key, $value, $overwrite = true)
         {
         }
     }
@@ -15083,8 +15364,8 @@ namespace FluentValidator {
         /**
          * Define a set of rules that apply to each element in an array attribute.
          *
-         * @param array $results
-         * @param string $attribute
+         * @param array        $results
+         * @param string       $attribute
          * @param string|array $rules
          *
          * @return array
@@ -15095,7 +15376,7 @@ namespace FluentValidator {
         /**
          * Merge additional rules into a given attribute(s).
          *
-         * @param array $results
+         * @param array        $results
          * @param string|array $attribute
          * @param string|array $rules
          *
@@ -15107,8 +15388,8 @@ namespace FluentValidator {
         /**
          * Merge additional rules into a given attribute.
          *
-         * @param array $results
-         * @param string $attribute
+         * @param array        $results
+         * @param string       $attribute
          * @param string|array $rules
          *
          * @return array
@@ -15129,7 +15410,8 @@ namespace FluentValidator {
     }
     class Validator
     {
-        use \FluentValidator\ValidatesAttributes, \FluentValidator\MessageBag;
+        use \FluentValidator\ValidatesAttributes;
+        use \FluentValidator\MessageBag;
         /**
          * The data under validation.
          *
@@ -15264,7 +15546,7 @@ namespace FluentValidator {
          *
          * @param string|array $attribute
          * @param string|array $rules
-         * @param callable $callback
+         * @param callable     $callback
          *
          * @return $this
          */
@@ -15318,7 +15600,7 @@ namespace FluentValidator {
          *
          * @param string $rule
          * @param string $attribute
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return bool
          */
@@ -18130,21 +18412,21 @@ namespace FluentForm\Framework\Request {
          */
         use \FluentForm\Framework\Request\FileHandler;
         protected $app = null;
-        protected $headers = array();
-        protected $server = array();
-        protected $cookie = array();
-        protected $json = array();
-        protected $get = array();
-        protected $post = array();
-        protected $files = array();
-        protected $request = array();
+        protected $headers = [];
+        protected $server = [];
+        protected $cookie = [];
+        protected $json = [];
+        protected $get = [];
+        protected $post = [];
+        protected $files = [];
+        protected $request = [];
         public function __construct($app, $get, $post, $files)
         {
         }
         /**
          * Clean up the slashes from GET/POST added by WP
          * using "wp_magic_quotes" function in load.php.
-         * 
+         *
          * @param  array $data
          * @return array
          */
@@ -18430,6 +18712,7 @@ namespace {
      * @param string $manifestDirectory
      *
      * @return string
+     *
      * @throws \Exception
      */
     function fluentformMix($path, $manifestDirectory = '')
@@ -18453,8 +18736,10 @@ namespace {
     }
     /**
      * Recursively implode a multi-dimentional array
+     *
      * @param string $glue
-     * @param array $array
+     * @param array  $array
+     *
      * @return string
      */
     function fluentImplodeRecursive($glue, array $array)
@@ -18516,9 +18801,21 @@ namespace {
      *
      * @param array $input
      * @param array $sanitizeMap
+     *
      * @return array $input
      */
     function fluentform_backend_sanitizer($array, $sanitizeMap = [])
+    {
+    }
+    /**
+     * Sanitizes CSS.
+     *
+     * @return mixed $css
+     */
+    function fluentformSanitizeCSS($css)
+    {
+    }
+    function fluentformCanUnfilteredHTML()
     {
     }
     function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
