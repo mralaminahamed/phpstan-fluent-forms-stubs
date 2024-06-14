@@ -3885,57 +3885,6 @@ namespace FluentForm\App\Modules\Acl {
         {
         }
     }
-    /**
-     * @deprecated deprecated use FluentForm\App\Http\Controllers\RoleManagerController
-     */
-    class Managers
-    {
-        /**
-         * Request object
-         *
-         * @var \FluentForm\Framework\Request\Request $request
-         */
-        protected $request;
-        public function __construct()
-        {
-        }
-        public function get()
-        {
-        }
-        public function store()
-        {
-        }
-        public function remove()
-        {
-        }
-        private function validate()
-        {
-        }
-        private function sendError($data, $code = 423)
-        {
-        }
-        public function dependencyValidate($permissions)
-        {
-        }
-    }
-    /**
-     * @deprecated deprecated use FluentForm\App\Http\Controllers\RoleManagerController
-     */
-    class RoleManager
-    {
-        public function getRoles()
-        {
-        }
-        public function setRoles()
-        {
-        }
-        public function verifyPermissionSet()
-        {
-        }
-        public function currentUserFormFormCapability()
-        {
-        }
-    }
 }
 namespace FluentForm\App\Modules {
     class AddOnModule
@@ -4589,31 +4538,6 @@ namespace FluentForm\App\Modules\Entries {
         public function changeEntryStatus()
         {
         }
-        public function deleteEntry()
-        {
-        }
-        public function deleteEntryById($entryId, $formId = false)
-        {
-        }
-        private function getSubmissionAttachments($submissionId, $form)
-        {
-        }
-        public function favoriteChange()
-        {
-        }
-        public function handleBulkAction()
-        {
-        }
-        /**
-         * @deprecated Use \FluentForm\App\Services\Submission\SubmissionService::recordEntryDetails
-         * @param $entryId
-         * @param $formId
-         * @param $data
-         * @return bool
-         */
-        public function recordEntryDetails($entryId, $formId, $data)
-        {
-        }
         public function updateEntryDiffs($entryId, $formId, $formData)
         {
         }
@@ -4907,9 +4831,6 @@ namespace FluentForm\App\Modules\Form {
         {
         }
         private function getSettingsUrl($form)
-        {
-        }
-        public function getAllForms()
         {
         }
         /**
@@ -5237,41 +5158,6 @@ namespace FluentForm\App\Modules\Form {
         {
         }
     }
-    /* @deprecated  Use FluentForm\App\Services\Form\FormService*/
-    class Predefined extends \FluentForm\App\Modules\Form\Form
-    {
-        /**
-         * all JSON data will be stored here
-         *
-         * @return array
-         */
-        private function getPredefinedForms()
-        {
-        }
-        private function getBlankConversationalForm()
-        {
-        }
-        /**
-         * Fetch simplified information for all predefined forms
-         */
-        public function all()
-        {
-        }
-        /**
-         * Create a predefined form
-         *
-         * @param $name
-         */
-        public function create()
-        {
-        }
-        public function createForm($predefinedForm, $predefinedName = '')
-        {
-        }
-        private function getRandomPhoto()
-        {
-        }
-    }
 }
 namespace FluentForm\App\Modules\Form\Settings {
     class EntryColumnViewSettings
@@ -5306,47 +5192,6 @@ namespace FluentForm\App\Modules\Form\Settings {
         {
         }
         protected function store($formId, $metaKey, $metaValue)
-        {
-        }
-    }
-    class ExtraSettings
-    {
-        /**
-         * Request Object
-         *
-         * @var \FluentForm\Framework\Request\Request $request
-         */
-        protected $request;
-        /**
-         * Query Builder Handler Object
-         *
-         * @var \WpFluent\QueryBuilder\QueryBuilderHandler
-         */
-        protected $form_model;
-        /**
-         * Construct the object
-         *
-         * @throws \Exception
-         */
-        public function __construct(\FluentForm\Framework\Foundation\Application $application)
-        {
-        }
-        /**
-         * Get extra settig navigations
-         */
-        public function getExtraSettingNavs()
-        {
-        }
-        /**
-         * Get extra settigs component
-         */
-        public function getExtraSettingsComponent()
-        {
-        }
-        /**
-         * Get trello settigs
-         */
-        public function getTrelloSettingsComponent($component, $formId)
         {
         }
     }
@@ -8045,6 +7890,12 @@ namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
         private static function hasFormula($question)
         {
         }
+        private static function hasSaveAndResume($form)
+        {
+        }
+        private static function getSaveAndResumeData($form)
+        {
+        }
     }
 }
 namespace FluentForm\App\Services\FormBuilder\Components {
@@ -8355,6 +8206,9 @@ namespace FluentForm\App\Services\FluentConversational\Classes {
         {
         }
         protected function getAsteriskPlacement($formId)
+        {
+        }
+        private function getLocalizedForm($form)
         {
         }
     }
@@ -9198,6 +9052,9 @@ namespace FluentForm\App\Services\FormBuilder {
         public static function getFormShortCodes($form)
         {
         }
+        public static function getFormLabelShortCodes($form)
+        {
+        }
         public static function getSubmissionShortcodes($form = false)
         {
         }
@@ -9641,6 +9498,9 @@ namespace FluentForm\App\Services\FormBuilder {
         {
         }
         protected static function getFormData($key, $isHtml = false)
+        {
+        }
+        protected static function getFormLabelData($key)
         {
         }
         protected static function getUserData($key)
@@ -10192,7 +10052,7 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         {
         }
     }
-    class MailChimpIntegration extends \FluentForm\App\Services\Integrations\IntegrationManager
+    class MailChimpIntegration extends \FluentForm\App\Http\Controllers\IntegrationManagerController
     {
         /**
          * MailChimp Subscriber that handles & process all the subscribing logics.
@@ -10217,9 +10077,6 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         {
         }
         public function getSettingsFields($settings, $formId)
-        {
-        }
-        public function setFeedAtributes($feed, $formId)
         {
         }
         public function prepareIntegrationFeed($setting, $feed, $formId)
