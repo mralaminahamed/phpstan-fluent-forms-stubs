@@ -671,7 +671,7 @@ namespace FluentForm\App\Modules\Component {
          *
          * @param string $output
          * @param \stdClass $form
-         * @return void
+         * @return string
          */
         private function processOutput($output, $form)
         {
