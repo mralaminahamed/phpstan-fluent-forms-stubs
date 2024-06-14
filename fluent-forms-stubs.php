@@ -863,10 +863,13 @@ namespace FluentForm\App\Modules\Entries {
         public function getEntriesGroup()
         {
         }
-        public function _getEntries($formId, $currentPage, $perPage, $sortBy, $entryType, $search, $wheres = array())
+        public function _getEntries($formId, $currentPage, $perPage, $sortBy, $entryType, $search, $wheres = [])
         {
         }
         public function getEntries()
+        {
+        }
+        public function _getEntry()
         {
         }
         public function getEntry()
