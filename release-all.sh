@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Generate Fluent Forms stubs from all the latest versions starting from 1.8.
+# Generate Fluent Forms stubs from all the latest versions.
 #
 
 set -e
@@ -8,23 +8,16 @@ set -e
 # Fetch plugin information from WordPress.org.
 WC_JSON="$(wget -q -O- "https://api.wordpress.org/plugins/info/1.0/fluentform.json")"
 
-# Specify the minimum version to start collecting from.
-MIN_VERSION="1.1"
-
 # Prepare output file.
 OUTPUT_FILE="fluentform_versions.txt"
 > "$OUTPUT_FILE"
 
-# Extract and filter versions.
+# Extract and filter versions, excluding "trunk".
 VERSIONS=$(jq -r '."versions" | keys[]' <<<"$WC_JSON" | grep -v "trunk" | sort -V)
 
-# Iterate through versions and collect those from 1.8 onwards.
-collect_versions=false
+# Collect all versions.
 for VERSION in $VERSIONS; do
-    if $collect_versions || [[ "$VERSION" == "$MIN_VERSION"* ]]; then
-        collect_versions=true
-        echo "$VERSION" >> "$OUTPUT_FILE"
-    fi
+    echo "$VERSION" >> "$OUTPUT_FILE"
 done
 
 # Remove the vtrunk tag if it exists.
@@ -43,7 +36,7 @@ while IFS= read -r VERSION; do
 
     # Clean up source/ directory
     git status --ignored --short -- source/ | sed -n -e 's#^!! ##p' | xargs --no-run-if-empty -- rm -rf
-    
+
     # Get new version
     wget -P source/ "https://downloads.wordpress.org/plugin/fluentform.${VERSION}.zip"
     unzip -q -d source/ source/fluentform.*.zip
