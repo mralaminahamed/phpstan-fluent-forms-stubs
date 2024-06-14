@@ -4821,7 +4821,13 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         public function getAvailableDateFormats()
         {
         }
-        private function getDateFormatConfigJSON($settings, $form, $id)
+        public function getDateFormatConfigJSON($settings, $form)
+        {
+        }
+        public function getCustomConfig($settings)
+        {
+        }
+        private function loadToFooter($config, $customConfigObject, $form, $id)
         {
         }
         private function hasTime($string)
