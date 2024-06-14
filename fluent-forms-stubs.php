@@ -369,10 +369,40 @@ namespace FluentForm\App\Helpers {
         private static function getConversionUrl($formId)
         {
         }
+        public static function fileUploadLocations()
+        {
+        }
         private function unreadCount($formId)
         {
         }
         public static function getForms()
+        {
+        }
+    }
+    class Protector
+    {
+        /**
+         * Get the salt for the encryption and decryption.
+         */
+        public static function getSalt()
+        {
+        }
+        /**
+         * Encryp a text using a predefined salt.
+         * 
+         * @param string $text
+         * @return string $text
+         */
+        public static function encrypt($text)
+        {
+        }
+        /**
+         * Decrypt a text using a predefined salt.
+         * 
+         * @param string $text
+         * @return string $text
+         */
+        public static function decrypt($text)
         {
         }
     }
@@ -2287,7 +2317,7 @@ namespace FluentForm\App\Modules\Registerer {
         public function renderAllEntriesAdminRoute()
         {
         }
-        private function renderFormInnerPages()
+        public function renderFormInnerPages()
         {
         }
         public function renderSettings($form_id)
@@ -5663,7 +5693,7 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static $browser = null;
         protected static $formFields = null;
         protected static $store = ['inputs' => null, 'original_inputs' => null, 'user' => null, 'post' => null, 'other' => null, 'submission' => null];
-        public static function parse($parsable, $entryId, $data = [], $form = null, $isUrl = false, $provider = false)
+        public static function parse($parsable, $entryId, $data = [], $form = null, $isUrl = false, $providerOrIsHTML = false)
         {
         }
         protected static function setDependencies($entry, $data, $form)
@@ -6482,7 +6512,7 @@ namespace FluentForm\App\Services\Migrator\Classes {
          * @param array|null $form
          * @return array|mixed
          */
-        public function getFieldsNameMap(?array $form)
+        public function getFieldsNameMap($form)
         {
         }
     }
