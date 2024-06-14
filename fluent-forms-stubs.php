@@ -25,6 +25,17 @@ namespace FluentForm\App\Databases\Migrations {
         {
         }
     }
+    class FormLogs
+    {
+        /**
+         * Migrate the table.
+         *
+         * @return void
+         */
+        public static function migrate()
+        {
+        }
+    }
     class FormMeta
     {
         /**
@@ -144,7 +155,7 @@ namespace FluentForm\App\Helpers {
         public static function isEntryAutoDeleteEnabled($formId)
         {
         }
-        public static function formExtraCssClass($formId)
+        public static function formExtraCssClass($form)
         {
         }
         public static function getNextTabIndex($increment = 1)
@@ -154,6 +165,9 @@ namespace FluentForm\App\Helpers {
         {
         }
         public static function resetTabIndex()
+        {
+        }
+        public static function isFluentAdminPage()
         {
         }
     }
@@ -1110,16 +1124,19 @@ namespace FluentForm\App\Modules\Form {
         public static function parseFormEntries($entries, $form, $fields = null)
         {
         }
-        public static function parseFormEntry($entry, $form, $fields = null)
+        public static function parseFormEntry($entry, $form, $fields = null, $isHtml = false)
         {
         }
-        public static function parseFormSubmission($submission, $form, $fields)
+        public static function parseFormSubmission($submission, $form, $fields, $isHtml = false)
         {
         }
-        public static function parseData($response, $fields, $formId)
+        public static function parseData($response, $fields, $formId, $isHtml = false)
         {
         }
         public static function formatValue($value)
+        {
+        }
+        public static function formatFileValues($values, $isHtml)
         {
         }
         public static function formatRepeatFieldValue($value, $field, $form_id)
@@ -1406,10 +1423,13 @@ namespace FluentForm\App\Modules\Form\Settings {
     }
     class FormCssJs
     {
-        public function addCss($form)
+        public function addCssJs($form)
         {
         }
-        public function addJs($form)
+        public function addCss($form, $css)
+        {
+        }
+        public function addJs($form, $customJS)
         {
         }
         /**
@@ -1617,6 +1637,27 @@ namespace FluentForm\App\Modules\Form {
         }
     }
 }
+namespace FluentForm\App\Modules\Logger {
+    class DataLogger
+    {
+        public $app;
+        public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        {
+        }
+        public function log($data)
+        {
+        }
+        public function getLogsByEntry($entry_id, $sourceType = 'submission_item')
+        {
+        }
+        public function getAllLogs()
+        {
+        }
+        public function deleteLogsByIds($ids = [])
+        {
+        }
+    }
+}
 namespace FluentForm\App\Modules {
     class ProcessExteriorModule
     {
@@ -1675,7 +1716,7 @@ namespace FluentForm\App\Modules\Registerer {
         public function reisterScripts()
         {
         }
-        private function isFluentPages()
+        public function isFluentPages()
         {
         }
         public function enqueuePageScripts()
@@ -1852,6 +1893,23 @@ namespace FluentForm\App\Modules\Track {
         {
         }
         private function isLocalhost()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Widgets {
+    class SidebarWidgets extends \WP_Widget
+    {
+        function __construct()
+        {
+        }
+        public function widget($args, $instance)
+        {
+        }
+        public function form($instance)
+        {
+        }
+        public function update($new_instance, $old_instance)
         {
         }
     }
@@ -3876,6 +3934,12 @@ namespace FluentForm\App\Services\FormBuilder {
         public function register()
         {
         }
+        public function pushConditionalSupport($conditonalItems)
+        {
+        }
+        public function pushFormInputType($types)
+        {
+        }
         public function pushComponent($components)
         {
         }
@@ -4057,7 +4121,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         public function getAvailableDateFormats()
         {
         }
-        private function getDateFormatConfigJSON($settings, $form)
+        private function getDateFormatConfigJSON($settings, $form, $id)
         {
         }
         private function hasTime($string)
@@ -4219,13 +4283,6 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         public function compile($data, $form)
         {
         }
-        /**
-         * Enqueue style and script for datetime element
-         * @return void
-         */
-        protected function enqueueStyleAndScripts()
-        {
-        }
     }
     class TextArea extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
     {
@@ -4279,7 +4336,7 @@ namespace FluentForm\App\Services\FormBuilder {
          * mappings of methods to parse the shortcode
          * @var array
          */
-        private static $handlers = ['ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'wp.admin_email' => 'parseWPProperties', 'wp.site_url' => 'parseWPProperties', 'wp.site_title' => 'parseWPProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties', 'get.param_name' => 'parseQueryParam'];
+        private static $handlers = ['ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'http_referer' => 'parseWPProperties', 'wp.admin_email' => 'parseWPProperties', 'wp.site_url' => 'parseWPProperties', 'wp.site_title' => 'parseWPProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties', 'get.param_name' => 'parseQueryParam'];
         /**
          * Filter dynamic shortcodes in input value
          * @param  string $value
@@ -4388,7 +4445,7 @@ namespace FluentForm\App\Services\FormBuilder {
          * @param  StdClass $form [Form entry from database]
          * @return mixed
          */
-        public function build($form, $extraCssClass = '')
+        public function build($form, $extraCssClass = '', $instanceCssClass = '')
         {
         }
         public function buildFormBody($form)
