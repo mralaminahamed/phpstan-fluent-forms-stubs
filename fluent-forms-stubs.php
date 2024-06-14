@@ -96,6 +96,7 @@ namespace FluentForm\App\Helpers {
     class Helper
     {
         static $tabIndex = 0;
+        static $formInstance = 0;
         /**
          * Sanitize form inputs recursively.
          *
@@ -147,6 +148,9 @@ namespace FluentForm\App\Helpers {
         {
         }
         public static function getNextTabIndex($increment = 1)
+        {
+        }
+        public static function getFormInstaceClass($formId)
         {
         }
         public static function resetTabIndex()
@@ -579,6 +583,9 @@ namespace FluentForm\App\Modules\Component {
          * @param \FluentForm\Framework\Foundation\Application $app
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        {
+        }
+        public function registerScripts()
         {
         }
         /**
@@ -4381,7 +4388,7 @@ namespace FluentForm\App\Services\FormBuilder {
          * @param  StdClass $form [Form entry from database]
          * @return mixed
          */
-        public function build($form)
+        public function build($form, $extraCssClass = '')
         {
         }
         public function buildFormBody($form)
