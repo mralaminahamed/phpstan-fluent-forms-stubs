@@ -899,8 +899,37 @@ namespace FluentForm\App\Modules\Integration {
         {
         }
     }
+    trait MailChimpSubscriber
+    {
+        /**
+         * Enabled MailChimp feed settings.
+         *
+         * @var array $feeds
+         */
+        protected $feeds = [];
+        /**
+         * Form input data.
+         *
+         * @param array $formData
+         */
+        public function setApplicableFeeds($formData)
+        {
+        }
+        /**
+         * Subscribe a user to the list on form submission.
+         *
+         * @param $formData
+         */
+        public function subscribe($formData)
+        {
+        }
+    }
     class MailChimpIntegration extends \FluentForm\App\Modules\Integration\BaseIntegration
     {
+        /**
+         * MailChimp Subscriber that handles & process all the subscribing logics.
+         */
+        use \FluentForm\App\Modules\Integration\MailChimpSubscriber;
         private $key = '_mailchimp_feeds';
         private $app;
         public function __construct(\FluentForm\Framework\Foundation\Application $application)
