@@ -5,6 +5,119 @@
  * @see https://github.com/mralaminahamed/phpstan-fluent-forms-stubs
  */
 
+namespace FluentForm\App\Api {
+    class Entry
+    {
+        private $form;
+        public function __construct($form)
+        {
+        }
+        public function entries($atts = [], $includeFormats = false)
+        {
+        }
+        public function entry($entryId, $includeFormats = false)
+        {
+        }
+        public function report($statuses = [])
+        {
+        }
+    }
+    class Form
+    {
+        public function forms($atts = [], $withFields = false)
+        {
+        }
+        public function find($formId)
+        {
+        }
+        /**
+         * get Form Properties instance
+         * @param int|object $form
+         * @return \FluentForm\App\Api\FormProperties
+         */
+        public function form($form)
+        {
+        }
+        public function entryInstance($form)
+        {
+        }
+    }
+    class FormProperties
+    {
+        private $form;
+        public function __construct($form)
+        {
+        }
+        /**
+         * Get Form formatted inputs
+         * @param string[] $with
+         * @return array
+         */
+        public function inputs($with = ['admin_label', 'raw'])
+        {
+        }
+        /**
+         * Get Form Input labels
+         * @return array
+         */
+        public function labels()
+        {
+        }
+        /**
+         * Get Form Fields
+         * @return array
+         */
+        public function fields()
+        {
+        }
+        /**
+         * Get Form Settings
+         * @return array
+         */
+        public function settings()
+        {
+        }
+        /**
+         * Get Email Notifications as an array
+         * @return array
+         * @throws \WpFluent\Exception
+         */
+        public function emailNotifications()
+        {
+        }
+        /**
+         * get Form metas
+         * @param $metaName
+         * @param false $default
+         * @return mixed|string
+         */
+        public function meta($metaName, $default = false)
+        {
+        }
+        /**
+         * get form renerable pass settings as an array
+         * @return array
+         */
+        public function renderable()
+        {
+        }
+        public function conversionRate()
+        {
+        }
+        public function submissionCount()
+        {
+        }
+        public function viewCount()
+        {
+        }
+        public function unreadCount()
+        {
+        }
+        public function __get($name)
+        {
+        }
+    }
+}
 namespace FluentForm\App\Databases {
     class DatabaseMigrator
     {
@@ -208,6 +321,24 @@ namespace FluentForm\App\Helpers {
         protected static function getFieldNamesStatuses($fields)
         {
         }
+        public static function isConversionForm($formId)
+        {
+        }
+        public static function getPreviewUrl($formId, $type = '')
+        {
+        }
+        public static function getFormAdminPermalink($route, $form)
+        {
+        }
+        public static function getFormSettingsUrl($form)
+        {
+        }
+        private static function getConversionUrl($formId)
+        {
+        }
+        private function unreadCount($formId)
+        {
+        }
     }
     class Str
     {
@@ -330,6 +461,9 @@ namespace FluentForm\App\Modules {
         {
         }
         public static function setCronSchedule()
+        {
+        }
+        public static function maybeMigrateDefaultForms()
         {
         }
     }
@@ -942,7 +1076,7 @@ namespace FluentForm\App\Modules\Entries {
          * @return array
          * @todo: Implement Caching mechanism so we don't have to parse these things for every request
          */
-        private function getFormInputsAndLabels($form, $with = ['admin_label', 'raw'])
+        public function getFormInputsAndLabels($form, $with = ['admin_label', 'raw'])
         {
         }
         public function getNotes()
@@ -1027,6 +1161,9 @@ namespace FluentForm\App\Modules\Entries {
          * @param bool $formId
          */
         public function getReport($formId = false)
+        {
+        }
+        public function generateReport($form, $statuses = [])
         {
         }
         public function getInputReport($formId, $fieldNames, $whereClasuses)
@@ -1155,20 +1292,11 @@ namespace FluentForm\App\Modules\Form {
         public function index()
         {
         }
-        private function getFormViewCount($formId)
-        {
-        }
-        private function getSubmissionCount($formID)
-        {
-        }
-        private function getConversionRate($form)
-        {
-        }
         /**
          * Create a form from backend/editor
-         * @return void
+         * @return void|array
          */
-        public function store()
+        public function store($returnJSON = true)
         {
         }
         public function getFormsDefaultSettings($formId = false)
@@ -1244,9 +1372,6 @@ namespace FluentForm\App\Modules\Form {
         public function getAllForms()
         {
         }
-        private function getUnreadCount($formId)
-        {
-        }
     }
     class FormDataParser
     {
@@ -1294,6 +1419,9 @@ namespace FluentForm\App\Modules\Form {
         public static function formatCheckBoxValues($values, $field, $isHtml = false)
         {
         }
+        public static function resetData()
+        {
+        }
     }
     /**
      * @method array getShortCodeInputs(\stdClass $form, array $with = ['admin_label'])
@@ -1339,6 +1467,9 @@ namespace FluentForm\App\Modules\Form {
          * @return mixed
          */
         public static function __callStatic($method, $parameters)
+        {
+        }
+        public static function resetData()
         {
         }
     }
@@ -1510,6 +1641,9 @@ namespace FluentForm\App\Modules\Form {
         private function getPredefinedForms()
         {
         }
+        private function getBlankConversationalForm()
+        {
+        }
         /**
          * Fetch simplified information for all predefined forms
          */
@@ -1521,6 +1655,12 @@ namespace FluentForm\App\Modules\Form {
          * @param $name
          */
         public function create()
+        {
+        }
+        public function createForm($predefinedForm)
+        {
+        }
+        private function getRandomPhoto()
         {
         }
     }
@@ -1594,6 +1734,12 @@ namespace FluentForm\App\Modules\Form\Settings {
     class FormCssJs
     {
         public function addCssJs($formId)
+        {
+        }
+        public function getCss($formId)
+        {
+        }
+        public function getJs($formId)
         {
         }
         public function addCss($formId, $css, $cssId = 'fluentform_custom_css')
@@ -2006,9 +2152,6 @@ namespace FluentForm\App\Modules\Registerer {
         public function renderTransfer()
         {
         }
-        private function getFormPreviewUrl($form_id)
-        {
-        }
         public function addPreviewButton($formId)
         {
         }
@@ -2366,6 +2509,15 @@ namespace FluentForm\App\Providers {
          * The provider booted method to be called after booting
          * @return void
          */
+        public function booted()
+        {
+        }
+    }
+    class FluentConversationalProvider extends \FluentForm\Framework\Foundation\Provider
+    {
+        public function booting()
+        {
+        }
         public function booted()
         {
         }
@@ -4181,6 +4333,43 @@ namespace FluentForm\App\Services\Emogrifier {
         }
     }
 }
+namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
+    class Converter
+    {
+        public static function convert($form)
+        {
+        }
+        public static function fieldTypes()
+        {
+        }
+        public static function hex2rgb($color, $opacity = 0.3)
+        {
+        }
+        public static function getPhoneFieldSettings($data, $form)
+        {
+        }
+        /**
+         * Load country list from file
+         * @param array $data
+         * @return array
+         */
+        public static function loadCountries($data)
+        {
+        }
+        public static function getSelectedCountries($keys = [])
+        {
+        }
+        public static function setDefaultValue($value, $field, $form)
+        {
+        }
+        private static function parseConditionalLogic($field)
+        {
+        }
+        private static function getAdvancedOptions($field)
+        {
+        }
+    }
+}
 namespace FluentForm\App\Services\FormBuilder\Components {
     class BaseComponent
     {
@@ -4338,6 +4527,113 @@ namespace FluentForm\App\Services\FormBuilder {
         abstract function getComponent();
         abstract function render($element, $form);
     }
+}
+namespace FluentForm\App\Services\FluentConversational\Classes\Elements {
+    class WelcomeScreen extends \FluentForm\App\Services\FormBuilder\BaseFieldManager
+    {
+        public function __construct()
+        {
+        }
+        public function getComponent()
+        {
+        }
+        public function pushConversationalComponent($components)
+        {
+        }
+        public function getGeneralEditorElements()
+        {
+        }
+        public function getAdvancedEditorElements()
+        {
+        }
+        public function pushFormInputType($types)
+        {
+        }
+        public function render($data, $form)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\FluentConversational\Classes {
+    class Fonts
+    {
+        public static function getFonts()
+        {
+        }
+        public static function getAllFonts()
+        {
+        }
+        public static function getSystemFonts()
+        {
+        }
+        public static function getGoogleFonts()
+        {
+        }
+    }
+    class Form
+    {
+        protected $addOnKey = 'conversational_forms';
+        protected $metaKey = 'ffc_form_settings';
+        public function boot()
+        {
+        }
+        public function pushDesignTab($menuItems, $formId)
+        {
+        }
+        public function renderDesignSettings($formId)
+        {
+        }
+        public function getSettingsAjax()
+        {
+        }
+        public function saveSettingsAjax()
+        {
+        }
+        public function getDesignSettings($formId)
+        {
+        }
+        public function getMetaSettings($formId)
+        {
+        }
+        private function getGeneratedCss($formId)
+        {
+        }
+        public function render()
+        {
+        }
+        public function isEnabled()
+        {
+        }
+        private function getSubmitBttnStyle($form)
+        {
+        }
+        public function filterAcceptedFields($components, $formId)
+        {
+        }
+        public function printLoadedScripts()
+        {
+        }
+        private function getRegisteredScripts()
+        {
+        }
+        private function getRegisteredStyles()
+        {
+        }
+        public function renderShortcode($form)
+        {
+        }
+        public function maybeAlterPlacement($placements, $form)
+        {
+        }
+        private function getExtraHiddenInputs($formId)
+        {
+        }
+        private function getRandomPhoto()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\FormBuilder {
     class Components implements \JsonSerializable
     {
         /**
@@ -4478,6 +4774,30 @@ namespace FluentForm\App\Services\FormBuilder\Components {
          * @return viod
          */
         public function compile($data, $form)
+        {
+        }
+    }
+    class CustomSubmitButton extends \FluentForm\App\Services\FormBuilder\BaseFieldManager
+    {
+        public function __construct()
+        {
+        }
+        public function pushFormInputType($types)
+        {
+        }
+        function getComponent()
+        {
+        }
+        public function pushConditionalSupport($conditonalItems)
+        {
+        }
+        public function getGeneralEditorElements()
+        {
+        }
+        public function getAdvancedEditorElements()
+        {
+        }
+        public function render($data, $form)
         {
         }
     }
@@ -5058,6 +5378,9 @@ namespace FluentForm\App\Services\FormBuilder {
         {
         }
         public static function getInputs()
+        {
+        }
+        public static function resetData()
         {
         }
     }
@@ -17187,6 +17510,9 @@ namespace {
     {
     }
     function fluentform_upgrade_url()
+    {
+    }
+    function fluentFormApi($module = 'forms')
     {
     }
     function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
