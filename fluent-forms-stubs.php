@@ -284,6 +284,9 @@ namespace FluentForm\App\Modules\Acl {
         public static function hasAnyFormPermission($form_id = false)
         {
         }
+        public static function verifyNonce($key = 'fluent_forms_admin_nonce')
+        {
+        }
     }
     class RoleManager
     {
@@ -748,7 +751,7 @@ namespace FluentForm\App\Modules\Component {
         {
         }
         /**
-         * Check if form has scheduled date and open for submission
+         * Check if form has scheduled date & weekdays and open for submission
          *
          * @param array $restrictions
          *
@@ -1429,7 +1432,7 @@ namespace FluentForm\App\Modules\Form {
          * @param array $settings
          * @param $fields
          */
-        private function handleDenyEmptySubmission($settings = [], &$fields)
+        private function handleDenyEmptySubmission($settings, &$fields)
         {
         }
         /**
@@ -4688,7 +4691,7 @@ namespace FluentForm\App\Services\FormBuilder {
          * mappings of methods to parse the shortcode
          * @var array
          */
-        private static $handlers = ['ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'http_referer' => 'parseWPProperties', 'wp.admin_email' => 'parseWPProperties', 'wp.site_url' => 'parseWPProperties', 'wp.site_title' => 'parseWPProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties', 'get.param_name' => 'parseQueryParam'];
+        private static $handlers = ['ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'http_referer' => 'parseWPProperties', 'wp.admin_email' => 'parseWPProperties', 'wp.site_url' => 'parseWPProperties', 'wp.site_title' => 'parseWPProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties', 'get.param_name' => 'parseQueryParam', 'random_string.param_name' => 'parseRandomString'];
         /**
          * Filter dynamic shortcodes in input value
          * @param string $value
@@ -4764,6 +4767,15 @@ namespace FluentForm\App\Services\FormBuilder {
          * @return string
          */
         public static function parseQueryParam($value)
+        {
+        }
+        /**
+         * Generate random a string with prefix
+         *
+         * @param $value
+         * @return string
+         */
+        public static function parseRandomString($value)
         {
         }
     }
@@ -5015,6 +5027,9 @@ namespace FluentForm\App\Services\FormBuilder {
         {
         }
         public static function getInstance()
+        {
+        }
+        public static function getInputs()
         {
         }
     }
@@ -15599,6 +15614,14 @@ namespace FluentForm\Framework\Foundation {
          * @throws Exception
          */
         protected function resolveClass(\ReflectionParameter $parameter)
+        {
+        }
+        /**
+         * Get the parameter type for the given parameter.
+         *
+         * @return object ReflectionClass|ReflectionNamedType
+         */
+        protected function getParameterType($parameter)
         {
         }
         /**
