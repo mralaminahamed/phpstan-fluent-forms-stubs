@@ -117,6 +117,39 @@ namespace FluentForm\App\Api {
         {
         }
     }
+    class Submission
+    {
+        public function get($args = [])
+        {
+        }
+        public function find($submissionId)
+        {
+        }
+        public function transactions($columnValue, $column = 'submission_id')
+        {
+        }
+        public function transaction($columnValue, $column = 'id')
+        {
+        }
+        public function subscriptions($submissionId, $withTransactions = false)
+        {
+        }
+        public function getSubscription($subscriptionId, $withTransactions = false)
+        {
+        }
+        public function transactionsByUserId($userId = false, $args = [])
+        {
+        }
+        public function transactionsBySubscriptionId($subscriptionId)
+        {
+        }
+        public function transactionsBySubmissionId($submissionId)
+        {
+        }
+        public function subscriptionsByUserId($userId = false, $args = [])
+        {
+        }
+    }
 }
 namespace FluentForm\App\Databases {
     class DatabaseMigrator
@@ -1109,6 +1142,12 @@ namespace FluentForm\App\Modules\Entries {
         public function updateEntryDiffs($entryId, $formId, $formData)
         {
         }
+        public function getUsers()
+        {
+        }
+        public function changeEntryUser()
+        {
+        }
     }
     class Export
     {
@@ -1657,7 +1696,7 @@ namespace FluentForm\App\Modules\Form {
         public function create()
         {
         }
-        public function createForm($predefinedForm)
+        public function createForm($predefinedForm, $predefinedName = '')
         {
         }
         private function getRandomPhoto()
@@ -2028,6 +2067,9 @@ namespace FluentForm\App\Modules\Logger {
         private function getEntry($submission, $form)
         {
         }
+        public function getApiLogFilters()
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules {
@@ -2168,6 +2210,9 @@ namespace FluentForm\App\Modules\Registerer {
         {
         }
         public function renderSmtpPromo()
+        {
+        }
+        private function getAdminI18n()
         {
         }
     }
@@ -4637,6 +4682,12 @@ namespace FluentForm\App\Services\FluentConversational\Classes {
         private function renderFormHtml($formId, $providedKey = '')
         {
         }
+        /**
+         * Enqueue proper stylesheet based on rtl & JS script.
+         */
+        private function enqueueScripts()
+        {
+        }
     }
 }
 namespace FluentForm\App\Services\FormBuilder {
@@ -4724,8 +4775,8 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         protected $wrapperClass = 'fluent-address';
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
+         * @param array $data [element data]
+         * @param stdClass $form [Form Object]
          * @return viod
          */
         public function compile($data, $form)
@@ -4940,8 +4991,8 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
+         * @param array $data [element data]
+         * @param stdClass $form [Form Object]
          * @return viod
          */
         public function compile($data, $form)
@@ -5172,7 +5223,7 @@ namespace FluentForm\App\Services\FormBuilder {
          * @param  \StdClass $form [Form entry from database]
          * @return mixed
          */
-        public function build($form, $extraCssClass = '', $instanceCssClass = '')
+        public function build($form, $extraCssClass = '', $instanceCssClass = '', $atts = [])
         {
         }
         public function buildFormBody($form)
