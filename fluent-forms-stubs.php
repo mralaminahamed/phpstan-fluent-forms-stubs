@@ -202,6 +202,12 @@ namespace FluentForm\App\Helpers {
         public static function getNumericFormatted($input, $formatterName)
         {
         }
+        public static function getDuplicateFieldNames($fields)
+        {
+        }
+        protected static function getFieldNamesStatuses($fields)
+        {
+        }
     }
     class Str
     {
@@ -1220,7 +1226,7 @@ namespace FluentForm\App\Modules\Form {
         {
         }
         /**
-         * Validate a form only by form title
+         * Validate a form  by form title & for duplicate name attributes
          * @return void
          */
         private function validate()
@@ -1987,6 +1993,9 @@ namespace FluentForm\App\Modules\Registerer {
         public function renderPaymentEntries()
         {
         }
+        public function renderSmtpPromo()
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules\Renderer\GlobalSettings {
@@ -2066,6 +2075,21 @@ namespace FluentForm\App\Modules\Settings {
     }
 }
 namespace FluentForm\App\Modules\Track {
+    class SetupModule
+    {
+        public function installPlugin($repoSlug)
+        {
+        }
+        private function installFluentSMTP()
+        {
+        }
+        private function backgroundInstaller($plugin_to_install, $plugin_id)
+        {
+        }
+        private function associate_plugin_file($plugins, $key)
+        {
+        }
+    }
     class TrackModule
     {
         private $apiUrl = 'https://wpfluentform.com';
@@ -2155,6 +2179,9 @@ namespace FluentForm\App\Modules\Widgets {
         {
         }
         protected function register_input_textarea_style_controls()
+        {
+        }
+        protected function register_terms_gdpr_style_controls()
         {
         }
         protected function register_placeholder_style_controls()
@@ -4499,8 +4526,8 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
+         * @param array $data [element data]
+         * @param stdClass $form [Form Object]
          * @return viod
          */
         public function compile($data, $form)
@@ -4508,7 +4535,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Build options for select
-         * @param  array $options
+         * @param array $options
          * @return string/html [compiled options]
          */
         protected function buildOptions($data, $defaultValues)
@@ -15575,6 +15602,22 @@ namespace FluentForm\Framework\Foundation {
         {
         }
         /**
+         * Get the parameter type for the given parameter.
+         *
+         * @return object ReflectionClass|ReflectionNamedType
+         */
+        protected function getParameterType($parameter)
+        {
+        }
+        /**
+         * Get the parameter name for the given parameter.
+         *
+         * @return string
+         */
+        protected function getParameterName($parameter)
+        {
+        }
+        /**
          * Get the alias for a key if available.
          * @param  string  $key
          * @return string
@@ -15976,7 +16019,7 @@ namespace FluentForm\Framework\Foundation {
          * @param string $scope [specify the scope of the ajax action|internal use]
          * @return Framework\Foundation\HookReference
          */
-        private function addAjaxAction($tag, $handler, $priority = 10, $scope)
+        private function addAjaxAction($tag, $handler, $priority, $scope)
         {
         }
         /**
@@ -16007,7 +16050,7 @@ namespace FluentForm\Framework\Foundation {
          * @param string $scope [specify the scope of the ajax action|internal use]
          * @return mixed [a reference to the handler to remove the action later]
          */
-        private function removeAjaxAction($tag, $handler, $priority = 10, $scope)
+        private function removeAjaxAction($tag, $handler, $priority, $scope)
         {
         }
         /**
