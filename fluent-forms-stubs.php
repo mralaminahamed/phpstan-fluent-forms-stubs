@@ -190,6 +190,9 @@ namespace FluentForm\App\Helpers {
         public static function hasFormElement($formId, $elementName)
         {
         }
+        public static function isUniqueValidation($validation, $field, $formData, $fields, $form)
+        {
+        }
     }
     class Str
     {
@@ -1810,6 +1813,12 @@ namespace FluentForm\App\Modules\Logger {
         {
         }
         public function deleteApiLogsByIds($ids = [])
+        {
+        }
+        public function retryApiAction()
+        {
+        }
+        private function getEntry($submission, $form)
         {
         }
     }
@@ -4711,6 +4720,7 @@ namespace FluentForm\App\Services\FormBuilder {
          * @var Framework\Foundation\Application
          */
         protected $app = null;
+        protected $form = null;
         /**
          * Conditional logic for elements
          * @var array
@@ -4853,6 +4863,12 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         public function notify($notification, $submittedData, $form, $entryId = false)
         {
         }
+        private function broadCast($data)
+        {
+        }
+        private function getSendAddresses($notification, $submittedData)
+        {
+        }
         /**
          * @param $formId
          * @return array
@@ -4893,7 +4909,7 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static $browser = null;
         protected static $formFields = null;
         protected static $store = ['inputs' => null, 'original_inputs' => null, 'user' => null, 'post' => null, 'other' => null, 'submission' => null];
-        public static function parse($parsable, $entryId, $data = null, $form = null, $isUrl = false)
+        public static function parse($parsable, $entryId, $data = [], $form = null, $isUrl = false)
         {
         }
         protected static function setDependencies($entry, $data, $form)
@@ -5971,6 +5987,9 @@ namespace FluentForm\App\Services\Scheduler {
     class Scheduler
     {
         public static function processEmailReport()
+        {
+        }
+        private static function cleanUpOldData()
         {
         }
     }
