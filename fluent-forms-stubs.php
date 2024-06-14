@@ -671,7 +671,7 @@ namespace FluentForm\App\Modules\Component {
          *
          * @param string $output
          * @param \stdClass $form
-         * @return void
+         * @return string
          */
         private function processOutput($output, $form)
         {
@@ -1165,6 +1165,9 @@ namespace FluentForm\App\Modules\Form {
         public static function formatFileValues($values, $isHtml)
         {
         }
+        public static function formatImageValues($values, $isHtml)
+        {
+        }
         public static function formatRepeatFieldValue($value, $field, $form_id)
         {
         }
@@ -1206,7 +1209,7 @@ namespace FluentForm\App\Modules\Form {
         public static function getInputs($form, $with = [])
         {
         }
-        public static function getEntryInputs($form, $with = ['admin_label'])
+        public static function getEntryInputs($form, $with = ['admin_label', 'raw'])
         {
         }
         public static function parse($key, $form, $with)
@@ -1511,12 +1514,6 @@ namespace FluentForm\App\Modules\Form\Settings {
          * @return void
          */
         public function index()
-        {
-        }
-        protected function joinFluentformsTable($query)
-        {
-        }
-        protected function getPostFields()
         {
         }
         /**
@@ -4322,6 +4319,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         public function compile($data, $form)
         {
         }
+        private function buildInputGroup($data, $form)
+        {
+        }
     }
     class TextArea extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
     {
@@ -4803,6 +4803,8 @@ namespace FluentForm\App\Services\Integrations {
         protected $priority = 11;
         public $logo = '';
         public $hasGlobalMenu = true;
+        public $category = 'crm';
+        public $disableGlobalSettings = 'no';
         public function __construct($app, $title, $integrationKey, $optionKey, $settingsKey, $priority = 11)
         {
         }
@@ -4839,10 +4841,10 @@ namespace FluentForm\App\Services\Integrations {
         public function prepareIntegrationFeed($setting, $feed, $formId)
         {
         }
-        abstract function getIntegrationDefaults($settings, $formId);
-        abstract function pushIntegration($integrations, $formId);
-        abstract function getSettingsFields($settings, $formId);
-        abstract function getMergeFields($list, $listId, $formId);
+        public abstract function getIntegrationDefaults($settings, $formId);
+        public abstract function pushIntegration($integrations, $formId);
+        public abstract function getSettingsFields($settings, $formId);
+        public abstract function getMergeFields($list, $listId, $formId);
         public function setFeedAtributes($feed, $formId)
         {
         }
@@ -17068,7 +17070,7 @@ namespace {
      * @param array $array
      * @return string
      */
-    function implodeRecursive($glue, array $array)
+    function fluentImplodeRecursive($glue, array $array)
     {
     }
     function getFluentFormCountryList()
