@@ -1013,7 +1013,7 @@ namespace FluentForm\App\Modules\Component {
         private function addInlineVars()
         {
         }
-        private function getDatei18n()
+        public static function getDatei18n()
         {
         }
         protected function maybeHasAdvandedFields($form, $formBuilder)
@@ -6134,7 +6134,7 @@ namespace FluentForm\App\Services\Integrations\Slack {
          * @param $formData
          * @param $form
          */
-        public function handle($feed, $formData, $form, $entry)
+        public static function handle($feed, $formData, $form, $entry)
         {
         }
     }
