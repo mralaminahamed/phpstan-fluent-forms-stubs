@@ -18,7 +18,7 @@ namespace FluentForm\App\Api {
         public function entry($entryId, $includeFormats = false)
         {
         }
-        public function report($statuses = [])
+        public function report($statuses = ['read', 'unread', 'unapproved', 'approved', 'declined', 'unconfirmed', 'confirmed'])
         {
         }
     }
@@ -397,6 +397,21 @@ namespace FluentForm\App\Helpers {
         public static function resolveValidationRulesGlobalOption(&$field)
         {
         }
+        /**
+         * Validate form input value against database values
+         *
+         * @param $field array Form Field
+         * @param $formData array From Data
+         * @param $form object From
+         * @param $fieldName string optional
+         * @param $inputValue mixed optional
+         *
+         * @return string
+         * Return Error message on fail. Otherwise, return empty string
+         */
+        public static function validateInput($field, $formData, $form, $fieldName = '', $inputValue = [])
+        {
+        }
         public static function getWhiteListedFields($formId)
         {
         }
@@ -432,6 +447,9 @@ namespace FluentForm\App\Helpers {
         {
         }
         public function getFormattedValue($setting)
+        {
+        }
+        public static function isIntegrationEnabled($key)
         {
         }
     }
@@ -773,6 +791,12 @@ namespace FluentForm\App\Http\Controllers {
         {
         }
         public function storeConversationalDesign(\FluentForm\App\Services\Settings\SettingsService $settingsService, $formId)
+        {
+        }
+        public function getPreset(\FluentForm\App\Services\Settings\SettingsService $settingsService, $formId)
+        {
+        }
+        public function savePreset(\FluentForm\App\Services\Settings\SettingsService $settingsService)
         {
         }
     }
@@ -5847,6 +5871,9 @@ namespace FluentForm\App\Modules\Registerer {
         public static function getEditorI18n()
         {
         }
+        public static function getPreviewI18n()
+        {
+        }
         public static function getEntriesI18n()
         {
         }
@@ -9518,6 +9545,14 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         private function broadCast($data)
         {
         }
+        /**
+         * Get email addresses
+         *
+         * @param array     $notification  [Notification settings from form meta]
+         * @param array     $submittedData [User submitted form data]
+         *
+         * @return string $sendAddresses [Email address or addresses as comma separated string]
+         */
         private function getSendAddresses($notification, $submittedData)
         {
         }
@@ -16820,6 +16855,66 @@ namespace FluentForm\App\Services\Migrator\Classes {
         {
         }
     }
+    class ContactForm7Migrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
+    {
+        public function __construct()
+        {
+        }
+        public function exist()
+        {
+        }
+        protected function getForms()
+        {
+        }
+        public function getFields($form)
+        {
+        }
+        public function getSubmitBttn($args)
+        {
+        }
+        private function fieldTypeMap()
+        {
+        }
+        protected function formatFieldData($args, $type)
+        {
+        }
+        protected function getOptions($options, $default)
+        {
+        }
+        protected function getFileTypes($field, $arg)
+        {
+        }
+        protected function getFormName($form)
+        {
+        }
+        protected function getFormMetas($form)
+        {
+        }
+        protected function getFormId($form)
+        {
+        }
+        public function getFormsFormatted()
+        {
+        }
+        private function getNotifications()
+        {
+        }
+        private function getAdvancedValidation()
+        {
+        }
+        private function removeLabelsAndNewLine($formMetaDataArray)
+        {
+        }
+        private function formatFieldArray($formattedArray)
+        {
+        }
+        private function formatAsFluentField($fieldStringArray)
+        {
+        }
+        public function getEntries($formId)
+        {
+        }
+    }
     class GravityFormsMigrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
     {
         public function __construct()
@@ -17755,10 +17850,10 @@ namespace FluentForm\App\Services\Parser {
 namespace FluentForm\App\Services\Report {
     class ReportHelper
     {
-        public static function generateReport($form, $statuses = [])
+        public static function generateReport($form, $statuses = ['read', 'unread'])
         {
         }
-        public static function getInputReport($formId, $fieldNames, $statuses = [])
+        public static function getInputReport($formId, $fieldNames, $statuses = ['read', 'unread', 'unapproved', 'approved', 'declined', 'unconfirmed', 'confirmed'])
         {
         }
         public static function getSubFieldInputReport($formId, $fieldNames, $statuses)
@@ -17869,6 +17964,15 @@ namespace FluentForm\App\Services\Settings {
         {
         }
         public function storeConversationalDesign($attributes, $formId)
+        {
+        }
+        public function getPreset($formId)
+        {
+        }
+        /**
+         * @throws \Exception
+         */
+        public function savePreset($attributes)
         {
         }
     }
