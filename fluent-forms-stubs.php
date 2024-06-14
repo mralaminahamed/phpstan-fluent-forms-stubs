@@ -8285,25 +8285,15 @@ namespace FluentForm\App\Services\Form {
     }
     class FormService
     {
-        /**
-         * @var \FluentForm\Framework\Foundation\Application
-         */
+        /** @var \FluentForm\Framework\Foundation\Application */
         protected $app;
-        /**
-         * @var \FluentForm\App\Models\Form|\FluentForm\Framework\Database\Query\Builder
-         */
+        /** @var \FluentForm\App\Models\Form|\FluentForm\Framework\Database\Query\Builder */
         protected $model;
-        /**
-         * @var \FluentForm\App\Services\Form\Updater
-         */
+        /** @var \FluentForm\App\Services\Form\Updater */
         protected $updater;
-        /**
-         * @var \FluentForm\App\Services\Form\Duplicator
-         */
+        /** @var \FluentForm\App\Services\Form\Duplicator */
         protected $duplicator;
-        /**
-         * @var \FluentForm\App\Services\Form\Fields
-         */
+        /** @var \FluentForm\App\Services\Form\Fields */
         protected $fields;
         public function __construct()
         {
@@ -8311,7 +8301,7 @@ namespace FluentForm\App\Services\Form {
         /**
          * Get the paginated forms matching search criteria.
          *
-         * @param  array $attributes
+         * @param array $attributes
          * @return array
          */
         public function get($attributes = [])
@@ -8320,9 +8310,9 @@ namespace FluentForm\App\Services\Form {
         /**
          * Store a form with its associated meta.
          *
-         * @param  array                       $attributes
-         * @throws Exception
+         * @param array $attributes
          * @return \FluentForm\App\Models\Form $form
+         * @throws Exception
          */
         public function store($attributes = [])
         {
@@ -8330,9 +8320,9 @@ namespace FluentForm\App\Services\Form {
         /**
          * Duplicate a form with its associated meta.
          *
-         * @param  array                       $attributes
-         * @throws Exception
+         * @param array $attributes
          * @return \FluentForm\App\Models\Form $form
+         * @throws Exception
          */
         public function duplicate($attributes = [])
         {
@@ -8346,9 +8336,9 @@ namespace FluentForm\App\Services\Form {
         /**
          * Update a form with its relevant fields.
          *
-         * @param  array                       $attributes
-         * @throws Exception
+         * @param array $attributes
          * @return \FluentForm\App\Models\Form $form
+         * @throws Exception
          */
         public function update($attributes = [])
         {
@@ -8356,9 +8346,9 @@ namespace FluentForm\App\Services\Form {
         /**
          * Duplicate a form with its associated meta.
          *
-         * @param  int                         $id
-         * @throws Exception
+         * @param int $id
          * @return \FluentForm\App\Models\Form $form
+         * @throws Exception
          */
         public function convert($id)
         {
