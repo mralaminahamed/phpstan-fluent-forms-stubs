@@ -669,6 +669,16 @@ namespace FluentForm\App\Modules\Form {
         public static function formatValue($value)
         {
         }
+        /**
+         * Format input_name field value by concatenating all name fields.
+         *
+         * @param array|object $value
+         *
+         * @return string $value
+         */
+        public static function formatName($value)
+        {
+        }
     }
     /**
      * @method array getShortCodeInputs(\stdClass $form, array $with = ['admin_label'])
@@ -3000,7 +3010,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
          * @param  array $data
          * @return string [Html]
          */
-        protected function getInputHelpMessage($data)
+        protected function getInputHelpMessage($data, $hideClass = '')
         {
         }
     }
