@@ -193,6 +193,15 @@ namespace FluentForm\App\Helpers {
         public static function isUniqueValidation($validation, $field, $formData, $fields, $form)
         {
         }
+        public static function getNumericFormatters()
+        {
+        }
+        public static function getNumericValue($input, $formatterName)
+        {
+        }
+        public static function getNumericFormatted($input, $formatterName)
+        {
+        }
     }
     class Str
     {
@@ -774,6 +783,12 @@ namespace FluentForm\App\Modules\Component {
         protected function maybeHasAdvandedFields($form, $formBuilder)
         {
         }
+        public function registerInputSanitizers()
+        {
+        }
+        public function getNumericInputValue($value, $field)
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules {
@@ -1190,6 +1205,9 @@ namespace FluentForm\App\Modules\Form {
         public function delete()
         {
         }
+        protected function deleteFormAssests($formId)
+        {
+        }
         /**
          * Duplicate a from
          * @return void
@@ -1259,6 +1277,9 @@ namespace FluentForm\App\Modules\Form {
          * @return string $value
          */
         public static function formatName($value)
+        {
+        }
+        public static function formatCheckBoxValues($values, $field, $isHtml = false)
         {
         }
     }
@@ -4886,7 +4907,7 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         private function getFooterText($form, $notification)
         {
         }
-        private function getHeaders($notification, $isSendAsPlain = false)
+        public function getHeaders($notification, $isSendAsPlain = false)
         {
         }
     }
@@ -4912,7 +4933,7 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static $browser = null;
         protected static $formFields = null;
         protected static $store = ['inputs' => null, 'original_inputs' => null, 'user' => null, 'post' => null, 'other' => null, 'submission' => null];
-        public static function parse($parsable, $entryId, $data = [], $form = null, $isUrl = false)
+        public static function parse($parsable, $entryId, $data = [], $form = null, $isUrl = false, $provider = false)
         {
         }
         protected static function setDependencies($entry, $data, $form)
@@ -4927,13 +4948,13 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static function setForm($form)
         {
         }
-        protected static function parseShortCodeFromArray($parsable, $isUrl = false)
+        protected static function parseShortCodeFromArray($parsable, $isUrl = false, $provider = false)
         {
         }
-        protected static function parseShortCodeFromString($parsable, $isUrl = false)
+        protected static function parseShortCodeFromString($parsable, $isUrl = false, $isHtml = false)
         {
         }
-        protected static function getFormData($key)
+        protected static function getFormData($key, $isHtml = false)
         {
         }
         protected static function getUserData($key)
@@ -5030,6 +5051,9 @@ namespace FluentForm\App\Services\Integrations {
         public function getAllFormIntegrations()
         {
         }
+        public function getNotificationFeeds($formId)
+        {
+        }
         public function updateNotificationStatus()
         {
         }
@@ -5055,7 +5079,7 @@ namespace FluentForm\App\Services\Integrations {
         public function globalNotify($insertId, $formData, $form)
         {
         }
-        private function checkCondition($parsedValue, $formData, $insertId)
+        public function checkCondition($parsedValue, $formData, $insertId)
         {
         }
         private function getEntry($id, $form)
@@ -5129,6 +5153,12 @@ namespace FluentForm\App\Services\Integrations {
         {
         }
         public function getApiSettings()
+        {
+        }
+        protected function getSelectedTagIds($data, $inputData, $simpleKey = 'tag_ids', $routingId = 'tag_ids_selection_type', $routersKey = 'tag_routers')
+        {
+        }
+        protected function evaluateRoutings($routings, $inputData)
         {
         }
     }
@@ -17034,6 +17064,9 @@ namespace {
     function fluentImplodeRecursive($glue, array $array)
     {
     }
+    function fluentform_get_active_theme_slug()
+    {
+    }
     function getFluentFormCountryList()
     {
     }
@@ -17053,6 +17086,9 @@ namespace {
     {
     }
     function fluentFormHandleScheduledEmailReport()
+    {
+    }
+    function fluentform_upgrade_url()
     {
     }
     function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
