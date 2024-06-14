@@ -5,5 +5,5 @@
  * @see https://github.com/mralaminahamed/phpstan-fluent-forms-stubs
  */
 
-\define("ACTIVECAMPAIGN_URL", "");
-\define("ACTIVECAMPAIGN_API_KEY", "");
+\define('FLUENTFORM_DIR_PATH', \plugin_dir_path(__FILE__));
+\define('FLUENTFORM_HAS_NIA', \true);

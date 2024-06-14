@@ -25,7 +25,29 @@ namespace FluentForm\App\Databases\Migrations {
         {
         }
     }
+    class FormLogs
+    {
+        /**
+         * Migrate the table.
+         *
+         * @return void
+         */
+        public static function migrate()
+        {
+        }
+    }
     class FormMeta
+    {
+        /**
+         * Migrate the table.
+         *
+         * @return void
+         */
+        public static function migrate()
+        {
+        }
+    }
+    class FormSubmissionDetails
     {
         /**
          * Migrate the table.
@@ -84,6 +106,10 @@ namespace FluentForm\App\Databases\Migrations {
 namespace FluentForm\App\Helpers {
     class Helper
     {
+        static $tabIndex = 0;
+        static $formInstance = 0;
+        static $loadedForms = [];
+        static $tabIndexStatus = 'na';
         /**
          * Sanitize form inputs recursively.
          *
@@ -108,6 +134,54 @@ namespace FluentForm\App\Helpers {
          * @return bool
          */
         public static function isJson($string)
+        {
+        }
+        public static function isSlackEnabled()
+        {
+        }
+        public static function getEntryStutuses($form_id = false)
+        {
+        }
+        public static function getReportableInputs()
+        {
+        }
+        public static function getSubFieldReportableInputs()
+        {
+        }
+        public static function getFormMeta($formId, $metaKey, $default = '')
+        {
+        }
+        public static function setFormMeta($formId, $metaKey, $value)
+        {
+        }
+        public static function isEntryAutoDeleteEnabled($formId)
+        {
+        }
+        public static function formExtraCssClass($form)
+        {
+        }
+        public static function getNextTabIndex($increment = 1)
+        {
+        }
+        public static function getFormInstaceClass($formId)
+        {
+        }
+        public static function resetTabIndex()
+        {
+        }
+        public static function isFluentAdminPage()
+        {
+        }
+        public static function getShortCodeIds($content, $tag = 'fluentform', $selector = 'id')
+        {
+        }
+        public static function isTabIndexEnabled()
+        {
+        }
+        public static function isMultiStepForm($formId)
+        {
+        }
+        public static function hasFormElement($formId, $elementName)
         {
         }
     }
@@ -177,6 +251,21 @@ namespace FluentForm\App\Modules\Acl {
         {
         }
     }
+    class RoleManager
+    {
+        public function getRoles()
+        {
+        }
+        public function setRoles()
+        {
+        }
+        public function verifyPermissionSet()
+        {
+        }
+        public function currentUserFormFormCapability()
+        {
+        }
+    }
 }
 namespace FluentForm\App\Modules {
     class Activator
@@ -185,7 +274,16 @@ namespace FluentForm\App\Modules {
          * This method will be called on plugin activation
          * @return void
          */
-        public function handleActivation()
+        public function handleActivation($network_wide)
+        {
+        }
+        public function migrate()
+        {
+        }
+        public function maybeMigrateDB()
+        {
+        }
+        public function migrateGlobalAddOns()
         {
         }
         private function setDefaultGlobalSettings()
@@ -208,7 +306,7 @@ namespace FluentForm\App\Modules {
          *
          * @var string
          */
-        protected $addOnsFetchUrl = 'https://wpfluentform.com/add-ons.json';
+        protected $addOnsFetchUrl = 'https://wpmanageninja.com/add-ons.json';
         /**
          * Render the add-ons list page.
          */
@@ -221,27 +319,284 @@ namespace FluentForm\App\Modules {
         public function showFluentAddOns()
         {
         }
-        /**
-         * Get the add-ons from the appropriate source
-         * e.g. `options` table or, remote server.
-         *
-         * @return array $addOns
-         */
-        private function getAddOns()
+        public function updateAddOnsStatus()
         {
         }
-        /**
-         * Request to the remote server to fetch the add-ons,
-         * then store it to the options table for caching.
-         *
-         * @return array $addOns
-         */
-        private function prepareAddOnsFromRemoteServer()
+        public function getPremiumAddOns()
         {
         }
     }
 }
 namespace FluentForm\App\Modules\Component {
+    trait ComponentInitTrait
+    {
+        /**
+         * Initialize the component and register the
+         * component by registering actions/filters.
+         */
+        public function _init()
+        {
+        }
+        /**
+         * Validate certain required properties
+         * 
+         * @return void
+         */
+        private function _fluentFormValidateComponent()
+        {
+        }
+        /**
+         * Add the component in fluentform editor's components array.
+         *
+         * @param  array $components
+         * @return array $components
+         */
+        public function _fluentEditorComponenstCallback($components)
+        {
+        }
+        /**
+         * Add the keywords for the component to search in the editor.
+         * 
+         * @param  array $keywords
+         * @return array $keywords
+         */
+        public function _fluentEditorElementSearchTagsCallback($keywords)
+        {
+        }
+        /**
+         * Configure placements of input customization options in editor.
+         * 
+         * @param  array $placemenSettings
+         * @return array $placemenSettings
+         */
+        public function _fluentEditorElementSettingsPlacementCallback($placementSettings)
+        {
+        }
+        /**
+         * Configure input customization options/items in the editor.
+         * 
+         * @param  array $customizationSettings
+         * @return array $customizationSettings
+         */
+        public function _fluentEditorElementCustomizationSettingsCallback($customizationSettings)
+        {
+        }
+        /**
+         * Prepare the submission data for the element on Form Submission.
+         *
+         * @param  array $formData
+         * @param  int   $formId
+         * @param  array $inputConfigs
+         * @return array $formData
+         */
+        public function _fluentformInsertResponseDataCallback($formData, $formId, $inputConfigs)
+        {
+        }
+        /**
+         * Add the component type in fluentform field
+         * types to be available in FormFieldParser.
+         * 
+         * @param  array $types
+         * @return array $types
+         */
+        public function _fluentformFormInputTypesCallback($types)
+        {
+        }
+        /**
+         * Render the component.
+         *
+         * @param array $data
+         * @param stdClass $form
+         * @return void
+         */
+        public function _elementRenderHookCallback($item, $form)
+        {
+        }
+        /**
+         * Element's entry value transformation.
+         * 
+         * @param  mixed $value
+         * @param  string $field
+         * @param  int $formId
+         * @return mixed $value
+         */
+        public function _elementEntryFormatCallback($value, $field, $formId)
+        {
+        }
+    }
+    abstract class BaseComponent
+    {
+        use \FluentForm\App\Modules\Component\ComponentInitTrait;
+        /**
+         * The unique name of the component.
+         * 
+         * @return string
+         */
+        public abstract function name();
+        /**
+         * The label of the component.
+         * 
+         * @return string
+         */
+        public abstract function label();
+        /**
+         * The element type of the component from already
+         * available elements (input_text, textarea e.t.c).
+         * 
+         * @return string
+         */
+        public abstract function element();
+        /**
+         * The template type of the component to display preview in editor dropzone from
+         * already available templates (inputText, selectCountry, addressFields e.t.c).
+         * 
+         * @return string
+         */
+        public abstract function template();
+        /**
+         * Render the element on frontend form.
+         * 
+         * @param  array $component Element Config
+         * @param  object $form The Form Object
+         * 
+         * @return void
+         */
+        public abstract function render($component, $form);
+        /**
+         * Form submission callback.
+         * 
+         * @param  array $formData Submitted form data
+         * @param  int $formId Submitted form id
+         * @param  array $config Form elements config
+         * 
+         * @return array $formData
+         */
+        public abstract function onSubmit($formData, $formId, $config);
+        /**
+         * Component position in editor. If null is returned then
+         * the element will be pushed at last but the derived class
+         * will override this method if any customization is needed.
+         * 
+         * @return int|null
+         */
+        public function index()
+        {
+        }
+        /**
+         * The group, where the component should be added. By default,
+         * the element will be added in "general" group and the derived
+         *  class will override this method if any customization is needed.
+         * 
+         * @return string general|advanced|container
+         */
+        public function group()
+        {
+        }
+        /**
+         * The element icon class for the component to display in the button in
+         * the editor element list which is mapped to editor_options.icon_class.
+         * 
+         * @return string
+         */
+        public function elementIconClass()
+        {
+        }
+        /**
+         * Element editor/form attributes and the derived class will
+         * override this method if any customization is needed.
+         *
+         * @param  array $dafault
+         * @return array $default
+         */
+        public function attributes($default)
+        {
+        }
+        /**
+         * Element editor settings and the derived class will
+         * override this method if any customization is needed.
+         * 
+         * @param  array $dafault
+         * @return array $default
+         */
+        public function settings($default)
+        {
+        }
+        /**
+         * Element editor options and the derived class will
+         * override this method if any customization is needed.
+         * 
+         * @param  array $dafault
+         * @return array $default
+         */
+        public function options($default)
+        {
+        }
+        /**
+         * Element's form submission validation rules and the derived
+         * class will override this method if needed any customization.
+         * 
+         * @return array
+         */
+        public function validationRules()
+        {
+        }
+        /**
+         * Element editor placement settings and the derived class
+         * will override this method if any customization is needed.
+         * 
+         * @param array $placemenSettings
+         * @return array $placemenSettings
+         */
+        public function placementSettings($placemenSettings)
+        {
+        }
+        /**
+         * The customization for the component and derived class can
+         * override this method if any customization is needed.
+         * 
+         * @param  array $customizationSettings
+         * @return array $customizationSettings
+         */
+        public function customizationSettings($customizationSettings)
+        {
+        }
+        /**
+         * Add the component type in fluentform field types to
+         * be available in FormFieldParser and derived class can
+         * override this method if any customization is needed.
+         * 
+         * @param  array $types
+         * @return array $types
+         */
+        public function addType($types)
+        {
+        }
+        /**
+         * The keywords to search the element in the editor and
+         * the derived class will override this method if needed.
+         * 
+         * @return array
+         */
+        public function searchBy()
+        {
+        }
+        /**
+         * Transform the element's submitted value saved in database
+         * to show it properly/formatted in entry page if needed and 
+         * this method implementation optional so a default method is
+         * implemented here and original value is returned. In any case
+         * if any customization of the value is needed then the derived
+         * class will override it and will format and return the the value.
+         * 
+         * @param  mixed $value   [description]
+         * @param  string $field
+         * @param  int $formId
+         * @return mixed $value
+         */
+        public function formatEntryValue($value, $field, $formId)
+        {
+        }
+    }
     class Component
     {
         /**
@@ -256,6 +611,12 @@ namespace FluentForm\App\Modules\Component {
          * @param \FluentForm\Framework\Foundation\Application $app
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        {
+        }
+        public function registerScripts()
+        {
+        }
+        protected function maybeLoadFluentFormStyles()
         {
         }
         /**
@@ -286,11 +647,33 @@ namespace FluentForm\App\Modules\Component {
         {
         }
         /**
+         * Get all available shortcodes for editor
+         *
+         * @return void
+         * @throws \Exception
+         */
+        public function getAllEditorShortcodes()
+        {
+        }
+        /**
          * Register the form renderer shortcode
          *
          * @return  void
          */
         public function addFluentFormShortCode()
+        {
+        }
+        public function renderForm($atts)
+        {
+        }
+        /**
+         * Process the output HTML to generate the default values.
+         *
+         * @param string $output
+         * @param \stdClass $form
+         * @return void
+         */
+        private function processOutput($output, $form)
         {
         }
         /**
@@ -320,7 +703,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Check if limit is set on form submits and it's valid yet
          *
-         * @param  array $restrictions
+         * @param array $restrictions
          *
          * @return bool
          */
@@ -330,7 +713,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Check if form has scheduled date and open for submission
          *
-         * @param  array $restrictions
+         * @param array $restrictions
          *
          * @return bool
          */
@@ -340,7 +723,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * * Check if form requires loged in user and user is logged in
          *
-         * @param  array $restrictions
+         * @param array $restrictions
          *
          * @return bool
          */
@@ -348,7 +731,7 @@ namespace FluentForm\App\Modules\Component {
         {
         }
         /**
-         * Register fluentform_submission_inserted action
+         * Register fluentform_submission_inserted actions
          *
          * @return  void
          */
@@ -359,16 +742,34 @@ namespace FluentForm\App\Modules\Component {
          * Add inline scripts [Add localized script using same var]
          *
          * @param array $vars
-         * @param int   $form_id
+         * @param int $form_id
          *
          * @return  void
          */
         private function addInlineVars($vars, $form_id)
         {
         }
+        private function getDatei18n()
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules {
+    class DashboardWidgetModule
+    {
+        public function showStat()
+        {
+        }
+        private function printStats($stats)
+        {
+        }
+        private function getInstallUrl($plugin)
+        {
+        }
+        private function getUnreadCount($formId)
+        {
+        }
+    }
     class Deactivator
     {
         /**
@@ -420,6 +821,9 @@ namespace FluentForm\App\Modules\Entries {
         protected $is_favourite = null;
         protected $sort_by = 'ASC';
         protected $search = false;
+        protected $wheres = array();
+        protected $startDate;
+        protected $endDate;
         public function __construct()
         {
         }
@@ -464,6 +868,9 @@ namespace FluentForm\App\Modules\Entries {
         public function getEntriesGroup()
         {
         }
+        public function _getEntries($formId, $currentPage, $perPage, $sortBy, $entryType, $search, $wheres = array())
+        {
+        }
         public function getEntries()
         {
         }
@@ -471,11 +878,13 @@ namespace FluentForm\App\Modules\Entries {
         {
         }
         /**
-         * @param $formId
-         * @todo: Implement Caching mechanism so we don't have to parse these things for every request
+         * @param       $form
+         * @param array $with
+         *
          * @return array
+         * @todo: Implement Caching mechanism so we don't have to parse these things for every request
          */
-        private function getFormInputsAndLabels($form)
+        private function getFormInputsAndLabels($form, $with = ['admin_label', 'raw'])
         {
         }
         public function getNotes()
@@ -490,10 +899,19 @@ namespace FluentForm\App\Modules\Entries {
         public function deleteEntry()
         {
         }
+        public function deleteEntryById($entryId, $formId = false)
+        {
+        }
         public function favoriteChange()
         {
         }
         public function handleBulkAction()
+        {
+        }
+        public function recordEntryDetails($entryId, $formId, $data)
+        {
+        }
+        public function updateEntryDiffs($entryId, $formId, $formData)
         {
         }
     }
@@ -503,6 +921,7 @@ namespace FluentForm\App\Modules\Entries {
          * @var \FluentForm\Framework\Request\Request
          */
         protected $request;
+        protected $app;
         /**
          * Export constructor.
          *
@@ -517,6 +936,50 @@ namespace FluentForm\App\Modules\Entries {
          * @todo:: refactor.
          */
         public function index()
+        {
+        }
+        private function downloadOfficeDoc($data, $type = 'csv', $fileName = null)
+        {
+        }
+        private function exportAsJSON($form)
+        {
+        }
+        private function getSubmissions($formId)
+        {
+        }
+    }
+    class Report
+    {
+        private $app;
+        private $formModel;
+        public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        {
+        }
+        /**
+         * @param bool $formId
+         */
+        public function getReport($formId = false)
+        {
+        }
+        public function getInputReport($formId, $fieldNames, $whereClasuses)
+        {
+        }
+        public function getSubFieldInputReport($formId, $fieldNames, $whereClasuses)
+        {
+        }
+        public function getEntryTotal($fieldName, $formId, $whereClasuses)
+        {
+        }
+        private function maybeMigrateData($formId)
+        {
+        }
+        private function getEntryCounts($formId, $statuses = false)
+        {
+        }
+        private function getBrowserCounts($formId, $statuses)
+        {
+        }
+        private function getDeviceCounts($formId, $statuses)
         {
         }
     }
@@ -541,14 +1004,17 @@ namespace FluentForm\App\Modules\Form {
          * 
          * @return json respoonse
          */
-        public function record()
+        public function record($formId)
+        {
+        }
+        public function resetFormAnalytics()
         {
         }
         /**
          * Save form view analytics data
          * @return void
          */
-        private function saveViewAnalytics()
+        private function saveViewAnalytics($formId)
         {
         }
         /**
@@ -572,6 +1038,12 @@ namespace FluentForm\App\Modules\Form {
          * @var array $defaultSettings
          */
         protected $defaultSettings;
+        /**
+         * Set this value when we need predefined default notifications.
+         *
+         * @var array $defaultNotifications
+         */
+        protected $defaultNotifications;
         /**
          * Set this value when we need predefined form fields.
          *
@@ -624,6 +1096,14 @@ namespace FluentForm\App\Modules\Form {
         {
         }
         /**
+         * Fetch a from from the database
+         * Note: required for ninja-tables
+         * @return mixed
+         */
+        public function fetchForm($formId)
+        {
+        }
+        /**
          * Save/update a form from backend/editor
          * @return void
          */
@@ -638,16 +1118,29 @@ namespace FluentForm\App\Modules\Form {
         {
         }
         /**
+         * Duplicate a from
+         * @return void
+         */
+        public function duplicate()
+        {
+        }
+        /**
          * Validate a form only by form title
          * @return void
          */
         private function validate()
         {
         }
-        private function getAdminPermalink($route, $formId)
+        private function getAdminPermalink($route, $form)
+        {
+        }
+        private function getSettingsUrl($form)
         {
         }
         public function getAllForms()
+        {
+        }
+        private function getUnreadCount($formId)
         {
         }
     }
@@ -657,16 +1150,38 @@ namespace FluentForm\App\Modules\Form {
         public static function parseFormEntries($entries, $form, $fields = null)
         {
         }
-        public static function parseFormEntry($entry, $form, $fields = null)
+        public static function parseFormEntry($entry, $form, $fields = null, $isHtml = false)
         {
         }
-        public static function parseFormSubmission($submission, $form, $fields)
+        public static function parseFormSubmission($submission, $form, $fields, $isHtml = false)
         {
         }
-        public static function parseData($response, $fields, $formId)
+        public static function parseData($response, $fields, $formId, $isHtml = false)
         {
         }
         public static function formatValue($value)
+        {
+        }
+        public static function formatFileValues($values, $isHtml)
+        {
+        }
+        public static function formatRepeatFieldValue($value, $field, $form_id)
+        {
+        }
+        public static function formatTabularGridFieldValue($value, $field, $form_id)
+        {
+        }
+        public static function makeTabularData($data)
+        {
+        }
+        /**
+         * Format input_name field value by concatenating all name fields.
+         *
+         * @param array|object $value
+         *
+         * @return string $value
+         */
+        public static function formatName($value)
         {
         }
     }
@@ -681,6 +1196,10 @@ namespace FluentForm\App\Modules\Form {
     class FormFieldsParser
     {
         protected static $forms = [];
+        protected static $formsWith = [];
+        public static function maybeResetForm($form, $with)
+        {
+        }
         public static function getFields($form, $asArray = false)
         {
         }
@@ -757,7 +1276,10 @@ namespace FluentForm\App\Modules\Form {
          *
          * @param int $insertId
          */
-        private function sendResponse($insertId)
+        private function sendResponse($insertId, $returnData)
+        {
+        }
+        private function getReturnData($insertId)
         {
         }
         /**
@@ -819,6 +1341,25 @@ namespace FluentForm\App\Modules\Form {
         {
         }
     }
+    class HonetPot
+    {
+        private $app;
+        public function __construct(\FluentForm\Framework\Foundation\Application $application)
+        {
+        }
+        public function renderHoneyPot($form)
+        {
+        }
+        public function verify($insertData, $requestData, $formId)
+        {
+        }
+        public function isEnabled($formId = false)
+        {
+        }
+        private function getFieldName($formId)
+        {
+        }
+    }
     class Inputs
     {
         /**
@@ -836,6 +1377,12 @@ namespace FluentForm\App\Modules\Form {
          * Get all the flatten form inputs for shortcode generation.
          */
         public function index()
+        {
+        }
+        public function supportedConditionalFields()
+        {
+        }
+        public function filterEditorFields($fields)
         {
         }
     }
@@ -904,6 +1451,38 @@ namespace FluentForm\App\Modules\Form\Settings {
         {
         }
     }
+    class FormCssJs
+    {
+        public function addCssJs($formId)
+        {
+        }
+        public function addCss($formId, $css, $cssId = 'fluentform_custom_css')
+        {
+        }
+        public function addJs($formId, $customJS)
+        {
+        }
+        /**
+         * Get settings for a particular form by id
+         * @return void
+         */
+        public function getSettingsAjax()
+        {
+        }
+        /**
+         * Save settings for a particular form by id
+         * @return void
+         */
+        public function saveSettingsAjax()
+        {
+        }
+        protected function getData($formId, $metaKey)
+        {
+        }
+        protected function store($formId, $metaKey, $metaValue)
+        {
+        }
+    }
     class FormSettings
     {
         /**
@@ -932,6 +1511,12 @@ namespace FluentForm\App\Modules\Form\Settings {
          * @return void
          */
         public function index()
+        {
+        }
+        protected function joinFluentformsTable($query)
+        {
+        }
+        protected function getPostFields()
         {
         }
         /**
@@ -1083,185 +1668,31 @@ namespace FluentForm\App\Modules\Form {
         public function import()
         {
         }
-    }
-}
-namespace FluentForm\App\Modules\Integration {
-    class BaseIntegration
-    {
-        private $setting_key = '';
-        private $isMultiple = false;
-        private $formId = false;
-        private $isJsonValue = true;
-        public function __construct($settings_key = '', $form_id = false, $isMultiple = false)
-        {
-        }
-        public function setSettingsKey($key)
-        {
-        }
-        public function setIsMultiple($isMultiple)
-        {
-        }
-        public function setFormId($formId)
-        {
-        }
-        public function setJasonType($type)
-        {
-        }
-        public function save($settings)
-        {
-        }
-        public function update($settingsId, $settings)
-        {
-        }
-        public function get($settingsId)
-        {
-        }
-        public function getAll()
-        {
-        }
-        public function delete($settingsId)
-        {
-        }
-        public function deleteAll()
-        {
-        }
-        private function getFormattedValue($setting)
+        public function getFormMetas($formId)
         {
         }
     }
 }
-namespace FluentForm\App\Modules\Integration\ActiveCampaign {
-    class Integrator extends \FluentForm\App\Modules\Integration\BaseIntegration
+namespace FluentForm\App\Modules\Logger {
+    class DataLogger
     {
-        /**
-         * Option `key` for Active Campaign List settings.
-         *
-         * @var string $key
-         */
-        private $key = 'activecampaign_details';
-        /**
-         * Application instance
-         *
-         * @var \FluentForm\Framework\Foundation\Application $app
-         */
-        private $app;
-        /**
-         * Global settings for the integration.
-         *
-         * @var array $settings
-         */
-        protected $settings;
-        /**
-         * Active Campaign integration constructor.
-         *
-         * @param \FluentForm\Framework\Foundation\Application $app
-         */
+        public $app;
         public function __construct(\FluentForm\Framework\Foundation\Application $app)
         {
         }
-        /**
-         * Get all of the integrations.
-         *
-         * @return void
-         */
-        public function index()
+        public function getLogFilters()
         {
         }
-        /**
-         * Determine if the integration is active.
-         *
-         * @return boolean
-         */
-        private function isActive()
+        public function log($data)
         {
         }
-        /**
-         * Get all available lists.
-         *
-         * @return void
-         */
-        public function getLists()
+        public function getLogsByEntry($entry_id, $sourceType = 'submission_item')
         {
         }
-        /**
-         * Format the lists excluding some keys so that we only have
-         * the plain array of the lists containing each list info.
-         *
-         * @param array $lists
-         * @return array
-         */
-        private function formatLists($lists)
+        public function getAllLogs()
         {
         }
-    }
-}
-namespace FluentForm\App\Modules\Integration {
-    trait MailChimpSubscriber
-    {
-        /**
-         * Enabled MailChimp feed settings.
-         *
-         * @var array $feeds
-         */
-        protected $feeds = [];
-        /**
-         * Form input data.
-         *
-         * @param array $formData
-         */
-        public function setApplicableFeeds($formData)
-        {
-        }
-        /**
-         * Determine if the feed is eligible to be applied.
-         *
-         * @param $feed
-         * @param $formData
-         *
-         * @return bool
-         */
-        public function isApplicable(&$feed, &$formData)
-        {
-        }
-        /**
-         * Subscribe a user to the list on form submission.
-         *
-         * @param $formData
-         */
-        public function subscribe($formData)
-        {
-        }
-    }
-    class MailChimpIntegration extends \FluentForm\App\Modules\Integration\BaseIntegration
-    {
-        /**
-         * MailChimp Subscriber that handles & process all the subscribing logics.
-         */
-        use \FluentForm\App\Modules\Integration\MailChimpSubscriber;
-        private $key = 'mailchimp_feeds';
-        private $app;
-        public function __construct(\FluentForm\Framework\Foundation\Application $application)
-        {
-        }
-        public function getMailChimpSettings()
-        {
-        }
-        public function getMailChimpLists()
-        {
-        }
-        public function getMailChimpList()
-        {
-        }
-        public function saveNotification()
-        {
-        }
-        public function deleteNotification()
-        {
-        }
-        private function isConfigured()
-        {
-        }
-        private function validate($notification)
+        public function deleteLogsByIds($ids = [])
         {
         }
     }
@@ -1321,6 +1752,15 @@ namespace FluentForm\App\Modules\Registerer {
         public function __construct(\FluentForm\Framework\Foundation\Application $application)
         {
         }
+        public function reisterScripts()
+        {
+        }
+        public function isFluentPages()
+        {
+        }
+        public function enqueuePageScripts()
+        {
+        }
         /**
          * Register menu and sub-menus.
          */
@@ -1333,7 +1773,18 @@ namespace FluentForm\App\Modules\Registerer {
         public function renderFormAdminRoute()
         {
         }
+        private function renderFormInnerPages()
+        {
+        }
         public function renderSettings($form_id)
+        {
+        }
+        /**
+         * Remove the inactive addOn menu items
+         * @param  string $addOn
+         * @return boolean
+         */
+        public function filterFormSettingsMenu($settingsMenus, $form_id)
         {
         }
         public function renderFormSettings($form_id)
@@ -1369,6 +1820,15 @@ namespace FluentForm\App\Modules\Registerer {
         {
         }
         public function addPreviewButton($formId)
+        {
+        }
+        public function addCopyShortcodeButton($formId)
+        {
+        }
+        public function commonAction()
+        {
+        }
+        public function renderGlobalMenu()
         {
         }
     }
@@ -1444,9 +1904,6 @@ namespace FluentForm\App\Modules\Settings {
         public function storeMailChimpSettings()
         {
         }
-        public function storeActiveCampaignSettings()
-        {
-        }
     }
 }
 namespace FluentForm\App\Modules\Track {
@@ -1475,6 +1932,23 @@ namespace FluentForm\App\Modules\Track {
         {
         }
         private function isLocalhost()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Widgets {
+    class SidebarWidgets extends \WP_Widget
+    {
+        function __construct()
+        {
+        }
+        public function widget($args, $instance)
+        {
+        }
+        public function form($instance)
+        {
+        }
+        public function update($new_instance, $old_instance)
         {
         }
     }
@@ -1509,12 +1983,6 @@ namespace FluentForm\Framework\Foundation {
     }
 }
 namespace FluentForm\App\Providers {
-    class ActiveCampaignApiProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        public function booting()
-        {
-        }
-    }
     class AdminNoticeProvider extends \FluentForm\Framework\Foundation\Provider
     {
         /**
@@ -1552,12 +2020,6 @@ namespace FluentForm\App\Providers {
         {
         }
     }
-    class BackgroundProcessingProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        public function booting()
-        {
-        }
-    }
     class CommonProvider extends \FluentForm\Framework\Foundation\Provider
     {
         /**
@@ -1572,12 +2034,6 @@ namespace FluentForm\App\Providers {
          * @return void
          */
         public function booted()
-        {
-        }
-    }
-    class CsvProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        public function booting()
         {
         }
     }
@@ -1685,376 +2141,6 @@ namespace FluentForm\App\Services {
         private function hasPermission()
         {
         }
-    }
-}
-namespace {
-    /**
-     * Abstract WP_Async_Request class.
-     *
-     * @abstract
-     */
-    abstract class WP_Async_Request
-    {
-        /**
-         * Prefix
-         *
-         * (default value: 'wp')
-         *
-         * @var string
-         * @access protected
-         */
-        protected $prefix = 'wp';
-        /**
-         * Action
-         *
-         * (default value: 'async_request')
-         *
-         * @var string
-         * @access protected
-         */
-        protected $action = 'async_request';
-        /**
-         * Identifier
-         *
-         * @var mixed
-         * @access protected
-         */
-        protected $identifier;
-        /**
-         * Data
-         *
-         * (default value: array())
-         *
-         * @var array
-         * @access protected
-         */
-        protected $data = array();
-        /**
-         * Initiate new async request
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Set data used during the request
-         *
-         * @param array $data Data.
-         *
-         * @return $this
-         */
-        public function data($data)
-        {
-        }
-        /**
-         * Dispatch the async request
-         *
-         * @return array|WP_Error
-         */
-        public function dispatch()
-        {
-        }
-        /**
-         * Get query args
-         *
-         * @return array
-         */
-        protected function get_query_args()
-        {
-        }
-        /**
-         * Get query URL
-         *
-         * @return string
-         */
-        protected function get_query_url()
-        {
-        }
-        /**
-         * Get post args
-         *
-         * @return array
-         */
-        protected function get_post_args()
-        {
-        }
-        /**
-         * Maybe handle
-         *
-         * Check for correct nonce and pass to handler.
-         */
-        public function maybe_handle()
-        {
-        }
-        /**
-         * Handle
-         *
-         * Override this method to perform any actions required
-         * during the async request.
-         */
-        protected abstract function handle();
-    }
-    /**
-     * Abstract WP_Background_Process class.
-     *
-     * @abstract
-     * @extends WP_Async_Request
-     */
-    abstract class WP_Background_Process extends \WP_Async_Request
-    {
-        /**
-         * Action
-         *
-         * (default value: 'background_process')
-         *
-         * @var string
-         * @access protected
-         */
-        protected $action = 'background_process';
-        /**
-         * Start time of current process.
-         *
-         * (default value: 0)
-         *
-         * @var int
-         * @access protected
-         */
-        protected $start_time = 0;
-        /**
-         * Cron_hook_identifier
-         *
-         * @var mixed
-         * @access protected
-         */
-        protected $cron_hook_identifier;
-        /**
-         * Cron_interval_identifier
-         *
-         * @var mixed
-         * @access protected
-         */
-        protected $cron_interval_identifier;
-        /**
-         * Initiate new background process
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Dispatch
-         *
-         * @access public
-         * @return void
-         */
-        public function dispatch()
-        {
-        }
-        /**
-         * Push to queue
-         *
-         * @param mixed $data Data.
-         *
-         * @return $this
-         */
-        public function push_to_queue($data)
-        {
-        }
-        /**
-         * Save queue
-         *
-         * @return $this
-         */
-        public function save()
-        {
-        }
-        /**
-         * Update queue
-         *
-         * @param string $key Key.
-         * @param array  $data Data.
-         *
-         * @return $this
-         */
-        public function update($key, $data)
-        {
-        }
-        /**
-         * Delete queue
-         *
-         * @param string $key Key.
-         *
-         * @return $this
-         */
-        public function delete($key)
-        {
-        }
-        /**
-         * Generate key
-         *
-         * Generates a unique key based on microtime. Queue items are
-         * given a unique key so that they can be merged upon save.
-         *
-         * @param int $length Length.
-         *
-         * @return string
-         */
-        protected function generate_key($length = 64)
-        {
-        }
-        /**
-         * Maybe process queue
-         *
-         * Checks whether data exists within the queue and that
-         * the process is not already running.
-         */
-        public function maybe_handle()
-        {
-        }
-        /**
-         * Is queue empty
-         *
-         * @return bool
-         */
-        protected function is_queue_empty()
-        {
-        }
-        /**
-         * Is process running
-         *
-         * Check whether the current process is already running
-         * in a background process.
-         */
-        protected function is_process_running()
-        {
-        }
-        /**
-         * Lock process
-         *
-         * Lock the process so that multiple instances can't run simultaneously.
-         * Override if applicable, but the duration should be greater than that
-         * defined in the time_exceeded() method.
-         */
-        protected function lock_process()
-        {
-        }
-        /**
-         * Unlock process
-         *
-         * Unlock the process so that other instances can spawn.
-         *
-         * @return $this
-         */
-        protected function unlock_process()
-        {
-        }
-        /**
-         * Get batch
-         *
-         * @return stdClass Return the first batch from the queue
-         */
-        protected function get_batch()
-        {
-        }
-        /**
-         * Handle
-         *
-         * Pass each queue item to the task handler, while remaining
-         * within server memory and time limit constraints.
-         */
-        protected function handle()
-        {
-        }
-        /**
-         * Memory exceeded
-         *
-         * Ensures the batch process never exceeds 90%
-         * of the maximum WordPress memory.
-         *
-         * @return bool
-         */
-        protected function memory_exceeded()
-        {
-        }
-        /**
-         * Get memory limit
-         *
-         * @return int
-         */
-        protected function get_memory_limit()
-        {
-        }
-        /**
-         * Time exceeded.
-         *
-         * Ensures the batch never exceeds a sensible time limit.
-         * A timeout limit of 30s is common on shared hosting.
-         *
-         * @return bool
-         */
-        protected function time_exceeded()
-        {
-        }
-        /**
-         * Complete.
-         *
-         * Override if applicable, but ensure that the below actions are
-         * performed, or, call parent::complete().
-         */
-        protected function complete()
-        {
-        }
-        /**
-         * Schedule cron healthcheck
-         *
-         * @access public
-         * @param mixed $schedules Schedules.
-         * @return mixed
-         */
-        public function schedule_cron_healthcheck($schedules)
-        {
-        }
-        /**
-         * Handle cron healthcheck
-         *
-         * Restart the background process if not already running
-         * and data exists in the queue.
-         */
-        public function handle_cron_healthcheck()
-        {
-        }
-        /**
-         * Schedule event
-         */
-        protected function schedule_event()
-        {
-        }
-        /**
-         * Clear scheduled event
-         */
-        protected function clear_scheduled_event()
-        {
-        }
-        /**
-         * Cancel Process
-         *
-         * Stop processing queue items, clear cronjob and delete batch.
-         *
-         */
-        public function cancel_process()
-        {
-        }
-        /**
-         * Task
-         *
-         * Override this method to perform any actions required on each
-         * queue item. Return the modified item for further processing
-         * in the next pass through. Or, return false to remove the
-         * item from the queue.
-         *
-         * @param mixed $item Queue item to iterate over.
-         *
-         * @return mixed
-         */
-        protected abstract function task($item);
     }
 }
 namespace FluentForm\App\Services\Browser {
@@ -2825,7 +2911,1098 @@ namespace FluentForm\App\Services {
         }
     }
 }
+namespace FluentForm\App\Services\Emogrifier {
+    /**
+     * This class provides functions for converting CSS styles into inline style attributes in your HTML code.
+     *
+     * For more information, please see the README.md file.
+     *
+     * @version 2.0.0
+     *
+     * @author Cameron Brooks
+     * @author Jaime Prado
+     * @author Oliver Klee <github@oliverklee.de>
+     * @author Roman Ožana <ozana@omdesign.cz>
+     * @author Sander Kruger <s.kruger@invessel.com>
+     * @author Zoli Szabó <zoli.szabo+github@gmail.com>
+     */
+    class Emogrifier
+    {
+        /**
+         * @var int
+         */
+        const CACHE_KEY_CSS = 0;
+        /**
+         * @var int
+         */
+        const CACHE_KEY_SELECTOR = 1;
+        /**
+         * @var int
+         */
+        const CACHE_KEY_XPATH = 2;
+        /**
+         * @var int
+         */
+        const CACHE_KEY_CSS_DECLARATIONS_BLOCK = 3;
+        /**
+         * @var int
+         */
+        const CACHE_KEY_COMBINED_STYLES = 4;
+        /**
+         * for calculating nth-of-type and nth-child selectors
+         *
+         * @var int
+         */
+        const INDEX = 0;
+        /**
+         * for calculating nth-of-type and nth-child selectors
+         *
+         * @var int
+         */
+        const MULTIPLIER = 1;
+        /**
+         * @var string
+         */
+        const ID_ATTRIBUTE_MATCHER = '/(\\w+)?\\#([\\w\\-]+)/';
+        /**
+         * @var string
+         */
+        const CLASS_ATTRIBUTE_MATCHER = '/(\\w+|[\\*\\]])?((\\.[\\w\\-]+)+)/';
+        /**
+         * @var string
+         */
+        const CONTENT_TYPE_META_TAG = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
+        /**
+         * @var string
+         */
+        const DEFAULT_DOCUMENT_TYPE = '<!DOCTYPE html>';
+        /**
+         * @var string
+         */
+        private $html = '';
+        /**
+         * @var string
+         */
+        private $css = '';
+        /**
+         * @var bool[]
+         */
+        private $excludedSelectors = [];
+        /**
+         * @var string[]
+         */
+        private $unprocessableHtmlTags = ['wbr'];
+        /**
+         * @var bool[]
+         */
+        private $allowedMediaTypes = ['all' => true, 'screen' => true, 'print' => true];
+        /**
+         * @var mixed[]
+         */
+        private $caches = [self::CACHE_KEY_CSS => [], self::CACHE_KEY_SELECTOR => [], self::CACHE_KEY_XPATH => [], self::CACHE_KEY_CSS_DECLARATIONS_BLOCK => [], self::CACHE_KEY_COMBINED_STYLES => []];
+        /**
+         * the visited nodes with the XPath paths as array keys
+         *
+         * @var \DOMElement[]
+         */
+        private $visitedNodes = [];
+        /**
+         * the styles to apply to the nodes with the XPath paths as array keys for the outer array
+         * and the attribute names/values as key/value pairs for the inner array
+         *
+         * @var string[][]
+         */
+        private $styleAttributesForNodes = [];
+        /**
+         * Determines whether the "style" attributes of tags in the the HTML passed to this class should be preserved.
+         * If set to false, the value of the style attributes will be discarded.
+         *
+         * @var bool
+         */
+        private $isInlineStyleAttributesParsingEnabled = true;
+        /**
+         * Determines whether the <style> blocks in the HTML passed to this class should be parsed.
+         *
+         * If set to true, the <style> blocks will be removed from the HTML and their contents will be applied to the HTML
+         * via inline styles.
+         *
+         * If set to false, the <style> blocks will be left as they are in the HTML.
+         *
+         * @var bool
+         */
+        private $isStyleBlocksParsingEnabled = true;
+        /**
+         * Determines whether elements with the `display: none` property are
+         * removed from the DOM.
+         *
+         * @var bool
+         */
+        private $shouldKeepInvisibleNodes = true;
+        /**
+         * @var string[]
+         */
+        private $xPathRules = [
+            // attribute presence
+            '/^\\[(\\w+|\\w+\\=[\'"]?\\w+[\'"]?)\\]/' => '*[@\\1]',
+            // type and attribute exact value
+            '/(\\w)\\[(\\w+)\\=[\'"]?([\\w\\s]+)[\'"]?\\]/' => '\\1[@\\2="\\3"]',
+            // type and attribute value with ~ (one word within a whitespace-separated list of words)
+            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\~\\=[\\s]*[\'"]?([\\w\\-_\\/]+)[\'"]?\\]/' => '\\1[contains(concat(" ", @\\2, " "), concat(" ", "\\3", " "))]',
+            // type and attribute value with | (either exact value match or prefix followed by a hyphen)
+            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\|\\=[\\s]*[\'"]?([\\w\\-_\\s\\/]+)[\'"]?\\]/' => '\\1[@\\2="\\3" or starts-with(@\\2, concat("\\3", "-"))]',
+            // type and attribute value with ^ (prefix match)
+            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\^\\=[\\s]*[\'"]?([\\w\\-_\\/]+)[\'"]?\\]/' => '\\1[starts-with(@\\2, "\\3")]',
+            // type and attribute value with * (substring match)
+            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\*\\=[\\s]*[\'"]?([\\w\\-_\\s\\/:;]+)[\'"]?\\]/' => '\\1[contains(@\\2, "\\3")]',
+            // adjacent sibling
+            '/\\s+\\+\\s+/' => '/following-sibling::*[1]/self::',
+            // child
+            '/\\s*>\\s*/' => '/',
+            // descendant
+            '/\\s+(?=.*[^\\]]{1}$)/' => '//',
+            // type and :first-child
+            '/([^\\/]+):first-child/i' => '*[1]/self::\\1',
+            // type and :last-child
+            '/([^\\/]+):last-child/i' => '*[last()]/self::\\1',
+            // The following matcher will break things if it is placed before the adjacent matcher.
+            // So one of the matchers matches either too much or not enough.
+            // type and attribute value with $ (suffix match)
+            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\$\\=[\\s]*[\'"]?([\\w\\-_\\s\\/]+)[\'"]?\\]/' => '\\1[substring(@\\2, string-length(@\\2) - string-length("\\3") + 1) = "\\3"]',
+        ];
+        /**
+         * Determines whether CSS styles that have an equivalent HTML attribute
+         * should be mapped and attached to those elements.
+         *
+         * @var bool
+         */
+        private $shouldMapCssToHtml = false;
+        /**
+         * This multi-level array contains simple mappings of CSS properties to
+         * HTML attributes. If a mapping only applies to certain HTML nodes or
+         * only for certain values, the mapping is an object with a whitelist
+         * of nodes and values.
+         *
+         * @var mixed[][]
+         */
+        private $cssToHtmlMap = ['background-color' => ['attribute' => 'bgcolor'], 'text-align' => ['attribute' => 'align', 'nodes' => ['p', 'div', 'td'], 'values' => ['left', 'right', 'center', 'justify']], 'float' => ['attribute' => 'align', 'nodes' => ['table', 'img'], 'values' => ['left', 'right']], 'border-spacing' => ['attribute' => 'cellspacing', 'nodes' => ['table']]];
+        /**
+         * Emogrifier will throw Exceptions when it encounters an error instead of silently ignoring them.
+         *
+         * @var bool
+         */
+        private $debug = false;
+        /**
+         * The constructor.
+         *
+         * @param string $html the HTML to emogrify, must be UTF-8-encoded
+         * @param string $css the CSS to merge, must be UTF-8-encoded
+         */
+        public function __construct($html = '', $css = '')
+        {
+        }
+        /**
+         * The destructor.
+         */
+        public function __destruct()
+        {
+        }
+        /**
+         * Sets the HTML to emogrify.
+         *
+         * @param string $html the HTML to emogrify, must be UTF-8-encoded
+         *
+         * @return void
+         */
+        public function setHtml($html)
+        {
+        }
+        /**
+         * Sets the CSS to merge with the HTML.
+         *
+         * @param string $css the CSS to merge, must be UTF-8-encoded
+         *
+         * @return void
+         */
+        public function setCss($css)
+        {
+        }
+        /**
+         * Applies $this->css to $this->html and returns the HTML with the CSS
+         * applied.
+         *
+         * This method places the CSS inline.
+         *
+         * @return string
+         *
+         * @throws \BadMethodCallException
+         */
+        public function emogrify()
+        {
+        }
+        /**
+         * Applies $this->css to $this->html and returns only the HTML content
+         * within the <body> tag.
+         *
+         * This method places the CSS inline.
+         *
+         * @return string
+         *
+         * @throws \BadMethodCallException
+         */
+        public function emogrifyBodyContent()
+        {
+        }
+        /**
+         * Creates an XML document from $this->html and emogrifies ist.
+         *
+         * @return \DOMDocument
+         *
+         * @throws \BadMethodCallException
+         */
+        private function createAndProcessXmlDocument()
+        {
+        }
+        /**
+         * Applies $this->css to $xmlDocument.
+         *
+         * This method places the CSS inline.
+         *
+         * @param \DOMDocument $xmlDocument
+         *
+         * @return void
+         *
+         * @throws \InvalidArgumentException
+         */
+        protected function process(\DOMDocument $xmlDocument)
+        {
+        }
+        /**
+         * Searches for all nodes with a style attribute, transforms the CSS found
+         * to HTML attributes and adds those attributes to each node.
+         *
+         * @param \DOMXPath $xPath
+         *
+         * @return void
+         */
+        private function mapAllInlineStylesToHtmlAttributes(\DOMXPath $xPath)
+        {
+        }
+        /**
+         * Searches for all nodes with a style attribute and removes the "!important" annotations out of
+         * the inline style declarations, eventually by rearranging declarations.
+         *
+         * @param \DOMXPath $xPath
+         *
+         * @return void
+         */
+        private function removeImportantAnnotationFromAllInlineStyles(\DOMXPath $xPath)
+        {
+        }
+        /**
+         * Removes the "!important" annotations out of the inline style declarations,
+         * eventually by rearranging declarations.
+         * Rearranging needed when !important shorthand properties are followed by some of their
+         * not !important expanded-version properties.
+         * For example "font: 12px serif !important; font-size: 13px;" must be reordered
+         * to "font-size: 13px; font: 12px serif;" in order to remain correct.
+         *
+         * @param \DOMElement $node
+         *
+         * @return void
+         */
+        private function removeImportantAnnotationFromNodeInlineStyle(\DOMElement $node)
+        {
+        }
+        /**
+         * Returns a list with all DOM nodes that have a style attribute.
+         *
+         * @param \DOMXPath $xPath
+         *
+         * @return \DOMNodeList
+         */
+        private function getAllNodesWithStyleAttribute(\DOMXPath $xPath)
+        {
+        }
+        /**
+         * Applies $styles to $node.
+         *
+         * This method maps CSS styles to HTML attributes and adds those to the
+         * node.
+         *
+         * @param string[] $styles the new CSS styles taken from the global styles to be applied to this node
+         * @param \DOMElement $node node to apply styles to
+         *
+         * @return void
+         */
+        private function mapCssToHtmlAttributes(array $styles, \DOMElement $node)
+        {
+        }
+        /**
+         * Tries to apply the CSS style to $node as an attribute.
+         *
+         * This method maps a CSS rule to HTML attributes and adds those to the node.
+         *
+         * @param string $property the name of the CSS property to map
+         * @param string $value the value of the style rule to map
+         * @param \DOMElement $node node to apply styles to
+         *
+         * @return void
+         */
+        private function mapCssToHtmlAttribute($property, $value, \DOMElement $node)
+        {
+        }
+        /**
+         * Looks up the CSS property in the mapping table and maps it if it matches the conditions.
+         *
+         * @param string $property the name of the CSS property to map
+         * @param string $value the value of the style rule to map
+         * @param \DOMElement $node node to apply styles to
+         *
+         * @return bool true if the property cab be mapped using the simple mapping table
+         */
+        private function mapSimpleCssProperty($property, $value, \DOMElement $node)
+        {
+        }
+        /**
+         * Maps CSS properties that need special transformation to an HTML attribute.
+         *
+         * @param string $property the name of the CSS property to map
+         * @param string $value the value of the style rule to map
+         * @param \DOMElement $node node to apply styles to
+         *
+         * @return void
+         */
+        private function mapComplexCssProperty($property, $value, \DOMElement $node)
+        {
+        }
+        /**
+         * Parses a shorthand CSS value and splits it into individual values
+         *
+         * @param string $value a string of CSS value with 1, 2, 3 or 4 sizes
+         *                      For example: padding: 0 auto;
+         *                      '0 auto' is split into top: 0, left: auto, bottom: 0,
+         *                      right: auto.
+         *
+         * @return string[] an array of values for top, right, bottom and left (using these as associative array keys)
+         */
+        private function parseCssShorthandValue($value)
+        {
+        }
+        /**
+         * Extracts and parses the individual rules from a CSS string.
+         *
+         * @param string $css a string of raw CSS code
+         *
+         * @return string[][] an array of string sub-arrays with the keys
+         *         "selector" (the CSS selector(s), e.g., "*" or "h1"),
+         *         "declarationsBLock" (the semicolon-separated CSS declarations for that selector(s),
+         *         e.g., "color: red; height: 4px;"),
+         *         and "line" (the line number e.g. 42)
+         */
+        private function parseCssRules($css)
+        {
+        }
+        /**
+         * Disables the parsing of inline styles.
+         *
+         * @return void
+         */
+        public function disableInlineStyleAttributesParsing()
+        {
+        }
+        /**
+         * Disables the parsing of <style> blocks.
+         *
+         * @return void
+         */
+        public function disableStyleBlocksParsing()
+        {
+        }
+        /**
+         * Disables the removal of elements with `display: none` properties.
+         *
+         * @return void
+         */
+        public function disableInvisibleNodeRemoval()
+        {
+        }
+        /**
+         * Enables the attachment/override of HTML attributes for which a
+         * corresponding CSS property has been set.
+         *
+         * @return void
+         */
+        public function enableCssToHtmlMapping()
+        {
+        }
+        /**
+         * Clears all caches.
+         *
+         * @return void
+         */
+        private function clearAllCaches()
+        {
+        }
+        /**
+         * Clears a single cache by key.
+         *
+         * @param int $key the cache key, must be CACHE_KEY_CSS, CACHE_KEY_SELECTOR, CACHE_KEY_XPATH
+         *                 or CACHE_KEY_CSS_DECLARATION_BLOCK
+         *
+         * @return void
+         *
+         * @throws \InvalidArgumentException
+         */
+        private function clearCache($key)
+        {
+        }
+        /**
+         * Purges the visited nodes.
+         *
+         * @return void
+         */
+        private function purgeVisitedNodes()
+        {
+        }
+        /**
+         * Marks a tag for removal.
+         *
+         * There are some HTML tags that DOMDocument cannot process, and it will throw an error if it encounters them.
+         * In particular, DOMDocument will complain if you try to use HTML5 tags in an XHTML document.
+         *
+         * Note: The tags will not be removed if they have any content.
+         *
+         * @param string $tagName the tag name, e.g., "p"
+         *
+         * @return void
+         */
+        public function addUnprocessableHtmlTag($tagName)
+        {
+        }
+        /**
+         * Drops a tag from the removal list.
+         *
+         * @param string $tagName the tag name, e.g., "p"
+         *
+         * @return void
+         */
+        public function removeUnprocessableHtmlTag($tagName)
+        {
+        }
+        /**
+         * Marks a media query type to keep.
+         *
+         * @param string $mediaName the media type name, e.g., "braille"
+         *
+         * @return void
+         */
+        public function addAllowedMediaType($mediaName)
+        {
+        }
+        /**
+         * Drops a media query type from the allowed list.
+         *
+         * @param string $mediaName the tag name, e.g., "braille"
+         *
+         * @return void
+         */
+        public function removeAllowedMediaType($mediaName)
+        {
+        }
+        /**
+         * Adds a selector to exclude nodes from emogrification.
+         *
+         * Any nodes that match the selector will not have their style altered.
+         *
+         * @param string $selector the selector to exclude, e.g., ".editor"
+         *
+         * @return void
+         */
+        public function addExcludedSelector($selector)
+        {
+        }
+        /**
+         * No longer excludes the nodes matching this selector from emogrification.
+         *
+         * @param string $selector the selector to no longer exclude, e.g., ".editor"
+         *
+         * @return void
+         */
+        public function removeExcludedSelector($selector)
+        {
+        }
+        /**
+         * This removes styles from your email that contain display:none.
+         * We need to look for display:none, but we need to do a case-insensitive search. Since DOMDocument only
+         * supports XPath 1.0, lower-case() isn't available to us. We've thus far only set attributes to lowercase,
+         * not attribute values. Consequently, we need to translate() the letters that would be in 'NONE' ("NOE")
+         * to lowercase.
+         *
+         * @param \DOMXPath $xPath
+         *
+         * @return void
+         */
+        private function removeInvisibleNodes(\DOMXPath $xPath)
+        {
+        }
+        /**
+         * Parses the document and normalizes all existing CSS attributes.
+         * This changes 'DISPLAY: none' to 'display: none'.
+         * We wouldn't have to do this if DOMXPath supported XPath 2.0.
+         * Also stores a reference of nodes with existing inline styles so we don't overwrite them.
+         *
+         * @param \DOMXPath $xPath
+         *
+         * @return void
+         */
+        private function normalizeStyleAttributesOfAllNodes(\DOMXPath $xPath)
+        {
+        }
+        /**
+         * Normalizes the value of the "style" attribute and saves it.
+         *
+         * @param \DOMElement $node
+         *
+         * @return void
+         */
+        private function normalizeStyleAttributes(\DOMElement $node)
+        {
+        }
+        /**
+         * Merges styles from styles attributes and style nodes and applies them to the attribute nodes
+         *
+         * @return void
+         */
+        private function fillStyleAttributesWithMergedStyles()
+        {
+        }
+        /**
+         * This method merges old or existing name/value array with new name/value array
+         * and then generates a string of the combined style suitable for placing inline.
+         * This becomes the single point for CSS string generation allowing for consistent
+         * CSS output no matter where the CSS originally came from.
+         *
+         * @param string[] $oldStyles
+         * @param string[] $newStyles
+         *
+         * @return string
+         */
+        private function generateStyleStringFromDeclarationsArrays(array $oldStyles, array $newStyles)
+        {
+        }
+        /**
+         * Generates a CSS style string suitable to be used inline from the $styleDeclarations property => value array.
+         *
+         * @param string[] $styleDeclarations
+         *
+         * @return string
+         */
+        private function generateStyleStringFromSingleDeclarationsArray(array $styleDeclarations)
+        {
+        }
+        /**
+         * Checks whether $attributeValue is marked as !important.
+         *
+         * @param string $attributeValue
+         *
+         * @return bool
+         */
+        private function attributeValueIsImportant($attributeValue)
+        {
+        }
+        /**
+         * Applies $css to $xmlDocument, limited to the media queries that actually apply to the document.
+         *
+         * @param \DOMDocument $xmlDocument the document to match against
+         * @param \DOMXPath $xPath
+         * @param string $css a string of CSS
+         *
+         * @return void
+         */
+        private function copyCssWithMediaToStyleNode(\DOMDocument $xmlDocument, \DOMXPath $xPath, $css)
+        {
+        }
+        /**
+         * Extracts the media queries from $css while skipping empty media queries.
+         *
+         * @param string $css
+         *
+         * @return string[][] numeric array with string sub-arrays with the keys "css" and "query"
+         */
+        private function extractMediaQueriesFromCss($css)
+        {
+        }
+        /**
+         * Checks whether there is at least one matching element for $cssSelector.
+         * When not in debug mode, it returns true also for invalid selectors (because they may be valid,
+         * just not implemented/recognized yet by Emogrifier).
+         *
+         * @param \DOMXPath $xPath
+         * @param string $cssSelector
+         *
+         * @return bool
+         *
+         * @throws \InvalidArgumentException
+         */
+        private function existsMatchForCssSelector(\DOMXPath $xPath, $cssSelector)
+        {
+        }
+        /**
+         * Returns CSS content.
+         *
+         * @param \DOMXPath $xPath
+         *
+         * @return string
+         */
+        private function getCssFromAllStyleNodes(\DOMXPath $xPath)
+        {
+        }
+        /**
+         * Adds a style element with $css to $document.
+         *
+         * This method is protected to allow overriding.
+         *
+         * @see https://github.com/jjriv/emogrifier/issues/103
+         *
+         * @param \DOMDocument $document
+         * @param string $css
+         *
+         * @return void
+         */
+        protected function addStyleElementToDocument(\DOMDocument $document, $css)
+        {
+        }
+        /**
+         * Checks that $document has a BODY element and adds it if it is missing.
+         *
+         * @param \DOMDocument $document
+         */
+        private function ensureExistenceOfBodyElement(\DOMDocument $document)
+        {
+        }
+        /**
+         * Returns the BODY element.
+         *
+         * This method assumes that there always is a BODY element.
+         *
+         * @param \DOMDocument $document
+         *
+         * @return \DOMElement
+         *
+         * @throws \BadMethodCallException
+         */
+        private function getBodyElement(\DOMDocument $document)
+        {
+        }
+        /**
+         * Splits input CSS code to an array where:
+         *
+         * - key "css" will be contains clean CSS code
+         * - key "media" will be contains all valuable media queries
+         *
+         * Example:
+         *
+         * The CSS code
+         *
+         *   "@import "file.css"; h1 { color:red; } @media { h1 {}} @media tv { h1 {}}"
+         *
+         * will be parsed into the following array:
+         *
+         *   "css" => "h1 { color:red; }"
+         *   "media" => "@media { h1 {}}"
+         *
+         * @param string $css
+         *
+         * @return string[]
+         */
+        private function splitCssAndMediaQuery($css)
+        {
+        }
+        /**
+         * Creates a DOMDocument instance with the current HTML.
+         *
+         * @return \DOMDocument
+         */
+        private function createRawXmlDocument()
+        {
+        }
+        /**
+         * Returns the HTML with the unprocessable HTML tags removed and
+         * with added document type and Content-Type meta tag if needed.
+         *
+         * @return string the unified HTML
+         *
+         * @throws \BadMethodCallException
+         */
+        private function getUnifiedHtml()
+        {
+        }
+        /**
+         * Removes the unprocessable tags from $html (if this feature is enabled).
+         *
+         * @param string $html
+         *
+         * @return string the reworked HTML with the unprocessable tags removed
+         */
+        private function removeUnprocessableTags($html)
+        {
+        }
+        /**
+         * Makes sure that the passed HTML has a document type.
+         *
+         * @param string $html
+         *
+         * @return string HTML with document type
+         */
+        private function ensureDocumentType($html)
+        {
+        }
+        /**
+         * Adds a Content-Type meta tag for the charset.
+         *
+         * @param string $html
+         *
+         * @return string the HTML with the meta tag added
+         */
+        private function addContentTypeMetaTag($html)
+        {
+        }
+        /**
+         * @param string[] $a
+         * @param string[] $b
+         *
+         * @return int
+         */
+        private function sortBySelectorPrecedence(array $a, array $b)
+        {
+        }
+        /**
+         * @param string $selector
+         *
+         * @return int
+         */
+        private function getCssSelectorPrecedence($selector)
+        {
+        }
+        /**
+         * Maps a CSS selector to an XPath query string.
+         *
+         * @see http://plasmasturm.org/log/444/
+         *
+         * @param string $cssSelector a CSS selector
+         *
+         * @return string the corresponding XPath selector
+         */
+        private function translateCssToXpath($cssSelector)
+        {
+        }
+        /**
+         * Flexibly translates the CSS selector $trimmedLowercaseSelector to an xPath selector.
+         *
+         * @param string $trimmedLowercaseSelector
+         *
+         * @return string
+         */
+        private function translateCssToXpathPass($trimmedLowercaseSelector)
+        {
+        }
+        /**
+         * Flexibly translates the CSS selector $trimmedLowercaseSelector to an xPath selector for inline usage.
+         *
+         * @param string $trimmedLowercaseSelector
+         *
+         * @return string
+         */
+        private function translateCssToXpathPassInline($trimmedLowercaseSelector)
+        {
+        }
+        /**
+         * Flexibly translates the CSS selector $trimmedLowercaseSelector to an xPath selector while using
+         * $matchClassAttributesCallback as to match the class attributes.
+         *
+         * @param string $trimmedLowercaseSelector
+         * @param callable $matchClassAttributesCallback
+         *
+         * @return string
+         */
+        private function translateCssToXpathPassWithMatchClassAttributesCallback($trimmedLowercaseSelector, callable $matchClassAttributesCallback)
+        {
+        }
+        /**
+         * @param string[] $match
+         *
+         * @return string
+         */
+        private function matchIdAttributes(array $match)
+        {
+        }
+        /**
+         * @param string[] $match
+         *
+         * @return string xPath class attribute query wrapped in element selector
+         */
+        private function matchClassAttributes(array $match)
+        {
+        }
+        /**
+         * @param string[] $match
+         *
+         * @return string xPath class attribute query
+         */
+        private function matchClassAttributesInline(array $match)
+        {
+        }
+        /**
+         * @param string[] $match
+         *
+         * @return string
+         */
+        private function translateNthChild(array $match)
+        {
+        }
+        /**
+         * @param string[] $match
+         *
+         * @return string
+         */
+        private function translateNthOfType(array $match)
+        {
+        }
+        /**
+         * @param string[] $match
+         *
+         * @return int[]
+         */
+        private function parseNth(array $match)
+        {
+        }
+        /**
+         * Parses a CSS declaration block into property name/value pairs.
+         *
+         * Example:
+         *
+         * The declaration block
+         *
+         *   "color: #000; font-weight: bold;"
+         *
+         * will be parsed into the following array:
+         *
+         *   "color" => "#000"
+         *   "font-weight" => "bold"
+         *
+         * @param string $cssDeclarationsBlock the CSS declarations block without the curly braces, may be empty
+         *
+         * @return string[]
+         *         the CSS declarations with the property names as array keys and the property values as array values
+         */
+        private function parseCssDeclarationsBlock($cssDeclarationsBlock)
+        {
+        }
+        /**
+         * Find the nodes that are not to be emogrified.
+         *
+         * @param \DOMXPath $xPath
+         *
+         * @return \DOMElement[]
+         *
+         * @throws \InvalidArgumentException
+         */
+        private function getNodesToExclude(\DOMXPath $xPath)
+        {
+        }
+        /**
+         * Handles invalid xPath expression warnings, generated during the process() method,
+         * during querying \DOMDocument and trigger \InvalidArgumentException with invalid selector
+         * or \RuntimeException, depending on the source of the warning.
+         *
+         * @param int $type
+         * @param string $message
+         * @param string $file
+         * @param int $line
+         * @param array $context
+         *
+         * @return bool always false
+         *
+         * @throws \InvalidArgumentException
+         * @throws \RuntimeException
+         */
+        public function handleXpathQueryWarnings(
+            // @codingStandardsIgnoreLine
+            $type,
+            $message,
+            $file,
+            $line,
+            array $context
+        )
+        {
+        }
+        /**
+         * Sets the debug mode.
+         *
+         * @param bool $debug set to true to enable debug mode
+         *
+         * @return void
+         */
+        public function setDebug($debug)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\FormBuilder\Components {
+    class BaseComponent
+    {
+        /**
+         * $app Application Instance
+         * @var Framework\Foundation\Application
+         */
+        protected $app = null;
+        /**
+         * Construct the base component object
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Build unique ID concating form id and name attribute
+         * @param  array  $data $form
+         * @return string for id value
+         */
+        protected function makeElementId($data, $form)
+        {
+        }
+        /**
+         * Build attributes for any html element
+         * @param  array  $attributes
+         * @return string [Compiled key='value' attributes]
+         */
+        protected function buildAttributes($attributes, $form = null)
+        {
+        }
+        /**
+         * Extract value attribute from attribute list
+         * @param  array  &$element
+         * @return string
+         */
+        protected function extractValueFromAttributes(&$element)
+        {
+        }
+        /**
+         * Determine if the given element has conditions bound
+         * @param  array   $element [Html element being compiled]
+         * @return boolean
+         */
+        protected function hasConditions($element)
+        {
+        }
+        /**
+         * Generate a unique id for an element
+         * @param  string $str [preix]
+         * @return string [Unique id]
+         */
+        protected function getUniqueId($str)
+        {
+        }
+        /**
+         * Get a default class for each form element wrapper
+         * @return string
+         */
+        protected function getDefaultContainerClass()
+        {
+        }
+        /**
+         * Get required class for form element wrapper
+         * @param  array $rules [Validation rules]
+         * @return mixed
+         */
+        protected function getRequiredClass($rules)
+        {
+        }
+        /**
+         * Get asterisk placement for the required form elements
+         * @return String
+         */
+        protected function getAsteriskPlacement($form)
+        {
+        }
+        /**
+         * Generate a label for any element
+         * @param  array  $data
+         * @return string [label Html element]
+         */
+        protected function buildElementLabel($data, $form)
+        {
+        }
+        /**
+         * Generate html/markup for any element
+         * @param  string   $elMarkup [Predifined partial markup]
+         * @param  array    $data
+         * @param  StdClass $form     [Form object]
+         * @return string   [Compiled markup]
+         */
+        protected function buildElementMarkup($elMarkup, $data, $form)
+        {
+        }
+        /**
+         * Generate a help message for any element beside label
+         * @param  array  $data
+         * @return string [Html]
+         */
+        protected function getLabelHelpMessage($data)
+        {
+        }
+        /**
+         * Generate a help message for any element beside form element
+         * @param  array  $data
+         * @return string [Html]
+         */
+        protected function getInputHelpMessage($data, $hideClass = '')
+        {
+        }
+    }
+}
 namespace FluentForm\App\Services\FormBuilder {
+    abstract class BaseFieldManager extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
+    {
+        protected $key = '';
+        protected $title = '';
+        protected $tags = [];
+        protected $position = 'advanced';
+        public function __construct($key, $title, $tags = [], $position = 'advanced')
+        {
+        }
+        public function register()
+        {
+        }
+        public function pushConditionalSupport($conditonalItems)
+        {
+        }
+        public function pushFormInputType($types)
+        {
+        }
+        public function pushComponent($components)
+        {
+        }
+        public function pushEditorElementPositions($placement_settings)
+        {
+        }
+        public function generalEditorElement()
+        {
+        }
+        public function advancedEditorElement()
+        {
+        }
+        public function getGeneralEditorElements()
+        {
+        }
+        public function getAdvancedEditorElements()
+        {
+        }
+        public function getEditorCustomizationSettings()
+        {
+        }
+        abstract function getComponent();
+        abstract function render($element, $form);
+    }
     class Components implements \JsonSerializable
     {
         /**
@@ -2901,109 +4078,6 @@ namespace FluentForm\App\Services\FormBuilder {
     }
 }
 namespace FluentForm\App\Services\FormBuilder\Components {
-    class BaseComponent
-    {
-        /**
-         * $app Application Instance
-         * @var Framework\Foundation\Application
-         */
-        protected $app = null;
-        /**
-         * Construct the base component object
-         */
-        public function __construct()
-        {
-        }
-        /**
-         * Build unique ID concating form id and name attribute
-         * @param  array $data $form
-         * @return string for id value
-         */
-        protected function makeElementId($data, $form)
-        {
-        }
-        /**
-         * Build attributes for any html element
-         * @param  array $attributes
-         * @return string [Compiled key='value' attributes]
-         */
-        protected function buildAttributes($attributes, $form = null)
-        {
-        }
-        /**
-         * Extract value attribute from attribute list
-         * @param  array &$element
-         * @return string
-         */
-        protected function extractValueFromAttributes(&$element)
-        {
-        }
-        /**
-         * Determine if the given element has conditions bound
-         * @param  array $element [Html element being compiled]
-         * @return boolean
-         */
-        protected function hasConditions($element)
-        {
-        }
-        /**
-         * Generate a unique id for an element
-         * @param  string $str [preix]
-         * @return string [Unique id]
-         */
-        protected function getUniqueId($str)
-        {
-        }
-        /**
-         * Get a default class for each form element wrapper
-         * @return string
-         */
-        protected function getDefaultContainerClass()
-        {
-        }
-        /**
-         * Get required class for form element wrapper
-         * @param  array $rules [Validation rules]
-         * @return mixed
-         */
-        protected function getRequiredClass($rules)
-        {
-        }
-        /**
-         * Generate a label for any element
-         * @param  array $data
-         * @return string [label Html element]
-         */
-        protected function buildElementLabel($data)
-        {
-        }
-        /**
-         * Generate html/markup for any element
-         * @param  string $elMarkup [Predifined partial markup]
-         * @param  array $data
-         * @param  StdClass $form [Form object]
-         * @return string [Compiled markup]
-         */
-        protected function buildElementMarkup($elMarkup, $data, $form)
-        {
-        }
-        /**
-         * Generate a help message for any element beside label
-         * @param  array $data
-         * @return string [Html]
-         */
-        protected function getLabelHelpMessage($data)
-        {
-        }
-        /**
-         * Generate a help message for any element beside form element
-         * @param  array $data
-         * @return string [Html]
-         */
-        protected function getInputHelpMessage($data)
-        {
-        }
-    }
     class Address extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
     {
         /**
@@ -3049,7 +4123,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
          * Container wrapper class
          * @var string
          */
-        protected $wrapperClass = 'ff-t-container';
+        protected $wrapperClass = 'ff-t-container ff-column-container';
         /**
          * Compile and echo the html element
          * @param  array $data [element data]
@@ -3083,15 +4157,32 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         public function compile($data, $form)
         {
         }
-        /**
-         * Enqueue style and script for datetime element
-         * @return void
-         */
-        protected function enqueueStyleAndScripts()
+        public function getAvailableDateFormats()
+        {
+        }
+        private function getDateFormatConfigJSON($settings, $form, $id)
+        {
+        }
+        private function hasTime($string)
+        {
+        }
+        private function hasDate($string)
         {
         }
     }
     class Name extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
+    {
+        /**
+         * Compile and echo the html element
+         * @param  array $data [element data]
+         * @param  stdClass $form [Form Object]
+         * @return viod
+         */
+        public function compile($data, $form)
+        {
+        }
+    }
+    class Rating extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
     {
         /**
          * Compile and echo the html element
@@ -3143,7 +4234,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
          * @param  array $options
          * @return string/html [compiled options]
          */
-        protected function buildOptions($options, $defaultValues)
+        protected function buildOptions($data, $defaultValues)
         {
         }
     }
@@ -3187,6 +4278,27 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         {
         }
     }
+    class TabularGrid extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
+    {
+        /**
+         * Compile and echo the html element
+         * @param  array $data [element data]
+         * @param  stdClass $form [Form Object]
+         * @return viod
+         */
+        public function compile($data, $form)
+        {
+        }
+        public function makeTabularData($data)
+        {
+        }
+        protected function getElementHelpMessage($data, $form)
+        {
+        }
+        protected function setClasses(&$data)
+        {
+        }
+    }
     class TermsAndConditions extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
     {
         /**
@@ -3215,9 +4327,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         * @param  array     $data [element data]
+         * @param  \stdClass $form [Form Object]
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -3225,6 +4337,33 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     }
 }
 namespace FluentForm\App\Services\FormBuilder {
+    class EditorShortcode
+    {
+        public static function getGeneralShortCodes()
+        {
+        }
+        public static function getFormShortCodes($form)
+        {
+        }
+        public static function getSubmissionShortcodes()
+        {
+        }
+        public static function getShortCodes($form)
+        {
+        }
+        public static function parse($string, $data, callable $arrayFormatter = null)
+        {
+        }
+        public static function parseArray($string, $data, $arrayFormatter)
+        {
+        }
+        public static function parseString($string, $data, callable $arrayFormatter = null)
+        {
+        }
+        protected static function getForm($form)
+        {
+        }
+    }
     class EditorShortcodeParser
     {
         /**
@@ -3236,7 +4375,7 @@ namespace FluentForm\App\Services\FormBuilder {
          * mappings of methods to parse the shortcode
          * @var array
          */
-        private static $handlers = array('ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties');
+        private static $handlers = ['ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'http_referer' => 'parseWPProperties', 'wp.admin_email' => 'parseWPProperties', 'wp.site_url' => 'parseWPProperties', 'wp.site_title' => 'parseWPProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties', 'get.param_name' => 'parseQueryParam'];
         /**
          * Filter dynamic shortcodes in input value
          * @param  string $value
@@ -3273,6 +4412,14 @@ namespace FluentForm\App\Services\FormBuilder {
         {
         }
         /**
+         * Parse WP Properties
+         * @param  string $value
+         * @return string
+         */
+        private static function parseWPProperties($value, $form = null)
+        {
+        }
+        /**
          * Parse browser/user-agent properties
          * @param  string $value
          * @return string
@@ -3296,6 +4443,16 @@ namespace FluentForm\App\Services\FormBuilder {
         private static function parseDate($value, $form = null)
         {
         }
+        /**
+         * Parse request query param.
+         *
+         * @param  string $value
+         * @param  \stdClass $form
+         * @return string
+         */
+        public static function parseQueryParam($value)
+        {
+        }
     }
     class FormBuilder
     {
@@ -3314,6 +4471,7 @@ namespace FluentForm\App\Services\FormBuilder {
          * @var array
          */
         public $validationRules = array();
+        public $tabIndex = 1;
         /**
          * Construct the form builder instance
          * @param Framework\Foundation\Application $app
@@ -3326,7 +4484,10 @@ namespace FluentForm\App\Services\FormBuilder {
          * @param  StdClass $form [Form entry from database]
          * @return mixed
          */
-        public function build($form)
+        public function build($form, $extraCssClass = '', $instanceCssClass = '')
+        {
+        }
+        public function buildFormBody($form)
         {
         }
         /**
@@ -3361,6 +4522,14 @@ namespace FluentForm\App\Services\FormBuilder {
         protected function extractConditionalLogic($item)
         {
         }
+        /**
+         * Build attributes for any html element
+         * @param  array  $attributes
+         * @return string [Compiled key='value' attributes]
+         */
+        protected function buildAttributes($attributes, $form = null)
+        {
+        }
     }
     class GroupSetterProxy
     {
@@ -3387,33 +4556,21 @@ namespace FluentForm\App\Services\FormBuilder {
         {
         }
     }
-    class MessageShortCodeParser
+    class NotificationParser
     {
-        protected static $data = null;
+        protected static $cache = null;
         /**
          * Parse Norifications
          * @param array $notifications
          * @param int $insertId
          * @param array $data
          * @param object $form
-         * @return  array $notifications
+         * @return  bool $cache
          */
-        public static function parseMessageShortCode($notifications, $insertId, $data, $form, $cache = true)
+        public static function parse($notifications, $insertId, $data, $form, $cache = true)
         {
         }
-        public static function parsePropertiesFor($parsableFields, $notifications)
-        {
-        }
-        public static function setFormProperties(&$formattedProperties, $formProperties, $data, $form, $insertId)
-        {
-        }
-        public static function setUserProperties(&$formattedProperties, $userProperties, $data, $form, $insertId)
-        {
-        }
-        public static function setPostProperties(&$formattedProperties, $postProperties, $data, $form, $insetId)
-        {
-        }
-        public static function setOtherProperties(&$formattedProperties, $others, $data, $form, $insertId)
+        protected static function setRecepient(&$notification, $data)
         {
         }
     }
@@ -3436,12 +4593,12 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         }
         /**
          * Send the email notification
-         * @param  array    $notification  [Notification settings from form meta]
-         * @param  array    $submittedData [User submitted form data]
-         * @param  StdClass $form          [The form object from database]
+         * @param  array $notification [Notification settings from form meta]
+         * @param  array $submittedData [User submitted form data]
+         * @param  StdClass $form [The form object from database]
          * @return bool
          */
-        public function notify($notification, $submittedData, $form)
+        public function notify($notification, $submittedData, $form, $entryId = false)
         {
         }
         /**
@@ -3452,9 +4609,264 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         private function getFormInputsAndLabels($form)
         {
         }
+        public function getEmailWithTemplate($emailBody, $form, $notification)
+        {
+        }
+        private function getFooterText($form, $notification)
+        {
+        }
+        private function getHeaders($notification)
+        {
+        }
+    }
+    class EmailNotificationActions
+    {
+        protected $app = null;
+        public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        {
+        }
+        public function register()
+        {
+        }
+        public function notify($feed, $formData, $entry, $form)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\FormBuilder {
+    class ShortCodeParser
+    {
+        protected static $form = null;
+        protected static $entry = null;
+        protected static $browser = null;
+        protected static $formFields = null;
+        protected static $store = ['inputs' => null, 'original_inputs' => null, 'user' => null, 'post' => null, 'other' => null, 'submission' => null];
+        public static function parse($parsable, $entryId, $data = null, $form = null)
+        {
+        }
+        protected static function setDependencies($entry, $data, $form)
+        {
+        }
+        protected static function setEntry($entry)
+        {
+        }
+        protected static function setdata($data)
+        {
+        }
+        protected static function setForm($form)
+        {
+        }
+        protected static function parseShortCodeFromArray($parsable)
+        {
+        }
+        protected static function parseShortCodeFromString($parsable)
+        {
+        }
+        protected static function getFormData($key)
+        {
+        }
+        protected static function getUserData($key)
+        {
+        }
+        protected static function getPostData($key)
+        {
+        }
+        protected static function getWPData($key)
+        {
+        }
+        protected static function getSubmissionData($key)
+        {
+        }
+        protected static function getOtherData($key)
+        {
+        }
+        protected static function getForm()
+        {
+        }
+        protected static function getEntry()
+        {
+        }
+        protected static function getRequest()
+        {
+        }
+        protected static function getUserAgent()
+        {
+        }
     }
 }
 namespace FluentForm\App\Services\Integrations {
+    class BaseIntegration
+    {
+        private $setting_key = '';
+        private $isMultiple = false;
+        private $formId = false;
+        private $isJsonValue = true;
+        public function __construct($settings_key = '', $form_id = false, $isMultiple = false)
+        {
+        }
+        public function setSettingsKey($key)
+        {
+        }
+        public function setIsMultiple($isMultiple)
+        {
+        }
+        public function setFormId($formId)
+        {
+        }
+        public function setJasonType($type)
+        {
+        }
+        public function save($settings)
+        {
+        }
+        public function update($settingsId, $settings)
+        {
+        }
+        public function get($settingsId)
+        {
+        }
+        public function getAll()
+        {
+        }
+        public function delete($settingsId)
+        {
+        }
+        protected function validate($notification)
+        {
+        }
+        private function getFormattedValue($setting)
+        {
+        }
+        public function deleteAll()
+        {
+        }
+    }
+    class GlobalIntegrationManager
+    {
+        private $app;
+        public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        {
+        }
+        public function getGlobalSettingsAjax()
+        {
+        }
+        public function saveGlobalSettingsAjax()
+        {
+        }
+        public function getAllFormIntegrations()
+        {
+        }
+        public function updateNotificationStatus()
+        {
+        }
+        public function getIntegrationSettings()
+        {
+        }
+        public function saveIntegrationSettings()
+        {
+        }
+        public function deleteIntegrationFeed()
+        {
+        }
+        public function getIntegrationList()
+        {
+        }
+    }
+    class GlobalNotificationManager
+    {
+        private $app;
+        public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        {
+        }
+        public function globalNotify($insertId, $formData, $form)
+        {
+        }
+        private function checkCondition($parsedValue, $formData, $insertId)
+        {
+        }
+        private function getEntry($id, $form)
+        {
+        }
+        public function handleGlobalAsyncNotifications($insertId, $feedIds, $form)
+        {
+        }
+    }
+    abstract class IntegrationManager
+    {
+        protected $app = null;
+        protected $subscriber = null;
+        protected $title = '';
+        protected $description = '';
+        protected $integrationKey = '';
+        protected $optionKey = '';
+        protected $settingsKey = '';
+        protected $priority = 11;
+        public $logo = '';
+        public $hasGlobalMenu = true;
+        public function __construct($app, $title, $integrationKey, $optionKey, $settingsKey, $priority = 11)
+        {
+        }
+        public function registerAdminHooks()
+        {
+        }
+        public function registerNotificationHooks()
+        {
+        }
+        public function notify($feed, $formData, $entry, $form)
+        {
+        }
+        public function addGlobalMenu($setting)
+        {
+        }
+        public function addNotificationType($types)
+        {
+        }
+        public function addActiveNotificationType($types)
+        {
+        }
+        public function getGlobalSettings($settings)
+        {
+        }
+        public function saveGlobalSettings($settings)
+        {
+        }
+        public function getGlobalFields($fields)
+        {
+        }
+        public function setMetaKey($data, $integrationId)
+        {
+        }
+        public function prepareIntegrationFeed($setting, $feed, $formId)
+        {
+        }
+        abstract function getIntegrationDefaults($settings, $formId);
+        abstract function pushIntegration($integrations, $formId);
+        abstract function getSettingsFields($settings, $formId);
+        abstract function getMergeFields($list, $listId, $formId);
+        public function setFeedAtributes($feed, $formId)
+        {
+        }
+        public function isConfigured()
+        {
+        }
+        public function isEnabled()
+        {
+        }
+        public function getApiSettings()
+        {
+        }
+    }
+    trait LogResponseTrait
+    {
+        protected function logResponse($response, $feed, $data, $form, $entryId, $status)
+        {
+        }
+        protected function getApiResponseMessage($response, $status)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Integrations\MailChimp {
     /**
      * Super-simple, minimum abstraction MailChimp API v3 wrapper
      * MailChimp API v3: http://developer.mailchimp.com
@@ -3672,797 +5084,142 @@ namespace FluentForm\App\Services\Integrations {
         {
         }
     }
+    trait MailChimpSubscriber
+    {
+        use \FluentForm\App\Services\Integrations\LogResponseTrait;
+        /**
+         * Enabled MailChimp feed settings.
+         *
+         * @var array $feeds
+         */
+        protected $feeds = [];
+        /**
+         * Required for api response logging
+         * @var string
+         */
+        protected $metaKey = 'fluentform_mailchimp_feed';
+        /**
+         * Form input data.
+         *
+         * @param array $formData
+         */
+        public function setApplicableFeeds($formData)
+        {
+        }
+        /**
+         * Determine if the feed is eligible to be applied.
+         *
+         * @param $feed
+         * @param $formData
+         *
+         * @return bool
+         */
+        public function isApplicable(&$feed, &$formData)
+        {
+        }
+        /**
+         * Subscribe a user to the list on form submission.
+         *
+         * @param $formData
+         */
+        public function subscribe($feed, $formData, $entry, $form)
+        {
+        }
+        /**
+         * Get a specific MailChimp list member.
+         *
+         */
+        public function getMemberByEmail($list_id, $email_address)
+        {
+        }
+    }
+    class MailChimpIntegration extends \FluentForm\App\Services\Integrations\IntegrationManager
+    {
+        /**
+         * MailChimp Subscriber that handles & process all the subscribing logics.
+         */
+        use \FluentForm\App\Services\Integrations\MailChimp\MailChimpSubscriber;
+        public function __construct(\FluentForm\Framework\Foundation\Application $application)
+        {
+        }
+        public function getGlobalFields($fields)
+        {
+        }
+        public function getGlobalSettings($settings)
+        {
+        }
+        public function saveGlobalSettings($mailChimp)
+        {
+        }
+        public function pushIntegration($integrations, $formId)
+        {
+        }
+        public function getIntegrationDefaults($settings, $formId)
+        {
+        }
+        public function getSettingsFields($settings, $formId)
+        {
+        }
+        public function setFeedAtributes($feed, $formId)
+        {
+        }
+        public function prepareIntegrationFeed($setting, $feed, $formId)
+        {
+        }
+        private function getLists()
+        {
+        }
+        public function getMergeFields($list, $listId, $formId)
+        {
+        }
+        public function fetchInterestGroups()
+        {
+        }
+        private function getInterestCategories($listId)
+        {
+        }
+        private function getInterestSubCategories($listId, $categoryId)
+        {
+        }
+        /*
+         * For Handling Notifications broadcast
+         */
+        public function notify($feed, $formData, $entry, $form)
+        {
+        }
+    }
 }
-namespace {
-    /**
-     * Class AC_Connector
-     */
-    class AC_Connector
+namespace FluentForm\App\Services\Integrations\Slack {
+    class Slack
     {
+        use \FluentForm\App\Services\Integrations\LogResponseTrait;
         /**
-         * Default curl timeout
-         */
-        const DEFAULT_TIMEOUT = 30;
-        /**
-         * @var string
-         */
-        public $url;
-        /**
-         * @var
-         */
-        public $api_key;
-        /**
-         * @var string
-         */
-        public $output = "json";
-        /**
-         * @var int
-         */
-        private $timeout = self::DEFAULT_TIMEOUT;
-        /**
-         * AC_Connector constructor.
+         * The slack integration settings of the form.
          *
-         * @param        $url
-         * @param        $api_key
-         * @param string $api_user
-         * @param string $api_pass
+         * @var array $settings
          */
-        function __construct($url, $api_key, $api_user = "", $api_pass = "")
-        {
-        }
+        protected $settings = [];
         /**
-         * Test the api credentials
+         * Handle slack notifier.
          *
-         * @return bool|mixed
-         * @throws \RequestException
+         * @param $submissionId
+         * @param $formData
+         * @param $form
          */
-        public function credentials_test()
-        {
-        }
-        /**
-         * Debug helper function
-         *
-         * @param        $var
-         * @param int    $continue
-         * @param string $element
-         * @param string $extra
-         */
-        public function dbg($var, $continue = 0, $element = "pre", $extra = "")
-        {
-        }
-        /**
-         * Set curl timeout
-         *
-         * @param $seconds
-         */
-        public function set_curl_timeout($seconds)
-        {
-        }
-        /**
-         * Get curl timeout
-         *
-         * @return int
-         */
-        public function get_curl_timeout()
-        {
-        }
-        /**
-         * Make the curl request
-         *
-         * @param        $url
-         * @param array  $params_data
-         * @param string $verb
-         * @param string $custom_method
-         *
-         * @return mixed
-         * @throws \RequestException
-         */
-        public function curl($url, $params_data = array(), $verb = "", $custom_method = "")
-        {
-        }
-        /**
-         * Throw the request exception
-         *
-         * @param $message
-         *
-         * @throws \RequestException
-         */
-        protected function throwRequestException($message)
+        public function handle($feed, $formData, $form, $entry)
         {
         }
     }
-    /**
-     * Class ActiveCampaign
-     */
-    class ActiveCampaign extends \AC_Connector
+    class SlackNotificationActions
     {
-        /**
-         * @var
-         */
-        public $url_base;
-        /**
-         * @var
-         */
-        public $url;
-        /**
-         * @var
-         */
-        public $api_key;
-        /**
-         * @var
-         */
-        public $track_email;
-        /**
-         * @var
-         */
-        public $track_actid;
-        /**
-         * @var
-         */
-        public $track_key;
-        /**
-         * @var int
-         */
-        public $version = 1;
-        /**
-         * @var bool
-         */
-        public $debug = \false;
-        /**
-         * @var string
-         */
-        public $curl_response_error = "";
-        /**
-         * ActiveCampaign constructor.
-         *
-         * @param        $url
-         * @param        $api_key
-         * @param string $api_user
-         * @param string $api_pass
-         */
-        function __construct($url, $api_key, $api_user = "", $api_pass = "")
+        protected $app = null;
+        public function __construct(\FluentForm\Framework\Foundation\Application $app)
         {
         }
-        /**
-         * Set the version on the url
-         *
-         * @param $version
-         */
-        function version($version)
+        public function register()
         {
         }
-        /**
-         * Make api calls
-         *
-         * @param       $path
-         * @param array $post_data
-         *
-         * @return mixed
-         */
-        function api($path, $post_data = array())
-        {
-        }
-    }
-    class AC_Account extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function add($params, $post_data)
-        {
-        }
-        function cancel($params)
-        {
-        }
-        function edit($params, $post_data)
-        {
-        }
-        function list_($params)
-        {
-        }
-        function name_check($params)
-        {
-        }
-        function plans($params)
-        {
-        }
-        function status($params)
-        {
-        }
-        function status_set($params)
-        {
-        }
-        function view()
-        {
-        }
-    }
-    class AC_Auth extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function singlesignon($params)
-        {
-        }
-    }
-    class AC_Automation extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function list_($params)
-        {
-        }
-        function contact_add($params, $post_data)
-        {
-        }
-        function contact_remove($params, $post_data)
-        {
-        }
-        function contact_list($params)
-        {
-        }
-        function contact_view($params)
-        {
-        }
-    }
-    class AC_Campaign extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function create($params, $post_data)
-        {
-        }
-        function delete_list($params)
-        {
-        }
-        function delete($params)
-        {
-        }
-        function list_($params)
-        {
-        }
-        function paginator($params)
-        {
-        }
-        function report_bounce_list($params)
-        {
-        }
-        function report_bounce_totals($params)
-        {
-        }
-        function report_forward_list($params)
-        {
-        }
-        function report_forward_totals($params)
-        {
-        }
-        function report_link_list($params)
-        {
-        }
-        function report_link_totals($params)
-        {
-        }
-        function report_open_list($params)
-        {
-        }
-        function report_open_totals($params)
-        {
-        }
-        function report_totals($params)
-        {
-        }
-        function report_unopen_list($params)
-        {
-        }
-        function report_unsubscription_list($params)
-        {
-        }
-        function report_unsubscription_totals($params)
-        {
-        }
-        function send($params)
-        {
-        }
-        function status($params)
-        {
-        }
-    }
-    class AC_Contact extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function add($params, $post_data)
-        {
-        }
-        function automation_list($params)
-        {
-        }
-        function delete_list($params)
-        {
-        }
-        function delete($params)
-        {
-        }
-        function edit($params, $post_data)
-        {
-        }
-        function list_($params)
-        {
-        }
-        function note_add($params, $post_data)
-        {
-        }
-        function note_edit($params, $post_data)
-        {
-        }
-        function note_delete($params)
-        {
-        }
-        function paginator($params)
-        {
-        }
-        function sync($params, $post_data)
-        {
-        }
-        function tag_add($params, $post_data)
-        {
-        }
-        function tag_remove($params, $post_data)
-        {
-        }
-        function view($params)
-        {
-        }
-    }
-    class AC_Deal extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function add($params, $post_data)
-        {
-        }
-        function edit($params, $post_data)
-        {
-        }
-        function delete($params, $post_data)
-        {
-        }
-        function get($params)
-        {
-        }
-        function list_($params)
-        {
-        }
-        function note_add($params, $post_data)
-        {
-        }
-        function note_edit($params, $post_data)
-        {
-        }
-        function pipeline_add($params, $post_data)
-        {
-        }
-        function pipeline_edit($params, $post_data)
-        {
-        }
-        function pipeline_delete($params, $post_data)
-        {
-        }
-        function pipeline_list($params)
-        {
-        }
-        function stage_add($params, $post_data)
-        {
-        }
-        function stage_edit($params, $post_data)
-        {
-        }
-        function stage_delete($params, $post_data)
-        {
-        }
-        function stage_list($params)
-        {
-        }
-        function task_add($params, $post_data)
-        {
-        }
-        function task_edit($params, $post_data)
-        {
-        }
-        function tasktype_add($params, $post_data)
-        {
-        }
-        function tasktype_edit($params, $post_data)
-        {
-        }
-        function tasktype_delete($params, $post_data)
-        {
-        }
-    }
-    class AC_Design extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function edit($params, $post_data)
-        {
-        }
-        function view($params, $post_data)
-        {
-        }
-    }
-    class AC_Form extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function getforms($params)
-        {
-        }
-        function html($params)
-        {
-        }
-        function embed($params)
-        {
-        }
-        function process($params)
-        {
-        }
-    }
-    class AC_Group extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function add($params, $post_data)
-        {
-        }
-        function delete_list($params)
-        {
-        }
-        function delete($params)
-        {
-        }
-        function edit($params, $post_data)
-        {
-        }
-        function list_($params)
-        {
-        }
-        function view($params)
-        {
-        }
-    }
-    class AC_List_ extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function add($params, $post_data)
-        {
-        }
-        function delete_list($params)
-        {
-        }
-        function delete($params)
-        {
-        }
-        function edit($params, $post_data)
-        {
-        }
-        function field_add($params, $post_data)
-        {
-        }
-        function field_delete($params)
-        {
-        }
-        function field_edit($params, $post_data)
-        {
-        }
-        function field_view($params)
-        {
-        }
-        function list_($params, $post_data)
-        {
-        }
-        function paginator($params)
-        {
-        }
-        function view($params)
-        {
-        }
-    }
-    class AC_Message extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function add($params, $post_data)
-        {
-        }
-        function delete_list($params)
-        {
-        }
-        function delete($params)
-        {
-        }
-        function edit($params, $post_data)
-        {
-        }
-        function list_($params)
-        {
-        }
-        function template_add($params, $post_data)
-        {
-        }
-        function template_delete_list($params)
-        {
-        }
-        function template_delete($params)
-        {
-        }
-        function template_edit($params, $post_data)
-        {
-        }
-        function template_export($params)
-        {
-        }
-        function template_import($params, $post_data)
-        {
-        }
-        function template_list($params)
-        {
-        }
-        function template_view($params)
-        {
-        }
-        function view($params)
-        {
-        }
-    }
-    class AC_Organization extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function list_($params, $post_data)
-        {
-        }
-    }
-    class AC_Segment extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function list_($params)
-        {
-        }
-    }
-    class AC_Settings extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function edit($params, $post_data)
-        {
-        }
-    }
-    class AC_Subscriber extends \AC_Contact
-    {
-    }
-    class AC_Tag extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function list_($params)
-        {
-        }
-    }
-    class AC_Tracking extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        /*
-         * Update the status (enabled or disabled) for site tracking.
-         */
-        function site_status($params, $post_data)
-        {
-        }
-        /*
-         * Update the status (enabled or disabled) for event tracking.
-         */
-        function event_status($params, $post_data)
-        {
-        }
-        /*
-         * Returns existing whitelisted domains.
-         */
-        function site_list($params)
-        {
-        }
-        /*
-         * Returns existing tracked events.
-         */
-        function event_list($params)
-        {
-        }
-        /*
-         * Adds a domain to the site tracking whitelist.
-         */
-        function whitelist($params, $post_data)
-        {
-        }
-        /*
-         * Removes a domain from the site tracking whitelist.
-         */
-        function whitelist_remove($params, $post_data)
-        {
-        }
-        /*
-         * Removes an event.
-         */
-        function event_remove($params, $post_data)
-        {
-        }
-        /*
-         * Adds a new event.
-         */
-        function log($params, $post_data)
-        {
-        }
-    }
-    class AC_User extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function add($params, $post_data)
-        {
-        }
-        function delete_list($params)
-        {
-        }
-        function delete($params)
-        {
-        }
-        function edit($params, $post_data)
-        {
-        }
-        function list_($params)
-        {
-        }
-        function me()
-        {
-        }
-        function view($params)
-        {
-        }
-    }
-    class AC_Webhook extends \ActiveCampaign
-    {
-        public $version;
-        public $url_base;
-        public $url;
-        public $api_key;
-        function __construct($version, $url_base, $url, $api_key)
-        {
-        }
-        function add($params, $post_data)
-        {
-        }
-        function delete($params)
-        {
-        }
-        function delete_list($params)
-        {
-        }
-        function edit($params, $post_data)
-        {
-        }
-        function list_($params)
-        {
-        }
-        function view($params)
-        {
-        }
-        function events($params)
-        {
-        }
-        function process($params)
-        {
-        }
-    }
-    class RequestException extends \Exception
-    {
-        private $failedRequestMessage;
-        /**
-         * @param string message	Response error message from the server.
-         *
-         * Set the failure message for this exception.
-         */
-        public function setFailedMessage($message)
-        {
-        }
-        /**
-         * @return string	Response error message from the server.
-         *
-         * Get the failure message for this exception.
-         */
-        public function getFailedMessage()
+        public function notify($feed, $formData, $entry, $form)
         {
         }
     }
@@ -4566,6 +5323,14 @@ namespace FluentForm\App\Services\Parser {
         {
         }
         /**
+         * Set the label of the form field.
+         *
+         * @return $this
+         */
+        protected function setLabel()
+        {
+        }
+        /**
          * Set the admin label of the form field.
          *
          * @return $this
@@ -4579,6 +5344,17 @@ namespace FluentForm\App\Services\Parser {
          * @return $this
          */
         protected function setOptions()
+        {
+        }
+        /**
+         * Set the advanced options of the form field.
+         *
+         * @return $this
+         */
+        protected function setAdvancedOptions()
+        {
+        }
+        protected function setSettings()
         {
         }
         /**
@@ -4603,6 +5379,14 @@ namespace FluentForm\App\Services\Parser {
          * @return $this
          */
         protected function handleCustomField()
+        {
+        }
+        /**
+         * Set the raw field of the form field.
+         *
+         * @return $this
+         */
+        protected function setRaw()
         {
         }
     }
@@ -4880,1538 +5664,7435 @@ namespace FluentForm\App\Services\Parser {
         }
     }
 }
-namespace FluentForm\App\Services {
-    class Slack
+namespace Box\Spout\Autoloader {
+    /**
+     * Class Psr4Autoloader
+     * @see https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader-examples.md#class-example
+     *
+     * @package Box\Spout\Autoloader
+     */
+    class Psr4Autoloader
     {
         /**
-         * The slack integration settings of the form.
+         * An associative array where the key is a namespace prefix and the value
+         * is an array of base directories for classes in that namespace.
          *
-         * @var array $settings
+         * @var array
          */
-        protected $settings = [];
+        protected $prefixes = array();
         /**
-         * Determine whether the slack notification should be sent or not.
+         * Register loader with SPL autoloader stack.
          *
-         * @param $formId
-         *
-         * @return boolean
+         * @return void
          */
-        public function shouldApply($formId)
+        public function register()
         {
         }
         /**
-         * Handle slack notifier.
+         * Adds a base directory for a namespace prefix.
          *
-         * @param $submissionId
-         * @param $formData
-         * @param $form
+         * @param string $prefix The namespace prefix.
+         * @param string $baseDir A base directory for class files in the
+         * namespace.
+         * @param bool $prepend If true, prepend the base directory to the stack
+         * instead of appending it; this causes it to be searched first rather
+         * than last.
+         * @return void
          */
-        public function handle($submissionId, $formData, $form)
+        public function addNamespace($prefix, $baseDir, $prepend = false)
         {
         }
         /**
-         * Invoke slack notifier.
+         * Loads the class file for a given class name.
          *
-         * @param $submissionId
-         * @param $formData
-         * @param $form
+         * @param string $class The fully-qualified class name.
+         * @return mixed The mapped file name on success, or boolean false on
+         * failure.
          */
-        public static function notify($submissionId, $formData, $form)
+        public function loadClass($class)
+        {
+        }
+        /**
+         * Load the mapped file for a namespace prefix and relative class.
+         *
+         * @param string $prefix The namespace prefix.
+         * @param string $relativeClass The relative class name.
+         * @return mixed Boolean false if no mapped file can be loaded, or the
+         * name of the mapped file that was loaded.
+         */
+        protected function loadMappedFile($prefix, $relativeClass)
+        {
+        }
+        /**
+         * If a file exists, require it from the file system.
+         *
+         * @param string $file The file to require.
+         * @return bool True if the file exists, false if not.
+         */
+        protected function requireFile($file)
         {
         }
     }
 }
-namespace League\Csv\Config {
+namespace Box\Spout\Common\Escaper {
     /**
-     *  A trait to configure and check CSV file and content
+     * Interface EscaperInterface
      *
-     * @package League.csv
-     * @since  6.0.0
-     *
+     * @package Box\Spout\Common\Escaper
      */
-    trait Controls
+    interface EscaperInterface
     {
         /**
-         * the field delimiter (one character only)
+         * Escapes the given string to make it compatible with PHP
          *
-         * @var string
+         * @param string $string The string to escape
+         * @return string The escaped string
          */
-        protected $delimiter = ',';
+        public function escape($string);
         /**
-         * the field enclosure character (one character only)
+         * Unescapes the given string to make it compatible with PHP
          *
-         * @var string
+         * @param string $string The string to unescape
+         * @return string The unescaped string
          */
-        protected $enclosure = '"';
+        public function unescape($string);
+    }
+    /**
+     * Class CSV
+     * Provides functions to escape and unescape data for CSV files
+     *
+     * @package Box\Spout\Common\Escaper
+     */
+    class CSV implements \Box\Spout\Common\Escaper\EscaperInterface
+    {
         /**
-         * the field escape character (one character only)
+         * Escapes the given string to make it compatible with CSV
          *
-         * @var string
+         * @codeCoverageIgnore
+         *
+         * @param string $string The string to escape
+         * @return string The escaped string
          */
-        protected $escape = '\\';
-        /**
-         * the \SplFileObject flags holder
-         *
-         * @var int
-         */
-        protected $flags;
-        /**
-         * newline character
-         *
-         * @var string
-         */
-        protected $newline = "\n";
-        /**
-         * Sets the field delimiter
-         *
-         * @param string $delimiter
-         *
-         * @throws InvalidArgumentException If $delimiter is not a single character
-         *
-         * @return $this
-         */
-        public function setDelimiter($delimiter)
+        public function escape($string)
         {
         }
         /**
-         * Tell whether the submitted string is a valid CSV Control character
+         * Unescapes the given string to make it compatible with CSV
          *
-         * @param string $str The submitted string
+         * @codeCoverageIgnore
          *
-         * @return bool
+         * @param string $string The string to unescape
+         * @return string The unescaped string
          */
-        protected function isValidCsvControls($str)
+        public function unescape($string)
+        {
+        }
+    }
+}
+namespace Box\Spout\Common {
+    /**
+     * Class Singleton
+     * Defines a class as a singleton.
+     *
+     * @package Box\Spout\Common
+     */
+    trait Singleton
+    {
+        protected static $instance;
+        /**
+         * @return static
+         */
+        public static final function getInstance()
         {
         }
         /**
-         * Returns the current field delimiter
-         *
-         * @return string
+         * Singleton constructor.
          */
-        public function getDelimiter()
+        private final function __construct()
         {
         }
         /**
-         * Detects the CSV file delimiters
+         * Initializes the singleton
+         * @return void
+         */
+        protected function init()
+        {
+        }
+        private final function __wakeup()
+        {
+        }
+        private final function __clone()
+        {
+        }
+    }
+}
+namespace Box\Spout\Common\Escaper {
+    /**
+     * Class ODS
+     * Provides functions to escape and unescape data for ODS files
+     *
+     * @package Box\Spout\Common\Escaper
+     */
+    class ODS implements \Box\Spout\Common\Escaper\EscaperInterface
+    {
+        use \Box\Spout\Common\Singleton;
+        /**
+         * Escapes the given string to make it compatible with XLSX
          *
-         * Returns a associative array where each key represents
-         * the number of occurences and each value a delimiter with the
-         * given occurence
+         * @param string $string The string to escape
+         * @return string The escaped string
+         */
+        public function escape($string)
+        {
+        }
+        /**
+         * Unescapes the given string to make it compatible with XLSX
          *
-         * This method returns incorrect informations when two delimiters
-         * have the same occurrence count
+         * @param string $string The string to unescape
+         * @return string The unescaped string
+         */
+        public function unescape($string)
+        {
+        }
+    }
+    /**
+     * Class XLSX
+     * Provides functions to escape and unescape data for XLSX files
+     *
+     * @package Box\Spout\Common\Escaper
+     */
+    class XLSX implements \Box\Spout\Common\Escaper\EscaperInterface
+    {
+        use \Box\Spout\Common\Singleton;
+        /** @var string Regex pattern to detect control characters that need to be escaped */
+        protected $escapableControlCharactersPattern;
+        /** @var string[] Map containing control characters to be escaped (key) and their escaped value (value) */
+        protected $controlCharactersEscapingMap;
+        /** @var string[] Map containing control characters to be escaped (value) and their escaped value (key) */
+        protected $controlCharactersEscapingReverseMap;
+        /**
+         * Initializes the singleton instance
+         */
+        protected function init()
+        {
+        }
+        /**
+         * Escapes the given string to make it compatible with XLSX
          *
-         * DEPRECATION WARNING! This method will be removed in the next major point release
+         * @param string $string The string to escape
+         * @return string The escaped string
+         */
+        public function escape($string)
+        {
+        }
+        /**
+         * Unescapes the given string to make it compatible with XLSX
          *
-         * @deprecated deprecated since version 7.2
+         * @param string $string The string to unescape
+         * @return string The unescaped string
+         */
+        public function unescape($string)
+        {
+        }
+        /**
+         * @return string Regex pattern containing all escapable control characters
+         */
+        protected function getEscapableControlCharactersPattern()
+        {
+        }
+        /**
+         * Builds the map containing control characters to be escaped
+         * mapped to their escaped values.
+         * "\t", "\r" and "\n" don't need to be escaped.
          *
-         * @param int      $nb_rows
-         * @param string[] $delimiters additional delimiters
+         * NOTE: the logic has been adapted from the XlsxWriter library (BSD License)
+         * @link https://github.com/jmcnamara/XlsxWriter/blob/f1e610f29/xlsxwriter/sharedstrings.py#L89
          *
          * @return string[]
          */
-        public function detectDelimiterList($nb_rows = 1, array $delimiters = [])
+        protected function getControlCharactersEscapingMap()
         {
         }
         /**
-         * Detect Delimiters occurences in the CSV
+         * Converts PHP control characters from the given string to OpenXML escaped control characters
          *
-         * Returns a associative array where each key represents
-         * a valid delimiter and each value the number of occurences
+         * Excel escapes control characters with _xHHHH_ and also escapes any
+         * literal strings of that type by encoding the leading underscore.
+         * So "\0" -> _x0000_ and "_x0000_" -> _x005F_x0000_.
          *
-         * @param string[] $delimiters the delimiters to consider
-         * @param int      $nb_rows    Detection is made using $nb_rows of the CSV
+         * NOTE: the logic has been adapted from the XlsxWriter library (BSD License)
+         * @link https://github.com/jmcnamara/XlsxWriter/blob/f1e610f29/xlsxwriter/sharedstrings.py#L89
          *
-         * @throws InvalidArgumentException If $nb_rows value is invalid
-         *
-         * @return array
-         */
-        public function fetchDelimitersOccurrence(array $delimiters, $nb_rows = 1)
-        {
-        }
-        /**
-         * Returns the CSV Iterator
-         *
-         * @return SplFileObject
-         */
-        public abstract function getIterator();
-        /**
-         * Sets the field enclosure
-         *
-         * @param string $enclosure
-         *
-         * @throws InvalidArgumentException If $enclosure is not a single character
-         *
-         * @return $this
-         */
-        public function setEnclosure($enclosure)
-        {
-        }
-        /**
-         * Returns the current field enclosure
-         *
+         * @param string $string String to escape
          * @return string
          */
-        public function getEnclosure()
+        protected function escapeControlCharacters($string)
         {
         }
         /**
-         * Sets the field escape character
+         * Escapes the escape character: "_x0000_" -> "_x005F_x0000_"
          *
-         * @param string $escape
-         *
-         * @throws InvalidArgumentException If $escape is not a single character
-         *
-         * @return $this
+         * @param string $string String to escape
+         * @return string The escaped string
          */
-        public function setEscape($escape)
+        protected function escapeEscapeCharacter($string)
         {
         }
         /**
-         * Returns the current field escape character
+         * Converts OpenXML escaped control characters from the given string to PHP control characters
          *
+         * Excel escapes control characters with _xHHHH_ and also escapes any
+         * literal strings of that type by encoding the leading underscore.
+         * So "_x0000_" -> "\0" and "_x005F_x0000_" -> "_x0000_"
+         *
+         * NOTE: the logic has been adapted from the XlsxWriter library (BSD License)
+         * @link https://github.com/jmcnamara/XlsxWriter/blob/f1e610f29/xlsxwriter/sharedstrings.py#L89
+         *
+         * @param string $string String to unescape
          * @return string
          */
-        public function getEscape()
+        protected function unescapeControlCharacters($string)
         {
         }
         /**
-         * Sets the Flags associated to the CSV SplFileObject
+         * Unecapes the escape character: "_x005F_x0000_" => "_x0000_"
          *
-         * @param int $flags
-         *
-         * @throws InvalidArgumentException If the argument is not a valid integer
-         *
-         * @return $this
+         * @param string $string String to unescape
+         * @return string The unescaped string
          */
-        public function setFlags($flags)
-        {
-        }
-        /**
-         * @inheritdoc
-         */
-        protected abstract function filterInteger($int, $minValue, $errorMessage);
-        /**
-         * Returns the file Flags
-         *
-         * @return int
-         */
-        public function getFlags()
-        {
-        }
-        /**
-         * Sets the newline sequence characters
-         *
-         * @param string $newline
-         *
-         * @return static
-         */
-        public function setNewline($newline)
-        {
-        }
-        /**
-         * Returns the current newline sequence characters
-         *
-         * @return string
-         */
-        public function getNewline()
-        {
-        }
-    }
-    /**
-     *  A trait to output CSV
-     *
-     * @package League.csv
-     * @since  6.3.0
-     *
-     */
-    trait Output
-    {
-        /**
-         * Charset Encoding for the CSV
-         *
-         * @var string
-         */
-        protected $encodingFrom = 'UTF-8';
-        /**
-         * The Input file BOM character
-         * @var string
-         */
-        protected $input_bom;
-        /**
-         * The Output file BOM character
-         * @var string
-         */
-        protected $output_bom;
-        /**
-         * Returns the CSV Iterator
-         *
-         * @return Iterator
-         */
-        protected abstract function getConversionIterator();
-        /**
-         * Returns the CSV Iterator
-         *
-         * @return Iterator
-         */
-        public abstract function getIterator();
-        /**
-         * Sets the CSV encoding charset
-         *
-         * @param string $str
-         *
-         * @return static
-         */
-        public function setEncodingFrom($str)
-        {
-        }
-        /**
-         * Gets the source CSV encoding charset
-         *
-         * @return string
-         */
-        public function getEncodingFrom()
-        {
-        }
-        /**
-         * Sets the BOM sequence to prepend the CSV on output
-         *
-         * @param string $str The BOM sequence
-         *
-         * @return static
-         */
-        public function setOutputBOM($str = null)
-        {
-        }
-        /**
-         * Returns the BOM sequence in use on Output methods
-         *
-         * @return string
-         */
-        public function getOutputBOM()
-        {
-        }
-        /**
-         * Returns the BOM sequence of the given CSV
-         *
-         * @return string
-         */
-        public function getInputBOM()
-        {
-        }
-        /**
-         * Outputs all data on the CSV file
-         *
-         * @param string $filename CSV downloaded name if present adds extra headers
-         *
-         * @return int Returns the number of characters read from the handle
-         *             and passed through to the output.
-         */
-        public function output($filename = null)
-        {
-        }
-        /**
-         * Outputs all data from the CSV
-         *
-         * @return int Returns the number of characters read from the handle
-         *             and passed through to the output.
-         */
-        protected function fpassthru()
-        {
-        }
-        /**
-         * Retrieves the CSV content
-         *
-         * @return string
-         */
-        public function __toString()
-        {
-        }
-        /**
-         * JsonSerializable Interface
-         *
-         * @return array
-         */
-        public function jsonSerialize()
-        {
-        }
-        /**
-         * Convert Csv file into UTF-8
-         *
-         * @param Iterator $iterator
-         *
-         * @return Iterator
-         */
-        protected function convertToUtf8(\Iterator $iterator)
-        {
-        }
-        /**
-         * Returns a HTML table representation of the CSV Table
-         *
-         * @param string $class_name optional classname
-         *
-         * @return string
-         */
-        public function toHTML($class_name = 'table-csv-data')
-        {
-        }
-        /**
-         * Transforms a CSV into a XML
-         *
-         * @param string $root_name XML root node name
-         * @param string $row_name  XML row node name
-         * @param string $cell_name XML cell node name
-         *
-         * @return DomDocument
-         */
-        public function toXML($root_name = 'csv', $row_name = 'row', $cell_name = 'cell')
+        protected function unescapeEscapeCharacter($string)
         {
         }
     }
 }
-namespace League\Csv\Modifier {
+namespace Box\Spout\Common\Exception {
     /**
-     *  A Trait to Query rows against a SplFileObject
+     * Class SpoutException
      *
-     * @package League.csv
-     * @since  4.2.1
-     *
+     * @package Box\Spout\Common\Exception
+     * @abstract
      */
-    trait QueryFilter
+    abstract class SpoutException extends \Exception
     {
-        /**
-         * Callables to filter the iterator
-         *
-         * @var callable[]
-         */
-        protected $iterator_filters = [];
-        /**
-         * Callables to sort the iterator
-         *
-         * @var callable[]
-         */
-        protected $iterator_sort_by = [];
-        /**
-         * iterator Offset
-         *
-         * @var int
-         */
-        protected $iterator_offset = 0;
-        /**
-         * iterator maximum length
-         *
-         * @var int
-         */
-        protected $iterator_limit = -1;
-        /**
-         * Stripping BOM status
-         *
-         * @var boolean
-         */
-        protected $strip_bom = false;
-        /**
-         * Stripping BOM setter
-         *
-         * @param bool $status
-         *
-         * @return $this
-         */
-        public function stripBom($status)
-        {
-        }
-        /**
-         * Tell whether we can strip or not the leading BOM sequence
-         *
-         * @return bool
-         */
-        protected function isBomStrippable()
-        {
-        }
-        /**
-         * {@inheritdoc}
-         */
-        public abstract function getInputBom();
-        /**
-         * Set LimitIterator Offset
-         *
-         * @param $offset
-         *
-         * @return $this
-         */
-        public function setOffset($offset = 0)
-        {
-        }
-        /**
-         * @inheritdoc
-         */
-        protected abstract function filterInteger($int, $minValue, $errorMessage);
-        /**
-         * Set LimitIterator Count
-         *
-         * @param int $limit
-         *
-         * @return $this
-         */
-        public function setLimit($limit = -1)
-        {
-        }
-        /**
-         * Set an Iterator sorting callable function
-         *
-         * @param callable $callable
-         *
-         * @return $this
-         */
-        public function addSortBy(callable $callable)
-        {
-        }
-        /**
-         * Remove a callable from the collection
-         *
-         * @param callable $callable
-         *
-         * @return $this
-         */
-        public function removeSortBy(callable $callable)
-        {
-        }
-        /**
-         * Detect if the callable is already registered
-         *
-         * @param callable $callable
-         *
-         * @return bool
-         */
-        public function hasSortBy(callable $callable)
-        {
-        }
-        /**
-         * Remove all registered callable
-         *
-         * @return $this
-         */
-        public function clearSortBy()
-        {
-        }
-        /**
-         * Set the Iterator filter method
-         *
-         * @param callable $callable
-         *
-         * @return $this
-         */
-        public function addFilter(callable $callable)
-        {
-        }
-        /**
-         * Remove a filter from the callable collection
-         *
-         * @param callable $callable
-         *
-         * @return $this
-         */
-        public function removeFilter(callable $callable)
-        {
-        }
-        /**
-         * Detect if the callable filter is already registered
-         *
-         * @param callable $callable
-         *
-         * @return bool
-         */
-        public function hasFilter(callable $callable)
-        {
-        }
-        /**
-         * Remove all registered callable filter
-         *
-         * @return $this
-         */
-        public function clearFilter()
-        {
-        }
-        /**
-         * Remove the BOM sequence from the CSV
-         *
-         * @param Iterator $iterator
-         *
-         * @return \Iterator
-         */
-        protected function applyBomStripping(\Iterator $iterator)
-        {
-        }
-        /**
-         * Return the Iterator without the BOM sequence
-         *
-         * @param Iterator $iterator
-         *
-         * @return Iterator
-         */
-        protected function getStripBomIterator(\Iterator $iterator)
-        {
-        }
-        /**
-         * {@inheritdoc}
-         */
-        public abstract function getEnclosure();
-        /**
-         * Filter the Iterator
-         *
-         * @param \Iterator $iterator
-         *
-         * @return \Iterator
-         */
-        protected function applyIteratorFilter(\Iterator $iterator)
-        {
-        }
-        /**
-         * Sort the Iterator
-         *
-         * @param \Iterator $iterator
-         *
-         * @return \Iterator
-         */
-        protected function applyIteratorInterval(\Iterator $iterator)
-        {
-        }
-        /**
-         * Sort the Iterator
-         *
-         * @param \Iterator $iterator
-         *
-         * @return \Iterator
-         */
-        protected function applyIteratorSortBy(\Iterator $iterator)
-        {
-        }
     }
     /**
-     *  A Trait to ease PHP Stream Filters manipulation
-     *  with a SplFileObject
+     * Class EncodingConversionException
      *
-     * @package League.csv
-     * @since  6.0.0
-     *
+     * @api
+     * @package Box\Spout\Common\Exception
      */
-    trait StreamFilter
+    class EncodingConversionException extends \Box\Spout\Common\Exception\SpoutException
     {
-        /**
-         * collection of stream filters
-         *
-         * @var array
-         */
-        protected $stream_filters = [];
-        /**
-         * Stream filtering mode to apply on all filters
-         *
-         * @var int
-         */
-        protected $stream_filter_mode = STREAM_FILTER_ALL;
-        /**
-         *the real path
-         *
-         * @var string the real path to the file
-         *
-         */
-        protected $stream_uri;
-        /**
-         * PHP Stream Filter Regex
-         *
-         * @var string
-         */
-        protected $stream_regex = ',^
-        php://filter/
-        (?P<mode>:?read=|write=)?  # The resource open mode
-        (?P<filters>.*?)           # The resource registered filters
-        /resource=(?P<resource>.*) # The resource path
-        $,ix';
-        /**
-         * Internal path setter
-         *
-         * The path must be an SplFileInfo object
-         * an object that implements the `__toString` method
-         * a path to a file
-         *
-         * @param \SplFileObject|string $path The file path
-         */
-        protected function initStreamFilter($path)
-        {
-        }
-        /**
-         * Get the stream mode
-         *
-         * @param string $mode
-         *
-         * @return int
-         */
-        protected function fetchStreamModeAsInt($mode)
-        {
-        }
-        /**
-         * Check if the trait methods can be used
-         *
-         * @throws LogicException If the API can not be use
-         */
-        protected function assertStreamable()
-        {
-        }
-        /**
-         * Tells whether the stream filter capabilities can be used
-         *
-         * @return bool
-         */
-        public function isActiveStreamFilter()
-        {
-        }
-        /**
-         * stream filter mode Setter
-         *
-         * Set the new Stream Filter mode and remove all
-         * previously attached stream filters
-         *
-         * @param int $mode
-         *
-         * @throws OutOfBoundsException If the mode is invalid
-         *
-         * @return $this
-         */
-        public function setStreamFilterMode($mode)
-        {
-        }
-        /**
-         * stream filter mode getter
-         *
-         * @return int
-         */
-        public function getStreamFilterMode()
-        {
-        }
-        /**
-         * append a stream filter
-         *
-         * @param string $filter_name a string or an object that implements the '__toString' method
-         *
-         * @return $this
-         */
-        public function appendStreamFilter($filter_name)
-        {
-        }
-        /**
-         * prepend a stream filter
-         *
-         * @param string $filter_name a string or an object that implements the '__toString' method
-         *
-         * @return $this
-         */
-        public function prependStreamFilter($filter_name)
-        {
-        }
-        /**
-         * Sanitize the stream filter name
-         *
-         * @param string $filter_name the stream filter name
-         *
-         * @return string
-         */
-        protected function sanitizeStreamFilter($filter_name)
-        {
-        }
-        /**
-         * Detect if the stream filter is already present
-         *
-         * @param string $filter_name
-         *
-         * @return bool
-         */
-        public function hasStreamFilter($filter_name)
-        {
-        }
-        /**
-         * Remove a filter from the collection
-         *
-         * @param string $filter_name
-         *
-         * @return $this
-         */
-        public function removeStreamFilter($filter_name)
-        {
-        }
-        /**
-         * Remove all registered stream filter
-         *
-         * @return $this
-         */
-        public function clearStreamFilter()
-        {
-        }
-        /**
-         * Return the filter path
-         *
-         * @return string
-         */
-        protected function getStreamFilterPath()
-        {
-        }
-        /**
-         * Return PHP stream filter prefix
-         *
-         * @return string
-         */
-        protected function getStreamFilterPrefix()
-        {
-        }
+    }
+    /**
+     * Class IOException
+     *
+     * @api
+     * @package Box\Spout\Common\Exception
+     */
+    class IOException extends \Box\Spout\Common\Exception\SpoutException
+    {
+    }
+    /**
+     * Class InvalidArgumentException
+     *
+     * @api
+     * @package Box\Spout\Common\Exception
+     */
+    class InvalidArgumentException extends \Box\Spout\Common\Exception\SpoutException
+    {
+    }
+    /**
+     * Class UnsupportedTypeException
+     *
+     * @api
+     * @package Box\Spout\Common\Exception
+     */
+    class UnsupportedTypeException extends \Box\Spout\Common\Exception\SpoutException
+    {
     }
 }
-namespace League\Csv {
+namespace Box\Spout\Common\Helper {
     /**
-     *  An abstract class to enable basic CSV manipulation
+     * Class EncodingHelper
+     * This class provides helper functions to work with encodings.
      *
-     * @package League.csv
-     * @since  4.0.0
-     *
+     * @package Box\Spout\Common\Helper
      */
-    abstract class AbstractCsv implements \JsonSerializable, \IteratorAggregate
+    class EncodingHelper
     {
-        use \League\Csv\Config\Controls;
-        use \League\Csv\Config\Output;
-        use \League\Csv\Modifier\QueryFilter;
-        use \League\Csv\Modifier\StreamFilter;
-        /**
-         *  UTF-8 BOM sequence
-         */
+        /** Definition of the encodings that can have a BOM */
+        const ENCODING_UTF8 = 'UTF-8';
+        const ENCODING_UTF16_LE = 'UTF-16LE';
+        const ENCODING_UTF16_BE = 'UTF-16BE';
+        const ENCODING_UTF32_LE = 'UTF-32LE';
+        const ENCODING_UTF32_BE = 'UTF-32BE';
+        /** Definition of the BOMs for the different encodings */
         const BOM_UTF8 = "﻿";
-        /**
-         * UTF-16 BE BOM sequence
-         */
-        const BOM_UTF16_BE = "\xfe\xff";
-        /**
-         * UTF-16 LE BOM sequence
-         */
         const BOM_UTF16_LE = "\xff\xfe";
-        /**
-         * UTF-32 BE BOM sequence
-         */
+        const BOM_UTF16_BE = "\xfe\xff";
+        const BOM_UTF32_LE = "\xff\xfe\x00\x00";
         const BOM_UTF32_BE = "\x00\x00\xfe\xff";
+        /** @var \Box\Spout\Common\Helper\GlobalFunctionsHelper Helper to work with global functions */
+        protected $globalFunctionsHelper;
+        /** @var array Map representing the encodings supporting BOMs (key) and their associated BOM (value) */
+        protected $supportedEncodingsWithBom;
         /**
-         * UTF-32 LE BOM sequence
+         * @param \Box\Spout\Common\Helper\GlobalFunctionsHelper $globalFunctionsHelper
          */
-        const BOM_UTF32_LE = "\x00\x00\xff\xfe";
-        /**
-         * The constructor path
-         *
-         * can be a SplFileInfo object or the string path to a file
-         *
-         * @var SplFileObject|string
-         */
-        protected $path;
-        /**
-         * The file open mode flag
-         *
-         * @var string
-         */
-        protected $open_mode;
-        /**
-         * Default SplFileObject flags settings
-         *
-         * @var int
-         */
-        protected $defaultFlags;
-        /**
-         * Creates a new instance
-         *
-         * The path must be an SplFileInfo object
-         * an object that implements the `__toString` method
-         * a path to a file
-         *
-         * @param SplFileObject|string $path      The file path
-         * @param string               $open_mode the file open mode flag
-         */
-        protected function __construct($path, $open_mode = 'r+')
+        public function __construct($globalFunctionsHelper)
         {
         }
         /**
-         * The destructor
+         * Returns the number of bytes to use as offset in order to skip the BOM.
+         *
+         * @param resource $filePointer Pointer to the file to check
+         * @param string $encoding Encoding of the file to check
+         * @return int Bytes offset to apply to skip the BOM (0 means no BOM)
          */
-        public function __destruct()
+        public function getBytesOffsetToSkipBOM($filePointer, $encoding)
         {
         }
         /**
-         * Returns the CSV Iterator
+         * Returns whether the file identified by the given pointer has a BOM.
          *
-         * @return SplFileObject
+         * @param resource $filePointer Pointer to the file to check
+         * @param string $encoding Encoding of the file to check
+         * @return bool TRUE if the file has a BOM, FALSE otherwise
          */
-        public function getIterator()
+        protected function hasBOM($filePointer, $encoding)
         {
         }
         /**
-         * Returns the CSV Iterator for conversion
+         * Attempts to convert a non UTF-8 string into UTF-8.
          *
-         * @return Iterator
+         * @param string $string Non UTF-8 string to be converted
+         * @param string $sourceEncoding The encoding used to encode the source string
+         * @return string The converted, UTF-8 string
+         * @throws \Box\Spout\Common\Exception\EncodingConversionException If conversion is not supported or if the conversion failed
          */
-        protected function getConversionIterator()
+        public function attemptConversionToUTF8($string, $sourceEncoding)
         {
         }
         /**
-         * Creates a {@link AbstractCsv} from a string
+         * Attempts to convert a UTF-8 string into the given encoding.
          *
-         * The path can be:
-         * - an SplFileInfo,
-         * - a SplFileObject,
-         * - an object that implements the `__toString` method,
-         * - a string
-         *
-         * BUT NOT a SplTempFileObject
-         *
-         * <code>
-         *<?php
-         * $csv = new Reader::createFromPath('/path/to/file.csv', 'a+');
-         * $csv = new Reader::createFromPath(new SplFileInfo('/path/to/file.csv'));
-         * $csv = new Reader::createFromPath(new SplFileObject('/path/to/file.csv'), 'rb');
-         *
-         * ?>
-         * </code>
-         *
-         * @param mixed  $path      file path
-         * @param string $open_mode the file open mode flag
-         *
-         * @throws InvalidArgumentException If $path is a \SplTempFileObject object
-         *
-         * @return static
+         * @param string $string UTF-8 string to be converted
+         * @param string $targetEncoding The encoding the string should be re-encoded into
+         * @return string The converted string, encoded with the given encoding
+         * @throws \Box\Spout\Common\Exception\EncodingConversionException If conversion is not supported or if the conversion failed
          */
-        public static function createFromPath($path, $open_mode = 'r+')
+        public function attemptConversionFromUTF8($string, $targetEncoding)
         {
         }
         /**
-         * validate a string
+         * Attempts to convert the given string to the given encoding.
+         * Depending on what is installed on the server, we will try to iconv or mbstring.
          *
-         * @param mixed $str the value to evaluate as a string
+         * @param string $string string to be converted
+         * @param string $sourceEncoding The encoding used to encode the source string
+         * @param string $targetEncoding The encoding the string should be re-encoded into
+         * @return string The converted string, encoded with the given encoding
+         * @throws \Box\Spout\Common\Exception\EncodingConversionException If conversion is not supported or if the conversion failed
+         */
+        protected function attemptConversion($string, $sourceEncoding, $targetEncoding)
+        {
+        }
+        /**
+         * Returns whether "iconv" can be used.
          *
-         * @throws InvalidArgumentException if the submitted data can not be converted to string
+         * @return bool TRUE if "iconv" is available and can be used, FALSE otherwise
+         */
+        protected function canUseIconv()
+        {
+        }
+        /**
+         * Returns whether "mb_string" functions can be used.
+         * These functions come with the PHP Intl package.
          *
+         * @return bool TRUE if "mb_string" functions are available and can be used, FALSE otherwise
+         */
+        protected function canUseMbString()
+        {
+        }
+    }
+    /**
+     * Class FileSystemHelper
+     * This class provides helper functions to help with the file system operations
+     * like files/folders creation & deletion
+     *
+     * @package Box\Spout\Common\Helper
+     */
+    class FileSystemHelper
+    {
+        /** @var string Real path of the base folder where all the I/O can occur */
+        protected $baseFolderRealPath;
+        /**
+         * @param string $baseFolderPath The path of the base folder where all the I/O can occur
+         */
+        public function __construct($baseFolderPath)
+        {
+        }
+        /**
+         * Creates an empty folder with the given name under the given parent folder.
+         *
+         * @param string $parentFolderPath The parent folder path under which the folder is going to be created
+         * @param string $folderName The name of the folder to create
+         * @return string Path of the created folder
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the folder or if the folder path is not inside of the base folder
+         */
+        public function createFolder($parentFolderPath, $folderName)
+        {
+        }
+        /**
+         * Creates a file with the given name and content in the given folder.
+         * The parent folder must exist.
+         *
+         * @param string $parentFolderPath The parent folder path where the file is going to be created
+         * @param string $fileName The name of the file to create
+         * @param string $fileContents The contents of the file to create
+         * @return string Path of the created file
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the file or if the file path is not inside of the base folder
+         */
+        public function createFileWithContents($parentFolderPath, $fileName, $fileContents)
+        {
+        }
+        /**
+         * Delete the file at the given path
+         *
+         * @param string $filePath Path of the file to delete
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the file path is not inside of the base folder
+         */
+        public function deleteFile($filePath)
+        {
+        }
+        /**
+         * Delete the folder at the given path as well as all its contents
+         *
+         * @param string $folderPath Path of the folder to delete
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the folder path is not inside of the base folder
+         */
+        public function deleteFolderRecursively($folderPath)
+        {
+        }
+        /**
+         * All I/O operations must occur inside the base folder, for security reasons.
+         * This function will throw an exception if the folder where the I/O operation
+         * should occur is not inside the base folder.
+         *
+         * @param string $operationFolderPath The path of the folder where the I/O operation should occur
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the folder where the I/O operation should occur is not inside the base folder
+         */
+        protected function throwIfOperationNotInBaseFolder($operationFolderPath)
+        {
+        }
+    }
+    /**
+     * Class GlobalFunctionsHelper
+     * This class wraps global functions to facilitate testing
+     *
+     * @codeCoverageIgnore
+     *
+     * @package Box\Spout\Common\Helper
+     */
+    class GlobalFunctionsHelper
+    {
+        /**
+         * Wrapper around global function fopen()
+         * @see fopen()
+         *
+         * @param string $fileName
+         * @param string $mode
+         * @return resource|bool
+         */
+        public function fopen($fileName, $mode)
+        {
+        }
+        /**
+         * Wrapper around global function fgets()
+         * @see fgets()
+         *
+         * @param resource $handle
+         * @param int|void $length
          * @return string
          */
-        protected static function validateString($str)
+        public function fgets($handle, $length = null)
         {
         }
         /**
-         * Creates a {@link AbstractCsv} from a SplFileObject
+         * Wrapper around global function fputs()
+         * @see fputs()
          *
-         * The path can be:
-         * - a SplFileObject,
-         * - a SplTempFileObject
-         *
-         * <code>
-         *<?php
-         * $csv = new Writer::createFromFileObject(new SplFileInfo('/path/to/file.csv'));
-         * $csv = new Writer::createFromFileObject(new SplTempFileObject);
-         *
-         * ?>
-         * </code>
-         *
-         * @param SplFileObject $file
-         *
-         * @return static
+         * @param resource $handle
+         * @param string $string
+         * @return int
          */
-        public static function createFromFileObject(\SplFileObject $file)
+        public function fputs($handle, $string)
         {
         }
         /**
-         * Creates a {@link AbstractCsv} from a string
+         * Wrapper around global function fflush()
+         * @see fflush()
          *
-         * The string must be an object that implements the `__toString` method,
-         * or a string
-         *
-         * @param string $str     the string
-         * @param string $newline the newline character
-         *
-         * @return static
+         * @param resource $handle
+         * @return bool
          */
-        public static function createFromString($str, $newline = "\n")
+        public function fflush($handle)
         {
         }
         /**
-         * Creates a {@link AbstractCsv} instance from another {@link AbstractCsv} object
+         * Wrapper around global function fseek()
+         * @see fseek()
          *
-         * @param string $class_name the class to be instantiated
-         * @param string $open_mode  the file open mode flag
-         *
-         * @return static
+         * @param resource $handle
+         * @param int $offset
+         * @return int
          */
-        protected function newInstance($class_name, $open_mode)
+        public function fseek($handle, $offset)
         {
         }
         /**
-         * Creates a {@link Writer} instance from a {@link AbstractCsv} object
+         * Wrapper around global function fgetcsv()
+         * @see fgetcsv()
          *
-         * @param string $open_mode the file open mode flag
-         *
-         * @return Writer
+         * @param resource $handle
+         * @param int|void $length
+         * @param string|void $delimiter
+         * @param string|void $enclosure
+         * @return array
          */
-        public function newWriter($open_mode = 'r+')
+        public function fgetcsv($handle, $length = null, $delimiter = null, $enclosure = null)
         {
         }
         /**
-         * Creates a {@link Reader} instance from a {@link AbstractCsv} object
+         * Wrapper around global function fputcsv()
+         * @see fputcsv()
          *
-         * @param string $open_mode the file open mode flag
+         * @param resource $handle
+         * @param array $fields
+         * @param string|void $delimiter
+         * @param string|void $enclosure
+         * @return int
+         */
+        public function fputcsv($handle, array $fields, $delimiter = null, $enclosure = null)
+        {
+        }
+        /**
+         * Wrapper around global function fwrite()
+         * @see fwrite()
          *
+         * @param resource $handle
+         * @param string $string
+         * @return int
+         */
+        public function fwrite($handle, $string)
+        {
+        }
+        /**
+         * Wrapper around global function fclose()
+         * @see fclose()
+         *
+         * @param resource $handle
+         * @return bool
+         */
+        public function fclose($handle)
+        {
+        }
+        /**
+         * Wrapper around global function rewind()
+         * @see rewind()
+         *
+         * @param resource $handle
+         * @return bool
+         */
+        public function rewind($handle)
+        {
+        }
+        /**
+         * Wrapper around global function file_exists()
+         * @see file_exists()
+         *
+         * @param string $fileName
+         * @return bool
+         */
+        public function file_exists($fileName)
+        {
+        }
+        /**
+         * Wrapper around global function file_get_contents()
+         * @see file_get_contents()
+         *
+         * @param string $filePath
+         * @return string
+         */
+        public function file_get_contents($filePath)
+        {
+        }
+        /**
+         * Updates the given file path to use a real path.
+         * This is to avoid issues on some Windows setup.
+         *
+         * @param string $filePath File path
+         * @return string The file path using a real path
+         */
+        protected function convertToUseRealPath($filePath)
+        {
+        }
+        /**
+         * Returns whether the given path is a zip stream.
+         *
+         * @param string $path Path pointing to a document
+         * @return bool TRUE if path is a zip stream, FALSE otherwise
+         */
+        protected function isZipStream($path)
+        {
+        }
+        /**
+         * Wrapper around global function feof()
+         * @see feof()
+         *
+         * @param resource
+         * @return bool
+         */
+        public function feof($handle)
+        {
+        }
+        /**
+         * Wrapper around global function is_readable()
+         * @see is_readable()
+         *
+         * @param string $fileName
+         * @return bool
+         */
+        public function is_readable($fileName)
+        {
+        }
+        /**
+         * Wrapper around global function basename()
+         * @see basename()
+         *
+         * @param string $path
+         * @param string|void $suffix
+         * @return string
+         */
+        public function basename($path, $suffix = null)
+        {
+        }
+        /**
+         * Wrapper around global function header()
+         * @see header()
+         *
+         * @param string $string
+         * @return void
+         */
+        public function header($string)
+        {
+        }
+        /**
+         * Wrapper around global function ob_end_clean()
+         * @see ob_end_clean()
+         *
+         * @return void
+         */
+        public function ob_end_clean()
+        {
+        }
+        /**
+         * Wrapper around global function iconv()
+         * @see iconv()
+         *
+         * @param string $string The string to be converted
+         * @param string $sourceEncoding The encoding of the source string
+         * @param string $targetEncoding The encoding the source string should be converted to
+         * @return string|bool the converted string or FALSE on failure.
+         */
+        public function iconv($string, $sourceEncoding, $targetEncoding)
+        {
+        }
+        /**
+         * Wrapper around global function mb_convert_encoding()
+         * @see mb_convert_encoding()
+         *
+         * @param string $string The string to be converted
+         * @param string $sourceEncoding The encoding of the source string
+         * @param string $targetEncoding The encoding the source string should be converted to
+         * @return string|bool the converted string or FALSE on failure.
+         */
+        public function mb_convert_encoding($string, $sourceEncoding, $targetEncoding)
+        {
+        }
+        /**
+         * Wrapper around global function stream_get_wrappers()
+         * @see stream_get_wrappers()
+         *
+         * @return array
+         */
+        public function stream_get_wrappers()
+        {
+        }
+        /**
+         * Wrapper around global function function_exists()
+         * @see function_exists()
+         *
+         * @param string $functionName
+         * @return bool
+         */
+        public function function_exists($functionName)
+        {
+        }
+    }
+    /**
+     * Class StringHelper
+     * This class provides helper functions to work with strings and multibyte strings.
+     *
+     * @codeCoverageIgnore
+     *
+     * @package Box\Spout\Common\Helper
+     */
+    class StringHelper
+    {
+        /** @var bool Whether the mbstring extension is loaded */
+        protected $hasMbstringSupport;
+        /**
+         *
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Returns the length of the given string.
+         * It uses the multi-bytes function is available.
+         * @see strlen
+         * @see mb_strlen
+         *
+         * @param string $string
+         * @return int
+         */
+        public function getStringLength($string)
+        {
+        }
+        /**
+         * Returns the position of the first occurrence of the given character/substring within the given string.
+         * It uses the multi-bytes function is available.
+         * @see strpos
+         * @see mb_strpos
+         *
+         * @param string $char Needle
+         * @param string $string Haystack
+         * @return int Char/substring's first occurrence position within the string if found (starts at 0) or -1 if not found
+         */
+        public function getCharFirstOccurrencePosition($char, $string)
+        {
+        }
+        /**
+         * Returns the position of the last occurrence of the given character/substring within the given string.
+         * It uses the multi-bytes function is available.
+         * @see strrpos
+         * @see mb_strrpos
+         *
+         * @param string $char Needle
+         * @param string $string Haystack
+         * @return int Char/substring's last occurrence position within the string if found (starts at 0) or -1 if not found
+         */
+        public function getCharLastOccurrencePosition($char, $string)
+        {
+        }
+    }
+}
+namespace Box\Spout\Common {
+    /**
+     * Class Type
+     * This class references the supported types
+     *
+     * @api
+     */
+    abstract class Type
+    {
+        const CSV = 'csv';
+        const XLSX = 'xlsx';
+        const ODS = 'ods';
+    }
+}
+namespace Box\Spout\Reader {
+    /**
+     * Interface ReaderInterface
+     *
+     * @package Box\Spout\Reader
+     */
+    interface ReaderInterface
+    {
+        /**
+         * Prepares the reader to read the given file. It also makes sure
+         * that the file exists and is readable.
+         *
+         * @param  string $filePath Path of the file to be read
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException
+         */
+        public function open($filePath);
+        /**
+         * Returns an iterator to iterate over sheets.
+         *
+         * @return \Iterator To iterate over sheets
+         * @throws \Box\Spout\Reader\Exception\ReaderNotOpenedException If called before opening the reader
+         */
+        public function getSheetIterator();
+        /**
+         * Closes the reader, preventing any additional reading
+         *
+         * @return void
+         */
+        public function close();
+    }
+    /**
+     * Class AbstractReader
+     *
+     * @package Box\Spout\Reader
+     * @abstract
+     */
+    abstract class AbstractReader implements \Box\Spout\Reader\ReaderInterface
+    {
+        /** @var bool Indicates whether the stream is currently open */
+        protected $isStreamOpened = false;
+        /** @var \Box\Spout\Common\Helper\GlobalFunctionsHelper Helper to work with global functions */
+        protected $globalFunctionsHelper;
+        /** @var \Box\Spout\Reader\Common\ReaderOptions Reader's customized options */
+        protected $options;
+        /**
+         * Returns the reader's current options
+         *
+         * @return \Box\Spout\Reader\Common\ReaderOptions
+         */
+        protected abstract function getOptions();
+        /**
+         * Returns whether stream wrappers are supported
+         *
+         * @return bool
+         */
+        protected abstract function doesSupportStreamWrapper();
+        /**
+         * Opens the file at the given file path to make it ready to be read
+         *
+         * @param  string $filePath Path of the file to be read
+         * @return void
+         */
+        protected abstract function openReader($filePath);
+        /**
+         * Returns an iterator to iterate over sheets.
+         *
+         * @return \Iterator To iterate over sheets
+         */
+        protected abstract function getConcreteSheetIterator();
+        /**
+         * Closes the reader. To be used after reading the file.
+         *
+         * @return AbstractReader
+         */
+        protected abstract function closeReader();
+        /**
+         * @param \Box\Spout\Common\Helper\GlobalFunctionsHelper $globalFunctionsHelper
+         * @return AbstractReader
+         */
+        public function setGlobalFunctionsHelper($globalFunctionsHelper)
+        {
+        }
+        /**
+         * Sets whether date/time values should be returned as PHP objects or be formatted as strings.
+         *
+         * @api
+         * @param bool $shouldFormatDates
+         * @return AbstractReader
+         */
+        public function setShouldFormatDates($shouldFormatDates)
+        {
+        }
+        /**
+         * Sets whether empty rows should be returned or skipped.
+         *
+         * @api
+         * @param bool $shouldPreserveEmptyRows
+         * @return AbstractReader
+         */
+        public function setShouldPreserveEmptyRows($shouldPreserveEmptyRows)
+        {
+        }
+        /**
+         * Prepares the reader to read the given file. It also makes sure
+         * that the file exists and is readable.
+         *
+         * @api
+         * @param  string $filePath Path of the file to be read
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the file at the given path does not exist, is not readable or is corrupted
+         */
+        public function open($filePath)
+        {
+        }
+        /**
+         * Returns the real path of the given path.
+         * If the given path is a valid stream wrapper, returns the path unchanged.
+         *
+         * @param string $filePath
+         * @return string
+         */
+        protected function getFileRealPath($filePath)
+        {
+        }
+        /**
+         * Returns the scheme of the custom stream wrapper, if the path indicates a stream wrapper is used.
+         * For example, php://temp => php, s3://path/to/file => s3...
+         *
+         * @param string $filePath Path of the file to be read
+         * @return string|null The stream wrapper scheme or NULL if not a stream wrapper
+         */
+        protected function getStreamWrapperScheme($filePath)
+        {
+        }
+        /**
+         * Checks if the given path is an unsupported stream wrapper
+         * (like local path, php://temp, mystream://foo/bar...).
+         *
+         * @param string $filePath Path of the file to be read
+         * @return bool Whether the given path is an unsupported stream wrapper
+         */
+        protected function isStreamWrapper($filePath)
+        {
+        }
+        /**
+         * Checks if the given path is an supported stream wrapper
+         * (like php://temp, mystream://foo/bar...).
+         * If the given path is a local path, returns true.
+         *
+         * @param string $filePath Path of the file to be read
+         * @return bool Whether the given path is an supported stream wrapper
+         */
+        protected function isSupportedStreamWrapper($filePath)
+        {
+        }
+        /**
+         * Checks if a path is a PHP stream (like php://output, php://memory, ...)
+         *
+         * @param string $filePath Path of the file to be read
+         * @return bool Whether the given path maps to a PHP stream
+         */
+        protected function isPhpStream($filePath)
+        {
+        }
+        /**
+         * Returns an iterator to iterate over sheets.
+         *
+         * @api
+         * @return \Iterator To iterate over sheets
+         * @throws \Box\Spout\Reader\Exception\ReaderNotOpenedException If called before opening the reader
+         */
+        public function getSheetIterator()
+        {
+        }
+        /**
+         * Closes the reader, preventing any additional reading
+         *
+         * @api
+         * @return void
+         */
+        public function close()
+        {
+        }
+    }
+}
+namespace Box\Spout\Reader\CSV {
+    /**
+     * Class Reader
+     * This class provides support to read data from a CSV file.
+     *
+     * @package Box\Spout\Reader\CSV
+     */
+    class Reader extends \Box\Spout\Reader\AbstractReader
+    {
+        /** @var resource Pointer to the file to be written */
+        protected $filePointer;
+        /** @var SheetIterator To iterator over the CSV unique "sheet" */
+        protected $sheetIterator;
+        /** @var string Original value for the "auto_detect_line_endings" INI value */
+        protected $originalAutoDetectLineEndings;
+        /**
+         * Returns the reader's current options
+         *
+         * @return ReaderOptions
+         */
+        protected function getOptions()
+        {
+        }
+        /**
+         * Sets the field delimiter for the CSV.
+         * Needs to be called before opening the reader.
+         *
+         * @param string $fieldDelimiter Character that delimits fields
          * @return Reader
          */
-        public function newReader($open_mode = 'r+')
+        public function setFieldDelimiter($fieldDelimiter)
         {
         }
         /**
-         * Validate the submitted integer
+         * Sets the field enclosure for the CSV.
+         * Needs to be called before opening the reader.
          *
-         * @param int    $int
-         * @param int    $minValue
-         * @param string $errorMessage
-         *
-         * @throws InvalidArgumentException If the value is invalid
-         *
-         * @return int
+         * @param string $fieldEnclosure Character that enclose fields
+         * @return Reader
          */
-        protected function filterInteger($int, $minValue, $errorMessage)
+        public function setFieldEnclosure($fieldEnclosure)
+        {
+        }
+        /**
+         * Sets the encoding of the CSV file to be read.
+         * Needs to be called before opening the reader.
+         *
+         * @param string $encoding Encoding of the CSV file to be read
+         * @return Reader
+         */
+        public function setEncoding($encoding)
+        {
+        }
+        /**
+         * Sets the EOL for the CSV.
+         * Needs to be called before opening the reader.
+         *
+         * @param string $endOfLineCharacter used to properly get lines from the CSV file.
+         * @return Reader
+         */
+        public function setEndOfLineCharacter($endOfLineCharacter)
+        {
+        }
+        /**
+         * Returns whether stream wrappers are supported
+         *
+         * @return bool
+         */
+        protected function doesSupportStreamWrapper()
+        {
+        }
+        /**
+         * Opens the file at the given path to make it ready to be read.
+         * If setEncoding() was not called, it assumes that the file is encoded in UTF-8.
+         *
+         * @param  string $filePath Path of the CSV file to be read
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException
+         */
+        protected function openReader($filePath)
+        {
+        }
+        /**
+         * Returns an iterator to iterate over sheets.
+         *
+         * @return SheetIterator To iterate over sheets
+         */
+        protected function getConcreteSheetIterator()
+        {
+        }
+        /**
+         * Closes the reader. To be used after reading the file.
+         *
+         * @return void
+         */
+        protected function closeReader()
         {
         }
     }
 }
-namespace League\Csv\Exception {
+namespace Box\Spout\Reader\Common {
     /**
-     *  Thrown when a data is not validated prior to insertion
+     * Class ReaderOptions
+     * Readers' common options
      *
-     * @package League.csv
-     * @since  7.0.0
-     *
+     * @package Box\Spout\Reader\Common
      */
-    class InvalidRowException extends \InvalidArgumentException
+    class ReaderOptions
     {
+        /** @var bool Whether date/time values should be returned as PHP objects or be formatted as strings */
+        protected $shouldFormatDates = false;
+        /** @var bool Whether empty rows should be returned or skipped */
+        protected $shouldPreserveEmptyRows = false;
         /**
-         * Validator which did not validated the data
-         * @var string
+         * @return bool Whether date/time values should be returned as PHP objects or be formatted as strings.
          */
-        private $name;
-        /**
-         * Validator Data which caused the error
-         * @var array
-         */
-        private $data;
-        /**
-         * New Instance
-         *
-         * @param string $name    validator name
-         * @param array  $data    invalid  data
-         * @param string $message exception message
-         */
-        public function __construct($name, array $data = [], $message = '')
+        public function shouldFormatDates()
         {
         }
         /**
-         * return the validator name
+         * Sets whether date/time values should be returned as PHP objects or be formatted as strings.
          *
+         * @param bool $shouldFormatDates
+         * @return ReaderOptions
+         */
+        public function setShouldFormatDates($shouldFormatDates)
+        {
+        }
+        /**
+         * @return bool Whether empty rows should be returned or skipped.
+         */
+        public function shouldPreserveEmptyRows()
+        {
+        }
+        /**
+         * Sets whether empty rows should be returned or skipped.
+         *
+         * @param bool $shouldPreserveEmptyRows
+         * @return ReaderOptions
+         */
+        public function setShouldPreserveEmptyRows($shouldPreserveEmptyRows)
+        {
+        }
+    }
+}
+namespace Box\Spout\Reader\CSV {
+    /**
+     * Class ReaderOptions
+     * This class is used to customize the reader's behavior
+     *
+     * @package Box\Spout\Reader\CSV
+     */
+    class ReaderOptions extends \Box\Spout\Reader\Common\ReaderOptions
+    {
+        /** @var string Defines the character used to delimit fields (one character only) */
+        protected $fieldDelimiter = ',';
+        /** @var string Defines the character used to enclose fields (one character only) */
+        protected $fieldEnclosure = '"';
+        /** @var string Encoding of the CSV file to be read */
+        protected $encoding = \Box\Spout\Common\Helper\EncodingHelper::ENCODING_UTF8;
+        /** @var string Defines the End of line */
+        protected $endOfLineCharacter = "\n";
+        /**
+         * @return string
+         */
+        public function getFieldDelimiter()
+        {
+        }
+        /**
+         * Sets the field delimiter for the CSV.
+         * Needs to be called before opening the reader.
+         *
+         * @param string $fieldDelimiter Character that delimits fields
+         * @return ReaderOptions
+         */
+        public function setFieldDelimiter($fieldDelimiter)
+        {
+        }
+        /**
+         * @return string
+         */
+        public function getFieldEnclosure()
+        {
+        }
+        /**
+         * Sets the field enclosure for the CSV.
+         * Needs to be called before opening the reader.
+         *
+         * @param string $fieldEnclosure Character that enclose fields
+         * @return ReaderOptions
+         */
+        public function setFieldEnclosure($fieldEnclosure)
+        {
+        }
+        /**
+         * @return string
+         */
+        public function getEncoding()
+        {
+        }
+        /**
+         * Sets the encoding of the CSV file to be read.
+         * Needs to be called before opening the reader.
+         *
+         * @param string $encoding Encoding of the CSV file to be read
+         * @return ReaderOptions
+         */
+        public function setEncoding($encoding)
+        {
+        }
+        /**
+         * @return string EOL for the CSV
+         */
+        public function getEndOfLineCharacter()
+        {
+        }
+        /**
+         * Sets the EOL for the CSV.
+         * Needs to be called before opening the reader.
+         *
+         * @param string $endOfLineCharacter used to properly get lines from the CSV file.
+         * @return ReaderOptions
+         */
+        public function setEndOfLineCharacter($endOfLineCharacter)
+        {
+        }
+    }
+}
+namespace Box\Spout\Reader {
+    /**
+     * Interface IteratorInterface
+     *
+     * @package Box\Spout\Reader
+     */
+    interface IteratorInterface extends \Iterator
+    {
+        /**
+         * Cleans up what was created to iterate over the object.
+         *
+         * @return void
+         */
+        public function end();
+    }
+}
+namespace Box\Spout\Reader\CSV {
+    /**
+     * Class RowIterator
+     * Iterate over CSV rows.
+     *
+     * @package Box\Spout\Reader\CSV
+     */
+    class RowIterator implements \Box\Spout\Reader\IteratorInterface
+    {
+        /**
+         * Value passed to fgetcsv. 0 means "unlimited" (slightly slower but accomodates for very long lines).
+         */
+        const MAX_READ_BYTES_PER_LINE = 0;
+        /** @var resource Pointer to the CSV file to read */
+        protected $filePointer;
+        /** @var int Number of read rows */
+        protected $numReadRows = 0;
+        /** @var array|null Buffer used to store the row data, while checking if there are more rows to read */
+        protected $rowDataBuffer = null;
+        /** @var bool Indicates whether all rows have been read */
+        protected $hasReachedEndOfFile = false;
+        /** @var string Defines the character used to delimit fields (one character only) */
+        protected $fieldDelimiter;
+        /** @var string Defines the character used to enclose fields (one character only) */
+        protected $fieldEnclosure;
+        /** @var string Encoding of the CSV file to be read */
+        protected $encoding;
+        /** @var string End of line delimiter, given by the user as input. */
+        protected $inputEOLDelimiter;
+        /** @var bool Whether empty rows should be returned or skipped */
+        protected $shouldPreserveEmptyRows;
+        /** @var \Box\Spout\Common\Helper\GlobalFunctionsHelper Helper to work with global functions */
+        protected $globalFunctionsHelper;
+        /** @var \Box\Spout\Common\Helper\EncodingHelper Helper to work with different encodings */
+        protected $encodingHelper;
+        /** @var string End of line delimiter, encoded using the same encoding as the CSV */
+        protected $encodedEOLDelimiter;
+        /**
+         * @param resource $filePointer Pointer to the CSV file to read
+         * @param \Box\Spout\Reader\CSV\ReaderOptions $options
+         * @param \Box\Spout\Common\Helper\GlobalFunctionsHelper $globalFunctionsHelper
+         */
+        public function __construct($filePointer, $options, $globalFunctionsHelper)
+        {
+        }
+        /**
+         * Rewind the Iterator to the first element
+         * @link http://php.net/manual/en/iterator.rewind.php
+         *
+         * @return void
+         */
+        public function rewind()
+        {
+        }
+        /**
+         * This rewinds and skips the BOM if inserted at the beginning of the file
+         * by moving the file pointer after it, so that it is not read.
+         *
+         * @return void
+         */
+        protected function rewindAndSkipBom()
+        {
+        }
+        /**
+         * Checks if current position is valid
+         * @link http://php.net/manual/en/iterator.valid.php
+         *
+         * @return bool
+         */
+        public function valid()
+        {
+        }
+        /**
+         * Move forward to next element. Reads data for the next unprocessed row.
+         * @link http://php.net/manual/en/iterator.next.php
+         *
+         * @return void
+         * @throws \Box\Spout\Common\Exception\EncodingConversionException If unable to convert data to UTF-8
+         */
+        public function next()
+        {
+        }
+        /**
+         * @return void
+         * @throws \Box\Spout\Common\Exception\EncodingConversionException If unable to convert data to UTF-8
+         */
+        protected function readDataForNextRow()
+        {
+        }
+        /**
+         * @param array|bool $currentRowData
+         * @return bool Whether the data for the current row can be returned or if we need to keep reading
+         */
+        protected function shouldReadNextRow($currentRowData)
+        {
+        }
+        /**
+         * Returns the next row, converted if necessary to UTF-8.
+         * As fgetcsv() does not manage correctly encoding for non UTF-8 data,
+         * we remove manually whitespace with ltrim or rtrim (depending on the order of the bytes)
+         *
+         * @return array|false The row for the current file pointer, encoded in UTF-8 or FALSE if nothing to read
+         * @throws \Box\Spout\Common\Exception\EncodingConversionException If unable to convert data to UTF-8
+         */
+        protected function getNextUTF8EncodedRow()
+        {
+        }
+        /**
+         * Returns the end of line delimiter, encoded using the same encoding as the CSV.
+         * The return value is cached.
+         *
+         * @return string
+         */
+        protected function getEncodedEOLDelimiter()
+        {
+        }
+        /**
+         * @param array|bool $lineData Array containing the cells value for the line
+         * @return bool Whether the given line is empty
+         */
+        protected function isEmptyLine($lineData)
+        {
+        }
+        /**
+         * Return the current element from the buffer
+         * @link http://php.net/manual/en/iterator.current.php
+         *
+         * @return array|null
+         */
+        public function current()
+        {
+        }
+        /**
+         * Return the key of the current element
+         * @link http://php.net/manual/en/iterator.key.php
+         *
+         * @return int
+         */
+        public function key()
+        {
+        }
+        /**
+         * Cleans up what was created to iterate over the object.
+         *
+         * @return void
+         */
+        public function end()
+        {
+        }
+    }
+}
+namespace Box\Spout\Reader {
+    /**
+     * Interface SheetInterface
+     *
+     * @package Box\Spout\Reader
+     */
+    interface SheetInterface
+    {
+        /**
+         * Returns an iterator to iterate over the sheet's rows.
+         *
+         * @return \Iterator
+         */
+        public function getRowIterator();
+    }
+}
+namespace Box\Spout\Reader\CSV {
+    /**
+     * Class Sheet
+     *
+     * @package Box\Spout\Reader\CSV
+     */
+    class Sheet implements \Box\Spout\Reader\SheetInterface
+    {
+        /** @var \Box\Spout\Reader\CSV\RowIterator To iterate over the CSV's rows */
+        protected $rowIterator;
+        /**
+         * @param resource $filePointer Pointer to the CSV file to read
+         * @param \Box\Spout\Reader\CSV\ReaderOptions $options
+         * @param \Box\Spout\Common\Helper\GlobalFunctionsHelper $globalFunctionsHelper
+         */
+        public function __construct($filePointer, $options, $globalFunctionsHelper)
+        {
+        }
+        /**
+         * @api
+         * @return \Box\Spout\Reader\CSV\RowIterator
+         */
+        public function getRowIterator()
+        {
+        }
+        /**
+         * @api
+         * @return int Index of the sheet
+         */
+        public function getIndex()
+        {
+        }
+        /**
+         * @api
+         * @return string Name of the sheet - empty string since CSV does not support that
+         */
+        public function getName()
+        {
+        }
+        /**
+         * @api
+         * @return bool Always TRUE as there is only one sheet
+         */
+        public function isActive()
+        {
+        }
+    }
+    /**
+     * Class SheetIterator
+     * Iterate over CSV unique "sheet".
+     *
+     * @package Box\Spout\Reader\CSV
+     */
+    class SheetIterator implements \Box\Spout\Reader\IteratorInterface
+    {
+        /** @var \Box\Spout\Reader\CSV\Sheet The CSV unique "sheet" */
+        protected $sheet;
+        /** @var bool Whether the unique "sheet" has already been read */
+        protected $hasReadUniqueSheet = false;
+        /**
+         * @param resource $filePointer
+         * @param \Box\Spout\Reader\CSV\ReaderOptions $options
+         * @param \Box\Spout\Common\Helper\GlobalFunctionsHelper $globalFunctionsHelper
+         */
+        public function __construct($filePointer, $options, $globalFunctionsHelper)
+        {
+        }
+        /**
+         * Rewind the Iterator to the first element
+         * @link http://php.net/manual/en/iterator.rewind.php
+         *
+         * @return void
+         */
+        public function rewind()
+        {
+        }
+        /**
+         * Checks if current position is valid
+         * @link http://php.net/manual/en/iterator.valid.php
+         *
+         * @return bool
+         */
+        public function valid()
+        {
+        }
+        /**
+         * Move forward to next element
+         * @link http://php.net/manual/en/iterator.next.php
+         *
+         * @return void
+         */
+        public function next()
+        {
+        }
+        /**
+         * Return the current element
+         * @link http://php.net/manual/en/iterator.current.php
+         *
+         * @return \Box\Spout\Reader\CSV\Sheet
+         */
+        public function current()
+        {
+        }
+        /**
+         * Return the key of the current element
+         * @link http://php.net/manual/en/iterator.key.php
+         *
+         * @return int
+         */
+        public function key()
+        {
+        }
+        /**
+         * Cleans up what was created to iterate over the object.
+         *
+         * @return void
+         */
+        public function end()
+        {
+        }
+    }
+}
+namespace Box\Spout\Reader\Common {
+    /**
+     * Class XMLProcessor
+     * Helps process XML files
+     *
+     * @package Box\Spout\Reader\Common
+     */
+    class XMLProcessor
+    {
+        /* Node types */
+        const NODE_TYPE_START = \Box\Spout\Reader\Wrapper\XMLReader::ELEMENT;
+        const NODE_TYPE_END = \Box\Spout\Reader\Wrapper\XMLReader::END_ELEMENT;
+        /* Keys associated to reflection attributes to invoke a callback */
+        const CALLBACK_REFLECTION_METHOD = 'reflectionMethod';
+        const CALLBACK_REFLECTION_OBJECT = 'reflectionObject';
+        /* Values returned by the callbacks to indicate what the processor should do next */
+        const PROCESSING_CONTINUE = 1;
+        const PROCESSING_STOP = 2;
+        /** @var \Box\Spout\Reader\Wrapper\XMLReader The XMLReader object that will help read sheet's XML data */
+        protected $xmlReader;
+        /** @var array Registered callbacks */
+        private $callbacks = [];
+        /**
+         * @param \Box\Spout\Reader\Wrapper\XMLReader $xmlReader XMLReader object
+         */
+        public function __construct($xmlReader)
+        {
+        }
+        /**
+         * @param string $nodeName A callback may be triggered when a node with this name is read
+         * @param int $nodeType Type of the node [NODE_TYPE_START || NODE_TYPE_END]
+         * @param callable $callback Callback to execute when the read node has the given name and type
+         * @return XMLProcessor
+         */
+        public function registerCallback($nodeName, $nodeType, $callback)
+        {
+        }
+        /**
+         * @param string $nodeName Name of the node
+         * @param int $nodeType Type of the node [NODE_TYPE_START || NODE_TYPE_END]
+         * @return string Key used to store the associated callback
+         */
+        private function getCallbackKey($nodeName, $nodeType)
+        {
+        }
+        /**
+         * Because the callback can be a "protected" function, we don't want to use call_user_func() directly
+         * but instead invoke the callback using Reflection. This allows the invocation of "protected" functions.
+         * Since some functions can be called a lot, we pre-process the callback to only return the elements that
+         * will be needed to invoke the callback later.
+         *
+         * @param callable $callback Array reference to a callback: [OBJECT, METHOD_NAME]
+         * @return array Associative array containing the elements needed to invoke the callback using Reflection
+         */
+        private function getInvokableCallbackData($callback)
+        {
+        }
+        /**
+         * Resumes the reading of the XML file where it was left off.
+         * Stops whenever a callback indicates that reading should stop or at the end of the file.
+         *
+         * @return void
+         * @throws \Box\Spout\Reader\Exception\XMLProcessingException
+         */
+        public function readUntilStopped()
+        {
+        }
+        /**
+         * @param string $nodeNamePossiblyWithPrefix Name of the node, possibly prefixed
+         * @param string $nodeNameWithoutPrefix Name of the same node, un-prefixed
+         * @param int $nodeType Type of the node [NODE_TYPE_START || NODE_TYPE_END]
+         * @return array|null Callback data to be used for execution when a node of the given name/type is read or NULL if none found
+         */
+        private function getRegisteredCallbackData($nodeNamePossiblyWithPrefix, $nodeNameWithoutPrefix, $nodeType)
+        {
+        }
+        /**
+         * @param array $callbackData Associative array containing data to invoke the callback using Reflection
+         * @param array $args Arguments to pass to the callback
+         * @return int Callback response
+         */
+        private function invokeCallback($callbackData, $args)
+        {
+        }
+    }
+}
+namespace Box\Spout\Reader\Exception {
+    /**
+     * Class ReaderException
+     *
+     * @package Box\Spout\Reader\Exception
+     * @abstract
+     */
+    abstract class ReaderException extends \Box\Spout\Common\Exception\SpoutException
+    {
+    }
+    /**
+     * Class IteratorNotRewindableException
+     *
+     * @api
+     * @package Box\Spout\Reader\Exception
+     */
+    class IteratorNotRewindableException extends \Box\Spout\Reader\Exception\ReaderException
+    {
+    }
+    /**
+     * Class NoSheetsFoundException
+     *
+     * @api
+     * @package Box\Spout\Reader\Exception
+     */
+    class NoSheetsFoundException extends \Box\Spout\Reader\Exception\ReaderException
+    {
+    }
+    /**
+     * Class ReaderNotOpenedException
+     *
+     * @api
+     * @package Box\Spout\Reader\Exception
+     */
+    class ReaderNotOpenedException extends \Box\Spout\Reader\Exception\ReaderException
+    {
+    }
+    /**
+     * Class SharedStringNotFoundException
+     *
+     * @api
+     * @package Box\Spout\Reader\Exception
+     */
+    class SharedStringNotFoundException extends \Box\Spout\Reader\Exception\ReaderException
+    {
+    }
+    /**
+     * Class XMLProcessingException
+     *
+     * @package Box\Spout\Reader\Exception
+     */
+    class XMLProcessingException extends \Box\Spout\Reader\Exception\ReaderException
+    {
+    }
+}
+namespace Box\Spout\Reader\ODS\Helper {
+    /**
+     * Class CellValueFormatter
+     * This class provides helper functions to format cell values
+     *
+     * @package Box\Spout\Reader\ODS\Helper
+     */
+    class CellValueFormatter
+    {
+        /** Definition of all possible cell types */
+        const CELL_TYPE_STRING = 'string';
+        const CELL_TYPE_FLOAT = 'float';
+        const CELL_TYPE_BOOLEAN = 'boolean';
+        const CELL_TYPE_DATE = 'date';
+        const CELL_TYPE_TIME = 'time';
+        const CELL_TYPE_CURRENCY = 'currency';
+        const CELL_TYPE_PERCENTAGE = 'percentage';
+        const CELL_TYPE_VOID = 'void';
+        /** Definition of XML nodes names used to parse data */
+        const XML_NODE_P = 'p';
+        const XML_NODE_S = 'text:s';
+        const XML_NODE_A = 'text:a';
+        const XML_NODE_SPAN = 'text:span';
+        /** Definition of XML attributes used to parse data */
+        const XML_ATTRIBUTE_TYPE = 'office:value-type';
+        const XML_ATTRIBUTE_VALUE = 'office:value';
+        const XML_ATTRIBUTE_BOOLEAN_VALUE = 'office:boolean-value';
+        const XML_ATTRIBUTE_DATE_VALUE = 'office:date-value';
+        const XML_ATTRIBUTE_TIME_VALUE = 'office:time-value';
+        const XML_ATTRIBUTE_CURRENCY = 'office:currency';
+        const XML_ATTRIBUTE_C = 'text:c';
+        /** @var bool Whether date/time values should be returned as PHP objects or be formatted as strings */
+        protected $shouldFormatDates;
+        /** @var \Box\Spout\Common\Escaper\ODS Used to unescape XML data */
+        protected $escaper;
+        /**
+         * @param bool $shouldFormatDates Whether date/time values should be returned as PHP objects or be formatted as strings
+         */
+        public function __construct($shouldFormatDates)
+        {
+        }
+        /**
+         * Returns the (unescaped) correctly marshalled, cell value associated to the given XML node.
+         * @see http://docs.oasis-open.org/office/v1.2/os/OpenDocument-v1.2-os-part1.html#refTable13
+         *
+         * @param \DOMNode $node
+         * @return string|int|float|bool|\DateTime|\DateInterval|null The value associated with the cell, empty string if cell's type is void/undefined, null on error
+         */
+        public function extractAndFormatNodeValue($node)
+        {
+        }
+        /**
+         * Returns the cell String value.
+         *
+         * @param \DOMNode $node
+         * @return string The value associated with the cell
+         */
+        protected function formatStringCellValue($node)
+        {
+        }
+        /**
+         * Returns the cell Numeric value from the given node.
+         *
+         * @param \DOMNode $node
+         * @return int|float The value associated with the cell
+         */
+        protected function formatFloatCellValue($node)
+        {
+        }
+        /**
+         * Returns the cell Boolean value from the given node.
+         *
+         * @param \DOMNode $node
+         * @return bool The value associated with the cell
+         */
+        protected function formatBooleanCellValue($node)
+        {
+        }
+        /**
+         * Returns the cell Date value from the given node.
+         *
+         * @param \DOMNode $node
+         * @return \DateTime|string|null The value associated with the cell or NULL if invalid date value
+         */
+        protected function formatDateCellValue($node)
+        {
+        }
+        /**
+         * Returns the cell Time value from the given node.
+         *
+         * @param \DOMNode $node
+         * @return \DateInterval|string|null The value associated with the cell or NULL if invalid time value
+         */
+        protected function formatTimeCellValue($node)
+        {
+        }
+        /**
+         * Returns the cell Currency value from the given node.
+         *
+         * @param \DOMNode $node
+         * @return string The value associated with the cell (e.g. "100 USD" or "9.99 EUR")
+         */
+        protected function formatCurrencyCellValue($node)
+        {
+        }
+        /**
+         * Returns the cell Percentage value from the given node.
+         *
+         * @param \DOMNode $node
+         * @return int|float The value associated with the cell
+         */
+        protected function formatPercentageCellValue($node)
+        {
+        }
+    }
+    /**
+     * Class SettingsHelper
+     * This class provides helper functions to extract data from the "settings.xml" file.
+     *
+     * @package Box\Spout\Reader\ODS\Helper
+     */
+    class SettingsHelper
+    {
+        const SETTINGS_XML_FILE_PATH = 'settings.xml';
+        /** Definition of XML nodes name and attribute used to parse settings data */
+        const XML_NODE_CONFIG_ITEM = 'config:config-item';
+        const XML_ATTRIBUTE_CONFIG_NAME = 'config:name';
+        const XML_ATTRIBUTE_VALUE_ACTIVE_TABLE = 'ActiveTable';
+        /**
+         * @param string $filePath Path of the file to be read
+         * @return string|null Name of the sheet that was defined as active or NULL if none found
+         */
+        public function getActiveSheetName($filePath)
+        {
+        }
+    }
+}
+namespace Box\Spout\Reader\ODS {
+    /**
+     * Class Reader
+     * This class provides support to read data from a ODS file
+     *
+     * @package Box\Spout\Reader\ODS
+     */
+    class Reader extends \Box\Spout\Reader\AbstractReader
+    {
+        /** @var \ZipArchive */
+        protected $zip;
+        /** @var SheetIterator To iterator over the ODS sheets */
+        protected $sheetIterator;
+        /**
+         * Returns the reader's current options
+         *
+         * @return ReaderOptions
+         */
+        protected function getOptions()
+        {
+        }
+        /**
+         * Returns whether stream wrappers are supported
+         *
+         * @return bool
+         */
+        protected function doesSupportStreamWrapper()
+        {
+        }
+        /**
+         * Opens the file at the given file path to make it ready to be read.
+         *
+         * @param  string $filePath Path of the file to be read
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the file at the given path or its content cannot be read
+         * @throws \Box\Spout\Reader\Exception\NoSheetsFoundException If there are no sheets in the file
+         */
+        protected function openReader($filePath)
+        {
+        }
+        /**
+         * Returns an iterator to iterate over sheets.
+         *
+         * @return SheetIterator To iterate over sheets
+         */
+        protected function getConcreteSheetIterator()
+        {
+        }
+        /**
+         * Closes the reader. To be used after reading the file.
+         *
+         * @return void
+         */
+        protected function closeReader()
+        {
+        }
+    }
+    /**
+     * Class ReaderOptions
+     * This class is used to customize the reader's behavior
+     *
+     * @package Box\Spout\Reader\ODS
+     */
+    class ReaderOptions extends \Box\Spout\Reader\Common\ReaderOptions
+    {
+        // No extra options
+    }
+    /**
+     * Class RowIterator
+     *
+     * @package Box\Spout\Reader\ODS
+     */
+    class RowIterator implements \Box\Spout\Reader\IteratorInterface
+    {
+        /** Definition of XML nodes names used to parse data */
+        const XML_NODE_TABLE = 'table:table';
+        const XML_NODE_ROW = 'table:table-row';
+        const XML_NODE_CELL = 'table:table-cell';
+        const MAX_COLUMNS_EXCEL = 16384;
+        /** Definition of XML attribute used to parse data */
+        const XML_ATTRIBUTE_NUM_ROWS_REPEATED = 'table:number-rows-repeated';
+        const XML_ATTRIBUTE_NUM_COLUMNS_REPEATED = 'table:number-columns-repeated';
+        /** @var \Box\Spout\Reader\Wrapper\XMLReader The XMLReader object that will help read sheet's XML data */
+        protected $xmlReader;
+        /** @var \Box\Spout\Reader\Common\XMLProcessor Helper Object to process XML nodes */
+        protected $xmlProcessor;
+        /** @var bool Whether empty rows should be returned or skipped */
+        protected $shouldPreserveEmptyRows;
+        /** @var Helper\CellValueFormatter Helper to format cell values */
+        protected $cellValueFormatter;
+        /** @var bool Whether the iterator has already been rewound once */
+        protected $hasAlreadyBeenRewound = false;
+        /** @var array Contains the data for the currently processed row (key = cell index, value = cell value) */
+        protected $currentlyProcessedRowData = [];
+        /** @var array|null Buffer used to store the row data, while checking if there are more rows to read */
+        protected $rowDataBuffer = null;
+        /** @var bool Indicates whether all rows have been read */
+        protected $hasReachedEndOfFile = false;
+        /** @var int Last row index processed (one-based) */
+        protected $lastRowIndexProcessed = 0;
+        /** @var int Row index to be processed next (one-based) */
+        protected $nextRowIndexToBeProcessed = 1;
+        /** @var mixed|null Value of the last processed cell (because when reading cell at column N+1, cell N is processed) */
+        protected $lastProcessedCellValue = null;
+        /** @var int Number of times the last processed row should be repeated */
+        protected $numRowsRepeated = 1;
+        /** @var int Number of times the last cell value should be copied to the cells on its right */
+        protected $numColumnsRepeated = 1;
+        /** @var bool Whether at least one cell has been read for the row currently being processed */
+        protected $hasAlreadyReadOneCellInCurrentRow = false;
+        /**
+         * @param XMLReader $xmlReader XML Reader, positioned on the "<table:table>" element
+         * @param \Box\Spout\Reader\ODS\ReaderOptions $options Reader's current options
+         */
+        public function __construct($xmlReader, $options)
+        {
+        }
+        /**
+         * Rewind the Iterator to the first element.
+         * NOTE: It can only be done once, as it is not possible to read an XML file backwards.
+         * @link http://php.net/manual/en/iterator.rewind.php
+         *
+         * @return void
+         * @throws \Box\Spout\Reader\Exception\IteratorNotRewindableException If the iterator is rewound more than once
+         */
+        public function rewind()
+        {
+        }
+        /**
+         * Checks if current position is valid
+         * @link http://php.net/manual/en/iterator.valid.php
+         *
+         * @return bool
+         */
+        public function valid()
+        {
+        }
+        /**
+         * Move forward to next element. Empty rows will be skipped.
+         * @link http://php.net/manual/en/iterator.next.php
+         *
+         * @return void
+         * @throws \Box\Spout\Reader\Exception\SharedStringNotFoundException If a shared string was not found
+         * @throws \Box\Spout\Common\Exception\IOException If unable to read the sheet data XML
+         */
+        public function next()
+        {
+        }
+        /**
+         * Returns whether we need data for the next row to be processed.
+         * We DO need to read data if:
+         *   - we have not read any rows yet
+         *      OR
+         *   - the next row to be processed immediately follows the last read row
+         *
+         * @return bool Whether we need data for the next row to be processed.
+         */
+        protected function doesNeedDataForNextRowToBeProcessed()
+        {
+        }
+        /**
+         * @return void
+         * @throws \Box\Spout\Reader\Exception\SharedStringNotFoundException If a shared string was not found
+         * @throws \Box\Spout\Common\Exception\IOException If unable to read the sheet data XML
+         */
+        protected function readDataForNextRow()
+        {
+        }
+        /**
+         * @param \Box\Spout\Reader\Wrapper\XMLReader $xmlReader XMLReader object, positioned on a "<table:table-row>" starting node
+         * @return int A return code that indicates what action should the processor take next
+         */
+        protected function processRowStartingNode($xmlReader)
+        {
+        }
+        /**
+         * @param \Box\Spout\Reader\Wrapper\XMLReader $xmlReader XMLReader object, positioned on a "<table:table-cell>" starting node
+         * @return int A return code that indicates what action should the processor take next
+         */
+        protected function processCellStartingNode($xmlReader)
+        {
+        }
+        /**
+         * @return int A return code that indicates what action should the processor take next
+         */
+        protected function processRowEndingNode()
+        {
+        }
+        /**
+         * @return int A return code that indicates what action should the processor take next
+         */
+        protected function processTableEndingNode()
+        {
+        }
+        /**
+         * @param \Box\Spout\Reader\Wrapper\XMLReader $xmlReader XMLReader object, positioned on a "<table:table-row>" starting node
+         * @return int The value of "table:number-rows-repeated" attribute of the current node, or 1 if attribute missing
+         */
+        protected function getNumRowsRepeatedForCurrentNode($xmlReader)
+        {
+        }
+        /**
+         * @param \Box\Spout\Reader\Wrapper\XMLReader $xmlReader XMLReader object, positioned on a "<table:table-cell>" starting node
+         * @return int The value of "table:number-columns-repeated" attribute of the current node, or 1 if attribute missing
+         */
+        protected function getNumColumnsRepeatedForCurrentNode($xmlReader)
+        {
+        }
+        /**
+         * Returns the (unescaped) correctly marshalled, cell value associated to the given XML node.
+         *
+         * @param \DOMNode $node
+         * @return string|int|float|bool|\DateTime|\DateInterval|null The value associated with the cell, empty string if cell's type is void/undefined, null on error
+         */
+        protected function getCellValue($node)
+        {
+        }
+        /**
+         * After finishing processing each cell, a row is considered empty if it contains
+         * no cells or if the value of the last read cell is an empty string.
+         * After finishing processing each cell, the last read cell is not part of the
+         * row data yet (as we still need to apply the "num-columns-repeated" attribute).
+         *
+         * @param array $rowData
+         * @param string|int|float|bool|\DateTime|\DateInterval|null The value of the last read cell
+         * @return bool Whether the row is empty
+         */
+        protected function isEmptyRow($rowData, $lastReadCellValue)
+        {
+        }
+        /**
+         * Return the current element, from the buffer.
+         * @link http://php.net/manual/en/iterator.current.php
+         *
+         * @return array|null
+         */
+        public function current()
+        {
+        }
+        /**
+         * Return the key of the current element
+         * @link http://php.net/manual/en/iterator.key.php
+         *
+         * @return int
+         */
+        public function key()
+        {
+        }
+        /**
+         * Cleans up what was created to iterate over the object.
+         *
+         * @return void
+         */
+        public function end()
+        {
+        }
+    }
+    /**
+     * Class Sheet
+     * Represents a sheet within a ODS file
+     *
+     * @package Box\Spout\Reader\ODS
+     */
+    class Sheet implements \Box\Spout\Reader\SheetInterface
+    {
+        /** @var \Box\Spout\Reader\ODS\RowIterator To iterate over sheet's rows */
+        protected $rowIterator;
+        /** @var int ID of the sheet */
+        protected $id;
+        /** @var int Index of the sheet, based on order in the workbook (zero-based) */
+        protected $index;
+        /** @var string Name of the sheet */
+        protected $name;
+        /** @var bool Whether the sheet was the active one */
+        protected $isActive;
+        /**
+         * @param XMLReader $xmlReader XML Reader, positioned on the "<table:table>" element
+         * @param int $sheetIndex Index of the sheet, based on order in the workbook (zero-based)
+         * @param string $sheetName Name of the sheet
+         * @param bool $isSheetActive Whether the sheet was defined as active
+         * @param \Box\Spout\Reader\ODS\ReaderOptions $options Reader's current options
+         */
+        public function __construct($xmlReader, $sheetIndex, $sheetName, $isSheetActive, $options)
+        {
+        }
+        /**
+         * @api
+         * @return \Box\Spout\Reader\ODS\RowIterator
+         */
+        public function getRowIterator()
+        {
+        }
+        /**
+         * @api
+         * @return int Index of the sheet, based on order in the workbook (zero-based)
+         */
+        public function getIndex()
+        {
+        }
+        /**
+         * @api
+         * @return string Name of the sheet
+         */
+        public function getName()
+        {
+        }
+        /**
+         * @api
+         * @return bool Whether the sheet was defined as active
+         */
+        public function isActive()
+        {
+        }
+    }
+    /**
+     * Class SheetIterator
+     * Iterate over ODS sheet.
+     *
+     * @package Box\Spout\Reader\ODS
+     */
+    class SheetIterator implements \Box\Spout\Reader\IteratorInterface
+    {
+        const CONTENT_XML_FILE_PATH = 'content.xml';
+        /** Definition of XML nodes name and attribute used to parse sheet data */
+        const XML_NODE_TABLE = 'table:table';
+        const XML_ATTRIBUTE_TABLE_NAME = 'table:name';
+        /** @var string $filePath Path of the file to be read */
+        protected $filePath;
+        /** @var \Box\Spout\Reader\ODS\ReaderOptions Reader's current options */
+        protected $options;
+        /** @var XMLReader The XMLReader object that will help read sheet's XML data */
+        protected $xmlReader;
+        /** @var \Box\Spout\Common\Escaper\ODS Used to unescape XML data */
+        protected $escaper;
+        /** @var bool Whether there are still at least a sheet to be read */
+        protected $hasFoundSheet;
+        /** @var int The index of the sheet being read (zero-based) */
+        protected $currentSheetIndex;
+        /** @var string The name of the sheet that was defined as active */
+        protected $activeSheetName;
+        /**
+         * @param string $filePath Path of the file to be read
+         * @param \Box\Spout\Reader\ODS\ReaderOptions $options Reader's current options
+         * @throws \Box\Spout\Reader\Exception\NoSheetsFoundException If there are no sheets in the file
+         */
+        public function __construct($filePath, $options)
+        {
+        }
+        /**
+         * Rewind the Iterator to the first element
+         * @link http://php.net/manual/en/iterator.rewind.php
+         *
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If unable to open the XML file containing sheets' data
+         */
+        public function rewind()
+        {
+        }
+        /**
+         * Checks if current position is valid
+         * @link http://php.net/manual/en/iterator.valid.php
+         *
+         * @return bool
+         */
+        public function valid()
+        {
+        }
+        /**
+         * Move forward to next element
+         * @link http://php.net/manual/en/iterator.next.php
+         *
+         * @return void
+         */
+        public function next()
+        {
+        }
+        /**
+         * Return the current element
+         * @link http://php.net/manual/en/iterator.current.php
+         *
+         * @return \Box\Spout\Reader\ODS\Sheet
+         */
+        public function current()
+        {
+        }
+        /**
+         * Returns whether the current sheet was defined as the active one
+         *
+         * @param string $sheetName Name of the current sheet
+         * @param int $sheetIndex Index of the current sheet
+         * @param string|null Name of the sheet that was defined as active or NULL if none defined
+         * @return bool Whether the current sheet was defined as the active one
+         */
+        private function isActiveSheet($sheetName, $sheetIndex, $activeSheetName)
+        {
+        }
+        /**
+         * Return the key of the current element
+         * @link http://php.net/manual/en/iterator.key.php
+         *
+         * @return int
+         */
+        public function key()
+        {
+        }
+        /**
+         * Cleans up what was created to iterate over the object.
+         *
+         * @return void
+         */
+        public function end()
+        {
+        }
+    }
+}
+namespace Box\Spout\Reader {
+    /**
+     * Class ReaderFactory
+     * This factory is used to create readers, based on the type of the file to be read.
+     * It supports CSV and XLSX formats.
+     *
+     * @package Box\Spout\Reader
+     */
+    class ReaderFactory
+    {
+        /**
+         * This creates an instance of the appropriate reader, given the type of the file to be read
+         *
+         * @api
+         * @param  string $readerType Type of the reader to instantiate
+         * @return ReaderInterface
+         * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
+         */
+        public static function create($readerType)
+        {
+        }
+    }
+}
+namespace Box\Spout\Reader\Wrapper {
+    /**
+     * Trait XMLInternalErrorsHelper
+     *
+     * @package Box\Spout\Reader\Wrapper
+     */
+    trait XMLInternalErrorsHelper
+    {
+        /** @var bool Stores whether XML errors were initially stored internally - used to reset */
+        protected $initialUseInternalErrorsValue;
+        /**
+         * To avoid displaying lots of warning/error messages on screen,
+         * stores errors internally instead.
+         *
+         * @return void
+         */
+        protected function useXMLInternalErrors()
+        {
+        }
+        /**
+         * Throws an XMLProcessingException if an error occured.
+         * It also always resets the "libxml_use_internal_errors" setting back to its initial value.
+         *
+         * @return void
+         * @throws \Box\Spout\Reader\Exception\XMLProcessingException
+         */
+        protected function resetXMLInternalErrorsSettingAndThrowIfXMLErrorOccured()
+        {
+        }
+        /**
+         * Returns whether the a XML error has occured since the last time errors were cleared.
+         *
+         * @return bool TRUE if an error occured, FALSE otherwise
+         */
+        private function hasXMLErrorOccured()
+        {
+        }
+        /**
+         * Returns the error message for the last XML error that occured.
+         * @see libxml_get_last_error
+         *
+         * @return String|null Last XML error message or null if no error
+         */
+        private function getLastXMLErrorMessage()
+        {
+        }
+        /**
+         * @return void
+         */
+        protected function resetXMLInternalErrorsSetting()
+        {
+        }
+    }
+    /**
+     * Class XMLReader
+     * Wrapper around the built-in XMLReader
+     * @see \XMLReader
+     *
+     * @package Box\Spout\Reader\Wrapper
+     */
+    class XMLReader extends \XMLReader
+    {
+        use \Box\Spout\Reader\Wrapper\XMLInternalErrorsHelper;
+        const ZIP_WRAPPER = 'zip://';
+        /**
+         * Opens the XML Reader to read a file located inside a ZIP file.
+         *
+         * @param string $zipFilePath Path to the ZIP file
+         * @param string $fileInsideZipPath Relative or absolute path of the file inside the zip
+         * @return bool TRUE on success or FALSE on failure
+         */
+        public function openFileInZip($zipFilePath, $fileInsideZipPath)
+        {
+        }
+        /**
+         * Returns the real path for the given path components.
+         * This is useful to avoid issues on some Windows setup.
+         *
+         * @param string $zipFilePath Path to the ZIP file
+         * @param string $fileInsideZipPath Relative or absolute path of the file inside the zip
+         * @return string The real path URI
+         */
+        public function getRealPathURIForFileInZip($zipFilePath, $fileInsideZipPath)
+        {
+        }
+        /**
+         * Returns whether the file at the given location exists
+         *
+         * @param string $zipStreamURI URI of a zip stream, e.g. "zip://file.zip#path/inside.xml"
+         * @return bool TRUE if the file exists, FALSE otherwise
+         */
+        protected function fileExistsWithinZip($zipStreamURI)
+        {
+        }
+        /**
+         * Move to next node in document
+         * @see \XMLReader::read
+         *
+         * @return bool TRUE on success or FALSE on failure
+         * @throws \Box\Spout\Reader\Exception\XMLProcessingException If an error/warning occurred
+         */
+        public function read()
+        {
+        }
+        /**
+         * Read until the element with the given name is found, or the end of the file.
+         *
+         * @param string $nodeName Name of the node to find
+         * @return bool TRUE on success or FALSE on failure
+         * @throws \Box\Spout\Reader\Exception\XMLProcessingException If an error/warning occurred
+         */
+        public function readUntilNodeFound($nodeName)
+        {
+        }
+        /**
+         * Move cursor to next node skipping all subtrees
+         * @see \XMLReader::next
+         *
+         * @param string|void $localName The name of the next node to move to
+         * @return bool TRUE on success or FALSE on failure
+         * @throws \Box\Spout\Reader\Exception\XMLProcessingException If an error/warning occurred
+         */
+        public function next($localName = null)
+        {
+        }
+        /**
+         * @param string $nodeName
+         * @return bool Whether the XML Reader is currently positioned on the starting node with given name
+         */
+        public function isPositionedOnStartingNode($nodeName)
+        {
+        }
+        /**
+         * @param string $nodeName
+         * @return bool Whether the XML Reader is currently positioned on the ending node with given name
+         */
+        public function isPositionedOnEndingNode($nodeName)
+        {
+        }
+        /**
+         * @param string $nodeName
+         * @param int $nodeType
+         * @return bool Whether the XML Reader is currently positioned on the node with given name and type
+         */
+        private function isPositionedOnNode($nodeName, $nodeType)
+        {
+        }
+        /**
+         * @return string The name of the current node, un-prefixed
+         */
+        public function getCurrentNodeName()
+        {
+        }
+    }
+}
+namespace Box\Spout\Reader\XLSX\Helper {
+    /**
+     * Class CellHelper
+     * This class provides helper functions when working with cells
+     *
+     * @package Box\Spout\Reader\XLSX\Helper
+     */
+    class CellHelper
+    {
+        // Using ord() is super slow... Using a pre-computed hash table instead.
+        private static $columnLetterToIndexMapping = ['A' => 0, 'B' => 1, 'C' => 2, 'D' => 3, 'E' => 4, 'F' => 5, 'G' => 6, 'H' => 7, 'I' => 8, 'J' => 9, 'K' => 10, 'L' => 11, 'M' => 12, 'N' => 13, 'O' => 14, 'P' => 15, 'Q' => 16, 'R' => 17, 'S' => 18, 'T' => 19, 'U' => 20, 'V' => 21, 'W' => 22, 'X' => 23, 'Y' => 24, 'Z' => 25];
+        /**
+         * Fills the missing indexes of an array with a given value.
+         * For instance, $dataArray = []; $a[1] = 1; $a[3] = 3;
+         * Calling fillMissingArrayIndexes($dataArray, 'FILL') will return this array: ['FILL', 1, 'FILL', 3]
+         *
+         * @param array $dataArray The array to fill
+         * @param string|void $fillValue optional
+         * @return array
+         */
+        public static function fillMissingArrayIndexes($dataArray, $fillValue = '')
+        {
+        }
+        /**
+         * Returns the base 10 column index associated to the cell index (base 26).
+         * Excel uses A to Z letters for column indexing, where A is the 1st column,
+         * Z is the 26th and AA is the 27th.
+         * The mapping is zero based, so that A1 maps to 0, B2 maps to 1, Z13 to 25 and AA4 to 26.
+         *
+         * @param string $cellIndex The Excel cell index ('A1', 'BC13', ...)
+         * @return int
+         * @throws \Box\Spout\Common\Exception\InvalidArgumentException When the given cell index is invalid
+         */
+        public static function getColumnIndexFromCellIndex($cellIndex)
+        {
+        }
+        /**
+         * Returns whether a cell index is valid, in an Excel world.
+         * To be valid, the cell index should start with capital letters and be followed by numbers.
+         * There can only be 3 letters, as there can only be 16,384 rows, which is equivalent to 'XFE'.
+         *
+         * @param string $cellIndex The Excel cell index ('A1', 'BC13', ...)
+         * @return bool
+         */
+        protected static function isValidCellIndex($cellIndex)
+        {
+        }
+    }
+    /**
+     * Class CellValueFormatter
+     * This class provides helper functions to format cell values
+     *
+     * @package Box\Spout\Reader\XLSX\Helper
+     */
+    class CellValueFormatter
+    {
+        /** Definition of all possible cell types */
+        const CELL_TYPE_INLINE_STRING = 'inlineStr';
+        const CELL_TYPE_STR = 'str';
+        const CELL_TYPE_SHARED_STRING = 's';
+        const CELL_TYPE_BOOLEAN = 'b';
+        const CELL_TYPE_NUMERIC = 'n';
+        const CELL_TYPE_DATE = 'd';
+        const CELL_TYPE_ERROR = 'e';
+        /** Definition of XML nodes names used to parse data */
+        const XML_NODE_VALUE = 'v';
+        const XML_NODE_INLINE_STRING_VALUE = 't';
+        /** Definition of XML attributes used to parse data */
+        const XML_ATTRIBUTE_TYPE = 't';
+        const XML_ATTRIBUTE_STYLE_ID = 's';
+        /** Constants used for date formatting */
+        const NUM_SECONDS_IN_ONE_DAY = 86400;
+        const NUM_SECONDS_IN_ONE_HOUR = 3600;
+        const NUM_SECONDS_IN_ONE_MINUTE = 60;
+        /**
+         * February 29th, 1900 is NOT a leap year but Excel thinks it is...
+         * @see https://en.wikipedia.org/wiki/Year_1900_problem#Microsoft_Excel
+         */
+        const ERRONEOUS_EXCEL_LEAP_YEAR_DAY = 60;
+        /** @var SharedStringsHelper Helper to work with shared strings */
+        protected $sharedStringsHelper;
+        /** @var StyleHelper Helper to work with styles */
+        protected $styleHelper;
+        /** @var bool Whether date/time values should be returned as PHP objects or be formatted as strings */
+        protected $shouldFormatDates;
+        /** @var \Box\Spout\Common\Escaper\XLSX Used to unescape XML data */
+        protected $escaper;
+        /**
+         * @param SharedStringsHelper $sharedStringsHelper Helper to work with shared strings
+         * @param StyleHelper $styleHelper Helper to work with styles
+         * @param bool $shouldFormatDates Whether date/time values should be returned as PHP objects or be formatted as strings
+         */
+        public function __construct($sharedStringsHelper, $styleHelper, $shouldFormatDates)
+        {
+        }
+        /**
+         * Returns the (unescaped) correctly marshalled, cell value associated to the given XML node.
+         *
+         * @param \DOMNode $node
+         * @return string|int|float|bool|\DateTime|null The value associated with the cell (null when the cell has an error)
+         */
+        public function extractAndFormatNodeValue($node)
+        {
+        }
+        /**
+         * Returns the cell's string value from a node's nested value node
+         *
+         * @param \DOMNode $node
+         * @return string The value associated with the cell
+         */
+        protected function getVNodeValue($node)
+        {
+        }
+        /**
+         * Returns the cell String value where string is inline.
+         *
+         * @param \DOMNode $node
+         * @return string The value associated with the cell (null when the cell has an error)
+         */
+        protected function formatInlineStringCellValue($node)
+        {
+        }
+        /**
+         * Returns the cell String value from shared-strings file using nodeValue index.
+         *
+         * @param string $nodeValue
+         * @return string The value associated with the cell (null when the cell has an error)
+         */
+        protected function formatSharedStringCellValue($nodeValue)
+        {
+        }
+        /**
+         * Returns the cell String value, where string is stored in value node.
+         *
+         * @param string $nodeValue
+         * @return string The value associated with the cell (null when the cell has an error)
+         */
+        protected function formatStrCellValue($nodeValue)
+        {
+        }
+        /**
+         * Returns the cell Numeric value from string of nodeValue.
+         * The value can also represent a timestamp and a DateTime will be returned.
+         *
+         * @param string $nodeValue
+         * @param int $cellStyleId 0 being the default style
+         * @return int|float|\DateTime|null The value associated with the cell
+         */
+        protected function formatNumericCellValue($nodeValue, $cellStyleId)
+        {
+        }
+        /**
+         * Returns a cell's PHP Date value, associated to the given timestamp.
+         * NOTE: The timestamp is a float representing the number of days since January 1st, 1900.
+         * NOTE: The timestamp can also represent a time, if it is a value between 0 and 1.
+         *
+         * @param float $nodeValue
+         * @param int $cellStyleId 0 being the default style
+         * @return \DateTime|null The value associated with the cell or NULL if invalid date value
+         */
+        protected function formatExcelTimestampValue($nodeValue, $cellStyleId)
+        {
+        }
+        /**
+         * Returns a cell's PHP DateTime value, associated to the given timestamp.
+         * Only the time value matters. The date part is set to Jan 1st, 1900 (base Excel date).
+         *
+         * @param float $nodeValue
+         * @param int $cellStyleId 0 being the default style
+         * @return \DateTime|string The value associated with the cell
+         */
+        protected function formatExcelTimestampValueAsTimeValue($nodeValue, $cellStyleId)
+        {
+        }
+        /**
+         * Returns a cell's PHP Date value, associated to the given timestamp.
+         * NOTE: The timestamp is a float representing the number of days since January 1st, 1900.
+         *
+         * @param float $nodeValue
+         * @param int $cellStyleId 0 being the default style
+         * @return \DateTime|string|null The value associated with the cell or NULL if invalid date value
+         */
+        protected function formatExcelTimestampValueAsDateValue($nodeValue, $cellStyleId)
+        {
+        }
+        /**
+         * Returns the cell Boolean value from a specific node's Value.
+         *
+         * @param string $nodeValue
+         * @return bool The value associated with the cell
+         */
+        protected function formatBooleanCellValue($nodeValue)
+        {
+        }
+        /**
+         * Returns a cell's PHP Date value, associated to the given stored nodeValue.
+         * @see ECMA-376 Part 1 - §18.17.4
+         *
+         * @param string $nodeValue ISO 8601 Date string
+         * @return \DateTime|string|null The value associated with the cell or NULL if invalid date value
+         */
+        protected function formatDateCellValue($nodeValue)
+        {
+        }
+    }
+    /**
+     * Class DateFormatHelper
+     * This class provides helper functions to format Excel dates
+     *
+     * @package Box\Spout\Reader\XLSX\Helper
+     */
+    class DateFormatHelper
+    {
+        const KEY_GENERAL = 'general';
+        const KEY_HOUR_12 = '12h';
+        const KEY_HOUR_24 = '24h';
+        /**
+         * This map is used to replace Excel format characters by their PHP equivalent.
+         * Keys should be ordered from longest to smallest.
+         *
+         * @var array Mapping between Excel format characters and PHP format characters
+         */
+        private static $excelDateFormatToPHPDateFormatMapping = [self::KEY_GENERAL => [
+            // Time
+            'am/pm' => 'A',
+            // Uppercase Ante meridiem and Post meridiem
+            ':mm' => ':i',
+            // Minutes with leading zeros - if preceded by a ":" (otherwise month)
+            'mm:' => 'i:',
+            // Minutes with leading zeros - if followed by a ":" (otherwise month)
+            'ss' => 's',
+            // Seconds, with leading zeros
+            '.s' => '',
+            // Ignore (fractional seconds format does not exist in PHP)
+            // Date
+            'e' => 'Y',
+            // Full numeric representation of a year, 4 digits
+            'yyyy' => 'Y',
+            // Full numeric representation of a year, 4 digits
+            'yy' => 'y',
+            // Two digit representation of a year
+            'mmmmm' => 'M',
+            // Short textual representation of a month, three letters ("mmmmm" should only contain the 1st letter...)
+            'mmmm' => 'F',
+            // Full textual representation of a month
+            'mmm' => 'M',
+            // Short textual representation of a month, three letters
+            'mm' => 'm',
+            // Numeric representation of a month, with leading zeros
+            'm' => 'n',
+            // Numeric representation of a month, without leading zeros
+            'dddd' => 'l',
+            // Full textual representation of the day of the week
+            'ddd' => 'D',
+            // Textual representation of a day, three letters
+            'dd' => 'd',
+            // Day of the month, 2 digits with leading zeros
+            'd' => 'j',
+        ], self::KEY_HOUR_12 => [
+            'hh' => 'h',
+            // 12-hour format of an hour without leading zeros
+            'h' => 'g',
+        ], self::KEY_HOUR_24 => [
+            'hh' => 'H',
+            // 24-hour hours with leading zero
+            'h' => 'G',
+        ]];
+        /**
+         * Converts the given Excel date format to a format understandable by the PHP date function.
+         *
+         * @param string $excelDateFormat Excel date format
+         * @return string PHP date format (as defined here: http://php.net/manual/en/function.date.php)
+         */
+        public static function toPHPDateFormat($excelDateFormat)
+        {
+        }
+        /**
+         * @param string $excelDateFormat Date format as defined by Excel
+         * @return bool Whether the given date format has the 12-hour format marker
+         */
+        private static function has12HourFormatMarker($excelDateFormat)
+        {
+        }
+    }
+}
+namespace Box\Spout\Reader\XLSX\Helper\SharedStringsCaching {
+    /**
+     * Class CachingStrategyFactory
+     *
+     * @package Box\Spout\Reader\XLSX\Helper\SharedStringsCaching
+     */
+    class CachingStrategyFactory
+    {
+        /**
+         * The memory amount needed to store a string was obtained empirically from this data:
+         *
+         *        ------------------------------------
+         *        | Number of chars⁺ | Memory needed |
+         *        ------------------------------------
+         *        |           3,000  |         1 MB  |
+         *        |          15,000  |         2 MB  |
+         *        |          30,000  |         5 MB  |
+         *        |          75,000  |        11 MB  |
+         *        |         150,000  |        21 MB  |
+         *        |         300,000  |        43 MB  |
+         *        |         750,000  |       105 MB  |
+         *        |       1,500,000  |       210 MB  |
+         *        |       2,250,000  |       315 MB  |
+         *        |       3,000,000  |       420 MB  |
+         *        |       4,500,000  |       630 MB  |
+         *        ------------------------------------
+         *
+         *        ⁺ All characters were 1 byte long
+         *
+         * This gives a linear graph where each 1-byte character requires about 150 bytes to be stored.
+         * Given that some characters can take up to 4 bytes, we need 600 bytes per character to be safe.
+         * Also, there is on average about 20 characters per cell (this is entirely empirical data...).
+         *
+         * This means that in order to store one shared string in memory, the memory amount needed is:
+         *   => 20 * 600 ≈ 12KB
+         */
+        const AMOUNT_MEMORY_NEEDED_PER_STRING_IN_KB = 12;
+        /**
+         * To avoid running out of memory when extracting a huge number of shared strings, they can be saved to temporary files
+         * instead of in memory. Then, when accessing a string, the corresponding file contents will be loaded in memory
+         * and the string will be quickly retrieved.
+         * The performance bottleneck is not when creating these temporary files, but rather when loading their content.
+         * Because the contents of the last loaded file stays in memory until another file needs to be loaded, it works
+         * best when the indexes of the shared strings are sorted in the sheet data.
+         * 10,000 was chosen because it creates small files that are fast to be loaded in memory.
+         */
+        const MAX_NUM_STRINGS_PER_TEMP_FILE = 10000;
+        /** @var CachingStrategyFactory|null Singleton instance */
+        protected static $instance = null;
+        /**
+         * Private constructor for singleton
+         */
+        private function __construct()
+        {
+        }
+        /**
+         * Returns the singleton instance of the factory
+         *
+         * @return CachingStrategyFactory
+         */
+        public static function getInstance()
+        {
+        }
+        /**
+         * Returns the best caching strategy, given the number of unique shared strings
+         * and the amount of memory available.
+         *
+         * @param int|null $sharedStringsUniqueCount Number of unique shared strings (NULL if unknown)
+         * @param string|void $tempFolder Temporary folder where the temporary files to store shared strings will be stored
+         * @return CachingStrategyInterface The best caching strategy
+         */
+        public function getBestCachingStrategy($sharedStringsUniqueCount, $tempFolder = null)
+        {
+        }
+        /**
+         * Returns whether it is safe to use in-memory caching, given the number of unique shared strings
+         * and the amount of memory available.
+         *
+         * @param int|null $sharedStringsUniqueCount Number of unique shared strings (NULL if unknown)
+         * @return bool
+         */
+        protected function isInMemoryStrategyUsageSafe($sharedStringsUniqueCount)
+        {
+        }
+        /**
+         * Returns the PHP "memory_limit" in Kilobytes
+         *
+         * @return float
+         */
+        protected function getMemoryLimitInKB()
+        {
+        }
+        /**
+         * Returns the formatted "memory_limit" value
+         *
+         * @return string
+         */
+        protected function getMemoryLimitFromIni()
+        {
+        }
+    }
+    /**
+     * Interface CachingStrategyInterface
+     *
+     * @package Box\Spout\Reader\XLSX\Helper\SharedStringsCaching
+     */
+    interface CachingStrategyInterface
+    {
+        /**
+         * Adds the given string to the cache.
+         *
+         * @param string $sharedString The string to be added to the cache
+         * @param int $sharedStringIndex Index of the shared string in the sharedStrings.xml file
+         * @return void
+         */
+        public function addStringForIndex($sharedString, $sharedStringIndex);
+        /**
+         * Closes the cache after the last shared string was added.
+         * This prevents any additional string from being added to the cache.
+         *
+         * @return void
+         */
+        public function closeCache();
+        /**
+         * Returns the string located at the given index from the cache.
+         *
+         * @param int $sharedStringIndex Index of the shared string in the sharedStrings.xml file
+         * @return string The shared string at the given index
+         * @throws \Box\Spout\Reader\Exception\SharedStringNotFoundException If no shared string found for the given index
+         */
+        public function getStringAtIndex($sharedStringIndex);
+        /**
+         * Destroys the cache, freeing memory and removing any created artifacts
+         *
+         * @return void
+         */
+        public function clearCache();
+    }
+    /**
+     * Class FileBasedStrategy
+     *
+     * This class implements the file-based caching strategy for shared strings.
+     * Shared strings are stored in small files (with a max number of strings per file).
+     * This strategy is slower than an in-memory strategy but is used to avoid out of memory crashes.
+     *
+     * @package Box\Spout\Reader\XLSX\Helper\SharedStringsCaching
+     */
+    class FileBasedStrategy implements \Box\Spout\Reader\XLSX\Helper\SharedStringsCaching\CachingStrategyInterface
+    {
+        /** Value to use to escape the line feed character ("\n") */
+        const ESCAPED_LINE_FEED_CHARACTER = '_x000A_';
+        /** @var \Box\Spout\Common\Helper\GlobalFunctionsHelper Helper to work with global functions */
+        protected $globalFunctionsHelper;
+        /** @var \Box\Spout\Common\Helper\FileSystemHelper Helper to perform file system operations */
+        protected $fileSystemHelper;
+        /** @var string Temporary folder where the temporary files will be created */
+        protected $tempFolder;
+        /**
+         * @var int Maximum number of strings that can be stored in one temp file
+         * @see CachingStrategyFactory::MAX_NUM_STRINGS_PER_TEMP_FILE
+         */
+        protected $maxNumStringsPerTempFile;
+        /** @var resource Pointer to the last temp file a shared string was written to */
+        protected $tempFilePointer;
+        /**
+         * @var string Path of the temporary file whose contents is currently stored in memory
+         * @see CachingStrategyFactory::MAX_NUM_STRINGS_PER_TEMP_FILE
+         */
+        protected $inMemoryTempFilePath;
+        /**
+         * @var array Contents of the temporary file that was last read
+         * @see CachingStrategyFactory::MAX_NUM_STRINGS_PER_TEMP_FILE
+         */
+        protected $inMemoryTempFileContents;
+        /**
+         * @param string|null $tempFolder Temporary folder where the temporary files to store shared strings will be stored
+         * @param int $maxNumStringsPerTempFile Maximum number of strings that can be stored in one temp file
+         */
+        public function __construct($tempFolder, $maxNumStringsPerTempFile)
+        {
+        }
+        /**
+         * Adds the given string to the cache.
+         *
+         * @param string $sharedString The string to be added to the cache
+         * @param int $sharedStringIndex Index of the shared string in the sharedStrings.xml file
+         * @return void
+         */
+        public function addStringForIndex($sharedString, $sharedStringIndex)
+        {
+        }
+        /**
+         * Returns the path for the temp file that should contain the string for the given index
+         *
+         * @param int $sharedStringIndex Index of the shared string in the sharedStrings.xml file
+         * @return string The temp file path for the given index
+         */
+        protected function getSharedStringTempFilePath($sharedStringIndex)
+        {
+        }
+        /**
+         * Closes the cache after the last shared string was added.
+         * This prevents any additional string from being added to the cache.
+         *
+         * @return void
+         */
+        public function closeCache()
+        {
+        }
+        /**
+         * Returns the string located at the given index from the cache.
+         *
+         * @param int $sharedStringIndex Index of the shared string in the sharedStrings.xml file
+         * @return string The shared string at the given index
+         * @throws \Box\Spout\Reader\Exception\SharedStringNotFoundException If no shared string found for the given index
+         */
+        public function getStringAtIndex($sharedStringIndex)
+        {
+        }
+        /**
+         * Escapes the line feed characters (\n)
+         *
+         * @param string $unescapedString
+         * @return string
+         */
+        private function escapeLineFeed($unescapedString)
+        {
+        }
+        /**
+         * Unescapes the line feed characters (\n)
+         *
+         * @param string $escapedString
+         * @return string
+         */
+        private function unescapeLineFeed($escapedString)
+        {
+        }
+        /**
+         * Destroys the cache, freeing memory and removing any created artifacts
+         *
+         * @return void
+         */
+        public function clearCache()
+        {
+        }
+    }
+    /**
+     * Class InMemoryStrategy
+     *
+     * This class implements the in-memory caching strategy for shared strings.
+     * This strategy is used when the number of unique strings is low, compared to the memory available.
+     *
+     * @package Box\Spout\Reader\XLSX\Helper\SharedStringsCaching
+     */
+    class InMemoryStrategy implements \Box\Spout\Reader\XLSX\Helper\SharedStringsCaching\CachingStrategyInterface
+    {
+        /** @var \SplFixedArray Array used to cache the shared strings */
+        protected $inMemoryCache;
+        /** @var bool Whether the cache has been closed */
+        protected $isCacheClosed;
+        /**
+         * @param int $sharedStringsUniqueCount Number of unique shared strings
+         */
+        public function __construct($sharedStringsUniqueCount)
+        {
+        }
+        /**
+         * Adds the given string to the cache.
+         *
+         * @param string $sharedString The string to be added to the cache
+         * @param int $sharedStringIndex Index of the shared string in the sharedStrings.xml file
+         * @return void
+         */
+        public function addStringForIndex($sharedString, $sharedStringIndex)
+        {
+        }
+        /**
+         * Closes the cache after the last shared string was added.
+         * This prevents any additional string from being added to the cache.
+         *
+         * @return void
+         */
+        public function closeCache()
+        {
+        }
+        /**
+         * Returns the string located at the given index from the cache.
+         *
+         * @param int $sharedStringIndex Index of the shared string in the sharedStrings.xml file
+         * @return string The shared string at the given index
+         * @throws \Box\Spout\Reader\Exception\SharedStringNotFoundException If no shared string found for the given index
+         */
+        public function getStringAtIndex($sharedStringIndex)
+        {
+        }
+        /**
+         * Destroys the cache, freeing memory and removing any created artifacts
+         *
+         * @return void
+         */
+        public function clearCache()
+        {
+        }
+    }
+}
+namespace Box\Spout\Reader\XLSX\Helper {
+    /**
+     * Class SharedStringsHelper
+     * This class provides helper functions for reading sharedStrings XML file
+     *
+     * @package Box\Spout\Reader\XLSX\Helper
+     */
+    class SharedStringsHelper
+    {
+        /** Path of sharedStrings XML file inside the XLSX file */
+        const SHARED_STRINGS_XML_FILE_PATH = 'xl/sharedStrings.xml';
+        /** Main namespace for the sharedStrings.xml file */
+        const MAIN_NAMESPACE_FOR_SHARED_STRINGS_XML = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
+        /** Definition of XML nodes names used to parse data */
+        const XML_NODE_SST = 'sst';
+        const XML_NODE_SI = 'si';
+        const XML_NODE_R = 'r';
+        const XML_NODE_T = 't';
+        /** Definition of XML attributes used to parse data */
+        const XML_ATTRIBUTE_COUNT = 'count';
+        const XML_ATTRIBUTE_UNIQUE_COUNT = 'uniqueCount';
+        const XML_ATTRIBUTE_XML_SPACE = 'xml:space';
+        const XML_ATTRIBUTE_VALUE_PRESERVE = 'preserve';
+        /** @var string Path of the XLSX file being read */
+        protected $filePath;
+        /** @var string Temporary folder where the temporary files to store shared strings will be stored */
+        protected $tempFolder;
+        /** @var CachingStrategyInterface The best caching strategy for storing shared strings */
+        protected $cachingStrategy;
+        /**
+         * @param string $filePath Path of the XLSX file being read
+         * @param string|null|void $tempFolder Temporary folder where the temporary files to store shared strings will be stored
+         */
+        public function __construct($filePath, $tempFolder = null)
+        {
+        }
+        /**
+         * Returns whether the XLSX file contains a shared strings XML file
+         *
+         * @return bool
+         */
+        public function hasSharedStrings()
+        {
+        }
+        /**
+         * Builds an in-memory array containing all the shared strings of the sheet.
+         * All the strings are stored in a XML file, located at 'xl/sharedStrings.xml'.
+         * It is then accessed by the sheet data, via the string index in the built table.
+         *
+         * More documentation available here: http://msdn.microsoft.com/en-us/library/office/gg278314.aspx
+         *
+         * The XML file can be really big with sheets containing a lot of data. That is why
+         * we need to use a XML reader that provides streaming like the XMLReader library.
+         *
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If sharedStrings.xml can't be read
+         */
+        public function extractSharedStrings()
+        {
+        }
+        /**
+         * Returns the shared strings unique count, as specified in <sst> tag.
+         *
+         * @param \Box\Spout\Reader\Wrapper\XMLReader $xmlReader XMLReader instance
+         * @return int|null Number of unique shared strings in the sharedStrings.xml file
+         * @throws \Box\Spout\Common\Exception\IOException If sharedStrings.xml is invalid and can't be read
+         */
+        protected function getSharedStringsUniqueCount($xmlReader)
+        {
+        }
+        /**
+         * Returns the best shared strings caching strategy.
+         *
+         * @param int|null $sharedStringsUniqueCount Number of unique shared strings (NULL if unknown)
+         * @return CachingStrategyInterface
+         */
+        protected function getBestSharedStringsCachingStrategy($sharedStringsUniqueCount)
+        {
+        }
+        /**
+         * Processes the shared strings item XML node which the given XML reader is positioned on.
+         *
+         * @param \Box\Spout\Reader\Wrapper\XMLReader $xmlReader XML Reader positioned on a "<si>" node
+         * @param int $sharedStringIndex Index of the processed shared strings item
+         * @return void
+         */
+        protected function processSharedStringsItem($xmlReader, $sharedStringIndex)
+        {
+        }
+        /**
+         * Not all text nodes' values must be extracted.
+         * Some text nodes are part of a node describing the pronunciation for instance.
+         * We'll only consider the nodes whose parents are "<si>" or "<r>".
+         *
+         * @param \DOMElement $textNode Text node to check
+         * @return bool Whether the given text node's value must be extracted
+         */
+        protected function shouldExtractTextNodeValue($textNode)
+        {
+        }
+        /**
+         * If the text node has the attribute 'xml:space="preserve"', then preserve whitespace.
+         *
+         * @param \DOMElement $textNode The text node element (<t>) whose whitespace may be preserved
+         * @return bool Whether whitespace should be preserved
+         */
+        protected function shouldPreserveWhitespace($textNode)
+        {
+        }
+        /**
+         * Returns the shared string at the given index, using the previously chosen caching strategy.
+         *
+         * @param int $sharedStringIndex Index of the shared string in the sharedStrings.xml file
+         * @return string The shared string at the given index
+         * @throws \Box\Spout\Reader\Exception\SharedStringNotFoundException If no shared string found for the given index
+         */
+        public function getStringAtIndex($sharedStringIndex)
+        {
+        }
+        /**
+         * Destroys the cache, freeing memory and removing any created artifacts
+         *
+         * @return void
+         */
+        public function cleanup()
+        {
+        }
+    }
+    /**
+     * Class SheetHelper
+     * This class provides helper functions related to XLSX sheets
+     *
+     * @package Box\Spout\Reader\XLSX\Helper
+     */
+    class SheetHelper
+    {
+        /** Paths of XML files relative to the XLSX file root */
+        const WORKBOOK_XML_RELS_FILE_PATH = 'xl/_rels/workbook.xml.rels';
+        const WORKBOOK_XML_FILE_PATH = 'xl/workbook.xml';
+        /** Definition of XML node names used to parse data */
+        const XML_NODE_WORKBOOK_VIEW = 'workbookView';
+        const XML_NODE_SHEET = 'sheet';
+        const XML_NODE_SHEETS = 'sheets';
+        const XML_NODE_RELATIONSHIP = 'Relationship';
+        /** Definition of XML attributes used to parse data */
+        const XML_ATTRIBUTE_ACTIVE_TAB = 'activeTab';
+        const XML_ATTRIBUTE_R_ID = 'r:id';
+        const XML_ATTRIBUTE_NAME = 'name';
+        const XML_ATTRIBUTE_ID = 'Id';
+        const XML_ATTRIBUTE_TARGET = 'Target';
+        /** @var string Path of the XLSX file being read */
+        protected $filePath;
+        /** @var \Box\Spout\Reader\XLSX\ReaderOptions Reader's current options */
+        protected $options;
+        /** @var \Box\Spout\Reader\XLSX\Helper\SharedStringsHelper Helper to work with shared strings */
+        protected $sharedStringsHelper;
+        /** @var \Box\Spout\Common\Helper\GlobalFunctionsHelper Helper to work with global functions */
+        protected $globalFunctionsHelper;
+        /**
+         * @param string $filePath Path of the XLSX file being read
+         * @param \Box\Spout\Reader\XLSX\ReaderOptions $options Reader's current options
+         * @param \Box\Spout\Reader\XLSX\Helper\SharedStringsHelper Helper to work with shared strings
+         * @param \Box\Spout\Common\Helper\GlobalFunctionsHelper $globalFunctionsHelper
+         */
+        public function __construct($filePath, $options, $sharedStringsHelper, $globalFunctionsHelper)
+        {
+        }
+        /**
+         * Returns the sheets metadata of the file located at the previously given file path.
+         * The paths to the sheets' data are read from the [Content_Types].xml file.
+         *
+         * @return Sheet[] Sheets within the XLSX file
+         */
+        public function getSheets()
+        {
+        }
+        /**
+         * Returns an instance of a sheet, given the XML node describing the sheet - from "workbook.xml".
+         * We can find the XML file path describing the sheet inside "workbook.xml.res", by mapping with the sheet ID
+         * ("r:id" in "workbook.xml", "Id" in "workbook.xml.res").
+         *
+         * @param \Box\Spout\Reader\Wrapper\XMLReader $xmlReaderOnSheetNode XML Reader instance, pointing on the node describing the sheet, as defined in "workbook.xml"
+         * @param int $sheetIndexZeroBased Index of the sheet, based on order of appearance in the workbook (zero-based)
+         * @param bool $isSheetActive Whether this sheet was defined as active
+         * @return \Box\Spout\Reader\XLSX\Sheet Sheet instance
+         */
+        protected function getSheetFromSheetXMLNode($xmlReaderOnSheetNode, $sheetIndexZeroBased, $isSheetActive)
+        {
+        }
+        /**
+         * @param string $sheetId The sheet ID, as defined in "workbook.xml"
+         * @return string The XML file path describing the sheet inside "workbook.xml.res", for the given sheet ID
+         */
+        protected function getSheetDataXMLFilePathForSheetId($sheetId)
+        {
+        }
+    }
+    /**
+     * Class StyleHelper
+     * This class provides helper functions related to XLSX styles
+     *
+     * @package Box\Spout\Reader\XLSX\Helper
+     */
+    class StyleHelper
+    {
+        /** Paths of XML files relative to the XLSX file root */
+        const STYLES_XML_FILE_PATH = 'xl/styles.xml';
+        /** Nodes used to find relevant information in the styles XML file */
+        const XML_NODE_NUM_FMTS = 'numFmts';
+        const XML_NODE_NUM_FMT = 'numFmt';
+        const XML_NODE_CELL_XFS = 'cellXfs';
+        const XML_NODE_XF = 'xf';
+        /** Attributes used to find relevant information in the styles XML file */
+        const XML_ATTRIBUTE_NUM_FMT_ID = 'numFmtId';
+        const XML_ATTRIBUTE_FORMAT_CODE = 'formatCode';
+        const XML_ATTRIBUTE_APPLY_NUMBER_FORMAT = 'applyNumberFormat';
+        /** By convention, default style ID is 0 */
+        const DEFAULT_STYLE_ID = 0;
+        const NUMBER_FORMAT_GENERAL = 'General';
+        /**
+         * @see https://msdn.microsoft.com/en-us/library/ff529597(v=office.12).aspx
+         * @var array Mapping between built-in numFmtId and the associated format - for dates only
+         */
+        protected static $builtinNumFmtIdToNumFormatMapping = [
+            14 => 'm/d/yyyy',
+            // @NOTE: ECMA spec is 'mm-dd-yy'
+            15 => 'd-mmm-yy',
+            16 => 'd-mmm',
+            17 => 'mmm-yy',
+            18 => 'h:mm AM/PM',
+            19 => 'h:mm:ss AM/PM',
+            20 => 'h:mm',
+            21 => 'h:mm:ss',
+            22 => 'm/d/yyyy h:mm',
+            // @NOTE: ECMA spec is 'm/d/yy h:mm',
+            45 => 'mm:ss',
+            46 => '[h]:mm:ss',
+            47 => 'mm:ss.0',
+        ];
+        /** @var string Path of the XLSX file being read */
+        protected $filePath;
+        /** @var array Array containing the IDs of built-in number formats indicating a date */
+        protected $builtinNumFmtIdIndicatingDates;
+        /** @var array Array containing a mapping NUM_FMT_ID => FORMAT_CODE */
+        protected $customNumberFormats;
+        /** @var array Array containing a mapping STYLE_ID => [STYLE_ATTRIBUTES] */
+        protected $stylesAttributes;
+        /** @var array Cache containing a mapping NUM_FMT_ID => IS_DATE_FORMAT. Used to avoid lots of recalculations */
+        protected $numFmtIdToIsDateFormatCache = [];
+        /**
+         * @param string $filePath Path of the XLSX file being read
+         */
+        public function __construct($filePath)
+        {
+        }
+        /**
+         * Returns whether the style with the given ID should consider
+         * numeric values as timestamps and format the cell as a date.
+         *
+         * @param int $styleId Zero-based style ID
+         * @return bool Whether the cell with the given cell should display a date instead of a numeric value
+         */
+        public function shouldFormatNumericValueAsDate($styleId)
+        {
+        }
+        /**
+         * Reads the styles.xml file and extract the relevant information from the file.
+         *
+         * @return void
+         */
+        protected function extractRelevantInfo()
+        {
+        }
+        /**
+         * Extracts number formats from the "numFmt" nodes.
+         * For simplicity, the styles attributes are kept in memory. This is possible thanks
+         * to the reuse of formats. So 1 million cells should not use 1 million formats.
+         *
+         * @param \Box\Spout\Reader\Wrapper\XMLReader $xmlReader XML Reader positioned on the "numFmts" node
+         * @return void
+         */
+        protected function extractNumberFormats($xmlReader)
+        {
+        }
+        /**
+         * Extracts style attributes from the "xf" nodes, inside the "cellXfs" section.
+         * For simplicity, the styles attributes are kept in memory. This is possible thanks
+         * to the reuse of styles. So 1 million cells should not use 1 million styles.
+         *
+         * @param \Box\Spout\Reader\Wrapper\XMLReader $xmlReader XML Reader positioned on the "cellXfs" node
+         * @return void
+         */
+        protected function extractStyleAttributes($xmlReader)
+        {
+        }
+        /**
+         * @return array The custom number formats
+         */
+        protected function getCustomNumberFormats()
+        {
+        }
+        /**
+         * @return array The styles attributes
+         */
+        protected function getStylesAttributes()
+        {
+        }
+        /**
+         * @param array $styleAttributes Array containing the style attributes (2 keys: "applyNumberFormat" and "numFmtId")
+         * @return bool Whether the style with the given attributes indicates that the number is a date
+         */
+        protected function doesStyleIndicateDate($styleAttributes)
+        {
+        }
+        /**
+         * Returns whether the number format ID indicates that the number is a date.
+         * The result is cached to avoid recomputing the same thing over and over, as
+         * "numFmtId" attributes can be shared between multiple styles.
+         *
+         * @param int $numFmtId
+         * @return bool Whether the number format ID indicates that the number is a date
+         */
+        protected function doesNumFmtIdIndicateDate($numFmtId)
+        {
+        }
+        /**
+         * @param int $numFmtId
+         * @return string|null The custom number format or NULL if none defined for the given numFmtId
+         */
+        protected function getFormatCodeForNumFmtId($numFmtId)
+        {
+        }
+        /**
+         * @param int $numFmtId
+         * @return bool Whether the number format ID indicates that the number is a date
+         */
+        protected function isNumFmtIdBuiltInDateFormat($numFmtId)
+        {
+        }
+        /**
+         * @param string|null $formatCode
+         * @return bool Whether the given format code indicates that the number is a date
+         */
+        protected function isFormatCodeCustomDateFormat($formatCode)
+        {
+        }
+        /**
+         * @param string $formatCode
+         * @return bool Whether the given format code matches a date format pattern
+         */
+        protected function isFormatCodeMatchingDateFormatPattern($formatCode)
+        {
+        }
+        /**
+         * Returns the format as defined in "styles.xml" of the given style.
+         * NOTE: It is assumed that the style DOES have a number format associated to it.
+         *
+         * @param int $styleId Zero-based style ID
+         * @return string The number format code associated with the given style
+         */
+        public function getNumberFormatCode($styleId)
+        {
+        }
+    }
+}
+namespace Box\Spout\Reader\XLSX {
+    /**
+     * Class Reader
+     * This class provides support to read data from a XLSX file
+     *
+     * @package Box\Spout\Reader\XLSX
+     */
+    class Reader extends \Box\Spout\Reader\AbstractReader
+    {
+        /** @var \ZipArchive */
+        protected $zip;
+        /** @var \Box\Spout\Reader\XLSX\Helper\SharedStringsHelper Helper to work with shared strings */
+        protected $sharedStringsHelper;
+        /** @var SheetIterator To iterator over the XLSX sheets */
+        protected $sheetIterator;
+        /**
+         * Returns the reader's current options
+         *
+         * @return ReaderOptions
+         */
+        protected function getOptions()
+        {
+        }
+        /**
+         * @param string $tempFolder Temporary folder where the temporary files will be created
+         * @return Reader
+         */
+        public function setTempFolder($tempFolder)
+        {
+        }
+        /**
+         * Returns whether stream wrappers are supported
+         *
+         * @return bool
+         */
+        protected function doesSupportStreamWrapper()
+        {
+        }
+        /**
+         * Opens the file at the given file path to make it ready to be read.
+         * It also parses the sharedStrings.xml file to get all the shared strings available in memory
+         * and fetches all the available sheets.
+         *
+         * @param  string $filePath Path of the file to be read
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the file at the given path or its content cannot be read
+         * @throws \Box\Spout\Reader\Exception\NoSheetsFoundException If there are no sheets in the file
+         */
+        protected function openReader($filePath)
+        {
+        }
+        /**
+         * Returns an iterator to iterate over sheets.
+         *
+         * @return SheetIterator To iterate over sheets
+         */
+        protected function getConcreteSheetIterator()
+        {
+        }
+        /**
+         * Closes the reader. To be used after reading the file.
+         *
+         * @return void
+         */
+        protected function closeReader()
+        {
+        }
+    }
+    /**
+     * Class ReaderOptions
+     * This class is used to customize the reader's behavior
+     *
+     * @package Box\Spout\Reader\XLSX
+     */
+    class ReaderOptions extends \Box\Spout\Reader\Common\ReaderOptions
+    {
+        /** @var string|null Temporary folder where the temporary files will be created */
+        protected $tempFolder = null;
+        /**
+         * @return string|null Temporary folder where the temporary files will be created
+         */
+        public function getTempFolder()
+        {
+        }
+        /**
+         * @param string|null $tempFolder Temporary folder where the temporary files will be created
+         * @return ReaderOptions
+         */
+        public function setTempFolder($tempFolder)
+        {
+        }
+    }
+    /**
+     * Class RowIterator
+     *
+     * @package Box\Spout\Reader\XLSX
+     */
+    class RowIterator implements \Box\Spout\Reader\IteratorInterface
+    {
+        /** Definition of XML nodes names used to parse data */
+        const XML_NODE_DIMENSION = 'dimension';
+        const XML_NODE_WORKSHEET = 'worksheet';
+        const XML_NODE_ROW = 'row';
+        const XML_NODE_CELL = 'c';
+        /** Definition of XML attributes used to parse data */
+        const XML_ATTRIBUTE_REF = 'ref';
+        const XML_ATTRIBUTE_SPANS = 'spans';
+        const XML_ATTRIBUTE_ROW_INDEX = 'r';
+        const XML_ATTRIBUTE_CELL_INDEX = 'r';
+        /** @var string Path of the XLSX file being read */
+        protected $filePath;
+        /** @var string $sheetDataXMLFilePath Path of the sheet data XML file as in [Content_Types].xml */
+        protected $sheetDataXMLFilePath;
+        /** @var \Box\Spout\Reader\Wrapper\XMLReader The XMLReader object that will help read sheet's XML data */
+        protected $xmlReader;
+        /** @var \Box\Spout\Reader\Common\XMLProcessor Helper Object to process XML nodes */
+        protected $xmlProcessor;
+        /** @var Helper\CellValueFormatter Helper to format cell values */
+        protected $cellValueFormatter;
+        /** @var Helper\StyleHelper $styleHelper Helper to work with styles */
+        protected $styleHelper;
+        /**
+         * TODO: This variable can be deleted when row indices get preserved
+         * @var int Number of read rows
+         */
+        protected $numReadRows = 0;
+        /** @var array Contains the data for the currently processed row (key = cell index, value = cell value) */
+        protected $currentlyProcessedRowData = [];
+        /** @var array|null Buffer used to store the row data, while checking if there are more rows to read */
+        protected $rowDataBuffer = null;
+        /** @var bool Indicates whether all rows have been read */
+        protected $hasReachedEndOfFile = false;
+        /** @var int The number of columns the sheet has (0 meaning undefined) */
+        protected $numColumns = 0;
+        /** @var bool Whether empty rows should be returned or skipped */
+        protected $shouldPreserveEmptyRows;
+        /** @var int Last row index processed (one-based) */
+        protected $lastRowIndexProcessed = 0;
+        /** @var int Row index to be processed next (one-based) */
+        protected $nextRowIndexToBeProcessed = 0;
+        /** @var int Last column index processed (zero-based) */
+        protected $lastColumnIndexProcessed = -1;
+        /**
+         * @param string $filePath Path of the XLSX file being read
+         * @param string $sheetDataXMLFilePath Path of the sheet data XML file as in [Content_Types].xml
+         * @param \Box\Spout\Reader\XLSX\ReaderOptions $options Reader's current options
+         * @param Helper\SharedStringsHelper $sharedStringsHelper Helper to work with shared strings
+         */
+        public function __construct($filePath, $sheetDataXMLFilePath, $options, $sharedStringsHelper)
+        {
+        }
+        /**
+         * @param string $sheetDataXMLFilePath Path of the sheet data XML file as in [Content_Types].xml
+         * @return string Path of the XML file containing the sheet data,
+         *                without the leading slash.
+         */
+        protected function normalizeSheetDataXMLFilePath($sheetDataXMLFilePath)
+        {
+        }
+        /**
+         * Rewind the Iterator to the first element.
+         * Initializes the XMLReader object that reads the associated sheet data.
+         * The XMLReader is configured to be safe from billion laughs attack.
+         * @link http://php.net/manual/en/iterator.rewind.php
+         *
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the sheet data XML cannot be read
+         */
+        public function rewind()
+        {
+        }
+        /**
+         * Checks if current position is valid
+         * @link http://php.net/manual/en/iterator.valid.php
+         *
+         * @return bool
+         */
+        public function valid()
+        {
+        }
+        /**
+         * Move forward to next element. Reads data describing the next unprocessed row.
+         * @link http://php.net/manual/en/iterator.next.php
+         *
+         * @return void
+         * @throws \Box\Spout\Reader\Exception\SharedStringNotFoundException If a shared string was not found
+         * @throws \Box\Spout\Common\Exception\IOException If unable to read the sheet data XML
+         */
+        public function next()
+        {
+        }
+        /**
+         * Returns whether we need data for the next row to be processed.
+         * We don't need to read data if:
+         *   we have already read at least one row
+         *     AND
+         *   we need to preserve empty rows
+         *     AND
+         *   the last row that was read is not the row that need to be processed
+         *   (i.e. if we need to return empty rows)
+         *
+         * @return bool Whether we need data for the next row to be processed.
+         */
+        protected function doesNeedDataForNextRowToBeProcessed()
+        {
+        }
+        /**
+         * @return void
+         * @throws \Box\Spout\Reader\Exception\SharedStringNotFoundException If a shared string was not found
+         * @throws \Box\Spout\Common\Exception\IOException If unable to read the sheet data XML
+         */
+        protected function readDataForNextRow()
+        {
+        }
+        /**
+         * @param \Box\Spout\Reader\Wrapper\XMLReader $xmlReader XMLReader object, positioned on a "<dimension>" starting node
+         * @return int A return code that indicates what action should the processor take next
+         */
+        protected function processDimensionStartingNode($xmlReader)
+        {
+        }
+        /**
+         * @param \Box\Spout\Reader\Wrapper\XMLReader $xmlReader XMLReader object, positioned on a "<row>" starting node
+         * @return int A return code that indicates what action should the processor take next
+         */
+        protected function processRowStartingNode($xmlReader)
+        {
+        }
+        /**
+         * @param \Box\Spout\Reader\Wrapper\XMLReader $xmlReader XMLReader object, positioned on a "<cell>" starting node
+         * @return int A return code that indicates what action should the processor take next
+         */
+        protected function processCellStartingNode($xmlReader)
+        {
+        }
+        /**
+         * @return int A return code that indicates what action should the processor take next
+         */
+        protected function processRowEndingNode()
+        {
+        }
+        /**
+         * @return int A return code that indicates what action should the processor take next
+         */
+        protected function processWorksheetEndingNode()
+        {
+        }
+        /**
+         * @param \Box\Spout\Reader\Wrapper\XMLReader $xmlReader XMLReader object, positioned on a "<row>" node
+         * @return int Row index
+         * @throws \Box\Spout\Common\Exception\InvalidArgumentException When the given cell index is invalid
+         */
+        protected function getRowIndex($xmlReader)
+        {
+        }
+        /**
+         * @param \Box\Spout\Reader\Wrapper\XMLReader $xmlReader XMLReader object, positioned on a "<c>" node
+         * @return int Column index
+         * @throws \Box\Spout\Common\Exception\InvalidArgumentException When the given cell index is invalid
+         */
+        protected function getColumnIndex($xmlReader)
+        {
+        }
+        /**
+         * Returns the (unescaped) correctly marshalled, cell value associated to the given XML node.
+         *
+         * @param \DOMNode $node
+         * @return string|int|float|bool|\DateTime|null The value associated with the cell (null when the cell has an error)
+         */
+        protected function getCellValue($node)
+        {
+        }
+        /**
+         * @param array $rowData
+         * @return bool Whether the given row is empty
+         */
+        protected function isEmptyRow($rowData)
+        {
+        }
+        /**
+         * Return the current element, either an empty row or from the buffer.
+         * @link http://php.net/manual/en/iterator.current.php
+         *
+         * @return array|null
+         */
+        public function current()
+        {
+        }
+        /**
+         * Return the key of the current element. Here, the row index.
+         * @link http://php.net/manual/en/iterator.key.php
+         *
+         * @return int
+         */
+        public function key()
+        {
+        }
+        /**
+         * Cleans up what was created to iterate over the object.
+         *
+         * @return void
+         */
+        public function end()
+        {
+        }
+    }
+    /**
+     * Class Sheet
+     * Represents a sheet within a XLSX file
+     *
+     * @package Box\Spout\Reader\XLSX
+     */
+    class Sheet implements \Box\Spout\Reader\SheetInterface
+    {
+        /** @var \Box\Spout\Reader\XLSX\RowIterator To iterate over sheet's rows */
+        protected $rowIterator;
+        /** @var int Index of the sheet, based on order in the workbook (zero-based) */
+        protected $index;
+        /** @var string Name of the sheet */
+        protected $name;
+        /** @var bool Whether the sheet was the active one */
+        protected $isActive;
+        /**
+         * @param string $filePath Path of the XLSX file being read
+         * @param string $sheetDataXMLFilePath Path of the sheet data XML file as in [Content_Types].xml
+         * @param int $sheetIndex Index of the sheet, based on order in the workbook (zero-based)
+         * @param string $sheetName Name of the sheet
+         * @param bool $isSheetActive Whether the sheet was defined as active
+         * @param \Box\Spout\Reader\XLSX\ReaderOptions $options Reader's current options
+         * @param Helper\SharedStringsHelper Helper to work with shared strings
+         */
+        public function __construct($filePath, $sheetDataXMLFilePath, $sheetIndex, $sheetName, $isSheetActive, $options, $sharedStringsHelper)
+        {
+        }
+        /**
+         * @api
+         * @return \Box\Spout\Reader\XLSX\RowIterator
+         */
+        public function getRowIterator()
+        {
+        }
+        /**
+         * @api
+         * @return int Index of the sheet, based on order in the workbook (zero-based)
+         */
+        public function getIndex()
+        {
+        }
+        /**
+         * @api
+         * @return string Name of the sheet
+         */
+        public function getName()
+        {
+        }
+        /**
+         * @api
+         * @return bool Whether the sheet was defined as active
+         */
+        public function isActive()
+        {
+        }
+    }
+    /**
+     * Class SheetIterator
+     * Iterate over XLSX sheet.
+     *
+     * @package Box\Spout\Reader\XLSX
+     */
+    class SheetIterator implements \Box\Spout\Reader\IteratorInterface
+    {
+        /** @var \Box\Spout\Reader\XLSX\Sheet[] The list of sheet present in the file */
+        protected $sheets;
+        /** @var int The index of the sheet being read (zero-based) */
+        protected $currentSheetIndex;
+        /**
+         * @param string $filePath Path of the file to be read
+         * @param \Box\Spout\Reader\XLSX\ReaderOptions $options Reader's current options
+         * @param \Box\Spout\Reader\XLSX\Helper\SharedStringsHelper $sharedStringsHelper
+         * @param \Box\Spout\Common\Helper\GlobalFunctionsHelper $globalFunctionsHelper
+         * @throws \Box\Spout\Reader\Exception\NoSheetsFoundException If there are no sheets in the file
+         */
+        public function __construct($filePath, $options, $sharedStringsHelper, $globalFunctionsHelper)
+        {
+        }
+        /**
+         * Rewind the Iterator to the first element
+         * @link http://php.net/manual/en/iterator.rewind.php
+         *
+         * @return void
+         */
+        public function rewind()
+        {
+        }
+        /**
+         * Checks if current position is valid
+         * @link http://php.net/manual/en/iterator.valid.php
+         *
+         * @return bool
+         */
+        public function valid()
+        {
+        }
+        /**
+         * Move forward to next element
+         * @link http://php.net/manual/en/iterator.next.php
+         *
+         * @return void
+         */
+        public function next()
+        {
+        }
+        /**
+         * Return the current element
+         * @link http://php.net/manual/en/iterator.current.php
+         *
+         * @return \Box\Spout\Reader\XLSX\Sheet
+         */
+        public function current()
+        {
+        }
+        /**
+         * Return the key of the current element
+         * @link http://php.net/manual/en/iterator.key.php
+         *
+         * @return int
+         */
+        public function key()
+        {
+        }
+        /**
+         * Cleans up what was created to iterate over the object.
+         *
+         * @return void
+         */
+        public function end()
+        {
+        }
+    }
+}
+namespace Box\Spout\Writer {
+    /**
+     * Interface WriterInterface
+     *
+     * @package Box\Spout\Writer
+     */
+    interface WriterInterface
+    {
+        /**
+         * Inits the writer and opens it to accept data.
+         * By using this method, the data will be written to a file.
+         *
+         * @param  string $outputFilePath Path of the output file that will contain the data
+         * @return WriterInterface
+         * @throws \Box\Spout\Common\Exception\IOException If the writer cannot be opened or if the given path is not writable
+         */
+        public function openToFile($outputFilePath);
+        /**
+         * Inits the writer and opens it to accept data.
+         * By using this method, the data will be outputted directly to the browser.
+         *
+         * @param  string $outputFileName Name of the output file that will contain the data. If a path is passed in, only the file name will be kept
+         * @return WriterInterface
+         * @throws \Box\Spout\Common\Exception\IOException If the writer cannot be opened
+         */
+        public function openToBrowser($outputFileName);
+        /**
+         * Write given data to the output. New data will be appended to end of stream.
+         *
+         * @param  array $dataRow Array containing data to be streamed.
+         *          Example $dataRow = ['data1', 1234, null, '', 'data5'];
+         * @return WriterInterface
+         * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException If the writer has not been opened yet
+         * @throws \Box\Spout\Common\Exception\IOException If unable to write data
+         */
+        public function addRow(array $dataRow);
+        /**
+         * Write given data to the output and apply the given style.
+         * @see addRow
+         *
+         * @param array $dataRow Array of array containing data to be streamed.
+         * @param Style\Style $style Style to be applied to the row.
+         * @return WriterInterface
+         * @throws \Box\Spout\Common\Exception\InvalidArgumentException If the input param is not valid
+         * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException If this function is called before opening the writer
+         * @throws \Box\Spout\Common\Exception\IOException If unable to write data
+         */
+        public function addRowWithStyle(array $dataRow, $style);
+        /**
+         * Write given data to the output. New data will be appended to end of stream.
+         *
+         * @param  array $dataRows Array of array containing data to be streamed.
+         *          Example $dataRow = [
+         *              ['data11', 12, , '', 'data13'],
+         *              ['data21', 'data22', null],
+         *          ];
+         * @return WriterInterface
+         * @throws \Box\Spout\Common\Exception\InvalidArgumentException If the input param is not valid
+         * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException If the writer has not been opened yet
+         * @throws \Box\Spout\Common\Exception\IOException If unable to write data
+         */
+        public function addRows(array $dataRows);
+        /**
+         * Write given data to the output and apply the given style.
+         * @see addRows
+         *
+         * @param array $dataRows Array of array containing data to be streamed.
+         * @param Style\Style $style Style to be applied to the rows.
+         * @return WriterInterface
+         * @throws \Box\Spout\Common\Exception\InvalidArgumentException If the input param is not valid
+         * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException If this function is called before opening the writer
+         * @throws \Box\Spout\Common\Exception\IOException If unable to write data
+         */
+        public function addRowsWithStyle(array $dataRows, $style);
+        /**
+         * Closes the writer. This will close the streamer as well, preventing new data
+         * to be written to the file.
+         *
+         * @return void
+         */
+        public function close();
+    }
+    /**
+     * Class AbstractWriter
+     *
+     * @package Box\Spout\Writer
+     * @abstract
+     */
+    abstract class AbstractWriter implements \Box\Spout\Writer\WriterInterface
+    {
+        /** @var string Path to the output file */
+        protected $outputFilePath;
+        /** @var resource Pointer to the file/stream we will write to */
+        protected $filePointer;
+        /** @var bool Indicates whether the writer has been opened or not */
+        protected $isWriterOpened = false;
+        /** @var \Box\Spout\Common\Helper\GlobalFunctionsHelper Helper to work with global functions */
+        protected $globalFunctionsHelper;
+        /** @var Style\Style Style to be applied to the next written row(s) */
+        protected $rowStyle;
+        /** @var Style\Style Default row style. Each writer can have its own default style */
+        protected $defaultRowStyle;
+        /** @var string Content-Type value for the header - to be defined by child class */
+        protected static $headerContentType;
+        /**
+         * Opens the streamer and makes it ready to accept data.
+         *
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the writer cannot be opened
+         */
+        protected abstract function openWriter();
+        /**
+         * Adds data to the currently openned writer.
+         *
+         * @param  array $dataRow Array containing data to be streamed.
+         *          Example $dataRow = ['data1', 1234, null, '', 'data5'];
+         * @param Style\Style $style Style to be applied to the written row
+         * @return void
+         */
+        protected abstract function addRowToWriter(array $dataRow, $style);
+        /**
+         * Closes the streamer, preventing any additional writing.
+         *
+         * @return void
+         */
+        protected abstract function closeWriter();
+        /**
+         *
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Sets the default styles for all rows added with "addRow".
+         * Overriding the default style instead of using "addRowWithStyle" improves performance by 20%.
+         * @see https://github.com/box/spout/issues/272
+         *
+         * @param Style\Style $defaultStyle
+         * @return AbstractWriter
+         */
+        public function setDefaultRowStyle($defaultStyle)
+        {
+        }
+        /**
+         * @param \Box\Spout\Common\Helper\GlobalFunctionsHelper $globalFunctionsHelper
+         * @return AbstractWriter
+         */
+        public function setGlobalFunctionsHelper($globalFunctionsHelper)
+        {
+        }
+        /**
+         * Inits the writer and opens it to accept data.
+         * By using this method, the data will be written to a file.
+         *
+         * @api
+         * @param  string $outputFilePath Path of the output file that will contain the data
+         * @return AbstractWriter
+         * @throws \Box\Spout\Common\Exception\IOException If the writer cannot be opened or if the given path is not writable
+         */
+        public function openToFile($outputFilePath)
+        {
+        }
+        /**
+         * Inits the writer and opens it to accept data.
+         * By using this method, the data will be outputted directly to the browser.
+         *
+         * @codeCoverageIgnore
+         *
+         * @api
+         * @param  string $outputFileName Name of the output file that will contain the data. If a path is passed in, only the file name will be kept
+         * @return AbstractWriter
+         * @throws \Box\Spout\Common\Exception\IOException If the writer cannot be opened
+         */
+        public function openToBrowser($outputFileName)
+        {
+        }
+        /**
+         * Checks if the pointer to the file/stream to write to is available.
+         * Will throw an exception if not available.
+         *
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the pointer is not available
+         */
+        protected function throwIfFilePointerIsNotAvailable()
+        {
+        }
+        /**
+         * Checks if the writer has already been opened, since some actions must be done before it gets opened.
+         * Throws an exception if already opened.
+         *
+         * @param string $message Error message
+         * @return void
+         * @throws \Box\Spout\Writer\Exception\WriterAlreadyOpenedException If the writer was already opened and must not be.
+         */
+        protected function throwIfWriterAlreadyOpened($message)
+        {
+        }
+        /**
+         * Write given data to the output. New data will be appended to end of stream.
+         *
+         * @param  array $dataRow Array containing data to be streamed.
+         *                        If empty, no data is added (i.e. not even as a blank row)
+         *                        Example: $dataRow = ['data1', 1234, null, '', 'data5', false];
+         * @api
+         * @return AbstractWriter
+         * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException If this function is called before opening the writer
+         * @throws \Box\Spout\Common\Exception\IOException If unable to write data
+         * @throws \Box\Spout\Common\Exception\SpoutException If anything else goes wrong while writing data
+         */
+        public function addRow(array $dataRow)
+        {
+        }
+        /**
+         * Write given data to the output and apply the given style.
+         * @see addRow
+         *
+         * @api
+         * @param array $dataRow Array of array containing data to be streamed.
+         * @param Style\Style $style Style to be applied to the row.
+         * @return AbstractWriter
+         * @throws \Box\Spout\Common\Exception\InvalidArgumentException If the input param is not valid
+         * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException If this function is called before opening the writer
+         * @throws \Box\Spout\Common\Exception\IOException If unable to write data
+         */
+        public function addRowWithStyle(array $dataRow, $style)
+        {
+        }
+        /**
+         * Write given data to the output. New data will be appended to end of stream.
+         *
+         * @api
+         * @param  array $dataRows Array of array containing data to be streamed.
+         *                         If a row is empty, it won't be added (i.e. not even as a blank row)
+         *                         Example: $dataRows = [
+         *                             ['data11', 12, , '', 'data13'],
+         *                             ['data21', 'data22', null, false],
+         *                         ];
+         * @return AbstractWriter
+         * @throws \Box\Spout\Common\Exception\InvalidArgumentException If the input param is not valid
+         * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException If this function is called before opening the writer
+         * @throws \Box\Spout\Common\Exception\IOException If unable to write data
+         */
+        public function addRows(array $dataRows)
+        {
+        }
+        /**
+         * Write given data to the output and apply the given style.
+         * @see addRows
+         *
+         * @api
+         * @param array $dataRows Array of array containing data to be streamed.
+         * @param Style\Style $style Style to be applied to the rows.
+         * @return AbstractWriter
+         * @throws \Box\Spout\Common\Exception\InvalidArgumentException If the input param is not valid
+         * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException If this function is called before opening the writer
+         * @throws \Box\Spout\Common\Exception\IOException If unable to write data
+         */
+        public function addRowsWithStyle(array $dataRows, $style)
+        {
+        }
+        /**
+         * Returns the default style to be applied to rows.
+         * Can be overriden by children to have a custom style.
+         *
+         * @return Style\Style
+         */
+        protected function getDefaultRowStyle()
+        {
+        }
+        /**
+         * Sets the style to be applied to the next written rows
+         * until it is changed or reset.
+         *
+         * @param Style\Style $style
+         * @return void
+         */
+        private function setRowStyle($style)
+        {
+        }
+        /**
+         * Resets the style to be applied to the next written rows.
+         *
+         * @return void
+         */
+        private function resetRowStyleToDefault()
+        {
+        }
+        /**
+         * Closes the writer. This will close the streamer as well, preventing new data
+         * to be written to the file.
+         *
+         * @api
+         * @return void
+         */
+        public function close()
+        {
+        }
+        /**
+         * Closes the writer and attempts to cleanup all files that were
+         * created during the writing process (temp files & final file).
+         *
+         * @return void
+         */
+        private function closeAndAttemptToCleanupAllFiles()
+        {
+        }
+    }
+    /**
+     * Class AbstractMultiSheetsWriter
+     *
+     * @package Box\Spout\Writer
+     * @abstract
+     */
+    abstract class AbstractMultiSheetsWriter extends \Box\Spout\Writer\AbstractWriter
+    {
+        /** @var bool Whether new sheets should be automatically created when the max rows limit per sheet is reached */
+        protected $shouldCreateNewSheetsAutomatically = true;
+        /**
+         * @return Common\Internal\WorkbookInterface The workbook representing the file to be written
+         */
+        protected abstract function getWorkbook();
+        /**
+         * Sets whether new sheets should be automatically created when the max rows limit per sheet is reached.
+         * This must be set before opening the writer.
+         *
+         * @api
+         * @param bool $shouldCreateNewSheetsAutomatically Whether new sheets should be automatically created when the max rows limit per sheet is reached
+         * @return AbstractMultiSheetsWriter
+         * @throws \Box\Spout\Writer\Exception\WriterAlreadyOpenedException If the writer was already opened
+         */
+        public function setShouldCreateNewSheetsAutomatically($shouldCreateNewSheetsAutomatically)
+        {
+        }
+        /**
+         * Returns all the workbook's sheets
+         *
+         * @api
+         * @return Common\Sheet[] All the workbook's sheets
+         * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException If the writer has not been opened yet
+         */
+        public function getSheets()
+        {
+        }
+        /**
+         * Creates a new sheet and make it the current sheet. The data will now be written to this sheet.
+         *
+         * @api
+         * @return Common\Sheet The created sheet
+         * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException If the writer has not been opened yet
+         */
+        public function addNewSheetAndMakeItCurrent()
+        {
+        }
+        /**
+         * Returns the current sheet
+         *
+         * @api
+         * @return Common\Sheet The current sheet
+         * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException If the writer has not been opened yet
+         */
+        public function getCurrentSheet()
+        {
+        }
+        /**
+         * Sets the given sheet as the current one. New data will be written to this sheet.
+         * The writing will resume where it stopped (i.e. data won't be truncated).
+         *
+         * @api
+         * @param Common\Sheet $sheet The sheet to set as current
+         * @return void
+         * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException If the writer has not been opened yet
+         * @throws \Box\Spout\Writer\Exception\SheetNotFoundException If the given sheet does not exist in the workbook
+         */
+        public function setCurrentSheet($sheet)
+        {
+        }
+        /**
+         * Checks if the book has been created. Throws an exception if not created yet.
+         *
+         * @return void
+         * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException If the book is not created yet
+         */
+        protected function throwIfBookIsNotAvailable()
+        {
+        }
+    }
+}
+namespace Box\Spout\Writer\CSV {
+    /**
+     * Class Writer
+     * This class provides support to write data to CSV files
+     *
+     * @package Box\Spout\Writer\CSV
+     */
+    class Writer extends \Box\Spout\Writer\AbstractWriter
+    {
+        /** Number of rows to write before flushing */
+        const FLUSH_THRESHOLD = 500;
+        /** @var string Content-Type value for the header */
+        protected static $headerContentType = 'text/csv; charset=UTF-8';
+        /** @var string Defines the character used to delimit fields (one character only) */
+        protected $fieldDelimiter = ',';
+        /** @var string Defines the character used to enclose fields (one character only) */
+        protected $fieldEnclosure = '"';
+        /** @var int */
+        protected $lastWrittenRowIndex = 0;
+        /** @var bool */
+        protected $shouldAddBOM = true;
+        /**
+         * Sets the field delimiter for the CSV
+         *
+         * @api
+         * @param string $fieldDelimiter Character that delimits fields
+         * @return Writer
+         */
+        public function setFieldDelimiter($fieldDelimiter)
+        {
+        }
+        /**
+         * Sets the field enclosure for the CSV
+         *
+         * @api
+         * @param string $fieldEnclosure Character that enclose fields
+         * @return Writer
+         */
+        public function setFieldEnclosure($fieldEnclosure)
+        {
+        }
+        /**
+         * Set if a BOM has to be added to the file
+         *
+         * @param bool $shouldAddBOM
+         * @return Writer
+         */
+        public function setShouldAddBOM($shouldAddBOM)
+        {
+        }
+        /**
+         * Opens the CSV streamer and makes it ready to accept data.
+         *
+         * @return void
+         */
+        protected function openWriter()
+        {
+        }
+        /**
+         * Adds data to the currently opened writer.
+         *
+         * @param  array $dataRow Array containing data to be written.
+         *          Example $dataRow = ['data1', 1234, null, '', 'data5'];
+         * @param \Box\Spout\Writer\Style\Style $style Ignored here since CSV does not support styling.
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If unable to write data
+         */
+        protected function addRowToWriter(array $dataRow, $style)
+        {
+        }
+        /**
+         * Closes the CSV streamer, preventing any additional writing.
+         * If set, sets the headers and redirects output to the browser.
+         *
+         * @return void
+         */
+        protected function closeWriter()
+        {
+        }
+    }
+}
+namespace Box\Spout\Writer\Common\Helper {
+    /**
+     * Class AbstractStyleHelper
+     * This class provides helper functions to manage styles
+     *
+     * @package Box\Spout\Writer\Common\Helper
+     */
+    abstract class AbstractStyleHelper
+    {
+        /** @var array [SERIALIZED_STYLE] => [STYLE_ID] mapping table, keeping track of the registered styles */
+        protected $serializedStyleToStyleIdMappingTable = [];
+        /** @var array [STYLE_ID] => [STYLE] mapping table, keeping track of the registered styles */
+        protected $styleIdToStyleMappingTable = [];
+        /**
+         * @param \Box\Spout\Writer\Style\Style $defaultStyle
+         */
+        public function __construct($defaultStyle)
+        {
+        }
+        /**
+         * Registers the given style as a used style.
+         * Duplicate styles won't be registered more than once.
+         *
+         * @param \Box\Spout\Writer\Style\Style $style The style to be registered
+         * @return \Box\Spout\Writer\Style\Style The registered style, updated with an internal ID.
+         */
+        public function registerStyle($style)
+        {
+        }
+        /**
+         * Returns whether the given style has already been registered.
+         *
+         * @param \Box\Spout\Writer\Style\Style $style
+         * @return bool
+         */
+        protected function hasStyleAlreadyBeenRegistered($style)
+        {
+        }
+        /**
+         * Returns the registered style associated to the given serialization.
+         *
+         * @param string $serializedStyle The serialized style from which the actual style should be fetched from
+         * @return \Box\Spout\Writer\Style\Style
+         */
+        protected function getStyleFromSerializedStyle($serializedStyle)
+        {
+        }
+        /**
+         * @return \Box\Spout\Writer\Style\Style[] List of registered styles
+         */
+        protected function getRegisteredStyles()
+        {
+        }
+        /**
+         * Returns the default style
+         *
+         * @return \Box\Spout\Writer\Style\Style Default style
+         */
+        protected function getDefaultStyle()
+        {
+        }
+        /**
+         * Apply additional styles if the given row needs it.
+         * Typically, set "wrap text" if a cell contains a new line.
+         *
+         * @param \Box\Spout\Writer\Style\Style $style The original style
+         * @param array $dataRow The row the style will be applied to
+         * @return \Box\Spout\Writer\Style\Style The updated style
+         */
+        public function applyExtraStylesIfNeeded($style, $dataRow)
+        {
+        }
+        /**
+         * Set the "wrap text" option if a cell of the given row contains a new line.
+         *
+         * @NOTE: There is a bug on the Mac version of Excel (2011 and below) where new lines
+         *        are ignored even when the "wrap text" option is set. This only occurs with
+         *        inline strings (shared strings do work fine).
+         *        A workaround would be to encode "\n" as "_x000D_" but it does not work
+         *        on the Windows version of Excel...
+         *
+         * @param \Box\Spout\Writer\Style\Style $style The original style
+         * @param array $dataRow The row the style will be applied to
+         * @return \Box\Spout\Writer\Style\Style The eventually updated style
+         */
+        protected function applyWrapTextIfCellContainsNewLine($style, $dataRow)
+        {
+        }
+    }
+    /**
+     * Class CellHelper
+     * This class provides helper functions when working with cells
+     *
+     * @package Box\Spout\Writer\Common\Helper
+     */
+    class CellHelper
+    {
+        /** @var array Cache containing the mapping column index => cell index */
+        private static $columnIndexToCellIndexCache = [];
+        /**
+         * Returns the cell index (base 26) associated to the base 10 column index.
+         * Excel uses A to Z letters for column indexing, where A is the 1st column,
+         * Z is the 26th and AA is the 27th.
+         * The mapping is zero based, so that 0 maps to A, B maps to 1, Z to 25 and AA to 26.
+         *
+         * @param int $columnIndex The Excel column index (0, 42, ...)
+         * @return string The associated cell index ('A', 'BC', ...)
+         */
+        public static function getCellIndexFromColumnIndex($columnIndex)
+        {
+        }
+        /**
+         * @param $value
+         * @return bool Whether the given value is considered "empty"
+         */
+        public static function isEmpty($value)
+        {
+        }
+        /**
+         * @param $value
+         * @return bool Whether the given value is a non empty string
+         */
+        public static function isNonEmptyString($value)
+        {
+        }
+        /**
+         * Returns whether the given value is numeric.
+         * A numeric value is from type "integer" or "double" ("float" is not returned by gettype).
+         *
+         * @param $value
+         * @return bool Whether the given value is numeric
+         */
+        public static function isNumeric($value)
+        {
+        }
+        /**
+         * Returns whether the given value is boolean.
+         * "true"/"false" and 0/1 are not booleans.
+         *
+         * @param $value
+         * @return bool Whether the given value is boolean
+         */
+        public static function isBoolean($value)
+        {
+        }
+    }
+    /**
+     * Class ZipHelper
+     * This class provides helper functions to create zip files
+     *
+     * @package Box\Spout\Writer\Common\Helper
+     */
+    class ZipHelper
+    {
+        const ZIP_EXTENSION = '.zip';
+        /** Controls what to do when trying to add an existing file */
+        const EXISTING_FILES_SKIP = 'skip';
+        const EXISTING_FILES_OVERWRITE = 'overwrite';
+        /** @var string Path of the folder where the zip file will be created */
+        protected $tmpFolderPath;
+        /** @var \ZipArchive The ZipArchive instance */
+        protected $zip;
+        /**
+         * @param string $tmpFolderPath Path of the temp folder where the zip file will be created
+         */
+        public function __construct($tmpFolderPath)
+        {
+        }
+        /**
+         * Returns the already created ZipArchive instance or
+         * creates one if none exists.
+         *
+         * @return \ZipArchive
+         */
+        protected function createOrGetZip()
+        {
+        }
+        /**
+         * @return string Path where the zip file of the given folder will be created
+         */
+        public function getZipFilePath()
+        {
+        }
+        /**
+         * Adds the given file, located under the given root folder to the archive.
+         * The file will be compressed.
+         *
+         * Example of use:
+         *   addFileToArchive('/tmp/xlsx/foo', 'bar/baz.xml');
+         *   => will add the file located at '/tmp/xlsx/foo/bar/baz.xml' in the archive, but only as 'bar/baz.xml'
+         *
+         * @param string $rootFolderPath Path of the root folder that will be ignored in the archive tree.
+         * @param string $localFilePath Path of the file to be added, under the root folder
+         * @param string|void $existingFileMode Controls what to do when trying to add an existing file
+         * @return void
+         */
+        public function addFileToArchive($rootFolderPath, $localFilePath, $existingFileMode = self::EXISTING_FILES_OVERWRITE)
+        {
+        }
+        /**
+         * Adds the given file, located under the given root folder to the archive.
+         * The file will NOT be compressed.
+         *
+         * Example of use:
+         *   addUncompressedFileToArchive('/tmp/xlsx/foo', 'bar/baz.xml');
+         *   => will add the file located at '/tmp/xlsx/foo/bar/baz.xml' in the archive, but only as 'bar/baz.xml'
+         *
+         * @param string $rootFolderPath Path of the root folder that will be ignored in the archive tree.
+         * @param string $localFilePath Path of the file to be added, under the root folder
+         * @param string|void $existingFileMode Controls what to do when trying to add an existing file
+         * @return void
+         */
+        public function addUncompressedFileToArchive($rootFolderPath, $localFilePath, $existingFileMode = self::EXISTING_FILES_OVERWRITE)
+        {
+        }
+        /**
+         * Adds the given file, located under the given root folder to the archive.
+         * The file will NOT be compressed.
+         *
+         * Example of use:
+         *   addUncompressedFileToArchive('/tmp/xlsx/foo', 'bar/baz.xml');
+         *   => will add the file located at '/tmp/xlsx/foo/bar/baz.xml' in the archive, but only as 'bar/baz.xml'
+         *
+         * @param string $rootFolderPath Path of the root folder that will be ignored in the archive tree.
+         * @param string $localFilePath Path of the file to be added, under the root folder
+         * @param string $existingFileMode Controls what to do when trying to add an existing file
+         * @param int $compressionMethod The compression method
+         * @return void
+         */
+        protected function addFileToArchiveWithCompressionMethod($rootFolderPath, $localFilePath, $existingFileMode, $compressionMethod)
+        {
+        }
+        /**
+         * @return bool Whether it is possible to choose the desired compression method to be used
+         */
+        public static function canChooseCompressionMethod()
+        {
+        }
+        /**
+         * @param string $folderPath Path to the folder to be zipped
+         * @param string|void $existingFileMode Controls what to do when trying to add an existing file
+         * @return void
+         */
+        public function addFolderToArchive($folderPath, $existingFileMode = self::EXISTING_FILES_OVERWRITE)
+        {
+        }
+        /**
+         * @param \ZipArchive $zip
+         * @param string $itemLocalPath
+         * @param string $existingFileMode
+         * @return bool Whether the file should be added to the archive or skipped
+         */
+        protected function shouldSkipFile($zip, $itemLocalPath, $existingFileMode)
+        {
+        }
+        /**
+         * Returns canonicalized absolute pathname, containing only forward slashes.
+         *
+         * @param string $path Path to normalize
+         * @return string Normalized and canonicalized path
+         */
+        protected function getNormalizedRealPath($path)
+        {
+        }
+        /**
+         * Closes the archive and copies it into the given stream
+         *
+         * @param resource $streamPointer Pointer to the stream to copy the zip
+         * @return void
+         */
+        public function closeArchiveAndCopyToStream($streamPointer)
+        {
+        }
+        /**
+         * Streams the contents of the zip file into the given stream
+         *
+         * @param resource $pointer Pointer to the stream to copy the zip
+         * @return void
+         */
+        protected function copyZipToStream($pointer)
+        {
+        }
+    }
+}
+namespace Box\Spout\Writer\Common\Internal {
+    /**
+     * Interface WorkbookInterface
+     *
+     * @package Box\Spout\Writer\Common\Internal
+     */
+    interface WorkbookInterface
+    {
+        /**
+         * Creates a new sheet in the workbook. The current sheet remains unchanged.
+         *
+         * @return WorksheetInterface The created sheet
+         * @throws \Box\Spout\Common\Exception\IOException If unable to open the sheet for writing
+         */
+        public function addNewSheet();
+        /**
+         * Creates a new sheet in the workbook and make it the current sheet.
+         * The writing will resume where it stopped (i.e. data won't be truncated).
+         *
+         * @return WorksheetInterface The created sheet
+         * @throws \Box\Spout\Common\Exception\IOException If unable to open the sheet for writing
+         */
+        public function addNewSheetAndMakeItCurrent();
+        /**
+         * @return WorksheetInterface[] All the workbook's sheets
+         */
+        public function getWorksheets();
+        /**
+         * Returns the current sheet
+         *
+         * @return WorksheetInterface The current sheet
+         */
+        public function getCurrentWorksheet();
+        /**
+         * Sets the given sheet as the current one. New data will be written to this sheet.
+         * The writing will resume where it stopped (i.e. data won't be truncated).
+         *
+         * @param \Box\Spout\Writer\Common\Sheet $sheet The "external" sheet to set as current
+         * @return void
+         * @throws \Box\Spout\Writer\Exception\SheetNotFoundException If the given sheet does not exist in the workbook
+         */
+        public function setCurrentSheet($sheet);
+        /**
+         * Adds data to the current sheet.
+         * If shouldCreateNewSheetsAutomatically option is set to true, it will handle pagination
+         * with the creation of new worksheets if one worksheet has reached its maximum capicity.
+         *
+         * @param array $dataRow Array containing data to be written.
+         *          Example $dataRow = ['data1', 1234, null, '', 'data5'];
+         * @param \Box\Spout\Writer\Style\Style $style Style to be applied to the row.
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If trying to create a new sheet and unable to open the sheet for writing
+         * @throws \Box\Spout\Writer\Exception\WriterException If unable to write data
+         */
+        public function addRowToCurrentWorksheet($dataRow, $style);
+        /**
+         * Closes the workbook and all its associated sheets.
+         * All the necessary files are written to disk and zipped together to create the ODS file.
+         * All the temporary files are then deleted.
+         *
+         * @param resource $finalFilePointer Pointer to the ODS that will be created
+         * @return void
+         */
+        public function close($finalFilePointer);
+    }
+    /**
+     * Class Workbook
+     * Represents a workbook within a spreadsheet file.
+     * It provides the functions to work with worksheets.
+     *
+     * @package Box\Spout\Writer\Common
+     */
+    abstract class AbstractWorkbook implements \Box\Spout\Writer\Common\Internal\WorkbookInterface
+    {
+        /** @var bool Whether new sheets should be automatically created when the max rows limit per sheet is reached */
+        protected $shouldCreateNewSheetsAutomatically;
+        /** @var string Timestamp based unique ID identifying the workbook */
+        protected $internalId;
+        /** @var WorksheetInterface[] Array containing the workbook's sheets */
+        protected $worksheets = [];
+        /** @var WorksheetInterface The worksheet where data will be written to */
+        protected $currentWorksheet;
+        /**
+         * @param bool $shouldCreateNewSheetsAutomatically
+         * @param \Box\Spout\Writer\Style\Style $defaultRowStyle
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create at least one of the base folders
+         */
+        public function __construct($shouldCreateNewSheetsAutomatically, $defaultRowStyle)
+        {
+        }
+        /**
+         * @return \Box\Spout\Writer\Common\Helper\AbstractStyleHelper The specific style helper
+         */
+        protected abstract function getStyleHelper();
+        /**
+         * @return int Maximum number of rows/columns a sheet can contain
+         */
+        protected abstract function getMaxRowsPerWorksheet();
+        /**
+         * Creates a new sheet in the workbook. The current sheet remains unchanged.
+         *
+         * @return WorksheetInterface The created sheet
+         * @throws \Box\Spout\Common\Exception\IOException If unable to open the sheet for writing
+         */
+        public abstract function addNewSheet();
+        /**
+         * Creates a new sheet in the workbook and make it the current sheet.
+         * The writing will resume where it stopped (i.e. data won't be truncated).
+         *
+         * @return WorksheetInterface The created sheet
+         * @throws \Box\Spout\Common\Exception\IOException If unable to open the sheet for writing
+         */
+        public function addNewSheetAndMakeItCurrent()
+        {
+        }
+        /**
+         * @return WorksheetInterface[] All the workbook's sheets
+         */
+        public function getWorksheets()
+        {
+        }
+        /**
+         * Returns the current sheet
+         *
+         * @return WorksheetInterface The current sheet
+         */
+        public function getCurrentWorksheet()
+        {
+        }
+        /**
+         * Sets the given sheet as the current one. New data will be written to this sheet.
+         * The writing will resume where it stopped (i.e. data won't be truncated).
+         *
+         * @param \Box\Spout\Writer\Common\Sheet $sheet The "external" sheet to set as current
+         * @return void
+         * @throws \Box\Spout\Writer\Exception\SheetNotFoundException If the given sheet does not exist in the workbook
+         */
+        public function setCurrentSheet($sheet)
+        {
+        }
+        /**
+         * @param WorksheetInterface $worksheet
+         * @return void
+         */
+        protected function setCurrentWorksheet($worksheet)
+        {
+        }
+        /**
+         * Returns the worksheet associated to the given external sheet.
+         *
+         * @param \Box\Spout\Writer\Common\Sheet $sheet
+         * @return WorksheetInterface|null The worksheet associated to the given external sheet or null if not found.
+         */
+        protected function getWorksheetFromExternalSheet($sheet)
+        {
+        }
+        /**
+         * Adds data to the current sheet.
+         * If shouldCreateNewSheetsAutomatically option is set to true, it will handle pagination
+         * with the creation of new worksheets if one worksheet has reached its maximum capicity.
+         *
+         * @param array $dataRow Array containing data to be written. Cannot be empty.
+         *          Example $dataRow = ['data1', 1234, null, '', 'data5'];
+         * @param \Box\Spout\Writer\Style\Style $style Style to be applied to the row.
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If trying to create a new sheet and unable to open the sheet for writing
+         * @throws \Box\Spout\Writer\Exception\WriterException If unable to write data
+         */
+        public function addRowToCurrentWorksheet($dataRow, $style)
+        {
+        }
+        /**
+         * @return bool Whether the current worksheet has reached the maximum number of rows per sheet.
+         */
+        protected function hasCurrentWorkseetReachedMaxRows()
+        {
+        }
+        /**
+         * Closes the workbook and all its associated sheets.
+         * All the necessary files are written to disk and zipped together to create the ODS file.
+         * All the temporary files are then deleted.
+         *
+         * @param resource $finalFilePointer Pointer to the ODS that will be created
+         * @return void
+         */
+        public abstract function close($finalFilePointer);
+    }
+    /**
+     * Interface WorksheetInterface
+     *
+     * @package Box\Spout\Writer\Common\Internal
+     */
+    interface WorksheetInterface
+    {
+        /**
+         * @return \Box\Spout\Writer\Common\Sheet The "external" sheet
+         */
+        public function getExternalSheet();
+        /**
+         * @return int The index of the last written row
+         */
+        public function getLastWrittenRowIndex();
+        /**
+         * Adds data to the worksheet.
+         *
+         * @param array $dataRow Array containing data to be written.
+         *          Example $dataRow = ['data1', 1234, null, '', 'data5'];
+         * @param \Box\Spout\Writer\Style\Style $style Style to be applied to the row. NULL means use default style.
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the data cannot be written
+         * @throws \Box\Spout\Common\Exception\InvalidArgumentException If a cell value's type is not supported
+         */
+        public function addRow($dataRow, $style);
+        /**
+         * Closes the worksheet
+         *
+         * @return void
+         */
+        public function close();
+    }
+}
+namespace Box\Spout\Writer\Common {
+    /**
+     * Class Sheet
+     * External representation of a worksheet
+     *
+     * @package Box\Spout\Writer\Common
+     */
+    class Sheet
+    {
+        const DEFAULT_SHEET_NAME_PREFIX = 'Sheet';
+        /** Sheet name should not exceed 31 characters */
+        const MAX_LENGTH_SHEET_NAME = 31;
+        /** @var array Invalid characters that cannot be contained in the sheet name */
+        private static $INVALID_CHARACTERS_IN_SHEET_NAME = ['\\', '/', '?', '*', ':', '[', ']'];
+        /** @var array Associative array [WORKBOOK_ID] => [[SHEET_INDEX] => [SHEET_NAME]] keeping track of sheets' name to enforce uniqueness per workbook */
+        protected static $SHEETS_NAME_USED = [];
+        /** @var int Index of the sheet, based on order in the workbook (zero-based) */
+        protected $index;
+        /** @var string ID of the sheet's associated workbook. Used to restrict sheet name uniqueness enforcement to a single workbook */
+        protected $associatedWorkbookId;
+        /** @var string Name of the sheet */
+        protected $name;
+        /** @var \Box\Spout\Common\Helper\StringHelper */
+        protected $stringHelper;
+        /**
+         * @param int $sheetIndex Index of the sheet, based on order in the workbook (zero-based)
+         * @param string $associatedWorkbookId ID of the sheet's associated workbook
+         */
+        public function __construct($sheetIndex, $associatedWorkbookId)
+        {
+        }
+        /**
+         * @api
+         * @return int Index of the sheet, based on order in the workbook (zero-based)
+         */
+        public function getIndex()
+        {
+        }
+        /**
+         * @api
+         * @return string Name of the sheet
+         */
+        public function getName()
+        {
+        }
+        /**
+         * Sets the name of the sheet. Note that Excel has some restrictions on the name:
+         *  - it should not be blank
+         *  - it should not exceed 31 characters
+         *  - it should not contain these characters: \ / ? * : [ or ]
+         *  - it should be unique
+         *
+         * @api
+         * @param string $name Name of the sheet
+         * @return Sheet
+         * @throws \Box\Spout\Writer\Exception\InvalidSheetNameException If the sheet's name is invalid.
+         */
+        public function setName($name)
+        {
+        }
+        /**
+         * Throws an exception if the given sheet's name is not valid.
+         * @see Sheet::setName for validity rules.
+         *
+         * @param string $name
+         * @return void
+         * @throws \Box\Spout\Writer\Exception\InvalidSheetNameException If the sheet's name is invalid.
+         */
+        protected function throwIfNameIsInvalid($name)
+        {
+        }
+        /**
+         * Returns whether the given name contains at least one invalid character.
+         * @see Sheet::$INVALID_CHARACTERS_IN_SHEET_NAME for the full list.
+         *
+         * @param string $name
+         * @return bool TRUE if the name contains invalid characters, FALSE otherwise.
+         */
+        protected function doesContainInvalidCharacters($name)
+        {
+        }
+        /**
+         * Returns whether the given name starts or ends with a single quote
+         *
+         * @param string $name
+         * @return bool TRUE if the name starts or ends with a single quote, FALSE otherwise.
+         */
+        protected function doesStartOrEndWithSingleQuote($name)
+        {
+        }
+        /**
+         * Returns whether the given name is unique.
+         *
+         * @param string $name
+         * @return bool TRUE if the name is unique, FALSE otherwise.
+         */
+        protected function isNameUnique($name)
+        {
+        }
+    }
+}
+namespace Box\Spout\Writer\Exception {
+    /**
+     * Class WriterException
+     *
+     * @package Box\Spout\Writer\Exception
+     * @abstract
+     */
+    abstract class WriterException extends \Box\Spout\Common\Exception\SpoutException
+    {
+    }
+}
+namespace Box\Spout\Writer\Exception\Border {
+    class InvalidNameException extends \Box\Spout\Writer\Exception\WriterException
+    {
+        public function __construct($name)
+        {
+        }
+    }
+    class InvalidStyleException extends \Box\Spout\Writer\Exception\WriterException
+    {
+        public function __construct($name)
+        {
+        }
+    }
+    class InvalidWidthException extends \Box\Spout\Writer\Exception\WriterException
+    {
+        public function __construct($name)
+        {
+        }
+    }
+}
+namespace Box\Spout\Writer\Exception {
+    /**
+     * Class InvalidColorException
+     *
+     * @api
+     * @package Box\Spout\Writer\Exception
+     */
+    class InvalidColorException extends \Box\Spout\Writer\Exception\WriterException
+    {
+    }
+    /**
+     * Class InvalidSheetNameException
+     *
+     * @api
+     * @package Box\Spout\Writer\Exception
+     */
+    class InvalidSheetNameException extends \Box\Spout\Writer\Exception\WriterException
+    {
+    }
+    /**
+     * Class SheetNotFoundException
+     *
+     * @api
+     * @package Box\Spout\Writer\Exception
+     */
+    class SheetNotFoundException extends \Box\Spout\Writer\Exception\WriterException
+    {
+    }
+    /**
+     * Class WriterAlreadyOpenedException
+     *
+     * @api
+     * @package Box\Spout\Writer\Exception
+     */
+    class WriterAlreadyOpenedException extends \Box\Spout\Writer\Exception\WriterException
+    {
+    }
+    /**
+     * Class WriterNotOpenedException
+     *
+     * @api
+     * @package Box\Spout\Writer\Exception
+     */
+    class WriterNotOpenedException extends \Box\Spout\Writer\Exception\WriterException
+    {
+    }
+}
+namespace Box\Spout\Writer\ODS\Helper {
+    /**
+     * Class BorderHelper
+     *
+     * The fo:border, fo:border-top, fo:border-bottom, fo:border-left and fo:border-right attributes
+     * specify border properties
+     * http://docs.oasis-open.org/office/v1.2/os/OpenDocument-v1.2-os-part1.html#__RefHeading__1419780_253892949
+     *
+     * Example table-cell-properties
+     *
+     * <style:table-cell-properties
+     * fo:border-bottom="0.74pt solid #ffc000" style:diagonal-bl-tr="none"
+     * style:diagonal-tl-br="none" fo:border-left="none" fo:border-right="none"
+     * style:rotation-align="none" fo:border-top="none"/>
+     */
+    class BorderHelper
+    {
+        /**
+         * Width mappings
+         *
+         * @var array
+         */
+        protected static $widthMap = [\Box\Spout\Writer\Style\Border::WIDTH_THIN => '0.75pt', \Box\Spout\Writer\Style\Border::WIDTH_MEDIUM => '1.75pt', \Box\Spout\Writer\Style\Border::WIDTH_THICK => '2.5pt'];
+        /**
+         * Style mapping
+         *
+         * @var array
+         */
+        protected static $styleMap = [\Box\Spout\Writer\Style\Border::STYLE_SOLID => 'solid', \Box\Spout\Writer\Style\Border::STYLE_DASHED => 'dashed', \Box\Spout\Writer\Style\Border::STYLE_DOTTED => 'dotted', \Box\Spout\Writer\Style\Border::STYLE_DOUBLE => 'double'];
+        /**
+         * @param BorderPart $borderPart
+         * @return string
+         */
+        public static function serializeBorderPart(\Box\Spout\Writer\Style\BorderPart $borderPart)
+        {
+        }
+    }
+    /**
+     * Class FileSystemHelper
+     * This class provides helper functions to help with the file system operations
+     * like files/folders creation & deletion for ODS files
+     *
+     * @package Box\Spout\Writer\ODS\Helper
+     */
+    class FileSystemHelper extends \Box\Spout\Common\Helper\FileSystemHelper
+    {
+        const APP_NAME = 'Spout';
+        const MIMETYPE = 'application/vnd.oasis.opendocument.spreadsheet';
+        const META_INF_FOLDER_NAME = 'META-INF';
+        const SHEETS_CONTENT_TEMP_FOLDER_NAME = 'worksheets-temp';
+        const MANIFEST_XML_FILE_NAME = 'manifest.xml';
+        const CONTENT_XML_FILE_NAME = 'content.xml';
+        const META_XML_FILE_NAME = 'meta.xml';
+        const MIMETYPE_FILE_NAME = 'mimetype';
+        const STYLES_XML_FILE_NAME = 'styles.xml';
+        /** @var string Path to the root folder inside the temp folder where the files to create the ODS will be stored */
+        protected $rootFolder;
+        /** @var string Path to the "META-INF" folder inside the root folder */
+        protected $metaInfFolder;
+        /** @var string Path to the temp folder, inside the root folder, where specific sheets content will be written to */
+        protected $sheetsContentTempFolder;
+        /**
+         * @return string
+         */
+        public function getRootFolder()
+        {
+        }
+        /**
+         * @return string
+         */
+        public function getSheetsContentTempFolder()
+        {
+        }
+        /**
+         * Creates all the folders needed to create a ODS file, as well as the files that won't change.
+         *
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create at least one of the base folders
+         */
+        public function createBaseFilesAndFolders()
+        {
+        }
+        /**
+         * Creates the folder that will be used as root
+         *
+         * @return FileSystemHelper
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the folder
+         */
+        protected function createRootFolder()
+        {
+        }
+        /**
+         * Creates the "META-INF" folder under the root folder as well as the "manifest.xml" file in it
+         *
+         * @return FileSystemHelper
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the folder or the "manifest.xml" file
+         */
+        protected function createMetaInfoFolderAndFile()
+        {
+        }
+        /**
+         * Creates the "manifest.xml" file under the "META-INF" folder (under root)
+         *
+         * @return FileSystemHelper
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the file
+         */
+        protected function createManifestFile()
+        {
+        }
+        /**
+         * Creates the temp folder where specific sheets content will be written to.
+         * This folder is not part of the final ODS file and is only used to be able to jump between sheets.
+         *
+         * @return FileSystemHelper
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the folder
+         */
+        protected function createSheetsContentTempFolder()
+        {
+        }
+        /**
+         * Creates the "meta.xml" file under the root folder
+         *
+         * @return FileSystemHelper
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the file
+         */
+        protected function createMetaFile()
+        {
+        }
+        /**
+         * Creates the "mimetype" file under the root folder
+         *
+         * @return FileSystemHelper
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the file
+         */
+        protected function createMimetypeFile()
+        {
+        }
+        /**
+         * Creates the "content.xml" file under the root folder
+         *
+         * @param Worksheet[] $worksheets
+         * @param StyleHelper $styleHelper
+         * @return FileSystemHelper
+         */
+        public function createContentFile($worksheets, $styleHelper)
+        {
+        }
+        /**
+         * Streams the content of the file at the given path into the target resource.
+         * Depending on which mode the target resource was created with, it will truncate then copy
+         * or append the content to the target file.
+         *
+         * @param string $sourceFilePath Path of the file whose content will be copied
+         * @param resource $targetResource Target resource that will receive the content
+         * @return void
+         */
+        protected function copyFileContentsToTarget($sourceFilePath, $targetResource)
+        {
+        }
+        /**
+         * Deletes the temporary folder where sheets content was stored.
+         *
+         * @return FileSystemHelper
+         */
+        public function deleteWorksheetTempFolder()
+        {
+        }
+        /**
+         * Creates the "styles.xml" file under the root folder
+         *
+         * @param StyleHelper $styleHelper
+         * @param int $numWorksheets Number of created worksheets
+         * @return FileSystemHelper
+         */
+        public function createStylesFile($styleHelper, $numWorksheets)
+        {
+        }
+        /**
+         * Zips the root folder and streams the contents of the zip into the given stream
+         *
+         * @param resource $streamPointer Pointer to the stream to copy the zip
+         * @return void
+         */
+        public function zipRootFolderAndCopyToStream($streamPointer)
+        {
+        }
+    }
+    /**
+     * Class StyleHelper
+     * This class provides helper functions to manage styles
+     *
+     * @package Box\Spout\Writer\ODS\Helper
+     */
+    class StyleHelper extends \Box\Spout\Writer\Common\Helper\AbstractStyleHelper
+    {
+        /** @var string[] [FONT_NAME] => [] Map whose keys contain all the fonts used */
+        protected $usedFontsSet = [];
+        /**
+         * Registers the given style as a used style.
+         * Duplicate styles won't be registered more than once.
+         *
+         * @param \Box\Spout\Writer\Style\Style $style The style to be registered
+         * @return \Box\Spout\Writer\Style\Style The registered style, updated with an internal ID.
+         */
+        public function registerStyle($style)
+        {
+        }
+        /**
+         * @return string[] List of used fonts name
+         */
+        protected function getUsedFonts()
+        {
+        }
+        /**
+         * Returns the content of the "styles.xml" file, given a list of styles.
+         *
+         * @param int $numWorksheets Number of worksheets created
+         * @return string
+         */
+        public function getStylesXMLFileContent($numWorksheets)
+        {
+        }
+        /**
+         * Returns the content of the "<office:font-face-decls>" section, inside "styles.xml" file.
+         *
+         * @return string
+         */
+        protected function getFontFaceSectionContent()
+        {
+        }
+        /**
+         * Returns the content of the "<office:styles>" section, inside "styles.xml" file.
+         *
+         * @return string
+         */
+        protected function getStylesSectionContent()
+        {
+        }
+        /**
+         * Returns the content of the "<office:automatic-styles>" section, inside "styles.xml" file.
+         *
+         * @param int $numWorksheets Number of worksheets created
+         * @return string
+         */
+        protected function getAutomaticStylesSectionContent($numWorksheets)
+        {
+        }
+        /**
+         * Returns the content of the "<office:master-styles>" section, inside "styles.xml" file.
+         *
+         * @param int $numWorksheets Number of worksheets created
+         * @return string
+         */
+        protected function getMasterStylesSectionContent($numWorksheets)
+        {
+        }
+        /**
+         * Returns the contents of the "<office:font-face-decls>" section, inside "content.xml" file.
+         *
+         * @return string
+         */
+        public function getContentXmlFontFaceSectionContent()
+        {
+        }
+        /**
+         * Returns the contents of the "<office:automatic-styles>" section, inside "content.xml" file.
+         *
+         * @param int $numWorksheets Number of worksheets created
+         * @return string
+         */
+        public function getContentXmlAutomaticStylesSectionContent($numWorksheets)
+        {
+        }
+        /**
+         * Returns the contents of the "<style:style>" section, inside "<office:automatic-styles>" section
+         *
+         * @param \Box\Spout\Writer\Style\Style $style
+         * @return string
+         */
+        protected function getStyleSectionContent($style)
+        {
+        }
+        /**
+         * Returns the contents of the "<style:text-properties>" section, inside "<style:style>" section
+         *
+         * @param \Box\Spout\Writer\Style\Style $style
+         * @return string
+         */
+        private function getTextPropertiesSectionContent($style)
+        {
+        }
+        /**
+         * Returns the contents of the "<style:text-properties>" section, inside "<style:style>" section
+         *
+         * @param \Box\Spout\Writer\Style\Style $style
+         * @return string
+         */
+        private function getFontSectionContent($style)
+        {
+        }
+        /**
+         * Returns the contents of the "<style:table-cell-properties>" section, inside "<style:style>" section
+         *
+         * @param \Box\Spout\Writer\Style\Style $style
+         * @return string
+         */
+        private function getTableCellPropertiesSectionContent($style)
+        {
+        }
+        /**
+         * Returns the contents of the wrap text definition for the "<style:table-cell-properties>" section
+         *
+         * @return string
+         */
+        private function getWrapTextXMLContent()
+        {
+        }
+        /**
+         * Returns the contents of the borders definition for the "<style:table-cell-properties>" section
+         *
+         * @param \Box\Spout\Writer\Style\Style $style
+         * @return string
+         */
+        private function getBorderXMLContent($style)
+        {
+        }
+        /**
+         * Returns the contents of the background color definition for the "<style:table-cell-properties>" section
+         *
+         * @param \Box\Spout\Writer\Style\Style $style
+         * @return string
+         */
+        private function getBackgroundColorXMLContent($style)
+        {
+        }
+    }
+}
+namespace Box\Spout\Writer\ODS\Internal {
+    /**
+     * Class Workbook
+     * Represents a workbook within a ODS file.
+     * It provides the functions to work with worksheets.
+     *
+     * @package Box\Spout\Writer\ODS\Internal
+     */
+    class Workbook extends \Box\Spout\Writer\Common\Internal\AbstractWorkbook
+    {
+        /**
+         * Maximum number of rows a ODS sheet can contain
+         * @see https://ask.libreoffice.org/en/question/8631/upper-limit-to-number-of-rows-in-calc/
+         */
+        protected static $maxRowsPerWorksheet = 1048576;
+        /** @var \Box\Spout\Writer\ODS\Helper\FileSystemHelper Helper to perform file system operations */
+        protected $fileSystemHelper;
+        /** @var \Box\Spout\Writer\ODS\Helper\StyleHelper Helper to apply styles */
+        protected $styleHelper;
+        /**
+         * @param string $tempFolder
+         * @param bool $shouldCreateNewSheetsAutomatically
+         * @param \Box\Spout\Writer\Style\Style $defaultRowStyle
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create at least one of the base folders
+         */
+        public function __construct($tempFolder, $shouldCreateNewSheetsAutomatically, $defaultRowStyle)
+        {
+        }
+        /**
+         * @return \Box\Spout\Writer\ODS\Helper\StyleHelper Helper to apply styles to ODS files
+         */
+        protected function getStyleHelper()
+        {
+        }
+        /**
+         * @return int Maximum number of rows/columns a sheet can contain
+         */
+        protected function getMaxRowsPerWorksheet()
+        {
+        }
+        /**
+         * Creates a new sheet in the workbook. The current sheet remains unchanged.
+         *
+         * @return Worksheet The created sheet
+         * @throws \Box\Spout\Common\Exception\IOException If unable to open the sheet for writing
+         */
+        public function addNewSheet()
+        {
+        }
+        /**
+         * Closes the workbook and all its associated sheets.
+         * All the necessary files are written to disk and zipped together to create the ODS file.
+         * All the temporary files are then deleted.
+         *
+         * @param resource $finalFilePointer Pointer to the ODS that will be created
+         * @return void
+         */
+        public function close($finalFilePointer)
+        {
+        }
+        /**
+         * Deletes the root folder created in the temp folder and all its contents.
+         *
+         * @return void
+         */
+        protected function cleanupTempFolder()
+        {
+        }
+    }
+    /**
+     * Class Worksheet
+     * Represents a worksheet within a ODS file. The difference with the Sheet object is
+     * that this class provides an interface to write data
+     *
+     * @package Box\Spout\Writer\ODS\Internal
+     */
+    class Worksheet implements \Box\Spout\Writer\Common\Internal\WorksheetInterface
+    {
+        /** @var \Box\Spout\Writer\Common\Sheet The "external" sheet */
+        protected $externalSheet;
+        /** @var string Path to the XML file that will contain the sheet data */
+        protected $worksheetFilePath;
+        /** @var \Box\Spout\Common\Escaper\ODS Strings escaper */
+        protected $stringsEscaper;
+        /** @var \Box\Spout\Common\Helper\StringHelper To help with string manipulation */
+        protected $stringHelper;
+        /** @var Resource Pointer to the temporary sheet data file (e.g. worksheets-temp/sheet1.xml) */
+        protected $sheetFilePointer;
+        /** @var int Maximum number of columns among all the written rows */
+        protected $maxNumColumns = 1;
+        /** @var int Index of the last written row */
+        protected $lastWrittenRowIndex = 0;
+        /**
+         * @param \Box\Spout\Writer\Common\Sheet $externalSheet The associated "external" sheet
+         * @param string $worksheetFilesFolder Temporary folder where the files to create the ODS will be stored
+         * @throws \Box\Spout\Common\Exception\IOException If the sheet data file cannot be opened for writing
+         */
+        public function __construct($externalSheet, $worksheetFilesFolder)
+        {
+        }
+        /**
+         * Prepares the worksheet to accept data
+         * The XML file does not contain the "<table:table>" node as it contains the sheet's name
+         * which may change during the execution of the program. It will be added at the end.
+         *
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the sheet data file cannot be opened for writing
+         */
+        protected function startSheet()
+        {
+        }
+        /**
+         * Checks if the book has been created. Throws an exception if not created yet.
+         *
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the sheet data file cannot be opened for writing
+         */
+        protected function throwIfSheetFilePointerIsNotAvailable()
+        {
+        }
+        /**
+         * @return string Path to the temporary sheet content XML file
+         */
+        public function getWorksheetFilePath()
+        {
+        }
+        /**
+         * Returns the table XML root node as string.
+         *
+         * @return string <table> node as string
+         */
+        public function getTableElementStartAsString()
+        {
+        }
+        /**
+         * @return \Box\Spout\Writer\Common\Sheet The "external" sheet
+         */
+        public function getExternalSheet()
+        {
+        }
+        /**
+         * @return int The index of the last written row
+         */
+        public function getLastWrittenRowIndex()
+        {
+        }
+        /**
+         * Adds data to the worksheet.
+         *
+         * @param array $dataRow Array containing data to be written. Cannot be empty.
+         *          Example $dataRow = ['data1', 1234, null, '', 'data5'];
+         * @param \Box\Spout\Writer\Style\Style $style Style to be applied to the row. NULL means use default style.
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the data cannot be written
+         * @throws \Box\Spout\Common\Exception\InvalidArgumentException If a cell value's type is not supported
+         */
+        public function addRow($dataRow, $style)
+        {
+        }
+        /**
+         * Returns the cell XML content, given its value.
+         *
+         * @param mixed $cellValue The value to be written
+         * @param int $styleIndex Index of the used style
+         * @param int $numTimesValueRepeated Number of times the value is consecutively repeated
+         * @return string The cell XML content
+         * @throws \Box\Spout\Common\Exception\InvalidArgumentException If a cell value's type is not supported
+         */
+        protected function getCellXML($cellValue, $styleIndex, $numTimesValueRepeated)
+        {
+        }
+        /**
+         * Closes the worksheet
+         *
+         * @return void
+         */
+        public function close()
+        {
+        }
+    }
+}
+namespace Box\Spout\Writer\ODS {
+    /**
+     * Class Writer
+     * This class provides base support to write data to ODS files
+     *
+     * @package Box\Spout\Writer\ODS
+     */
+    class Writer extends \Box\Spout\Writer\AbstractMultiSheetsWriter
+    {
+        /** @var string Content-Type value for the header */
+        protected static $headerContentType = 'application/vnd.oasis.opendocument.spreadsheet';
+        /** @var string Temporary folder where the files to create the ODS will be stored */
+        protected $tempFolder;
+        /** @var Internal\Workbook The workbook for the ODS file */
+        protected $book;
+        /**
+         * Sets a custom temporary folder for creating intermediate files/folders.
+         * This must be set before opening the writer.
+         *
+         * @api
+         * @param string $tempFolder Temporary folder where the files to create the ODS will be stored
+         * @return Writer
+         * @throws \Box\Spout\Writer\Exception\WriterAlreadyOpenedException If the writer was already opened
+         */
+        public function setTempFolder($tempFolder)
+        {
+        }
+        /**
+         * Configures the write and sets the current sheet pointer to a new sheet.
+         *
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If unable to open the file for writing
+         */
+        protected function openWriter()
+        {
+        }
+        /**
+         * @return Internal\Workbook The workbook representing the file to be written
+         */
+        protected function getWorkbook()
+        {
+        }
+        /**
+         * Adds data to the currently opened writer.
+         * If shouldCreateNewSheetsAutomatically option is set to true, it will handle pagination
+         * with the creation of new worksheets if one worksheet has reached its maximum capicity.
+         *
+         * @param array $dataRow Array containing data to be written.
+         *          Example $dataRow = ['data1', 1234, null, '', 'data5'];
+         * @param \Box\Spout\Writer\Style\Style $style Style to be applied to the row.
+         * @return void
+         * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException If the book is not created yet
+         * @throws \Box\Spout\Common\Exception\IOException If unable to write data
+         */
+        protected function addRowToWriter(array $dataRow, $style)
+        {
+        }
+        /**
+         * Closes the writer, preventing any additional writing.
+         *
+         * @return void
+         */
+        protected function closeWriter()
+        {
+        }
+    }
+}
+namespace Box\Spout\Writer\Style {
+    /**
+     * Class Border
+     */
+    class Border
+    {
+        const LEFT = 'left';
+        const RIGHT = 'right';
+        const TOP = 'top';
+        const BOTTOM = 'bottom';
+        const STYLE_NONE = 'none';
+        const STYLE_SOLID = 'solid';
+        const STYLE_DASHED = 'dashed';
+        const STYLE_DOTTED = 'dotted';
+        const STYLE_DOUBLE = 'double';
+        const WIDTH_THIN = 'thin';
+        const WIDTH_MEDIUM = 'medium';
+        const WIDTH_THICK = 'thick';
+        /**
+         * @var array A list of BorderPart objects for this border.
+         */
+        protected $parts = [];
+        /**
+         * @param array|void $borderParts
+         */
+        public function __construct(array $borderParts = [])
+        {
+        }
+        /**
+         * @param $name The name of the border part
+         * @return null|BorderPart
+         */
+        public function getPart($name)
+        {
+        }
+        /**
+         * @param $name The name of the border part
+         * @return bool
+         */
+        public function hasPart($name)
+        {
+        }
+        /**
+         * @return array
+         */
+        public function getParts()
+        {
+        }
+        /**
+         * Set BorderParts
+         * @param array $parts
+         */
+        public function setParts($parts)
+        {
+        }
+        /**
+         * @param BorderPart $borderPart
+         * @return self
+         */
+        public function addPart(\Box\Spout\Writer\Style\BorderPart $borderPart)
+        {
+        }
+    }
+    /**
+     * Class BorderBuilder
+     */
+    class BorderBuilder
+    {
+        /**
+         * @var Border
+         */
+        protected $border;
+        public function __construct()
+        {
+        }
+        /**
+         * @param string|void $color Border A RGB color code
+         * @param string|void $width Border width @see BorderPart::allowedWidths
+         * @param string|void $style Border style @see BorderPart::allowedStyles
+         * @return BorderBuilder
+         */
+        public function setBorderTop($color = \Box\Spout\Writer\Style\Color::BLACK, $width = \Box\Spout\Writer\Style\Border::WIDTH_MEDIUM, $style = \Box\Spout\Writer\Style\Border::STYLE_SOLID)
+        {
+        }
+        /**
+         * @param string|void $color Border A RGB color code
+         * @param string|void $width Border width @see BorderPart::allowedWidths
+         * @param string|void $style Border style @see BorderPart::allowedStyles
+         * @return BorderBuilder
+         */
+        public function setBorderRight($color = \Box\Spout\Writer\Style\Color::BLACK, $width = \Box\Spout\Writer\Style\Border::WIDTH_MEDIUM, $style = \Box\Spout\Writer\Style\Border::STYLE_SOLID)
+        {
+        }
+        /**
+         * @param string|void $color Border A RGB color code
+         * @param string|void $width Border width @see BorderPart::allowedWidths
+         * @param string|void $style Border style @see BorderPart::allowedStyles
+         * @return BorderBuilder
+         */
+        public function setBorderBottom($color = \Box\Spout\Writer\Style\Color::BLACK, $width = \Box\Spout\Writer\Style\Border::WIDTH_MEDIUM, $style = \Box\Spout\Writer\Style\Border::STYLE_SOLID)
+        {
+        }
+        /**
+         * @param string|void $color Border A RGB color code
+         * @param string|void $width Border width @see BorderPart::allowedWidths
+         * @param string|void $style Border style @see BorderPart::allowedStyles
+         * @return BorderBuilder
+         */
+        public function setBorderLeft($color = \Box\Spout\Writer\Style\Color::BLACK, $width = \Box\Spout\Writer\Style\Border::WIDTH_MEDIUM, $style = \Box\Spout\Writer\Style\Border::STYLE_SOLID)
+        {
+        }
+        /**
+         * @return Border
+         */
+        public function build()
+        {
+        }
+    }
+    /**
+     * Class BorderPart
+     */
+    class BorderPart
+    {
+        /**
+         * @var string The style of this border part.
+         */
+        protected $style;
+        /**
+         * @var string The name of this border part.
+         */
+        protected $name;
+        /**
+         * @var string The color of this border part.
+         */
+        protected $color;
+        /**
+         * @var string The width of this border part.
+         */
+        protected $width;
+        /**
+         * @var array Allowed style constants for parts.
+         */
+        protected static $allowedStyles = ['none', 'solid', 'dashed', 'dotted', 'double'];
+        /**
+         * @var array Allowed names constants for border parts.
+         */
+        protected static $allowedNames = ['left', 'right', 'top', 'bottom'];
+        /**
+         * @var array Allowed width constants for border parts.
+         */
+        protected static $allowedWidths = ['thin', 'medium', 'thick'];
+        /**
+         * @param string $name @see  BorderPart::$allowedNames
+         * @param string $color A RGB color code
+         * @param string $width @see BorderPart::$allowedWidths
+         * @param string $style @see BorderPart::$allowedStyles
+         * @throws InvalidNameException
+         * @throws InvalidStyleException
+         * @throws InvalidWidthException
+         */
+        public function __construct($name, $color = \Box\Spout\Writer\Style\Color::BLACK, $width = \Box\Spout\Writer\Style\Border::WIDTH_MEDIUM, $style = \Box\Spout\Writer\Style\Border::STYLE_SOLID)
+        {
+        }
+        /**
          * @return string
          */
         public function getName()
         {
         }
         /**
-         * return the invalid data submitted
-         *
+         * @param string $name The name of the border part @see BorderPart::$allowedNames
+         * @throws InvalidNameException
+         * @return void
+         */
+        public function setName($name)
+        {
+        }
+        /**
+         * @return string
+         */
+        public function getStyle()
+        {
+        }
+        /**
+         * @param string $style The style of the border part @see BorderPart::$allowedStyles
+         * @throws InvalidStyleException
+         * @return void
+         */
+        public function setStyle($style)
+        {
+        }
+        /**
+         * @return string
+         */
+        public function getColor()
+        {
+        }
+        /**
+         * @param string $color The color of the border part @see Color::rgb()
+         * @return void
+         */
+        public function setColor($color)
+        {
+        }
+        /**
+         * @return string
+         */
+        public function getWidth()
+        {
+        }
+        /**
+         * @param string $width The width of the border part @see BorderPart::$allowedWidths
+         * @throws InvalidWidthException
+         * @return void
+         */
+        public function setWidth($width)
+        {
+        }
+        /**
          * @return array
          */
-        public function getData()
+        public static function getAllowedStyles()
+        {
+        }
+        /**
+         * @return array
+         */
+        public static function getAllowedNames()
+        {
+        }
+        /**
+         * @return array
+         */
+        public static function getAllowedWidths()
+        {
+        }
+    }
+    /**
+     * Class Color
+     * This class provides constants and functions to work with colors
+     *
+     * @package Box\Spout\Writer\Style
+     */
+    class Color
+    {
+        /** Standard colors - based on Office Online */
+        const BLACK = '000000';
+        const WHITE = 'FFFFFF';
+        const RED = 'FF0000';
+        const DARK_RED = 'C00000';
+        const ORANGE = 'FFC000';
+        const YELLOW = 'FFFF00';
+        const LIGHT_GREEN = '92D040';
+        const GREEN = '00B050';
+        const LIGHT_BLUE = '00B0E0';
+        const BLUE = '0070C0';
+        const DARK_BLUE = '002060';
+        const PURPLE = '7030A0';
+        /**
+         * Returns an RGB color from R, G and B values
+         *
+         * @api
+         * @param int $red Red component, 0 - 255
+         * @param int $green Green component, 0 - 255
+         * @param int $blue Blue component, 0 - 255
+         * @return string RGB color
+         */
+        public static function rgb($red, $green, $blue)
+        {
+        }
+        /**
+         * Throws an exception is the color component value is outside of bounds (0 - 255)
+         *
+         * @param int $colorComponent
+         * @return void
+         * @throws \Box\Spout\Writer\Exception\InvalidColorException
+         */
+        protected static function throwIfInvalidColorComponentValue($colorComponent)
+        {
+        }
+        /**
+         * Converts the color component to its corresponding hexadecimal value
+         *
+         * @param int $colorComponent Color component, 0 - 255
+         * @return string Corresponding hexadecimal value, with a leading 0 if needed. E.g "0f", "2d"
+         */
+        protected static function convertColorComponentToHex($colorComponent)
+        {
+        }
+        /**
+         * Returns the ARGB color of the given RGB color,
+         * assuming that alpha value is always 1.
+         *
+         * @param string $rgbColor RGB color like "FF08B2"
+         * @return string ARGB color
+         */
+        public static function toARGB($rgbColor)
+        {
+        }
+    }
+    /**
+     * Class Style
+     * Represents a style to be applied to a cell
+     *
+     * @package Box\Spout\Writer\Style
+     */
+    class Style
+    {
+        /** Default font values */
+        const DEFAULT_FONT_SIZE = 11;
+        const DEFAULT_FONT_COLOR = \Box\Spout\Writer\Style\Color::BLACK;
+        const DEFAULT_FONT_NAME = 'Arial';
+        /** @var int|null Style ID */
+        protected $id = null;
+        /** @var bool Whether the font should be bold */
+        protected $fontBold = false;
+        /** @var bool Whether the bold property was set */
+        protected $hasSetFontBold = false;
+        /** @var bool Whether the font should be italic */
+        protected $fontItalic = false;
+        /** @var bool Whether the italic property was set */
+        protected $hasSetFontItalic = false;
+        /** @var bool Whether the font should be underlined */
+        protected $fontUnderline = false;
+        /** @var bool Whether the underline property was set */
+        protected $hasSetFontUnderline = false;
+        /** @var bool Whether the font should be struck through */
+        protected $fontStrikethrough = false;
+        /** @var bool Whether the strikethrough property was set */
+        protected $hasSetFontStrikethrough = false;
+        /** @var int Font size */
+        protected $fontSize = self::DEFAULT_FONT_SIZE;
+        /** @var bool Whether the font size property was set */
+        protected $hasSetFontSize = false;
+        /** @var string Font color */
+        protected $fontColor = self::DEFAULT_FONT_COLOR;
+        /** @var bool Whether the font color property was set */
+        protected $hasSetFontColor = false;
+        /** @var string Font name */
+        protected $fontName = self::DEFAULT_FONT_NAME;
+        /** @var bool Whether the font name property was set */
+        protected $hasSetFontName = false;
+        /** @var bool Whether specific font properties should be applied */
+        protected $shouldApplyFont = false;
+        /** @var bool Whether the text should wrap in the cell (useful for long or multi-lines text) */
+        protected $shouldWrapText = false;
+        /** @var bool Whether the wrap text property was set */
+        protected $hasSetWrapText = false;
+        /**
+         * @var Border
+         */
+        protected $border = null;
+        /**
+         * @var bool Whether border properties should be applied
+         */
+        protected $shouldApplyBorder = false;
+        /** @var string Background color */
+        protected $backgroundColor = null;
+        /** @var bool */
+        protected $hasSetBackgroundColor = false;
+        /**
+         * @return int|null
+         */
+        public function getId()
+        {
+        }
+        /**
+         * @param int $id
+         * @return Style
+         */
+        public function setId($id)
+        {
+        }
+        /**
+         * @return Border
+         */
+        public function getBorder()
+        {
+        }
+        /**
+         * @param Border $border
+         * @return Style
+         */
+        public function setBorder(\Box\Spout\Writer\Style\Border $border)
+        {
+        }
+        /**
+         * @return bool
+         */
+        public function shouldApplyBorder()
+        {
+        }
+        /**
+         * @return bool
+         */
+        public function isFontBold()
+        {
+        }
+        /**
+         * @return Style
+         */
+        public function setFontBold()
+        {
+        }
+        /**
+         * @return bool
+         */
+        public function isFontItalic()
+        {
+        }
+        /**
+         * @return Style
+         */
+        public function setFontItalic()
+        {
+        }
+        /**
+         * @return bool
+         */
+        public function isFontUnderline()
+        {
+        }
+        /**
+         * @return Style
+         */
+        public function setFontUnderline()
+        {
+        }
+        /**
+         * @return bool
+         */
+        public function isFontStrikethrough()
+        {
+        }
+        /**
+         * @return Style
+         */
+        public function setFontStrikethrough()
+        {
+        }
+        /**
+         * @return int
+         */
+        public function getFontSize()
+        {
+        }
+        /**
+         * @param int $fontSize Font size, in pixels
+         * @return Style
+         */
+        public function setFontSize($fontSize)
+        {
+        }
+        /**
+         * @return string
+         */
+        public function getFontColor()
+        {
+        }
+        /**
+         * Sets the font color.
+         *
+         * @param string $fontColor ARGB color (@see Color)
+         * @return Style
+         */
+        public function setFontColor($fontColor)
+        {
+        }
+        /**
+         * @return string
+         */
+        public function getFontName()
+        {
+        }
+        /**
+         * @param string $fontName Name of the font to use
+         * @return Style
+         */
+        public function setFontName($fontName)
+        {
+        }
+        /**
+         * @return bool
+         */
+        public function shouldWrapText()
+        {
+        }
+        /**
+         * @param bool|void $shouldWrap Should the text be wrapped
+         * @return Style
+         */
+        public function setShouldWrapText($shouldWrap = true)
+        {
+        }
+        /**
+         * @return bool
+         */
+        public function hasSetWrapText()
+        {
+        }
+        /**
+         * @return bool Whether specific font properties should be applied
+         */
+        public function shouldApplyFont()
+        {
+        }
+        /**
+         * Sets the background color
+         * @param string $color ARGB color (@see Color)
+         * @return Style
+         */
+        public function setBackgroundColor($color)
+        {
+        }
+        /**
+         * @return string
+         */
+        public function getBackgroundColor()
+        {
+        }
+        /**
+         *
+         * @return bool Whether the background color should be applied
+         */
+        public function shouldApplyBackgroundColor()
+        {
+        }
+        /**
+         * Serializes the style for future comparison with other styles.
+         * The ID is excluded from the comparison, as we only care about
+         * actual style properties.
+         *
+         * @return string The serialized style
+         */
+        public function serialize()
+        {
+        }
+        /**
+         * Merges the current style with the given style, using the given style as a base. This means that:
+         *   - if current style and base style both have property A set, use current style property's value
+         *   - if current style has property A set but base style does not, use current style property's value
+         *   - if base style has property A set but current style does not, use base style property's value
+         *
+         * @NOTE: This function returns a new style.
+         *
+         * @param Style $baseStyle
+         * @return Style New style corresponding to the merge of the 2 styles
+         */
+        public function mergeWith($baseStyle)
+        {
+        }
+        /**
+         * @param Style $styleToUpdate (passed as reference)
+         * @param Style $baseStyle
+         * @return void
+         */
+        private function mergeFontStyles($styleToUpdate, $baseStyle)
+        {
+        }
+        /**
+         * @param Style $styleToUpdate Style to update (passed as reference)
+         * @param Style $baseStyle
+         * @return void
+         */
+        private function mergeOtherFontProperties($styleToUpdate, $baseStyle)
+        {
+        }
+        /**
+         * @param Style $styleToUpdate Style to update (passed as reference)
+         * @param Style $baseStyle
+         * @return void
+         */
+        private function mergeCellProperties($styleToUpdate, $baseStyle)
+        {
+        }
+    }
+    /**
+     * Class StyleBuilder
+     * Builder to create new styles
+     *
+     * @package Box\Spout\Writer\Style
+     */
+    class StyleBuilder
+    {
+        /** @var Style Style to be created */
+        protected $style;
+        /**
+         *
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Makes the font bold.
+         *
+         * @api
+         * @return StyleBuilder
+         */
+        public function setFontBold()
+        {
+        }
+        /**
+         * Makes the font italic.
+         *
+         * @api
+         * @return StyleBuilder
+         */
+        public function setFontItalic()
+        {
+        }
+        /**
+         * Makes the font underlined.
+         *
+         * @api
+         * @return StyleBuilder
+         */
+        public function setFontUnderline()
+        {
+        }
+        /**
+         * Makes the font struck through.
+         *
+         * @api
+         * @return StyleBuilder
+         */
+        public function setFontStrikethrough()
+        {
+        }
+        /**
+         * Sets the font size.
+         *
+         * @api
+         * @param int $fontSize Font size, in pixels
+         * @return StyleBuilder
+         */
+        public function setFontSize($fontSize)
+        {
+        }
+        /**
+         * Sets the font color.
+         *
+         * @api
+         * @param string $fontColor ARGB color (@see Color)
+         * @return StyleBuilder
+         */
+        public function setFontColor($fontColor)
+        {
+        }
+        /**
+         * Sets the font name.
+         *
+         * @api
+         * @param string $fontName Name of the font to use
+         * @return StyleBuilder
+         */
+        public function setFontName($fontName)
+        {
+        }
+        /**
+         * Makes the text wrap in the cell if requested
+         *
+         * @api
+         * @param bool $shouldWrap Should the text be wrapped
+         * @return StyleBuilder
+         */
+        public function setShouldWrapText($shouldWrap = true)
+        {
+        }
+        /**
+         * Set a border
+         *
+         * @param Border $border
+         * @return $this
+         */
+        public function setBorder(\Box\Spout\Writer\Style\Border $border)
+        {
+        }
+        /**
+         *  Sets a background color
+         *
+         * @api
+         * @param string $color ARGB color (@see Color)
+         * @return StyleBuilder
+         */
+        public function setBackgroundColor($color)
+        {
+        }
+        /**
+         * Returns the configured style. The style is cached and can be reused.
+         *
+         * @api
+         * @return Style
+         */
+        public function build()
         {
         }
     }
 }
-namespace League\Csv\Modifier {
+namespace Box\Spout\Writer {
     /**
-     *  A simple MapIterator
+     * Class WriterFactory
+     * This factory is used to create writers, based on the type of the file to be read.
+     * It supports CSV, XLSX and ODS formats.
      *
-     * @package League.csv
-     * @since  3.3.0
-     * @internal used internally to modify CSV content
-     *
+     * @package Box\Spout\Writer
      */
-    class MapIterator extends \IteratorIterator
+    class WriterFactory
     {
         /**
-         * The function to be apply on all InnerIterator element
+         * This creates an instance of the appropriate writer, given the type of the file to be read
          *
-         * @var callable
+         * @api
+         * @param  string $writerType Type of the writer to instantiate
+         * @return WriterInterface
+         * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
          */
-        private $callable;
-        /**
-         * The Constructor
-         *
-         * @param Iterator $iterator
-         * @param callable $callable
-         */
-        public function __construct(\Iterator $iterator, callable $callable)
-        {
-        }
-        /**
-         * Get the value of the current element
-         */
-        public function current()
-        {
-        }
-    }
-    /**
-     *  Trait to format and validate the row before insertion
-     *
-     * @package League.csv
-     * @since  7.0.0
-     *
-     */
-    trait RowFilter
-    {
-        /**
-         * Callables to validate the row before insertion
-         *
-         * @var callable[]
-         */
-        protected $validators = [];
-        /**
-         * Callables to format the row before insertion
-         *
-         * @var callable[]
-         */
-        protected $formatters = [];
-        /**
-         * add a formatter to the collection
-         *
-         * @param callable $callable
-         *
-         * @return $this
-         */
-        public function addFormatter(callable $callable)
-        {
-        }
-        /**
-         * Remove a formatter from the collection
-         *
-         * @param callable $callable
-         *
-         * @return $this
-         */
-        public function removeFormatter(callable $callable)
-        {
-        }
-        /**
-         * Detect if the formatter is already registered
-         *
-         * @param callable $callable
-         *
-         * @return bool
-         */
-        public function hasFormatter(callable $callable)
-        {
-        }
-        /**
-         * Remove all registered formatter
-         *
-         * @return $this
-         */
-        public function clearFormatters()
-        {
-        }
-        /**
-         * add a Validator to the collection
-         *
-         * @param callable $callable
-         * @param string   $name     the rule name
-         *
-         * @return $this
-         */
-        public function addValidator(callable $callable, $name)
-        {
-        }
-        /**
-         * Remove a validator from the collection
-         *
-         * @param string $name the validator name
-         *
-         * @return $this
-         */
-        public function removeValidator($name)
-        {
-        }
-        /**
-         * Detect if a validator is already registered
-         *
-         * @param string $name the validator name
-         *
-         * @return bool
-         */
-        public function hasValidator($name)
-        {
-        }
-        /**
-         * Remove all registered validators
-         *
-         * @return $this
-         */
-        public function clearValidators()
-        {
-        }
-        /**
-         * Format the given row
-         *
-         * @param array|string $row
-         *
-         * @return array
-         */
-        protected function formatRow(array $row)
-        {
-        }
-        /**
-         * validate a row
-         *
-         * @param array $row
-         *
-         * @throws InvalidRowException If the validation failed
-         */
-        protected function validateRow(array $row)
+        public static function create($writerType)
         {
         }
     }
 }
-namespace League\Csv\Plugin {
+namespace Box\Spout\Writer\XLSX\Helper {
+    class BorderHelper
+    {
+        public static $xlsxStyleMap = [\Box\Spout\Writer\Style\Border::STYLE_SOLID => [\Box\Spout\Writer\Style\Border::WIDTH_THIN => 'thin', \Box\Spout\Writer\Style\Border::WIDTH_MEDIUM => 'medium', \Box\Spout\Writer\Style\Border::WIDTH_THICK => 'thick'], \Box\Spout\Writer\Style\Border::STYLE_DOTTED => [\Box\Spout\Writer\Style\Border::WIDTH_THIN => 'dotted', \Box\Spout\Writer\Style\Border::WIDTH_MEDIUM => 'dotted', \Box\Spout\Writer\Style\Border::WIDTH_THICK => 'dotted'], \Box\Spout\Writer\Style\Border::STYLE_DASHED => [\Box\Spout\Writer\Style\Border::WIDTH_THIN => 'dashed', \Box\Spout\Writer\Style\Border::WIDTH_MEDIUM => 'mediumDashed', \Box\Spout\Writer\Style\Border::WIDTH_THICK => 'mediumDashed'], \Box\Spout\Writer\Style\Border::STYLE_DOUBLE => [\Box\Spout\Writer\Style\Border::WIDTH_THIN => 'double', \Box\Spout\Writer\Style\Border::WIDTH_MEDIUM => 'double', \Box\Spout\Writer\Style\Border::WIDTH_THICK => 'double'], \Box\Spout\Writer\Style\Border::STYLE_NONE => [\Box\Spout\Writer\Style\Border::WIDTH_THIN => 'none', \Box\Spout\Writer\Style\Border::WIDTH_MEDIUM => 'none', \Box\Spout\Writer\Style\Border::WIDTH_THICK => 'none']];
+        /**
+         * @param BorderPart $borderPart
+         * @return string
+         */
+        public static function serializeBorderPart(\Box\Spout\Writer\Style\BorderPart $borderPart)
+        {
+        }
+        /**
+         * Get the style definition from the style map
+         *
+         * @param BorderPart $borderPart
+         * @return string
+         */
+        protected static function getBorderStyle(\Box\Spout\Writer\Style\BorderPart $borderPart)
+        {
+        }
+    }
     /**
-     *  A class to manage column consistency on data insertion into a CSV
+     * Class FileSystemHelper
+     * This class provides helper functions to help with the file system operations
+     * like files/folders creation & deletion for XLSX files
      *
-     * @package League.csv
-     * @since  7.0.0
-     *
+     * @package Box\Spout\Writer\XLSX\Helper
      */
-    class ColumnConsistencyValidator
+    class FileSystemHelper extends \Box\Spout\Common\Helper\FileSystemHelper
+    {
+        const APP_NAME = 'Spout';
+        const RELS_FOLDER_NAME = '_rels';
+        const DOC_PROPS_FOLDER_NAME = 'docProps';
+        const XL_FOLDER_NAME = 'xl';
+        const WORKSHEETS_FOLDER_NAME = 'worksheets';
+        const RELS_FILE_NAME = '.rels';
+        const APP_XML_FILE_NAME = 'app.xml';
+        const CORE_XML_FILE_NAME = 'core.xml';
+        const CONTENT_TYPES_XML_FILE_NAME = '[Content_Types].xml';
+        const WORKBOOK_XML_FILE_NAME = 'workbook.xml';
+        const WORKBOOK_RELS_XML_FILE_NAME = 'workbook.xml.rels';
+        const STYLES_XML_FILE_NAME = 'styles.xml';
+        /** @var string Path to the root folder inside the temp folder where the files to create the XLSX will be stored */
+        protected $rootFolder;
+        /** @var string Path to the "_rels" folder inside the root folder */
+        protected $relsFolder;
+        /** @var string Path to the "docProps" folder inside the root folder */
+        protected $docPropsFolder;
+        /** @var string Path to the "xl" folder inside the root folder */
+        protected $xlFolder;
+        /** @var string Path to the "_rels" folder inside the "xl" folder */
+        protected $xlRelsFolder;
+        /** @var string Path to the "worksheets" folder inside the "xl" folder */
+        protected $xlWorksheetsFolder;
+        /**
+         * @return string
+         */
+        public function getRootFolder()
+        {
+        }
+        /**
+         * @return string
+         */
+        public function getXlFolder()
+        {
+        }
+        /**
+         * @return string
+         */
+        public function getXlWorksheetsFolder()
+        {
+        }
+        /**
+         * Creates all the folders needed to create a XLSX file, as well as the files that won't change.
+         *
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create at least one of the base folders
+         */
+        public function createBaseFilesAndFolders()
+        {
+        }
+        /**
+         * Creates the folder that will be used as root
+         *
+         * @return FileSystemHelper
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the folder
+         */
+        protected function createRootFolder()
+        {
+        }
+        /**
+         * Creates the "_rels" folder under the root folder as well as the ".rels" file in it
+         *
+         * @return FileSystemHelper
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the folder or the ".rels" file
+         */
+        protected function createRelsFolderAndFile()
+        {
+        }
+        /**
+         * Creates the ".rels" file under the "_rels" folder (under root)
+         *
+         * @return FileSystemHelper
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the file
+         */
+        protected function createRelsFile()
+        {
+        }
+        /**
+         * Creates the "docProps" folder under the root folder as well as the "app.xml" and "core.xml" files in it
+         *
+         * @return FileSystemHelper
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the folder or one of the files
+         */
+        protected function createDocPropsFolderAndFiles()
+        {
+        }
+        /**
+         * Creates the "app.xml" file under the "docProps" folder
+         *
+         * @return FileSystemHelper
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the file
+         */
+        protected function createAppXmlFile()
+        {
+        }
+        /**
+         * Creates the "core.xml" file under the "docProps" folder
+         *
+         * @return FileSystemHelper
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the file
+         */
+        protected function createCoreXmlFile()
+        {
+        }
+        /**
+         * Creates the "xl" folder under the root folder as well as its subfolders
+         *
+         * @return FileSystemHelper
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create at least one of the folders
+         */
+        protected function createXlFolderAndSubFolders()
+        {
+        }
+        /**
+         * Creates the "_rels" folder under the "xl" folder
+         *
+         * @return FileSystemHelper
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the folder
+         */
+        protected function createXlRelsFolder()
+        {
+        }
+        /**
+         * Creates the "worksheets" folder under the "xl" folder
+         *
+         * @return FileSystemHelper
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create the folder
+         */
+        protected function createXlWorksheetsFolder()
+        {
+        }
+        /**
+         * Creates the "[Content_Types].xml" file under the root folder
+         *
+         * @param Worksheet[] $worksheets
+         * @return FileSystemHelper
+         */
+        public function createContentTypesFile($worksheets)
+        {
+        }
+        /**
+         * Creates the "workbook.xml" file under the "xl" folder
+         *
+         * @param Worksheet[] $worksheets
+         * @return FileSystemHelper
+         */
+        public function createWorkbookFile($worksheets)
+        {
+        }
+        /**
+         * Creates the "workbook.xml.res" file under the "xl/_res" folder
+         *
+         * @param Worksheet[] $worksheets
+         * @return FileSystemHelper
+         */
+        public function createWorkbookRelsFile($worksheets)
+        {
+        }
+        /**
+         * Creates the "styles.xml" file under the "xl" folder
+         *
+         * @param StyleHelper $styleHelper
+         * @return FileSystemHelper
+         */
+        public function createStylesFile($styleHelper)
+        {
+        }
+        /**
+         * Zips the root folder and streams the contents of the zip into the given stream
+         *
+         * @param resource $streamPointer Pointer to the stream to copy the zip
+         * @return void
+         */
+        public function zipRootFolderAndCopyToStream($streamPointer)
+        {
+        }
+    }
+    /**
+     * Class SharedStringsHelper
+     * This class provides helper functions to write shared strings
+     *
+     * @package Box\Spout\Writer\XLSX\Helper
+     */
+    class SharedStringsHelper
+    {
+        const SHARED_STRINGS_FILE_NAME = 'sharedStrings.xml';
+        const SHARED_STRINGS_XML_FILE_FIRST_PART_HEADER = <<<EOD
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+EOD;
+        /**
+         * This number must be really big so that the no generated file will have more strings than that.
+         * If the strings number goes above, characters will be overwritten in an unwanted way and will corrupt the file.
+         */
+        const DEFAULT_STRINGS_COUNT_PART = 'count="9999999999999" uniqueCount="9999999999999"';
+        /** @var resource Pointer to the sharedStrings.xml file */
+        protected $sharedStringsFilePointer;
+        /** @var int Number of shared strings already written */
+        protected $numSharedStrings = 0;
+        /** @var \Box\Spout\Common\Escaper\XLSX Strings escaper */
+        protected $stringsEscaper;
+        /**
+         * @param string $xlFolder Path to the "xl" folder
+         */
+        public function __construct($xlFolder)
+        {
+        }
+        /**
+         * Checks if the book has been created. Throws an exception if not created yet.
+         *
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the sheet data file cannot be opened for writing
+         */
+        protected function throwIfSharedStringsFilePointerIsNotAvailable()
+        {
+        }
+        /**
+         * Writes the given string into the sharedStrings.xml file.
+         * Starting and ending whitespaces are preserved.
+         *
+         * @param string $string
+         * @return int ID of the written shared string
+         */
+        public function writeString($string)
+        {
+        }
+        /**
+         * Finishes writing the data in the sharedStrings.xml file and closes the file.
+         *
+         * @return void
+         */
+        public function close()
+        {
+        }
+    }
+    /**
+     * Class StyleHelper
+     * This class provides helper functions to manage styles
+     *
+     * @package Box\Spout\Writer\XLSX\Helper
+     */
+    class StyleHelper extends \Box\Spout\Writer\Common\Helper\AbstractStyleHelper
     {
         /**
-         * The number of column per row
+         * @var array
+         */
+        protected $registeredFills = [];
+        /**
+         * @var array [STYLE_ID] => [FILL_ID] maps a style to a fill declaration
+         */
+        protected $styleIdToFillMappingTable = [];
+        /**
+         * Excel preserves two default fills with index 0 and 1
+         * Since Excel is the dominant vendor - we play along here
+         *
+         * @var int The fill index counter for custom fills.
+         */
+        protected $fillIndex = 2;
+        /**
+         * @var array
+         */
+        protected $registeredBorders = [];
+        /**
+         * @var array [STYLE_ID] => [BORDER_ID] maps a style to a border declaration
+         */
+        protected $styleIdToBorderMappingTable = [];
+        /**
+         * XLSX specific operations on the registered styles
+         *
+         * @param \Box\Spout\Writer\Style\Style $style
+         * @return \Box\Spout\Writer\Style\Style
+         */
+        public function registerStyle($style)
+        {
+        }
+        /**
+         * Register a fill definition
+         *
+         * @param \Box\Spout\Writer\Style\Style $style
+         */
+        protected function registerFill($style)
+        {
+        }
+        /**
+         * Register a border definition
+         *
+         * @param \Box\Spout\Writer\Style\Style $style
+         */
+        protected function registerBorder($style)
+        {
+        }
+        /**
+         * For empty cells, we can specify a style or not. If no style are specified,
+         * then the software default will be applied. But sometimes, it may be useful
+         * to override this default style, for instance if the cell should have a
+         * background color different than the default one or some borders
+         * (fonts property don't really matter here).
+         *
+         * @param int $styleId
+         * @return bool Whether the cell should define a custom style
+         */
+        public function shouldApplyStyleOnEmptyCell($styleId)
+        {
+        }
+        /**
+         * Returns the content of the "styles.xml" file, given a list of styles.
+         *
+         * @return string
+         */
+        public function getStylesXMLFileContent()
+        {
+        }
+        /**
+         * Returns the content of the "<fonts>" section.
+         *
+         * @return string
+         */
+        protected function getFontsSectionContent()
+        {
+        }
+        /**
+         * Returns the content of the "<fills>" section.
+         *
+         * @return string
+         */
+        protected function getFillsSectionContent()
+        {
+        }
+        /**
+         * Returns the content of the "<borders>" section.
+         *
+         * @return string
+         */
+        protected function getBordersSectionContent()
+        {
+        }
+        /**
+         * Returns the content of the "<cellStyleXfs>" section.
+         *
+         * @return string
+         */
+        protected function getCellStyleXfsSectionContent()
+        {
+        }
+        /**
+         * Returns the content of the "<cellXfs>" section.
+         *
+         * @return string
+         */
+        protected function getCellXfsSectionContent()
+        {
+        }
+        /**
+         * Returns the content of the "<cellStyles>" section.
+         *
+         * @return string
+         */
+        protected function getCellStylesSectionContent()
+        {
+        }
+    }
+}
+namespace Box\Spout\Writer\XLSX\Internal {
+    /**
+     * Class Workbook
+     * Represents a workbook within a XLSX file.
+     * It provides the functions to work with worksheets.
+     *
+     * @package Box\Spout\Writer\XLSX\Internal
+     */
+    class Workbook extends \Box\Spout\Writer\Common\Internal\AbstractWorkbook
+    {
+        /**
+         * Maximum number of rows a XLSX sheet can contain
+         * @see http://office.microsoft.com/en-us/excel-help/excel-specifications-and-limits-HP010073849.aspx
+         */
+        protected static $maxRowsPerWorksheet = 1048576;
+        /** @var bool Whether inline or shared strings should be used */
+        protected $shouldUseInlineStrings;
+        /** @var \Box\Spout\Writer\XLSX\Helper\FileSystemHelper Helper to perform file system operations */
+        protected $fileSystemHelper;
+        /** @var \Box\Spout\Writer\XLSX\Helper\SharedStringsHelper Helper to write shared strings */
+        protected $sharedStringsHelper;
+        /** @var \Box\Spout\Writer\XLSX\Helper\StyleHelper Helper to apply styles */
+        protected $styleHelper;
+        /**
+         * @param string $tempFolder
+         * @param bool $shouldUseInlineStrings
+         * @param bool $shouldCreateNewSheetsAutomatically
+         * @param \Box\Spout\Writer\Style\Style $defaultRowStyle
+         * @throws \Box\Spout\Common\Exception\IOException If unable to create at least one of the base folders
+         */
+        public function __construct($tempFolder, $shouldUseInlineStrings, $shouldCreateNewSheetsAutomatically, $defaultRowStyle)
+        {
+        }
+        /**
+         * @return \Box\Spout\Writer\XLSX\Helper\StyleHelper Helper to apply styles to XLSX files
+         */
+        protected function getStyleHelper()
+        {
+        }
+        /**
+         * @return int Maximum number of rows/columns a sheet can contain
+         */
+        protected function getMaxRowsPerWorksheet()
+        {
+        }
+        /**
+         * Creates a new sheet in the workbook. The current sheet remains unchanged.
+         *
+         * @return Worksheet The created sheet
+         * @throws \Box\Spout\Common\Exception\IOException If unable to open the sheet for writing
+         */
+        public function addNewSheet()
+        {
+        }
+        /**
+         * Closes the workbook and all its associated sheets.
+         * All the necessary files are written to disk and zipped together to create the XLSX file.
+         * All the temporary files are then deleted.
+         *
+         * @param resource $finalFilePointer Pointer to the XLSX that will be created
+         * @return void
+         */
+        public function close($finalFilePointer)
+        {
+        }
+        /**
+         * Deletes the root folder created in the temp folder and all its contents.
+         *
+         * @return void
+         */
+        protected function cleanupTempFolder()
+        {
+        }
+    }
+    /**
+     * Class Worksheet
+     * Represents a worksheet within a XLSX file. The difference with the Sheet object is
+     * that this class provides an interface to write data
+     *
+     * @package Box\Spout\Writer\XLSX\Internal
+     */
+    class Worksheet implements \Box\Spout\Writer\Common\Internal\WorksheetInterface
+    {
+        /**
+         * Maximum number of characters a cell can contain
+         * @see https://support.office.com/en-us/article/Excel-specifications-and-limits-16c69c74-3d6a-4aaf-ba35-e6eb276e8eaa [Excel 2007]
+         * @see https://support.office.com/en-us/article/Excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3 [Excel 2010]
+         * @see https://support.office.com/en-us/article/Excel-specifications-and-limits-ca36e2dc-1f09-4620-b726-67c00b05040f [Excel 2013/2016]
+         */
+        const MAX_CHARACTERS_PER_CELL = 32767;
+        const SHEET_XML_FILE_HEADER = <<<EOD
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+EOD;
+        /** @var \Box\Spout\Writer\Common\Sheet The "external" sheet */
+        protected $externalSheet;
+        /** @var string Path to the XML file that will contain the sheet data */
+        protected $worksheetFilePath;
+        /** @var \Box\Spout\Writer\XLSX\Helper\SharedStringsHelper Helper to write shared strings */
+        protected $sharedStringsHelper;
+        /** @var \Box\Spout\Writer\XLSX\Helper\StyleHelper Helper to work with styles */
+        protected $styleHelper;
+        /** @var bool Whether inline or shared strings should be used */
+        protected $shouldUseInlineStrings;
+        /** @var \Box\Spout\Common\Escaper\XLSX Strings escaper */
+        protected $stringsEscaper;
+        /** @var \Box\Spout\Common\Helper\StringHelper String helper */
+        protected $stringHelper;
+        /** @var Resource Pointer to the sheet data file (e.g. xl/worksheets/sheet1.xml) */
+        protected $sheetFilePointer;
+        /** @var int Index of the last written row */
+        protected $lastWrittenRowIndex = 0;
+        /**
+         * @param \Box\Spout\Writer\Common\Sheet $externalSheet The associated "external" sheet
+         * @param string $worksheetFilesFolder Temporary folder where the files to create the XLSX will be stored
+         * @param \Box\Spout\Writer\XLSX\Helper\SharedStringsHelper $sharedStringsHelper Helper for shared strings
+         * @param \Box\Spout\Writer\XLSX\Helper\StyleHelper Helper to work with styles
+         * @param bool $shouldUseInlineStrings Whether inline or shared strings should be used
+         * @throws \Box\Spout\Common\Exception\IOException If the sheet data file cannot be opened for writing
+         */
+        public function __construct($externalSheet, $worksheetFilesFolder, $sharedStringsHelper, $styleHelper, $shouldUseInlineStrings)
+        {
+        }
+        /**
+         * Prepares the worksheet to accept data
+         *
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the sheet data file cannot be opened for writing
+         */
+        protected function startSheet()
+        {
+        }
+        /**
+         * Checks if the book has been created. Throws an exception if not created yet.
+         *
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the sheet data file cannot be opened for writing
+         */
+        protected function throwIfSheetFilePointerIsNotAvailable()
+        {
+        }
+        /**
+         * @return \Box\Spout\Writer\Common\Sheet The "external" sheet
+         */
+        public function getExternalSheet()
+        {
+        }
+        /**
+         * @return int The index of the last written row
+         */
+        public function getLastWrittenRowIndex()
+        {
+        }
+        /**
+         * @return int The ID of the worksheet
+         */
+        public function getId()
+        {
+        }
+        /**
+         * Adds data to the worksheet.
+         *
+         * @param array $dataRow Array containing data to be written. Cannot be empty.
+         *          Example $dataRow = ['data1', 1234, null, '', 'data5'];
+         * @param \Box\Spout\Writer\Style\Style $style Style to be applied to the row. NULL means use default style.
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the data cannot be written
+         * @throws \Box\Spout\Common\Exception\InvalidArgumentException If a cell value's type is not supported
+         */
+        public function addRow($dataRow, $style)
+        {
+        }
+        /**
+         * Returns whether the given row is empty
+         *
+         * @param array $dataRow Array containing data to be written. Cannot be empty.
+         *          Example $dataRow = ['data1', 1234, null, '', 'data5'];
+         * @return bool Whether the given row is empty
+         */
+        protected function isEmptyRow($dataRow)
+        {
+        }
+        /**
+         * Adds non empty row to the worksheet.
+         *
+         * @param array $dataRow Array containing data to be written. Cannot be empty.
+         *          Example $dataRow = ['data1', 1234, null, '', 'data5'];
+         * @param \Box\Spout\Writer\Style\Style $style Style to be applied to the row. NULL means use default style.
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If the data cannot be written
+         * @throws \Box\Spout\Common\Exception\InvalidArgumentException If a cell value's type is not supported
+         */
+        protected function addNonEmptyRow($dataRow, $style)
+        {
+        }
+        /**
+         * Build and return xml for a single cell.
+         *
+         * @param int $rowIndex
+         * @param int $cellNumber
+         * @param mixed $cellValue
+         * @param int $styleId
+         * @return string
+         * @throws InvalidArgumentException If the given value cannot be processed
+         */
+        protected function getCellXML($rowIndex, $cellNumber, $cellValue, $styleId)
+        {
+        }
+        /**
+         * Returns the XML fragment for a cell containing a non empty string
+         *
+         * @param string $cellValue The cell value
+         * @return string The XML fragment representing the cell
+         * @throws InvalidArgumentException If the string exceeds the maximum number of characters allowed per cell
+         */
+        protected function getCellXMLFragmentForNonEmptyString($cellValue)
+        {
+        }
+        /**
+         * Closes the worksheet
+         *
+         * @return void
+         */
+        public function close()
+        {
+        }
+    }
+}
+namespace Box\Spout\Writer\XLSX {
+    /**
+     * Class Writer
+     * This class provides base support to write data to XLSX files
+     *
+     * @package Box\Spout\Writer\XLSX
+     */
+    class Writer extends \Box\Spout\Writer\AbstractMultiSheetsWriter
+    {
+        /** Default style font values */
+        const DEFAULT_FONT_SIZE = 12;
+        const DEFAULT_FONT_NAME = 'Calibri';
+        /** @var string Content-Type value for the header */
+        protected static $headerContentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        /** @var string Temporary folder where the files to create the XLSX will be stored */
+        protected $tempFolder;
+        /** @var bool Whether inline or shared strings should be used - inline string is more memory efficient */
+        protected $shouldUseInlineStrings = true;
+        /** @var Internal\Workbook The workbook for the XLSX file */
+        protected $book;
+        /**
+         * Sets a custom temporary folder for creating intermediate files/folders.
+         * This must be set before opening the writer.
+         *
+         * @api
+         * @param string $tempFolder Temporary folder where the files to create the XLSX will be stored
+         * @return Writer
+         * @throws \Box\Spout\Writer\Exception\WriterAlreadyOpenedException If the writer was already opened
+         */
+        public function setTempFolder($tempFolder)
+        {
+        }
+        /**
+         * Use inline string to be more memory efficient. If set to false, it will use shared strings.
+         * This must be set before opening the writer.
+         *
+         * @api
+         * @param bool $shouldUseInlineStrings Whether inline or shared strings should be used
+         * @return Writer
+         * @throws \Box\Spout\Writer\Exception\WriterAlreadyOpenedException If the writer was already opened
+         */
+        public function setShouldUseInlineStrings($shouldUseInlineStrings)
+        {
+        }
+        /**
+         * Configures the write and sets the current sheet pointer to a new sheet.
+         *
+         * @return void
+         * @throws \Box\Spout\Common\Exception\IOException If unable to open the file for writing
+         */
+        protected function openWriter()
+        {
+        }
+        /**
+         * @return Internal\Workbook The workbook representing the file to be written
+         */
+        protected function getWorkbook()
+        {
+        }
+        /**
+         * Adds data to the currently opened writer.
+         * If shouldCreateNewSheetsAutomatically option is set to true, it will handle pagination
+         * with the creation of new worksheets if one worksheet has reached its maximum capicity.
+         *
+         * @param array $dataRow Array containing data to be written.
+         *          Example $dataRow = ['data1', 1234, null, '', 'data5'];
+         * @param \Box\Spout\Writer\Style\Style $style Style to be applied to the row.
+         * @return void
+         * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException If the book is not created yet
+         * @throws \Box\Spout\Common\Exception\IOException If unable to write data
+         */
+        protected function addRowToWriter(array $dataRow, $style)
+        {
+        }
+        /**
+         * Returns the default style to be applied to rows.
+         *
+         * @return \Box\Spout\Writer\Style\Style
+         */
+        protected function getDefaultRowStyle()
+        {
+        }
+        /**
+         * Closes the writer, preventing any additional writing.
+         *
+         * @return void
+         */
+        protected function closeWriter()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\WPAsync {
+    /**
+     * Abstract WPAsyncRequest class.
+     *
+     * @abstract
+     */
+    abstract class WPAsyncRequest
+    {
+        /**
+         * Prefix
+         *
+         * (default value: 'wp')
+         *
+         * @var string
+         * @access protected
+         */
+        protected $prefix = 'wp';
+        /**
+         * Action
+         *
+         * (default value: 'async_request')
+         *
+         * @var string
+         * @access protected
+         *
+         * Must Declare this Property in Derrived Class
+         * protected $action = 'some_unique_async_request';
+         */
+        /**
+         * Identifier
+         *
+         * @var mixed
+         * @access protected
+         */
+        protected $identifier;
+        /**
+         * Data
+         *
+         * (default value: array())
+         *
+         * @var array
+         * @access protected
+         */
+        protected $data = array();
+        /**
+         * Initiate new async request
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Set data used during the request
+         *
+         * @param array $data Data.
+         *
+         * @return $this
+         */
+        public function data($data)
+        {
+        }
+        /**
+         * Dispatch the async request
+         *
+         * @return array|WP_Error
+         */
+        public function dispatch()
+        {
+        }
+        /**
+         * Get query args
+         *
+         * @return array
+         */
+        protected function get_query_args()
+        {
+        }
+        /**
+         * Get query URL
+         *
+         * @return string
+         */
+        protected function get_query_url()
+        {
+        }
+        /**
+         * Get post args
+         *
+         * @return array
+         */
+        protected function get_post_args()
+        {
+        }
+        /**
+         * Maybe handle
+         *
+         * Check for correct nonce and pass to handler.
+         */
+        public function maybe_handle()
+        {
+        }
+        /**
+         * Handle
+         *
+         * Override this method to perform any actions required
+         * during the async request.
+         */
+        protected abstract function handle();
+    }
+    class FluentFormAsyncRequest extends \FluentForm\App\Services\WPAsync\WPAsyncRequest
+    {
+        /**
+         * $prefix The prefix for the identifier
+         * @var string
+         */
+        protected $prefix = 'fluentform';
+        /**
+         * $action The action for the identifier
+         * @var string
+         */
+        protected $action = 'async_request';
+        /**
+         * $actions Actions to be fired when an async request is sent
+         * @var array
+         */
+        protected $actions = array();
+        /**
+         * $app Instance of Application/Framework
+         * @var FluentForm\Framework\Foundation\Application
+         */
+        protected $app = null;
+        /**
+         * Construct the Object
+         * @param FluentForm\Framework\Foundation\Application $app
+         */
+        public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        {
+        }
+        /**
+         * Add the action to be fired when an async request is sent
+         * @return void
+         */
+        public function shouldBeAsync($action, $data)
+        {
+        }
+        /**
+         * Get the actions to be fired when an async request is sent
+         * @return int
+         */
+        public function hasActions()
+        {
+        }
+        /**
+         * Handle the async request
+         * @return void
+         */
+        protected function handle()
+        {
+        }
+    }
+    /**
+     * Abstract WPBackgroundProcess class.
+     *
+     * @abstract
+     * @extends WP_Async_Request
+     */
+    abstract class WPBackgroundProcess extends \FluentForm\App\Services\WPAsync\WPAsyncRequest
+    {
+        /**
+         * Action
+         *
+         * (default value: 'background_process')
+         *
+         * @var string
+         * @access protected
+         */
+        protected $action = 'background_process';
+        /**
+         * Start time of current process.
+         *
+         * (default value: 0)
          *
          * @var int
+         * @access protected
          */
-        private $columns_count = -1;
+        protected $start_time = 0;
         /**
-         * should the class detect the column count based the inserted row
+         * Cron_hook_identifier
          *
-         * @var bool
+         * @var mixed
+         * @access protected
          */
-        private $detect_columns_count = false;
+        protected $cron_hook_identifier;
         /**
-         * Set Inserted row column count
+         * Cron_interval_identifier
          *
-         * @param int $value
-         *
-         * @throws InvalidArgumentException If $value is lesser than -1
-         *
+         * @var mixed
+         * @access protected
          */
-        public function setColumnsCount($value)
+        protected $cron_interval_identifier;
+        /**
+         * Initiate new background process
+         */
+        public function __construct()
         {
         }
         /**
-         * Column count getter
+         * Dispatch
+         *
+         * @access public
+         * @return void
+         */
+        public function dispatch()
+        {
+        }
+        /**
+         * Push to queue
+         *
+         * @param mixed $data Data.
+         *
+         * @return $this
+         */
+        public function push_to_queue($data)
+        {
+        }
+        /**
+         * Save queue
+         *
+         * @return $this
+         */
+        public function save()
+        {
+        }
+        /**
+         * Update queue
+         *
+         * @param string $key Key.
+         * @param array  $data Data.
+         *
+         * @return $this
+         */
+        public function update($key, $data)
+        {
+        }
+        /**
+         * Delete queue
+         *
+         * @param string $key Key.
+         *
+         * @return $this
+         */
+        public function delete($key)
+        {
+        }
+        /**
+         * Generate key
+         *
+         * Generates a unique key based on microtime. Queue items are
+         * given a unique key so that they can be merged upon save.
+         *
+         * @param int $length Length.
+         *
+         * @return string
+         */
+        protected function generate_key($length = 64)
+        {
+        }
+        /**
+         * Maybe process queue
+         *
+         * Checks whether data exists within the queue and that
+         * the process is not already running.
+         */
+        public function maybe_handle()
+        {
+        }
+        /**
+         * Is queue empty
+         *
+         * @return bool
+         */
+        protected function is_queue_empty()
+        {
+        }
+        /**
+         * Is process running
+         *
+         * Check whether the current process is already running
+         * in a background process.
+         */
+        protected function is_process_running()
+        {
+        }
+        /**
+         * Lock process
+         *
+         * Lock the process so that multiple instances can't run simultaneously.
+         * Override if applicable, but the duration should be greater than that
+         * defined in the time_exceeded() method.
+         */
+        protected function lock_process()
+        {
+        }
+        /**
+         * Unlock process
+         *
+         * Unlock the process so that other instances can spawn.
+         *
+         * @return $this
+         */
+        protected function unlock_process()
+        {
+        }
+        /**
+         * Get batch
+         *
+         * @return stdClass Return the first batch from the queue
+         */
+        protected function get_batch()
+        {
+        }
+        /**
+         * Handle
+         *
+         * Pass each queue item to the task handler, while remaining
+         * within server memory and time limit constraints.
+         */
+        protected function handle()
+        {
+        }
+        /**
+         * Memory exceeded
+         *
+         * Ensures the batch process never exceeds 90%
+         * of the maximum WordPress memory.
+         *
+         * @return bool
+         */
+        protected function memory_exceeded()
+        {
+        }
+        /**
+         * Get memory limit
          *
          * @return int
          */
-        public function getColumnsCount()
+        protected function get_memory_limit()
         {
         }
         /**
-         * The method will set the $columns_count property according to the next inserted row
-         * and therefore will also validate the next line whatever length it has no matter
-         * the current $columns_count property value.
+         * Time exceeded.
          *
-         */
-        public function autodetectColumnsCount()
-        {
-        }
-        /**
-         * Is the submitted row valid
-         *
-         * @param array $row
+         * Ensures the batch never exceeds a sensible time limit.
+         * A timeout limit of 30s is common on shared hosting.
          *
          * @return bool
          */
-        public function __invoke(array $row)
-        {
-        }
-    }
-    /**
-     *  A class to validate null value handling on data insertion into a CSV
-     *
-     * @package League.csv
-     * @since  7.0.0
-     *
-     */
-    class ForbiddenNullValuesValidator
-    {
-        /**
-         * Is the submitted row valid
-         *
-         * @param array $row
-         *
-         * @return bool
-         */
-        public function __invoke(array $row)
-        {
-        }
-    }
-    /**
-     *  A class to remove null value from data before insertion into a CSV
-     *
-     * @package League.csv
-     * @since  7.0.0
-     *
-     */
-    class SkipNullValuesFormatter
-    {
-        /**
-         * remove null value form the submitted array
-         *
-         * @param array $row
-         *
-         * @return array
-         */
-        public function __invoke(array $row)
-        {
-        }
-    }
-}
-namespace League\Csv {
-    /**
-     *  A class to manage extracting and filtering a CSV
-     *
-     * @package League.csv
-     * @since  3.0.0
-     *
-     */
-    class Reader extends \League\Csv\AbstractCsv
-    {
-        /**
-         * @inheritdoc
-         */
-        protected $stream_filter_mode = STREAM_FILTER_READ;
-        /**
-         * Returns a Filtered Iterator
-         *
-         * DEPRECATION WARNING! This method will be removed in the next major point release
-         *
-         * @deprecated deprecated since version 7.2
-         *
-         * @return Iterator
-         */
-        public function query(callable $callable = null)
+        protected function time_exceeded()
         {
         }
         /**
-         * Return a Filtered Iterator
+         * Complete.
          *
-         * @param callable $callable a callable function to be applied to each Iterator item
-         *
-         * @return Iterator
+         * Override if applicable, but ensure that the below actions are
+         * performed, or, call parent::complete().
          */
-        public function fetch(callable $callable = null)
+        protected function complete()
         {
         }
         /**
-         * Applies a callback function on the CSV
+         * Schedule cron healthcheck
          *
-         * The callback function must return TRUE in order to continue
-         * iterating over the iterator.
-         *
-         * @param callable $callable The callback function
-         *
-         * @return int the iteration count
+         * @access public
+         * @param mixed $schedules Schedules.
+         * @return mixed
          */
-        public function each(callable $callable)
+        public function schedule_cron_healthcheck($schedules)
         {
         }
         /**
-         * Returns a single row from the CSV
+         * Handle cron healthcheck
          *
-         * @param int $offset
-         *
-         * @throws InvalidArgumentException If the $offset is not a valid Integer
-         *
-         * @return array
+         * Restart the background process if not already running
+         * and data exists in the queue.
          */
-        public function fetchOne($offset = 0)
+        public function handle_cron_healthcheck()
         {
         }
         /**
-         * Returns a sequential array of all CSV lines
-         *
-         * The callable function will be applied to each Iterator item
-         *
-         * @param callable $callable a callable function
-         *
-         * @return array
+         * Schedule event
          */
-        public function fetchAll(callable $callable = null)
+        protected function schedule_event()
         {
         }
         /**
-         * Returns a single column from the CSV data
-         *
-         * The callable function will be applied to each value to be return
-         *
-         * @param int      $column_index field Index
-         * @param callable $callable     a callable function
-         *
-         * @throws InvalidArgumentException If the column index is not a positive integer or 0
-         *
-         * @return array
+         * Clear scheduled event
          */
-        public function fetchColumn($column_index = 0, callable $callable = null)
+        protected function clear_scheduled_event()
         {
         }
         /**
-         * Returns a sequential array of all CSV lines;
+         * Cancel Process
          *
-         * The rows are presented as associated arrays
-         * The callable function will be applied to each Iterator item
+         * Stop processing queue items, clear cronjob and delete batch.
          *
-         * @param int|array $offset_or_keys the name for each key member OR the row Index to be
-         *                                  used as the associated named keys
-         *
-         * @param callable $callable a callable function
-         *
-         * @throws InvalidArgumentException If the submitted keys are invalid
-         *
-         * @return Iterator
          */
-        public function fetchAssoc($offset_or_keys = 0, callable $callable = null)
+        public function cancel_process()
         {
         }
         /**
-         * Selects the array to be used as key for the fetchAssoc method
+         * Task
          *
-         * @param int|array $offset_or_keys the assoc key OR the row Index to be used
-         *                                  as the key index
+         * Override this method to perform any actions required on each
+         * queue item. Return the modified item for further processing
+         * in the next pass through. Or, return false to remove the
+         * item from the queue.
          *
-         * @throws InvalidArgumentException If the row index and/or the resulting array is invalid
+         * @param mixed $item Queue item to iterate over.
          *
-         * @return array
+         * @return mixed
          */
-        protected function getAssocKeys($offset_or_keys)
-        {
-        }
-        /**
-         * Validates the array to be used by the fetchAssoc method
-         *
-         * @param array $keys
-         *
-         * @throws InvalidArgumentException If the submitted array fails the assertion
-         */
-        protected function validateAssocKeys(array $keys)
-        {
-        }
-        /**
-         * Returns a single row from the CSV without filtering
-         *
-         * @param int $offset
-         *
-         * @throws InvalidArgumentException If the $offset is not valid or the row does not exist
-         *
-         * @return array
-         */
-        protected function getRow($offset)
-        {
-        }
-    }
-    /**
-     *  A class to manage data insertion into a CSV
-     *
-     * @package League.csv
-     * @since  4.0.0
-     *
-     */
-    class Writer extends \League\Csv\AbstractCsv
-    {
-        use \League\Csv\Modifier\RowFilter;
-        /**
-         * @inheritdoc
-         */
-        protected $stream_filter_mode = STREAM_FILTER_WRITE;
-        /**
-         * The CSV object holder
-         *
-         * @var \SplFileObject
-         */
-        protected $csv;
-        /**
-         * fputcsv method from SplFileObject
-         *
-         * @var ReflectionMethod
-         */
-        protected static $fputcsv;
-        /**
-         * Nb parameters for SplFileObject::fputcsv method
-         *
-         * @var integer
-         */
-        protected static $fputcsv_param_count;
-        /**
-         * @inheritdoc
-         */
-        protected function __construct($path, $open_mode = 'r+')
-        {
-        }
-        /**
-         * initiate a SplFileObject::fputcsv method
-         */
-        protected static function initFputcsv()
-        {
-        }
-        /**
-         * Adds multiple lines to the CSV document
-         *
-         * a simple wrapper method around insertOne
-         *
-         * @param Traversable|array $rows a multidimensional array or a Traversable object
-         *
-         * @throws InvalidArgumentException If the given rows format is invalid
-         *
-         * @return static
-         */
-        public function insertAll($rows)
-        {
-        }
-        /**
-         * Adds a single line to a CSV document
-         *
-         * @param string[]|string $row a string, an array or an object implementing to '__toString' method
-         *
-         * @return static
-         */
-        public function insertOne($row)
-        {
-        }
-        /**
-         * returns the parameters for SplFileObject::fputcsv
-         *
-         * @param array $fields The fields to be add
-         *
-         * @return array
-         */
-        protected function getFputcsvParameters(array $fields)
-        {
-        }
-        /**
-         *  {@inheritdoc}
-         */
-        public function isActiveStreamFilter()
-        {
-        }
-        /**
-         *  {@inheritdoc}
-         */
-        public function __destruct()
-        {
-        }
+        protected abstract function task($item);
     }
 }
 namespace FluentValidator {
@@ -6535,6 +13216,37 @@ namespace FluentValidator {
         {
         }
     }
+}
+namespace FluentValidator\Contracts {
+    interface File
+    {
+        /**
+         * Returns whether the file was uploaded successfully.
+         *
+         * @return bool
+         */
+        public function isValid();
+        /**
+         * Gets the path without filename
+         *
+         * @return string
+         */
+        public function getPath();
+        /**
+         * Take an educated guess of the file's extension.
+         *
+         * @return mixed|null
+         */
+        public function guessExtension();
+        /**
+         * Returns the original file extension.
+         *
+         * @return string
+         */
+        public function getClientOriginalExtension();
+    }
+}
+namespace FluentValidator {
     trait MessageBag
     {
         /**
@@ -8076,7 +14788,7 @@ namespace WpFluent\QueryBuilder {
          *
          * @return $this
          */
-        public function having($key, $operator, $value, $joiner = 'AND')
+        public function having($key, $operator = null, $value = null, $joiner = 'AND')
         {
         }
         /**
@@ -8938,6 +15650,62 @@ namespace FluentForm\Framework\Foundation {
         public function offsetUnset($offset)
         {
         }
+        /**
+         * Determine whether a shared entity is resolved.
+         * @param  string $key
+         * @return bool
+         */
+        public function resolved($key)
+        {
+        }
+        /**
+         * Get one or all resolved instance(s)
+         * @param  string $key
+         * @return mixed
+         */
+        public function getResolved($key = null)
+        {
+        }
+        /**
+         * Clear one or all resolved instance(s)
+         * @param  string $key
+         * @return void
+         */
+        public function clearResolved($key = null)
+        {
+        }
+        /**
+         * Get one or all binding(s)
+         * @param  string $key
+         * @return void
+         */
+        public function getBindings($key = null)
+        {
+        }
+        /**
+         * Clear one or all binding(s)
+         * @param  string $key
+         * @return void
+         */
+        public function clearBindings($key = null)
+        {
+        }
+        /**
+         * Get one or all singletons(s)
+         * @param  string $key
+         * @return void
+         */
+        public function getSingletons($key = null)
+        {
+        }
+        /**
+         * Clear one or all singletons(s)
+         * @param  string $key
+         * @return void
+         */
+        public function clearSingletons($key = null)
+        {
+        }
     }
     trait PathsAndUrlsTrait
     {
@@ -9280,7 +16048,7 @@ namespace FluentForm\Framework\Foundation {
          * @param  integer $acceptedArgs
          * @return Framework\Foundation\HookReference
          */
-        public function addfilter($tag, $handler, $priority = 10, $acceptedArgs = 1)
+        public function addFilter($tag, $handler, $priority = 10, $acceptedArgs = 1)
         {
         }
         /**
@@ -9427,22 +16195,26 @@ namespace FluentForm\Framework\Foundation {
          * Callbacks for framework's booted event
          * @var array
          */
-        protected $engineBootedCallbacks = array();
+        protected $booted = array();
         /**
          * Callbacks for framework's ready event
          * @var array
          */
-        protected $pluginReadyCallbacks = array();
-        /**
-         * A flag to register the dynamic facade loader once
-         * @var boolean
-         */
-        protected $isFacadeLoaderRegistered = false;
+        protected $ready = array();
         /**
          * Get application version
          * @return string
          */
         public function version()
+        {
+        }
+        /**
+         * Static interface to initiate the application
+         * @param string $baseFile (root plugin file path)
+         * @param array $appConfig (/config/app.php)
+         * @return $this
+         */
+        public static function run($baseFile, $appConfig)
         {
         }
         /**
@@ -9502,6 +16274,13 @@ namespace FluentForm\Framework\Foundation {
          * @return bool
          */
         protected function loadApplicationTextDomain()
+        {
+        }
+        /**
+         * Bootstrap all service providers
+         * @return void
+         */
+        protected function bootStrapApplicationProviders()
         {
         }
         /**
@@ -9578,7 +16357,8 @@ namespace FluentForm\Framework\Foundation {
         /**
          * Conveniently start the framework
          * @param  string $file
-         * @return $ */
+         * @return $
+         */
         public static function run($file)
         {
         }
@@ -9605,24 +16385,10 @@ namespace FluentForm\Framework\Foundation {
         {
         }
         /**
-         * Register deactivation hook
-         * @return bool
-         */
-        public static function registerDeactivationHook()
-        {
-        }
-        /**
          * Validate and activate the plugin
          * @return void
          */
-        public static function activate()
-        {
-        }
-        /**
-         * Deactivate the plugin
-         * @return void
-         */
-        public static function deactivate()
+        public static function activate($netowrkwide = false)
         {
         }
         /**
@@ -9648,7 +16414,7 @@ namespace FluentForm\Framework\Foundation {
         {
         }
         /**
-         * Register "plugins_loaded" hook to run the plugin
+         * Register "init" hook to run the plugin
          * @return void
          */
         public static function registerApplication()
@@ -9797,10 +16563,13 @@ namespace FluentForm\Framework\Helpers {
         public static function dot($array, $prepend = '')
         {
         }
+        public static function isTrue($array, $key)
+        {
+        }
     }
 }
 namespace FluentForm\Framework\Request {
-    class File extends \SplFileInfo
+    class File extends \SplFileInfo implements \FluentValidator\Contracts\File
     {
         /**
          * A map of mime types and their default extensions.
@@ -9810,7 +16579,7 @@ namespace FluentForm\Framework\Request {
          *
          * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
          */
-        protected $defaultExtensions = ['application/andrew-inset' => 'ez', 'application/applixware' => 'aw', 'application/atom+xml' => 'atom', 'application/atomcat+xml' => 'atomcat', 'application/atomsvc+xml' => 'atomsvc', 'application/ccxml+xml' => 'ccxml', 'application/cdmi-capability' => 'cdmia', 'application/cdmi-container' => 'cdmic', 'application/cdmi-domain' => 'cdmid', 'application/cdmi-object' => 'cdmio', 'application/cdmi-queue' => 'cdmiq', 'application/cu-seeme' => 'cu', 'application/davmount+xml' => 'davmount', 'application/docbook+xml' => 'dbk', 'application/dssc+der' => 'dssc', 'application/dssc+xml' => 'xdssc', 'application/ecmascript' => 'ecma', 'application/emma+xml' => 'emma', 'application/epub+zip' => 'epub', 'application/exi' => 'exi', 'application/font-tdpfr' => 'pfr', 'application/gml+xml' => 'gml', 'application/gpx+xml' => 'gpx', 'application/gxf' => 'gxf', 'application/hyperstudio' => 'stk', 'application/inkml+xml' => 'ink', 'application/ipfix' => 'ipfix', 'application/java-archive' => 'jar', 'application/java-serialized-object' => 'ser', 'application/java-vm' => 'class', 'application/javascript' => 'js', 'application/json' => 'json', 'application/jsonml+json' => 'jsonml', 'application/lost+xml' => 'lostxml', 'application/mac-binhex40' => 'hqx', 'application/mac-compactpro' => 'cpt', 'application/mads+xml' => 'mads', 'application/marc' => 'mrc', 'application/marcxml+xml' => 'mrcx', 'application/mathematica' => 'ma', 'application/mathml+xml' => 'mathml', 'application/mbox' => 'mbox', 'application/mediaservercontrol+xml' => 'mscml', 'application/metalink+xml' => 'metalink', 'application/metalink4+xml' => 'meta4', 'application/mets+xml' => 'mets', 'application/mods+xml' => 'mods', 'application/mp21' => 'm21', 'application/mp4' => 'mp4s', 'application/msword' => 'doc', 'application/mxf' => 'mxf', 'application/octet-stream' => 'bin', 'application/oda' => 'oda', 'application/oebps-package+xml' => 'opf', 'application/ogg' => 'ogx', 'application/omdoc+xml' => 'omdoc', 'application/onenote' => 'onetoc', 'application/oxps' => 'oxps', 'application/patch-ops-error+xml' => 'xer', 'application/pdf' => 'pdf', 'application/pgp-encrypted' => 'pgp', 'application/pgp-signature' => 'asc', 'application/pics-rules' => 'prf', 'application/pkcs10' => 'p10', 'application/pkcs7-mime' => 'p7m', 'application/pkcs7-signature' => 'p7s', 'application/pkcs8' => 'p8', 'application/pkix-attr-cert' => 'ac', 'application/pkix-cert' => 'cer', 'application/pkix-crl' => 'crl', 'application/pkix-pkipath' => 'pkipath', 'application/pkixcmp' => 'pki', 'application/pls+xml' => 'pls', 'application/postscript' => 'ai', 'application/prs.cww' => 'cww', 'application/pskc+xml' => 'pskcxml', 'application/rdf+xml' => 'rdf', 'application/reginfo+xml' => 'rif', 'application/relax-ng-compact-syntax' => 'rnc', 'application/resource-lists+xml' => 'rl', 'application/resource-lists-diff+xml' => 'rld', 'application/rls-services+xml' => 'rs', 'application/rpki-ghostbusters' => 'gbr', 'application/rpki-manifest' => 'mft', 'application/rpki-roa' => 'roa', 'application/rsd+xml' => 'rsd', 'application/rss+xml' => 'rss', 'application/rtf' => 'rtf', 'application/sbml+xml' => 'sbml', 'application/scvp-cv-request' => 'scq', 'application/scvp-cv-response' => 'scs', 'application/scvp-vp-request' => 'spq', 'application/scvp-vp-response' => 'spp', 'application/sdp' => 'sdp', 'application/set-payment-initiation' => 'setpay', 'application/set-registration-initiation' => 'setreg', 'application/shf+xml' => 'shf', 'application/smil+xml' => 'smi', 'application/sparql-query' => 'rq', 'application/sparql-results+xml' => 'srx', 'application/srgs' => 'gram', 'application/srgs+xml' => 'grxml', 'application/sru+xml' => 'sru', 'application/ssdl+xml' => 'ssdl', 'application/ssml+xml' => 'ssml', 'application/tei+xml' => 'tei', 'application/thraud+xml' => 'tfi', 'application/timestamped-data' => 'tsd', 'application/vnd.3gpp.pic-bw-large' => 'plb', 'application/vnd.3gpp.pic-bw-small' => 'psb', 'application/vnd.3gpp.pic-bw-var' => 'pvb', 'application/vnd.3gpp2.tcap' => 'tcap', 'application/vnd.3m.post-it-notes' => 'pwn', 'application/vnd.accpac.simply.aso' => 'aso', 'application/vnd.accpac.simply.imp' => 'imp', 'application/vnd.acucobol' => 'acu', 'application/vnd.acucorp' => 'atc', 'application/vnd.adobe.air-application-installer-package+zip' => 'air', 'application/vnd.adobe.formscentral.fcdt' => 'fcdt', 'application/vnd.adobe.fxp' => 'fxp', 'application/vnd.adobe.xdp+xml' => 'xdp', 'application/vnd.adobe.xfdf' => 'xfdf', 'application/vnd.ahead.space' => 'ahead', 'application/vnd.airzip.filesecure.azf' => 'azf', 'application/vnd.airzip.filesecure.azs' => 'azs', 'application/vnd.amazon.ebook' => 'azw', 'application/vnd.americandynamics.acc' => 'acc', 'application/vnd.amiga.ami' => 'ami', 'application/vnd.android.package-archive' => 'apk', 'application/vnd.anser-web-certificate-issue-initiation' => 'cii', 'application/vnd.anser-web-funds-transfer-initiation' => 'fti', 'application/vnd.antix.game-component' => 'atx', 'application/vnd.apple.installer+xml' => 'mpkg', 'application/vnd.apple.mpegurl' => 'm3u8', 'application/vnd.aristanetworks.swi' => 'swi', 'application/vnd.astraea-software.iota' => 'iota', 'application/vnd.audiograph' => 'aep', 'application/vnd.blueice.multipass' => 'mpm', 'application/vnd.bmi' => 'bmi', 'application/vnd.businessobjects' => 'rep', 'application/vnd.chemdraw+xml' => 'cdxml', 'application/vnd.chipnuts.karaoke-mmd' => 'mmd', 'application/vnd.cinderella' => 'cdy', 'application/vnd.claymore' => 'cla', 'application/vnd.cloanto.rp9' => 'rp9', 'application/vnd.clonk.c4group' => 'c4g', 'application/vnd.cluetrust.cartomobile-config' => 'c11amc', 'application/vnd.cluetrust.cartomobile-config-pkg' => 'c11amz', 'application/vnd.commonspace' => 'csp', 'application/vnd.contact.cmsg' => 'cdbcmsg', 'application/vnd.cosmocaller' => 'cmc', 'application/vnd.crick.clicker' => 'clkx', 'application/vnd.crick.clicker.keyboard' => 'clkk', 'application/vnd.crick.clicker.palette' => 'clkp', 'application/vnd.crick.clicker.template' => 'clkt', 'application/vnd.crick.clicker.wordbank' => 'clkw', 'application/vnd.criticaltools.wbs+xml' => 'wbs', 'application/vnd.ctc-posml' => 'pml', 'application/vnd.cups-ppd' => 'ppd', 'application/vnd.curl.car' => 'car', 'application/vnd.curl.pcurl' => 'pcurl', 'application/vnd.dart' => 'dart', 'application/vnd.data-vision.rdz' => 'rdz', 'application/vnd.dece.data' => 'uvf', 'application/vnd.dece.ttml+xml' => 'uvt', 'application/vnd.dece.unspecified' => 'uvx', 'application/vnd.dece.zip' => 'uvz', 'application/vnd.denovo.fcselayout-link' => 'fe_launch', 'application/vnd.dna' => 'dna', 'application/vnd.dolby.mlp' => 'mlp', 'application/vnd.dpgraph' => 'dpg', 'application/vnd.dreamfactory' => 'dfac', 'application/vnd.ds-keypoint' => 'kpxx', 'application/vnd.dvb.ait' => 'ait', 'application/vnd.dvb.service' => 'svc', 'application/vnd.dynageo' => 'geo', 'application/vnd.ecowin.chart' => 'mag', 'application/vnd.enliven' => 'nml', 'application/vnd.epson.esf' => 'esf', 'application/vnd.epson.msf' => 'msf', 'application/vnd.epson.quickanime' => 'qam', 'application/vnd.epson.salt' => 'slt', 'application/vnd.epson.ssf' => 'ssf', 'application/vnd.eszigno3+xml' => 'es3', 'application/vnd.ezpix-album' => 'ez2', 'application/vnd.ezpix-package' => 'ez3', 'application/vnd.fdf' => 'fdf', 'application/vnd.fdsn.mseed' => 'mseed', 'application/vnd.fdsn.seed' => 'seed', 'application/vnd.flographit' => 'gph', 'application/vnd.fluxtime.clip' => 'ftc', 'application/vnd.framemaker' => 'fm', 'application/vnd.frogans.fnc' => 'fnc', 'application/vnd.frogans.ltf' => 'ltf', 'application/vnd.fsc.weblaunch' => 'fsc', 'application/vnd.fujitsu.oasys' => 'oas', 'application/vnd.fujitsu.oasys2' => 'oa2', 'application/vnd.fujitsu.oasys3' => 'oa3', 'application/vnd.fujitsu.oasysgp' => 'fg5', 'application/vnd.fujitsu.oasysprs' => 'bh2', 'application/vnd.fujixerox.ddd' => 'ddd', 'application/vnd.fujixerox.docuworks' => 'xdw', 'application/vnd.fujixerox.docuworks.binder' => 'xbd', 'application/vnd.fuzzysheet' => 'fzs', 'application/vnd.genomatix.tuxedo' => 'txd', 'application/vnd.geogebra.file' => 'ggb', 'application/vnd.geogebra.tool' => 'ggt', 'application/vnd.geometry-explorer' => 'gex', 'application/vnd.geonext' => 'gxt', 'application/vnd.geoplan' => 'g2w', 'application/vnd.geospace' => 'g3w', 'application/vnd.gmx' => 'gmx', 'application/vnd.google-earth.kml+xml' => 'kml', 'application/vnd.google-earth.kmz' => 'kmz', 'application/vnd.grafeq' => 'gqf', 'application/vnd.groove-account' => 'gac', 'application/vnd.groove-help' => 'ghf', 'application/vnd.groove-identity-message' => 'gim', 'application/vnd.groove-injector' => 'grv', 'application/vnd.groove-tool-message' => 'gtm', 'application/vnd.groove-tool-template' => 'tpl', 'application/vnd.groove-vcard' => 'vcg', 'application/vnd.hal+xml' => 'hal', 'application/vnd.handheld-entertainment+xml' => 'zmm', 'application/vnd.hbci' => 'hbci', 'application/vnd.hhe.lesson-player' => 'les', 'application/vnd.hp-hpgl' => 'hpgl', 'application/vnd.hp-hpid' => 'hpid', 'application/vnd.hp-hps' => 'hps', 'application/vnd.hp-jlyt' => 'jlt', 'application/vnd.hp-pcl' => 'pcl', 'application/vnd.hp-pclxl' => 'pclxl', 'application/vnd.hydrostatix.sof-data' => 'sfd-hdstx', 'application/vnd.ibm.minipay' => 'mpy', 'application/vnd.ibm.modcap' => 'afp', 'application/vnd.ibm.rights-management' => 'irm', 'application/vnd.ibm.secure-container' => 'sc', 'application/vnd.iccprofile' => 'icc', 'application/vnd.igloader' => 'igl', 'application/vnd.immervision-ivp' => 'ivp', 'application/vnd.immervision-ivu' => 'ivu', 'application/vnd.insors.igm' => 'igm', 'application/vnd.intercon.formnet' => 'xpw', 'application/vnd.intergeo' => 'i2g', 'application/vnd.intu.qbo' => 'qbo', 'application/vnd.intu.qfx' => 'qfx', 'application/vnd.ipunplugged.rcprofile' => 'rcprofile', 'application/vnd.irepository.package+xml' => 'irp', 'application/vnd.is-xpr' => 'xpr', 'application/vnd.isac.fcs' => 'fcs', 'application/vnd.jam' => 'jam', 'application/vnd.jcp.javame.midlet-rms' => 'rms', 'application/vnd.jisp' => 'jisp', 'application/vnd.joost.joda-archive' => 'joda', 'application/vnd.kahootz' => 'ktz', 'application/vnd.kde.karbon' => 'karbon', 'application/vnd.kde.kchart' => 'chrt', 'application/vnd.kde.kformula' => 'kfo', 'application/vnd.kde.kivio' => 'flw', 'application/vnd.kde.kontour' => 'kon', 'application/vnd.kde.kpresenter' => 'kpr', 'application/vnd.kde.kspread' => 'ksp', 'application/vnd.kde.kword' => 'kwd', 'application/vnd.kenameaapp' => 'htke', 'application/vnd.kidspiration' => 'kia', 'application/vnd.kinar' => 'kne', 'application/vnd.koan' => 'skp', 'application/vnd.kodak-descriptor' => 'sse', 'application/vnd.las.las+xml' => 'lasxml', 'application/vnd.llamagraphics.life-balance.desktop' => 'lbd', 'application/vnd.llamagraphics.life-balance.exchange+xml' => 'lbe', 'application/vnd.lotus-1-2-3' => '123', 'application/vnd.lotus-approach' => 'apr', 'application/vnd.lotus-freelance' => 'pre', 'application/vnd.lotus-notes' => 'nsf', 'application/vnd.lotus-organizer' => 'org', 'application/vnd.lotus-screencam' => 'scm', 'application/vnd.lotus-wordpro' => 'lwp', 'application/vnd.macports.portpkg' => 'portpkg', 'application/vnd.mcd' => 'mcd', 'application/vnd.medcalcdata' => 'mc1', 'application/vnd.mediastation.cdkey' => 'cdkey', 'application/vnd.mfer' => 'mwf', 'application/vnd.mfmp' => 'mfm', 'application/vnd.micrografx.flo' => 'flo', 'application/vnd.micrografx.igx' => 'igx', 'application/vnd.mif' => 'mif', 'application/vnd.mobius.daf' => 'daf', 'application/vnd.mobius.dis' => 'dis', 'application/vnd.mobius.mbk' => 'mbk', 'application/vnd.mobius.mqy' => 'mqy', 'application/vnd.mobius.msl' => 'msl', 'application/vnd.mobius.plc' => 'plc', 'application/vnd.mobius.txf' => 'txf', 'application/vnd.mophun.application' => 'mpn', 'application/vnd.mophun.certificate' => 'mpc', 'application/vnd.mozilla.xul+xml' => 'xul', 'application/vnd.ms-artgalry' => 'cil', 'application/vnd.ms-cab-compressed' => 'cab', 'application/vnd.ms-excel' => 'xls', 'application/vnd.ms-excel.addin.macroenabled.12' => 'xlam', 'application/vnd.ms-excel.sheet.binary.macroenabled.12' => 'xlsb', 'application/vnd.ms-excel.sheet.macroenabled.12' => 'xlsm', 'application/vnd.ms-excel.template.macroenabled.12' => 'xltm', 'application/vnd.ms-fontobject' => 'eot', 'application/vnd.ms-htmlhelp' => 'chm', 'application/vnd.ms-ims' => 'ims', 'application/vnd.ms-lrm' => 'lrm', 'application/vnd.ms-officetheme' => 'thmx', 'application/vnd.ms-pki.seccat' => 'cat', 'application/vnd.ms-pki.stl' => 'stl', 'application/vnd.ms-powerpoint' => 'ppt', 'application/vnd.ms-powerpoint.addin.macroenabled.12' => 'ppam', 'application/vnd.ms-powerpoint.presentation.macroenabled.12' => 'pptm', 'application/vnd.ms-powerpoint.slide.macroenabled.12' => 'sldm', 'application/vnd.ms-powerpoint.slideshow.macroenabled.12' => 'ppsm', 'application/vnd.ms-powerpoint.template.macroenabled.12' => 'potm', 'application/vnd.ms-project' => 'mpp', 'application/vnd.ms-word.document.macroenabled.12' => 'docm', 'application/vnd.ms-word.template.macroenabled.12' => 'dotm', 'application/vnd.ms-works' => 'wps', 'application/vnd.ms-wpl' => 'wpl', 'application/vnd.ms-xpsdocument' => 'xps', 'application/vnd.mseq' => 'mseq', 'application/vnd.musician' => 'mus', 'application/vnd.muvee.style' => 'msty', 'application/vnd.mynfc' => 'taglet', 'application/vnd.neurolanguage.nlu' => 'nlu', 'application/vnd.nitf' => 'ntf', 'application/vnd.noblenet-directory' => 'nnd', 'application/vnd.noblenet-sealer' => 'nns', 'application/vnd.noblenet-web' => 'nnw', 'application/vnd.nokia.n-gage.data' => 'ngdat', 'application/vnd.nokia.n-gage.symbian.install' => 'n-gage', 'application/vnd.nokia.radio-preset' => 'rpst', 'application/vnd.nokia.radio-presets' => 'rpss', 'application/vnd.novadigm.edm' => 'edm', 'application/vnd.novadigm.edx' => 'edx', 'application/vnd.novadigm.ext' => 'ext', 'application/vnd.oasis.opendocument.chart' => 'odc', 'application/vnd.oasis.opendocument.chart-template' => 'otc', 'application/vnd.oasis.opendocument.database' => 'odb', 'application/vnd.oasis.opendocument.formula' => 'odf', 'application/vnd.oasis.opendocument.formula-template' => 'odft', 'application/vnd.oasis.opendocument.graphics' => 'odg', 'application/vnd.oasis.opendocument.graphics-template' => 'otg', 'application/vnd.oasis.opendocument.image' => 'odi', 'application/vnd.oasis.opendocument.image-template' => 'oti', 'application/vnd.oasis.opendocument.presentation' => 'odp', 'application/vnd.oasis.opendocument.presentation-template' => 'otp', 'application/vnd.oasis.opendocument.spreadsheet' => 'ods', 'application/vnd.oasis.opendocument.spreadsheet-template' => 'ots', 'application/vnd.oasis.opendocument.text' => 'odt', 'application/vnd.oasis.opendocument.text-master' => 'odm', 'application/vnd.oasis.opendocument.text-template' => 'ott', 'application/vnd.oasis.opendocument.text-web' => 'oth', 'application/vnd.olpc-sugar' => 'xo', 'application/vnd.oma.dd2+xml' => 'dd2', 'application/vnd.openofficeorg.extension' => 'oxt', 'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'pptx', 'application/vnd.openxmlformats-officedocument.presentationml.slide' => 'sldx', 'application/vnd.openxmlformats-officedocument.presentationml.slideshow' => 'ppsx', 'application/vnd.openxmlformats-officedocument.presentationml.template' => 'potx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.template' => 'xltx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.template' => 'dotx', 'application/vnd.osgeo.mapguide.package' => 'mgp', 'application/vnd.osgi.dp' => 'dp', 'application/vnd.osgi.subsystem' => 'esa', 'application/vnd.palm' => 'pdb', 'application/vnd.pawaafile' => 'paw', 'application/vnd.pg.format' => 'str', 'application/vnd.pg.osasli' => 'ei6', 'application/vnd.picsel' => 'efif', 'application/vnd.pmi.widget' => 'wg', 'application/vnd.pocketlearn' => 'plf', 'application/vnd.powerbuilder6' => 'pbd', 'application/vnd.previewsystems.box' => 'box', 'application/vnd.proteus.magazine' => 'mgz', 'application/vnd.publishare-delta-tree' => 'qps', 'application/vnd.pvi.ptid1' => 'ptid', 'application/vnd.quark.quarkxpress' => 'qxd', 'application/vnd.realvnc.bed' => 'bed', 'application/vnd.recordare.musicxml' => 'mxl', 'application/vnd.recordare.musicxml+xml' => 'musicxml', 'application/vnd.rig.cryptonote' => 'cryptonote', 'application/vnd.rim.cod' => 'cod', 'application/vnd.rn-realmedia' => 'rm', 'application/vnd.rn-realmedia-vbr' => 'rmvb', 'application/vnd.route66.link66+xml' => 'link66', 'application/vnd.sailingtracker.track' => 'st', 'application/vnd.seemail' => 'see', 'application/vnd.sema' => 'sema', 'application/vnd.semd' => 'semd', 'application/vnd.semf' => 'semf', 'application/vnd.shana.informed.formdata' => 'ifm', 'application/vnd.shana.informed.formtemplate' => 'itp', 'application/vnd.shana.informed.interchange' => 'iif', 'application/vnd.shana.informed.package' => 'ipk', 'application/vnd.simtech-mindmapper' => 'twd', 'application/vnd.smaf' => 'mmf', 'application/vnd.smart.teacher' => 'teacher', 'application/vnd.solent.sdkm+xml' => 'sdkm', 'application/vnd.spotfire.dxp' => 'dxp', 'application/vnd.spotfire.sfs' => 'sfs', 'application/vnd.stardivision.calc' => 'sdc', 'application/vnd.stardivision.draw' => 'sda', 'application/vnd.stardivision.impress' => 'sdd', 'application/vnd.stardivision.math' => 'smf', 'application/vnd.stardivision.writer' => 'sdw', 'application/vnd.stardivision.writer-global' => 'sgl', 'application/vnd.stepmania.package' => 'smzip', 'application/vnd.stepmania.stepchart' => 'sm', 'application/vnd.sun.xml.calc' => 'sxc', 'application/vnd.sun.xml.calc.template' => 'stc', 'application/vnd.sun.xml.draw' => 'sxd', 'application/vnd.sun.xml.draw.template' => 'std', 'application/vnd.sun.xml.impress' => 'sxi', 'application/vnd.sun.xml.impress.template' => 'sti', 'application/vnd.sun.xml.math' => 'sxm', 'application/vnd.sun.xml.writer' => 'sxw', 'application/vnd.sun.xml.writer.global' => 'sxg', 'application/vnd.sun.xml.writer.template' => 'stw', 'application/vnd.sus-calendar' => 'sus', 'application/vnd.svd' => 'svd', 'application/vnd.symbian.install' => 'sis', 'application/vnd.syncml+xml' => 'xsm', 'application/vnd.syncml.dm+wbxml' => 'bdm', 'application/vnd.syncml.dm+xml' => 'xdm', 'application/vnd.tao.intent-module-archive' => 'tao', 'application/vnd.tcpdump.pcap' => 'pcap', 'application/vnd.tmobile-livetv' => 'tmo', 'application/vnd.trid.tpt' => 'tpt', 'application/vnd.triscape.mxs' => 'mxs', 'application/vnd.trueapp' => 'tra', 'application/vnd.ufdl' => 'ufd', 'application/vnd.uiq.theme' => 'utz', 'application/vnd.umajin' => 'umj', 'application/vnd.unity' => 'unityweb', 'application/vnd.uoml+xml' => 'uoml', 'application/vnd.vcx' => 'vcx', 'application/vnd.visio' => 'vsd', 'application/vnd.visionary' => 'vis', 'application/vnd.vsf' => 'vsf', 'application/vnd.wap.wbxml' => 'wbxml', 'application/vnd.wap.wmlc' => 'wmlc', 'application/vnd.wap.wmlscriptc' => 'wmlsc', 'application/vnd.webturbo' => 'wtb', 'application/vnd.wolfram.player' => 'nbp', 'application/vnd.wordperfect' => 'wpd', 'application/vnd.wqd' => 'wqd', 'application/vnd.wt.stf' => 'stf', 'application/vnd.xara' => 'xar', 'application/vnd.xfdl' => 'xfdl', 'application/vnd.yamaha.hv-dic' => 'hvd', 'application/vnd.yamaha.hv-script' => 'hvs', 'application/vnd.yamaha.hv-voice' => 'hvp', 'application/vnd.yamaha.openscoreformat' => 'osf', 'application/vnd.yamaha.openscoreformat.osfpvg+xml' => 'osfpvg', 'application/vnd.yamaha.smaf-audio' => 'saf', 'application/vnd.yamaha.smaf-phrase' => 'spf', 'application/vnd.yellowriver-custom-menu' => 'cmp', 'application/vnd.zul' => 'zir', 'application/vnd.zzazz.deck+xml' => 'zaz', 'application/voicexml+xml' => 'vxml', 'application/widget' => 'wgt', 'application/winhlp' => 'hlp', 'application/wsdl+xml' => 'wsdl', 'application/wspolicy+xml' => 'wspolicy', 'application/x-7z-compressed' => '7z', 'application/x-abiword' => 'abw', 'application/x-ace-compressed' => 'ace', 'application/x-apple-diskimage' => 'dmg', 'application/x-authorware-bin' => 'aab', 'application/x-authorware-map' => 'aam', 'application/x-authorware-seg' => 'aas', 'application/x-bcpio' => 'bcpio', 'application/x-bittorrent' => 'torrent', 'application/x-blorb' => 'blb', 'application/x-bzip' => 'bz', 'application/x-bzip2' => 'bz2', 'application/x-cbr' => 'cbr', 'application/x-cdlink' => 'vcd', 'application/x-cfs-compressed' => 'cfs', 'application/x-chat' => 'chat', 'application/x-chess-pgn' => 'pgn', 'application/x-conference' => 'nsc', 'application/x-cpio' => 'cpio', 'application/x-csh' => 'csh', 'application/x-debian-package' => 'deb', 'application/x-dgc-compressed' => 'dgc', 'application/x-director' => 'dir', 'application/x-doom' => 'wad', 'application/x-dtbncx+xml' => 'ncx', 'application/x-dtbook+xml' => 'dtb', 'application/x-dtbresource+xml' => 'res', 'application/x-dvi' => 'dvi', 'application/x-envoy' => 'evy', 'application/x-eva' => 'eva', 'application/x-font-bdf' => 'bdf', 'application/x-font-ghostscript' => 'gsf', 'application/x-font-linux-psf' => 'psf', 'application/x-font-otf' => 'otf', 'application/x-font-pcf' => 'pcf', 'application/x-font-snf' => 'snf', 'application/x-font-ttf' => 'ttf', 'application/x-font-type1' => 'pfa', 'application/x-font-woff' => 'woff', 'application/x-freearc' => 'arc', 'application/x-futuresplash' => 'spl', 'application/x-gca-compressed' => 'gca', 'application/x-glulx' => 'ulx', 'application/x-gnumeric' => 'gnumeric', 'application/x-gramps-xml' => 'gramps', 'application/x-gtar' => 'gtar', 'application/x-hdf' => 'hdf', 'application/x-install-instructions' => 'install', 'application/x-iso9660-image' => 'iso', 'application/x-java-jnlp-file' => 'jnlp', 'application/x-latex' => 'latex', 'application/x-lzh-compressed' => 'lzh', 'application/x-mie' => 'mie', 'application/x-mobipocket-ebook' => 'prc', 'application/x-ms-application' => 'application', 'application/x-ms-shortcut' => 'lnk', 'application/x-ms-wmd' => 'wmd', 'application/x-ms-wmz' => 'wmz', 'application/x-ms-xbap' => 'xbap', 'application/x-msaccess' => 'mdb', 'application/x-msbinder' => 'obd', 'application/x-mscardfile' => 'crd', 'application/x-msclip' => 'clp', 'application/x-msdownload' => 'exe', 'application/x-msmediaview' => 'mvb', 'application/x-msmetafile' => 'wmf', 'application/x-msmoney' => 'mny', 'application/x-mspublisher' => 'pub', 'application/x-msschedule' => 'scd', 'application/x-msterminal' => 'trm', 'application/x-mswrite' => 'wri', 'application/x-netcdf' => 'nc', 'application/x-nzb' => 'nzb', 'application/x-pkcs12' => 'p12', 'application/x-pkcs7-certificates' => 'p7b', 'application/x-pkcs7-certreqresp' => 'p7r', 'application/x-rar-compressed' => 'rar', 'application/x-rar' => 'rar', 'application/x-research-info-systems' => 'ris', 'application/x-sh' => 'sh', 'application/x-shar' => 'shar', 'application/x-shockwave-flash' => 'swf', 'application/x-silverlight-app' => 'xap', 'application/x-sql' => 'sql', 'application/x-stuffit' => 'sit', 'application/x-stuffitx' => 'sitx', 'application/x-subrip' => 'srt', 'application/x-sv4cpio' => 'sv4cpio', 'application/x-sv4crc' => 'sv4crc', 'application/x-t3vm-image' => 't3', 'application/x-tads' => 'gam', 'application/x-tar' => 'tar', 'application/x-tcl' => 'tcl', 'application/x-tex' => 'tex', 'application/x-tex-tfm' => 'tfm', 'application/x-texinfo' => 'texinfo', 'application/x-tgif' => 'obj', 'application/x-ustar' => 'ustar', 'application/x-wais-source' => 'src', 'application/x-x509-ca-cert' => 'der', 'application/x-xfig' => 'fig', 'application/x-xliff+xml' => 'xlf', 'application/x-xpinstall' => 'xpi', 'application/x-xz' => 'xz', 'application/x-zmachine' => 'z1', 'application/xaml+xml' => 'xaml', 'application/xcap-diff+xml' => 'xdf', 'application/xenc+xml' => 'xenc', 'application/xhtml+xml' => 'xhtml', 'application/xml' => 'xml', 'application/xml-dtd' => 'dtd', 'application/xop+xml' => 'xop', 'application/xproc+xml' => 'xpl', 'application/xslt+xml' => 'xslt', 'application/xspf+xml' => 'xspf', 'application/xv+xml' => 'mxml', 'application/yang' => 'yang', 'application/yin+xml' => 'yin', 'application/zip' => 'zip', 'audio/adpcm' => 'adp', 'audio/basic' => 'au', 'audio/midi' => 'mid', 'audio/mp4' => 'mp4a', 'audio/mpeg' => 'mpga', 'audio/ogg' => 'oga', 'audio/s3m' => 's3m', 'audio/silk' => 'sil', 'audio/vnd.dece.audio' => 'uva', 'audio/vnd.digital-winds' => 'eol', 'audio/vnd.dra' => 'dra', 'audio/vnd.dts' => 'dts', 'audio/vnd.dts.hd' => 'dtshd', 'audio/vnd.lucent.voice' => 'lvp', 'audio/vnd.ms-playready.media.pya' => 'pya', 'audio/vnd.nuera.ecelp4800' => 'ecelp4800', 'audio/vnd.nuera.ecelp7470' => 'ecelp7470', 'audio/vnd.nuera.ecelp9600' => 'ecelp9600', 'audio/vnd.rip' => 'rip', 'audio/webm' => 'weba', 'audio/x-aac' => 'aac', 'audio/x-aiff' => 'aif', 'audio/x-caf' => 'caf', 'audio/x-flac' => 'flac', 'audio/x-matroska' => 'mka', 'audio/x-mpegurl' => 'm3u', 'audio/x-ms-wax' => 'wax', 'audio/x-ms-wma' => 'wma', 'audio/x-pn-realaudio' => 'ram', 'audio/x-pn-realaudio-plugin' => 'rmp', 'audio/x-wav' => 'wav', 'audio/xm' => 'xm', 'chemical/x-cdx' => 'cdx', 'chemical/x-cif' => 'cif', 'chemical/x-cmdf' => 'cmdf', 'chemical/x-cml' => 'cml', 'chemical/x-csml' => 'csml', 'chemical/x-xyz' => 'xyz', 'image/bmp' => 'bmp', 'image/x-ms-bmp' => 'bmp', 'image/cgm' => 'cgm', 'image/g3fax' => 'g3', 'image/gif' => 'gif', 'image/ief' => 'ief', 'image/jpeg' => 'jpeg', 'image/pjpeg' => 'jpeg', 'image/ktx' => 'ktx', 'image/png' => 'png', 'image/prs.btif' => 'btif', 'image/sgi' => 'sgi', 'image/svg+xml' => 'svg', 'image/tiff' => 'tiff', 'image/vnd.adobe.photoshop' => 'psd', 'image/vnd.dece.graphic' => 'uvi', 'image/vnd.dvb.subtitle' => 'sub', 'image/vnd.djvu' => 'djvu', 'image/vnd.dwg' => 'dwg', 'image/vnd.dxf' => 'dxf', 'image/vnd.fastbidsheet' => 'fbs', 'image/vnd.fpx' => 'fpx', 'image/vnd.fst' => 'fst', 'image/vnd.fujixerox.edmics-mmr' => 'mmr', 'image/vnd.fujixerox.edmics-rlc' => 'rlc', 'image/vnd.ms-modi' => 'mdi', 'image/vnd.ms-photo' => 'wdp', 'image/vnd.net-fpx' => 'npx', 'image/vnd.wap.wbmp' => 'wbmp', 'image/vnd.xiff' => 'xif', 'image/webp' => 'webp', 'image/x-3ds' => '3ds', 'image/x-cmu-raster' => 'ras', 'image/x-cmx' => 'cmx', 'image/x-freehand' => 'fh', 'image/x-icon' => 'ico', 'image/x-mrsid-image' => 'sid', 'image/x-pcx' => 'pcx', 'image/x-pict' => 'pic', 'image/x-portable-anymap' => 'pnm', 'image/x-portable-bitmap' => 'pbm', 'image/x-portable-graymap' => 'pgm', 'image/x-portable-pixmap' => 'ppm', 'image/x-rgb' => 'rgb', 'image/x-tga' => 'tga', 'image/x-xbitmap' => 'xbm', 'image/x-xpixmap' => 'xpm', 'image/x-xwindowdump' => 'xwd', 'message/rfc822' => 'eml', 'model/iges' => 'igs', 'model/mesh' => 'msh', 'model/vnd.collada+xml' => 'dae', 'model/vnd.dwf' => 'dwf', 'model/vnd.gdl' => 'gdl', 'model/vnd.gtw' => 'gtw', 'model/vnd.mts' => 'mts', 'model/vnd.vtu' => 'vtu', 'model/vrml' => 'wrl', 'model/x3d+binary' => 'x3db', 'model/x3d+vrml' => 'x3dv', 'model/x3d+xml' => 'x3d', 'text/cache-manifest' => 'appcache', 'text/calendar' => 'ics', 'text/css' => 'css', 'text/csv' => 'csv', 'text/html' => 'html', 'text/n3' => 'n3', 'text/plain' => 'txt', 'text/prs.lines.tag' => 'dsc', 'text/richtext' => 'rtx', 'text/rtf' => 'rtf', 'text/sgml' => 'sgml', 'text/tab-separated-values' => 'tsv', 'text/troff' => 't', 'text/turtle' => 'ttl', 'text/uri-list' => 'uri', 'text/vcard' => 'vcard', 'text/vnd.curl' => 'curl', 'text/vnd.curl.dcurl' => 'dcurl', 'text/vnd.curl.scurl' => 'scurl', 'text/vnd.curl.mcurl' => 'mcurl', 'text/vnd.dvb.subtitle' => 'sub', 'text/vnd.fly' => 'fly', 'text/vnd.fmi.flexstor' => 'flx', 'text/vnd.graphviz' => 'gv', 'text/vnd.in3d.3dml' => '3dml', 'text/vnd.in3d.spot' => 'spot', 'text/vnd.sun.j2me.app-descriptor' => 'jad', 'text/vnd.wap.wml' => 'wml', 'text/vnd.wap.wmlscript' => 'wmls', 'text/vtt' => 'vtt', 'text/x-asm' => 's', 'text/x-c' => 'c', 'text/x-fortran' => 'f', 'text/x-pascal' => 'p', 'text/x-java-source' => 'java', 'text/x-opml' => 'opml', 'text/x-nfo' => 'nfo', 'text/x-setext' => 'etx', 'text/x-sfv' => 'sfv', 'text/x-uuencode' => 'uu', 'text/x-vcalendar' => 'vcs', 'text/x-vcard' => 'vcf', 'video/3gpp' => '3gp', 'video/3gpp2' => '3g2', 'video/h261' => 'h261', 'video/h263' => 'h263', 'video/h264' => 'h264', 'video/jpeg' => 'jpgv', 'video/jpm' => 'jpm', 'video/mj2' => 'mj2', 'video/mp4' => 'mp4', 'video/mpeg' => 'mpeg', 'video/ogg' => 'ogv', 'video/quicktime' => 'qt', 'video/vnd.dece.hd' => 'uvh', 'video/vnd.dece.mobile' => 'uvm', 'video/vnd.dece.pd' => 'uvp', 'video/vnd.dece.sd' => 'uvs', 'video/vnd.dece.video' => 'uvv', 'video/vnd.dvb.file' => 'dvb', 'video/vnd.fvt' => 'fvt', 'video/vnd.mpegurl' => 'mxu', 'video/vnd.ms-playready.media.pyv' => 'pyv', 'video/vnd.uvvu.mp4' => 'uvu', 'video/vnd.vivo' => 'viv', 'video/webm' => 'webm', 'video/x-f4v' => 'f4v', 'video/x-fli' => 'fli', 'video/x-flv' => 'flv', 'video/x-m4v' => 'm4v', 'video/x-matroska' => 'mkv', 'video/x-mng' => 'mng', 'video/x-ms-asf' => 'asf', 'video/x-ms-vob' => 'vob', 'video/x-ms-wm' => 'wm', 'video/x-ms-wmv' => 'wmv', 'video/x-ms-wmx' => 'wmx', 'video/x-ms-wvx' => 'wvx', 'video/x-msvideo' => 'avi', 'video/x-sgi-movie' => 'movie', 'video/x-smv' => 'smv', 'x-conference/x-cooltalk' => 'ice'];
+        protected $defaultExtensions = ['application/andrew-inset' => 'ez', 'application/applixware' => 'aw', 'application/atom+xml' => 'atom', 'application/atomcat+xml' => 'atomcat', 'application/atomsvc+xml' => 'atomsvc', 'application/ccxml+xml' => 'ccxml', 'application/cdmi-capability' => 'cdmia', 'application/cdmi-container' => 'cdmic', 'application/cdmi-domain' => 'cdmid', 'application/cdmi-object' => 'cdmio', 'application/cdmi-queue' => 'cdmiq', 'application/cu-seeme' => 'cu', 'application/davmount+xml' => 'davmount', 'application/docbook+xml' => 'dbk', 'application/dssc+der' => 'dssc', 'application/dssc+xml' => 'xdssc', 'application/ecmascript' => 'ecma', 'application/emma+xml' => 'emma', 'application/epub+zip' => 'epub', 'application/exi' => 'exi', 'application/font-tdpfr' => 'pfr', 'application/gml+xml' => 'gml', 'application/gpx+xml' => 'gpx', 'application/gxf' => 'gxf', 'application/hyperstudio' => 'stk', 'application/inkml+xml' => 'ink', 'application/ipfix' => 'ipfix', 'application/java-archive' => 'jar', 'application/java-serialized-object' => 'ser', 'application/java-vm' => 'class', 'application/javascript' => 'js', 'application/json' => 'json', 'application/jsonml+json' => 'jsonml', 'application/lost+xml' => 'lostxml', 'application/mac-binhex40' => 'hqx', 'application/mac-compactpro' => 'cpt', 'application/mads+xml' => 'mads', 'application/marc' => 'mrc', 'application/marcxml+xml' => 'mrcx', 'application/mathematica' => 'ma', 'application/mathml+xml' => 'mathml', 'application/mbox' => 'mbox', 'application/mediaservercontrol+xml' => 'mscml', 'application/metalink+xml' => 'metalink', 'application/metalink4+xml' => 'meta4', 'application/mets+xml' => 'mets', 'application/mods+xml' => 'mods', 'application/mp21' => 'm21', 'application/mp4' => 'mp4s', 'application/msword' => 'doc', 'application/mxf' => 'mxf', 'application/octet-stream' => 'bin', 'application/oda' => 'oda', 'application/oebps-package+xml' => 'opf', 'application/ogg' => 'ogx', 'application/omdoc+xml' => 'omdoc', 'application/onenote' => 'onetoc', 'application/oxps' => 'oxps', 'application/patch-ops-error+xml' => 'xer', 'application/pdf' => 'pdf', 'application/pgp-encrypted' => 'pgp', 'application/pgp-signature' => 'asc', 'application/pics-rules' => 'prf', 'application/pkcs10' => 'p10', 'application/pkcs7-mime' => 'p7m', 'application/pkcs7-signature' => 'p7s', 'application/pkcs8' => 'p8', 'application/pkix-attr-cert' => 'ac', 'application/pkix-cert' => 'cer', 'application/pkix-crl' => 'crl', 'application/pkix-pkipath' => 'pkipath', 'application/pkixcmp' => 'pki', 'application/pls+xml' => 'pls', 'application/postscript' => 'ai', 'application/prs.cww' => 'cww', 'application/pskc+xml' => 'pskcxml', 'application/rdf+xml' => 'rdf', 'application/reginfo+xml' => 'rif', 'application/relax-ng-compact-syntax' => 'rnc', 'application/resource-lists+xml' => 'rl', 'application/resource-lists-diff+xml' => 'rld', 'application/rls-services+xml' => 'rs', 'application/rpki-ghostbusters' => 'gbr', 'application/rpki-manifest' => 'mft', 'application/rpki-roa' => 'roa', 'application/rsd+xml' => 'rsd', 'application/rss+xml' => 'rss', 'application/rtf' => 'rtf', 'application/sbml+xml' => 'sbml', 'application/scvp-cv-request' => 'scq', 'application/scvp-cv-response' => 'scs', 'application/scvp-vp-request' => 'spq', 'application/scvp-vp-response' => 'spp', 'application/sdp' => 'sdp', 'application/set-payment-initiation' => 'setpay', 'application/set-registration-initiation' => 'setreg', 'application/shf+xml' => 'shf', 'application/smil+xml' => 'smi', 'application/sparql-query' => 'rq', 'application/sparql-results+xml' => 'srx', 'application/srgs' => 'gram', 'application/srgs+xml' => 'grxml', 'application/sru+xml' => 'sru', 'application/ssdl+xml' => 'ssdl', 'application/ssml+xml' => 'ssml', 'application/tei+xml' => 'tei', 'application/thraud+xml' => 'tfi', 'application/timestamped-data' => 'tsd', 'application/vnd.3gpp.pic-bw-large' => 'plb', 'application/vnd.3gpp.pic-bw-small' => 'psb', 'application/vnd.3gpp.pic-bw-var' => 'pvb', 'application/vnd.3gpp2.tcap' => 'tcap', 'application/vnd.3m.post-it-notes' => 'pwn', 'application/vnd.accpac.simply.aso' => 'aso', 'application/vnd.accpac.simply.imp' => 'imp', 'application/vnd.acucobol' => 'acu', 'application/vnd.acucorp' => 'atc', 'application/vnd.adobe.air-application-installer-package+zip' => 'air', 'application/vnd.adobe.formscentral.fcdt' => 'fcdt', 'application/vnd.adobe.fxp' => 'fxp', 'application/vnd.adobe.xdp+xml' => 'xdp', 'application/vnd.adobe.xfdf' => 'xfdf', 'application/vnd.ahead.space' => 'ahead', 'application/vnd.airzip.filesecure.azf' => 'azf', 'application/vnd.airzip.filesecure.azs' => 'azs', 'application/vnd.amazon.ebook' => 'azw', 'application/vnd.americandynamics.acc' => 'acc', 'application/vnd.amiga.ami' => 'ami', 'application/vnd.android.package-archive' => 'apk', 'application/vnd.anser-web-certificate-issue-initiation' => 'cii', 'application/vnd.anser-web-funds-transfer-initiation' => 'fti', 'application/vnd.antix.game-component' => 'atx', 'application/vnd.apple.installer+xml' => 'mpkg', 'application/vnd.apple.mpegurl' => 'm3u8', 'application/vnd.aristanetworks.swi' => 'swi', 'application/vnd.astraea-software.iota' => 'iota', 'application/vnd.audiograph' => 'aep', 'application/vnd.blueice.multipass' => 'mpm', 'application/vnd.bmi' => 'bmi', 'application/vnd.businessobjects' => 'rep', 'application/vnd.chemdraw+xml' => 'cdxml', 'application/vnd.chipnuts.karaoke-mmd' => 'mmd', 'application/vnd.cinderella' => 'cdy', 'application/vnd.claymore' => 'cla', 'application/vnd.cloanto.rp9' => 'rp9', 'application/vnd.clonk.c4group' => 'c4g', 'application/vnd.cluetrust.cartomobile-config' => 'c11amc', 'application/vnd.cluetrust.cartomobile-config-pkg' => 'c11amz', 'application/vnd.commonspace' => 'csp', 'application/vnd.contact.cmsg' => 'cdbcmsg', 'application/vnd.cosmocaller' => 'cmc', 'application/vnd.crick.clicker' => 'clkx', 'application/vnd.crick.clicker.keyboard' => 'clkk', 'application/vnd.crick.clicker.palette' => 'clkp', 'application/vnd.crick.clicker.template' => 'clkt', 'application/vnd.crick.clicker.wordbank' => 'clkw', 'application/vnd.criticaltools.wbs+xml' => 'wbs', 'application/vnd.ctc-posml' => 'pml', 'application/vnd.cups-ppd' => 'ppd', 'application/vnd.curl.car' => 'car', 'application/vnd.curl.pcurl' => 'pcurl', 'application/vnd.dart' => 'dart', 'application/vnd.data-vision.rdz' => 'rdz', 'application/vnd.dece.data' => 'uvf', 'application/vnd.dece.ttml+xml' => 'uvt', 'application/vnd.dece.unspecified' => 'uvx', 'application/vnd.dece.zip' => 'uvz', 'application/vnd.denovo.fcselayout-link' => 'fe_launch', 'application/vnd.dna' => 'dna', 'application/vnd.dolby.mlp' => 'mlp', 'application/vnd.dpgraph' => 'dpg', 'application/vnd.dreamfactory' => 'dfac', 'application/vnd.ds-keypoint' => 'kpxx', 'application/vnd.dvb.ait' => 'ait', 'application/vnd.dvb.service' => 'svc', 'application/vnd.dynageo' => 'geo', 'application/vnd.ecowin.chart' => 'mag', 'application/vnd.enliven' => 'nml', 'application/vnd.epson.esf' => 'esf', 'application/vnd.epson.msf' => 'msf', 'application/vnd.epson.quickanime' => 'qam', 'application/vnd.epson.salt' => 'slt', 'application/vnd.epson.ssf' => 'ssf', 'application/vnd.eszigno3+xml' => 'es3', 'application/vnd.ezpix-album' => 'ez2', 'application/vnd.ezpix-package' => 'ez3', 'application/vnd.fdf' => 'fdf', 'application/vnd.fdsn.mseed' => 'mseed', 'application/vnd.fdsn.seed' => 'seed', 'application/vnd.flographit' => 'gph', 'application/vnd.fluxtime.clip' => 'ftc', 'application/vnd.framemaker' => 'fm', 'application/vnd.frogans.fnc' => 'fnc', 'application/vnd.frogans.ltf' => 'ltf', 'application/vnd.fsc.weblaunch' => 'fsc', 'application/vnd.fujitsu.oasys' => 'oas', 'application/vnd.fujitsu.oasys2' => 'oa2', 'application/vnd.fujitsu.oasys3' => 'oa3', 'application/vnd.fujitsu.oasysgp' => 'fg5', 'application/vnd.fujitsu.oasysprs' => 'bh2', 'application/vnd.fujixerox.ddd' => 'ddd', 'application/vnd.fujixerox.docuworks' => 'xdw', 'application/vnd.fujixerox.docuworks.binder' => 'xbd', 'application/vnd.fuzzysheet' => 'fzs', 'application/vnd.genomatix.tuxedo' => 'txd', 'application/vnd.geogebra.file' => 'ggb', 'application/vnd.geogebra.tool' => 'ggt', 'application/vnd.geometry-explorer' => 'gex', 'application/vnd.geonext' => 'gxt', 'application/vnd.geoplan' => 'g2w', 'application/vnd.geospace' => 'g3w', 'application/vnd.gmx' => 'gmx', 'application/vnd.google-earth.kml+xml' => 'kml', 'application/vnd.google-earth.kmz' => 'kmz', 'application/vnd.grafeq' => 'gqf', 'application/vnd.groove-account' => 'gac', 'application/vnd.groove-help' => 'ghf', 'application/vnd.groove-identity-message' => 'gim', 'application/vnd.groove-injector' => 'grv', 'application/vnd.groove-tool-message' => 'gtm', 'application/vnd.groove-tool-template' => 'tpl', 'application/vnd.groove-vcard' => 'vcg', 'application/vnd.hal+xml' => 'hal', 'application/vnd.handheld-entertainment+xml' => 'zmm', 'application/vnd.hbci' => 'hbci', 'application/vnd.hhe.lesson-player' => 'les', 'application/vnd.hp-hpgl' => 'hpgl', 'application/vnd.hp-hpid' => 'hpid', 'application/vnd.hp-hps' => 'hps', 'application/vnd.hp-jlyt' => 'jlt', 'application/vnd.hp-pcl' => 'pcl', 'application/vnd.hp-pclxl' => 'pclxl', 'application/vnd.hydrostatix.sof-data' => 'sfd-hdstx', 'application/vnd.ibm.minipay' => 'mpy', 'application/vnd.ibm.modcap' => 'afp', 'application/vnd.ibm.rights-management' => 'irm', 'application/vnd.ibm.secure-container' => 'sc', 'application/vnd.iccprofile' => 'icc', 'application/vnd.igloader' => 'igl', 'application/vnd.immervision-ivp' => 'ivp', 'application/vnd.immervision-ivu' => 'ivu', 'application/vnd.insors.igm' => 'igm', 'application/vnd.intercon.formnet' => 'xpw', 'application/vnd.intergeo' => 'i2g', 'application/vnd.intu.qbo' => 'qbo', 'application/vnd.intu.qfx' => 'qfx', 'application/vnd.ipunplugged.rcprofile' => 'rcprofile', 'application/vnd.irepository.package+xml' => 'irp', 'application/vnd.is-xpr' => 'xpr', 'application/vnd.isac.fcs' => 'fcs', 'application/vnd.jam' => 'jam', 'application/vnd.jcp.javame.midlet-rms' => 'rms', 'application/vnd.jisp' => 'jisp', 'application/vnd.joost.joda-archive' => 'joda', 'application/vnd.kahootz' => 'ktz', 'application/vnd.kde.karbon' => 'karbon', 'application/vnd.kde.kchart' => 'chrt', 'application/vnd.kde.kformula' => 'kfo', 'application/vnd.kde.kivio' => 'flw', 'application/vnd.kde.kontour' => 'kon', 'application/vnd.kde.kpresenter' => 'kpr', 'application/vnd.kde.kspread' => 'ksp', 'application/vnd.kde.kword' => 'kwd', 'application/vnd.kenameaapp' => 'htke', 'application/vnd.kidspiration' => 'kia', 'application/vnd.kinar' => 'kne', 'application/vnd.koan' => 'skp', 'application/vnd.kodak-descriptor' => 'sse', 'application/vnd.las.las+xml' => 'lasxml', 'application/vnd.llamagraphics.life-balance.desktop' => 'lbd', 'application/vnd.llamagraphics.life-balance.exchange+xml' => 'lbe', 'application/vnd.lotus-1-2-3' => '123', 'application/vnd.lotus-approach' => 'apr', 'application/vnd.lotus-freelance' => 'pre', 'application/vnd.lotus-notes' => 'nsf', 'application/vnd.lotus-organizer' => 'org', 'application/vnd.lotus-screencam' => 'scm', 'application/vnd.lotus-wordpro' => 'lwp', 'application/vnd.macports.portpkg' => 'portpkg', 'application/vnd.mcd' => 'mcd', 'application/vnd.medcalcdata' => 'mc1', 'application/vnd.mediastation.cdkey' => 'cdkey', 'application/vnd.mfer' => 'mwf', 'application/vnd.mfmp' => 'mfm', 'application/vnd.micrografx.flo' => 'flo', 'application/vnd.micrografx.igx' => 'igx', 'application/vnd.mif' => 'mif', 'application/vnd.mobius.daf' => 'daf', 'application/vnd.mobius.dis' => 'dis', 'application/vnd.mobius.mbk' => 'mbk', 'application/vnd.mobius.mqy' => 'mqy', 'application/vnd.mobius.msl' => 'msl', 'application/vnd.mobius.plc' => 'plc', 'application/vnd.mobius.txf' => 'txf', 'application/vnd.mophun.application' => 'mpn', 'application/vnd.mophun.certificate' => 'mpc', 'application/vnd.mozilla.xul+xml' => 'xul', 'application/vnd.ms-artgalry' => 'cil', 'application/vnd.ms-cab-compressed' => 'cab', 'application/vnd.ms-excel' => 'xls', 'application/vnd.ms-excel.addin.macroenabled.12' => 'xlam', 'application/vnd.ms-excel.sheet.binary.macroenabled.12' => 'xlsb', 'application/vnd.ms-excel.sheet.macroenabled.12' => 'xlsm', 'application/vnd.ms-excel.template.macroenabled.12' => 'xltm', 'application/vnd.ms-fontobject' => 'eot', 'application/vnd.ms-htmlhelp' => 'chm', 'application/vnd.ms-ims' => 'ims', 'application/vnd.ms-lrm' => 'lrm', 'application/vnd.ms-officetheme' => 'thmx', 'application/vnd.ms-pki.seccat' => 'cat', 'application/vnd.ms-pki.stl' => 'stl', 'application/vnd.ms-powerpoint' => 'ppt', 'application/vnd.ms-powerpoint.addin.macroenabled.12' => 'ppam', 'application/vnd.ms-powerpoint.presentation.macroenabled.12' => 'pptm', 'application/vnd.ms-powerpoint.slide.macroenabled.12' => 'sldm', 'application/vnd.ms-powerpoint.slideshow.macroenabled.12' => 'ppsm', 'application/vnd.ms-powerpoint.template.macroenabled.12' => 'potm', 'application/vnd.ms-project' => 'mpp', 'application/vnd.ms-word.document.macroenabled.12' => 'docm', 'application/vnd.ms-word.template.macroenabled.12' => 'dotm', 'application/vnd.ms-works' => 'wps', 'application/vnd.ms-wpl' => 'wpl', 'application/vnd.ms-xpsdocument' => 'xps', 'application/vnd.mseq' => 'mseq', 'application/vnd.musician' => 'mus', 'application/vnd.muvee.style' => 'msty', 'application/vnd.mynfc' => 'taglet', 'application/vnd.neurolanguage.nlu' => 'nlu', 'application/vnd.nitf' => 'ntf', 'application/vnd.noblenet-directory' => 'nnd', 'application/vnd.noblenet-sealer' => 'nns', 'application/vnd.noblenet-web' => 'nnw', 'application/vnd.nokia.n-gage.data' => 'ngdat', 'application/vnd.nokia.n-gage.symbian.install' => 'n-gage', 'application/vnd.nokia.radio-preset' => 'rpst', 'application/vnd.nokia.radio-presets' => 'rpss', 'application/vnd.novadigm.edm' => 'edm', 'application/vnd.novadigm.edx' => 'edx', 'application/vnd.novadigm.ext' => 'ext', 'application/vnd.oasis.opendocument.chart' => 'odc', 'application/vnd.oasis.opendocument.chart-template' => 'otc', 'application/vnd.oasis.opendocument.database' => 'odb', 'application/vnd.oasis.opendocument.formula' => 'odf', 'application/vnd.oasis.opendocument.formula-template' => 'odft', 'application/vnd.oasis.opendocument.graphics' => 'odg', 'application/vnd.oasis.opendocument.graphics-template' => 'otg', 'application/vnd.oasis.opendocument.image' => 'odi', 'application/vnd.oasis.opendocument.image-template' => 'oti', 'application/vnd.oasis.opendocument.presentation' => 'odp', 'application/vnd.oasis.opendocument.presentation-template' => 'otp', 'application/vnd.oasis.opendocument.spreadsheet' => 'ods', 'application/vnd.oasis.opendocument.spreadsheet-template' => 'ots', 'application/vnd.oasis.opendocument.text' => 'odt', 'application/vnd.oasis.opendocument.text-master' => 'odm', 'application/vnd.oasis.opendocument.text-template' => 'ott', 'application/vnd.oasis.opendocument.text-web' => 'oth', 'application/vnd.olpc-sugar' => 'xo', 'application/vnd.oma.dd2+xml' => 'dd2', 'application/vnd.openofficeorg.extension' => 'oxt', 'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'pptx', 'application/vnd.openxmlformats-officedocument.presentationml.slide' => 'sldx', 'application/vnd.openxmlformats-officedocument.presentationml.slideshow' => 'ppsx', 'application/vnd.openxmlformats-officedocument.presentationml.template' => 'potx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.template' => 'xltx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.template' => 'dotx', 'application/vnd.osgeo.mapguide.package' => 'mgp', 'application/vnd.osgi.dp' => 'dp', 'application/vnd.osgi.subsystem' => 'esa', 'application/vnd.palm' => 'pdb', 'application/vnd.pawaafile' => 'paw', 'application/vnd.pg.format' => 'str', 'application/vnd.pg.osasli' => 'ei6', 'application/vnd.picsel' => 'efif', 'application/vnd.pmi.widget' => 'wg', 'application/vnd.pocketlearn' => 'plf', 'application/vnd.powerbuilder6' => 'pbd', 'application/vnd.previewsystems.box' => 'box', 'application/vnd.proteus.magazine' => 'mgz', 'application/vnd.publishare-delta-tree' => 'qps', 'application/vnd.pvi.ptid1' => 'ptid', 'application/vnd.quark.quarkxpress' => 'qxd', 'application/vnd.realvnc.bed' => 'bed', 'application/vnd.recordare.musicxml' => 'mxl', 'application/vnd.recordare.musicxml+xml' => 'musicxml', 'application/vnd.rig.cryptonote' => 'cryptonote', 'application/vnd.rim.cod' => 'cod', 'application/vnd.rn-realmedia' => 'rm', 'application/vnd.rn-realmedia-vbr' => 'rmvb', 'application/vnd.route66.link66+xml' => 'link66', 'application/vnd.sailingtracker.track' => 'st', 'application/vnd.seemail' => 'see', 'application/vnd.sema' => 'sema', 'application/vnd.semd' => 'semd', 'application/vnd.semf' => 'semf', 'application/vnd.shana.informed.formdata' => 'ifm', 'application/vnd.shana.informed.formtemplate' => 'itp', 'application/vnd.shana.informed.interchange' => 'iif', 'application/vnd.shana.informed.package' => 'ipk', 'application/vnd.simtech-mindmapper' => 'twd', 'application/vnd.smaf' => 'mmf', 'application/vnd.smart.teacher' => 'teacher', 'application/vnd.solent.sdkm+xml' => 'sdkm', 'application/vnd.spotfire.dxp' => 'dxp', 'application/vnd.spotfire.sfs' => 'sfs', 'application/vnd.stardivision.calc' => 'sdc', 'application/vnd.stardivision.draw' => 'sda', 'application/vnd.stardivision.impress' => 'sdd', 'application/vnd.stardivision.math' => 'smf', 'application/vnd.stardivision.writer' => 'sdw', 'application/vnd.stardivision.writer-global' => 'sgl', 'application/vnd.stepmania.package' => 'smzip', 'application/vnd.stepmania.stepchart' => 'sm', 'application/vnd.sun.xml.calc' => 'sxc', 'application/vnd.sun.xml.calc.template' => 'stc', 'application/vnd.sun.xml.draw' => 'sxd', 'application/vnd.sun.xml.draw.template' => 'std', 'application/vnd.sun.xml.impress' => 'sxi', 'application/vnd.sun.xml.impress.template' => 'sti', 'application/vnd.sun.xml.math' => 'sxm', 'application/vnd.sun.xml.writer' => 'sxw', 'application/vnd.sun.xml.writer.global' => 'sxg', 'application/vnd.sun.xml.writer.template' => 'stw', 'application/vnd.sus-calendar' => 'sus', 'application/vnd.svd' => 'svd', 'application/vnd.symbian.install' => 'sis', 'application/vnd.syncml+xml' => 'xsm', 'application/vnd.syncml.dm+wbxml' => 'bdm', 'application/vnd.syncml.dm+xml' => 'xdm', 'application/vnd.tao.intent-module-archive' => 'tao', 'application/vnd.tcpdump.pcap' => 'pcap', 'application/vnd.tmobile-livetv' => 'tmo', 'application/vnd.trid.tpt' => 'tpt', 'application/vnd.triscape.mxs' => 'mxs', 'application/vnd.trueapp' => 'tra', 'application/vnd.ufdl' => 'ufd', 'application/vnd.uiq.theme' => 'utz', 'application/vnd.umajin' => 'umj', 'application/vnd.unity' => 'unityweb', 'application/vnd.uoml+xml' => 'uoml', 'application/vnd.vcx' => 'vcx', 'application/vnd.visio' => 'vsd', 'application/vnd.visionary' => 'vis', 'application/vnd.vsf' => 'vsf', 'application/vnd.wap.wbxml' => 'wbxml', 'application/vnd.wap.wmlc' => 'wmlc', 'application/vnd.wap.wmlscriptc' => 'wmlsc', 'application/vnd.webturbo' => 'wtb', 'application/vnd.wolfram.player' => 'nbp', 'application/vnd.wordperfect' => 'wpd', 'application/vnd.wqd' => 'wqd', 'application/vnd.wt.stf' => 'stf', 'application/vnd.xara' => 'xar', 'application/vnd.xfdl' => 'xfdl', 'application/vnd.yamaha.hv-dic' => 'hvd', 'application/vnd.yamaha.hv-script' => 'hvs', 'application/vnd.yamaha.hv-voice' => 'hvp', 'application/vnd.yamaha.openscoreformat' => 'osf', 'application/vnd.yamaha.openscoreformat.osfpvg+xml' => 'osfpvg', 'application/vnd.yamaha.smaf-audio' => 'saf', 'application/vnd.yamaha.smaf-phrase' => 'spf', 'application/vnd.yellowriver-custom-menu' => 'cmp', 'application/vnd.zul' => 'zir', 'application/vnd.zzazz.deck+xml' => 'zaz', 'application/voicexml+xml' => 'vxml', 'application/widget' => 'wgt', 'application/winhlp' => 'hlp', 'application/wsdl+xml' => 'wsdl', 'application/wspolicy+xml' => 'wspolicy', 'application/x-7z-compressed' => '7z', 'application/x-abiword' => 'abw', 'application/x-ace-compressed' => 'ace', 'application/x-apple-diskimage' => 'dmg', 'application/x-authorware-bin' => 'aab', 'application/x-authorware-map' => 'aam', 'application/x-authorware-seg' => 'aas', 'application/x-bcpio' => 'bcpio', 'application/x-bittorrent' => 'torrent', 'application/x-blorb' => 'blb', 'application/x-bzip' => 'bz', 'application/x-bzip2' => 'bz2', 'application/x-cbr' => 'cbr', 'application/x-cdlink' => 'vcd', 'application/x-cfs-compressed' => 'cfs', 'application/x-chat' => 'chat', 'application/x-chess-pgn' => 'pgn', 'application/x-conference' => 'nsc', 'application/x-cpio' => 'cpio', 'application/x-csh' => 'csh', 'application/x-debian-package' => 'deb', 'application/x-dgc-compressed' => 'dgc', 'application/x-director' => 'dir', 'application/x-doom' => 'wad', 'application/x-dtbncx+xml' => 'ncx', 'application/x-dtbook+xml' => 'dtb', 'application/x-dtbresource+xml' => 'res', 'application/x-dvi' => 'dvi', 'application/x-envoy' => 'evy', 'application/x-eva' => 'eva', 'application/x-font-bdf' => 'bdf', 'application/x-font-ghostscript' => 'gsf', 'application/x-font-linux-psf' => 'psf', 'application/x-font-otf' => 'otf', 'application/x-font-pcf' => 'pcf', 'application/x-font-snf' => 'snf', 'application/x-font-ttf' => 'ttf', 'application/x-font-type1' => 'pfa', 'application/x-font-woff' => 'woff', 'application/x-freearc' => 'arc', 'application/x-futuresplash' => 'spl', 'application/x-gca-compressed' => 'gca', 'application/x-glulx' => 'ulx', 'application/x-gnumeric' => 'gnumeric', 'application/x-gramps-xml' => 'gramps', 'application/x-gtar' => 'gtar', 'application/x-hdf' => 'hdf', 'application/x-install-instructions' => 'install', 'application/x-iso9660-image' => 'iso', 'application/x-java-jnlp-file' => 'jnlp', 'application/x-latex' => 'latex', 'application/x-lzh-compressed' => 'lzh', 'application/x-mie' => 'mie', 'application/x-mobipocket-ebook' => 'prc', 'application/x-ms-application' => 'application', 'application/x-ms-shortcut' => 'lnk', 'application/x-ms-wmd' => 'wmd', 'application/x-ms-wmz' => 'wmz', 'application/x-ms-xbap' => 'xbap', 'application/x-msaccess' => 'mdb', 'application/x-msbinder' => 'obd', 'application/x-mscardfile' => 'crd', 'application/x-msclip' => 'clp', 'application/x-msdownload' => 'exe', 'application/x-msmediaview' => 'mvb', 'application/x-msmetafile' => 'wmf', 'application/x-msmoney' => 'mny', 'application/x-mspublisher' => 'pub', 'application/x-msschedule' => 'scd', 'application/x-msterminal' => 'trm', 'application/x-mswrite' => 'wri', 'application/x-netcdf' => 'nc', 'application/x-nzb' => 'nzb', 'application/x-pkcs12' => 'p12', 'application/x-pkcs7-certificates' => 'p7b', 'application/x-pkcs7-certreqresp' => 'p7r', 'application/x-rar-compressed' => 'rar', 'application/x-rar' => 'rar', 'application/x-research-info-systems' => 'ris', 'application/x-sh' => 'sh', 'application/x-shar' => 'shar', 'application/x-shockwave-flash' => 'swf', 'application/x-silverlight-app' => 'xap', 'application/x-sql' => 'sql', 'application/x-stuffit' => 'sit', 'application/x-stuffitx' => 'sitx', 'application/x-subrip' => 'srt', 'application/x-sv4cpio' => 'sv4cpio', 'application/x-sv4crc' => 'sv4crc', 'application/x-t3vm-image' => 't3', 'application/x-tads' => 'gam', 'application/x-tar' => 'tar', 'application/x-tcl' => 'tcl', 'application/x-tex' => 'tex', 'application/x-tex-tfm' => 'tfm', 'application/x-texinfo' => 'texinfo', 'application/x-tgif' => 'obj', 'application/x-ustar' => 'ustar', 'application/x-wais-source' => 'src', 'application/x-x509-ca-cert' => 'der', 'application/x-xfig' => 'fig', 'application/x-xliff+xml' => 'xlf', 'application/x-xpinstall' => 'xpi', 'application/x-xz' => 'xz', 'application/x-zmachine' => 'z1', 'application/xaml+xml' => 'xaml', 'application/xcap-diff+xml' => 'xdf', 'application/xenc+xml' => 'xenc', 'application/xhtml+xml' => 'xhtml', 'application/xml' => 'xml', 'application/xml-dtd' => 'dtd', 'application/xop+xml' => 'xop', 'application/xproc+xml' => 'xpl', 'application/xslt+xml' => 'xslt', 'application/xspf+xml' => 'xspf', 'application/xv+xml' => 'mxml', 'application/yang' => 'yang', 'application/yin+xml' => 'yin', 'application/zip' => 'zip', 'audio/adpcm' => 'adp', 'audio/basic' => 'au', 'audio/midi' => 'mid', 'audio/mp4' => 'mp4a', 'audio/mpeg' => 'mp3', 'audio/ogg' => 'oga', 'audio/s3m' => 's3m', 'audio/silk' => 'sil', 'audio/vnd.dece.audio' => 'uva', 'audio/vnd.digital-winds' => 'eol', 'audio/vnd.dra' => 'dra', 'audio/vnd.dts' => 'dts', 'audio/vnd.dts.hd' => 'dtshd', 'audio/vnd.lucent.voice' => 'lvp', 'audio/vnd.ms-playready.media.pya' => 'pya', 'audio/vnd.nuera.ecelp4800' => 'ecelp4800', 'audio/vnd.nuera.ecelp7470' => 'ecelp7470', 'audio/vnd.nuera.ecelp9600' => 'ecelp9600', 'audio/vnd.rip' => 'rip', 'audio/webm' => 'weba', 'audio/x-aac' => 'aac', 'audio/x-aiff' => 'aif', 'audio/x-caf' => 'caf', 'audio/x-flac' => 'flac', 'audio/x-matroska' => 'mka', 'audio/x-mpegurl' => 'm3u', 'audio/x-ms-wax' => 'wax', 'audio/x-ms-wma' => 'wma', 'audio/x-pn-realaudio' => 'ram', 'audio/x-pn-realaudio-plugin' => 'rmp', 'audio/x-wav' => 'wav', 'audio/xm' => 'xm', 'chemical/x-cdx' => 'cdx', 'chemical/x-cif' => 'cif', 'chemical/x-cmdf' => 'cmdf', 'chemical/x-cml' => 'cml', 'chemical/x-csml' => 'csml', 'chemical/x-xyz' => 'xyz', 'image/bmp' => 'bmp', 'image/x-ms-bmp' => 'bmp', 'image/cgm' => 'cgm', 'image/g3fax' => 'g3', 'image/gif' => 'gif', 'image/ief' => 'ief', 'image/jpeg' => 'jpeg', 'image/pjpeg' => 'jpeg', 'image/ktx' => 'ktx', 'image/png' => 'png', 'image/prs.btif' => 'btif', 'image/sgi' => 'sgi', 'image/svg+xml' => 'svg', 'image/tiff' => 'tiff', 'image/vnd.adobe.photoshop' => 'psd', 'image/vnd.dece.graphic' => 'uvi', 'image/vnd.dvb.subtitle' => 'sub', 'image/vnd.djvu' => 'djvu', 'image/vnd.dwg' => 'dwg', 'image/vnd.dxf' => 'dxf', 'image/vnd.fastbidsheet' => 'fbs', 'image/vnd.fpx' => 'fpx', 'image/vnd.fst' => 'fst', 'image/vnd.fujixerox.edmics-mmr' => 'mmr', 'image/vnd.fujixerox.edmics-rlc' => 'rlc', 'image/vnd.ms-modi' => 'mdi', 'image/vnd.ms-photo' => 'wdp', 'image/vnd.net-fpx' => 'npx', 'image/vnd.wap.wbmp' => 'wbmp', 'image/vnd.xiff' => 'xif', 'image/webp' => 'webp', 'image/x-3ds' => '3ds', 'image/x-cmu-raster' => 'ras', 'image/x-cmx' => 'cmx', 'image/x-freehand' => 'fh', 'image/x-icon' => 'ico', 'image/x-mrsid-image' => 'sid', 'image/x-pcx' => 'pcx', 'image/x-pict' => 'pic', 'image/x-portable-anymap' => 'pnm', 'image/x-portable-bitmap' => 'pbm', 'image/x-portable-graymap' => 'pgm', 'image/x-portable-pixmap' => 'ppm', 'image/x-rgb' => 'rgb', 'image/x-tga' => 'tga', 'image/x-xbitmap' => 'xbm', 'image/x-xpixmap' => 'xpm', 'image/x-xwindowdump' => 'xwd', 'message/rfc822' => 'eml', 'model/iges' => 'igs', 'model/mesh' => 'msh', 'model/vnd.collada+xml' => 'dae', 'model/vnd.dwf' => 'dwf', 'model/vnd.gdl' => 'gdl', 'model/vnd.gtw' => 'gtw', 'model/vnd.mts' => 'mts', 'model/vnd.vtu' => 'vtu', 'model/vrml' => 'wrl', 'model/x3d+binary' => 'x3db', 'model/x3d+vrml' => 'x3dv', 'model/x3d+xml' => 'x3d', 'text/cache-manifest' => 'appcache', 'text/calendar' => 'ics', 'text/css' => 'css', 'text/csv' => 'csv', 'text/html' => 'html', 'text/n3' => 'n3', 'text/plain' => 'txt', 'text/prs.lines.tag' => 'dsc', 'text/richtext' => 'rtx', 'text/rtf' => 'rtf', 'text/sgml' => 'sgml', 'text/tab-separated-values' => 'tsv', 'text/troff' => 't', 'text/turtle' => 'ttl', 'text/uri-list' => 'uri', 'text/vcard' => 'vcard', 'text/vnd.curl' => 'curl', 'text/vnd.curl.dcurl' => 'dcurl', 'text/vnd.curl.scurl' => 'scurl', 'text/vnd.curl.mcurl' => 'mcurl', 'text/vnd.dvb.subtitle' => 'sub', 'text/vnd.fly' => 'fly', 'text/vnd.fmi.flexstor' => 'flx', 'text/vnd.graphviz' => 'gv', 'text/vnd.in3d.3dml' => '3dml', 'text/vnd.in3d.spot' => 'spot', 'text/vnd.sun.j2me.app-descriptor' => 'jad', 'text/vnd.wap.wml' => 'wml', 'text/vnd.wap.wmlscript' => 'wmls', 'text/vtt' => 'vtt', 'text/x-asm' => 's', 'text/x-c' => 'c', 'text/x-fortran' => 'f', 'text/x-pascal' => 'p', 'text/x-java-source' => 'java', 'text/x-opml' => 'opml', 'text/x-nfo' => 'nfo', 'text/x-setext' => 'etx', 'text/x-sfv' => 'sfv', 'text/x-uuencode' => 'uu', 'text/x-vcalendar' => 'vcs', 'text/x-vcard' => 'vcf', 'video/3gpp' => '3gp', 'video/3gpp2' => '3g2', 'video/h261' => 'h261', 'video/h263' => 'h263', 'video/h264' => 'h264', 'video/jpeg' => 'jpgv', 'video/jpm' => 'jpm', 'video/mj2' => 'mj2', 'video/mp4' => 'mp4', 'video/mpeg' => 'mpeg', 'video/ogg' => 'ogv', 'video/quicktime' => 'qt', 'video/vnd.dece.hd' => 'uvh', 'video/vnd.dece.mobile' => 'uvm', 'video/vnd.dece.pd' => 'uvp', 'video/vnd.dece.sd' => 'uvs', 'video/vnd.dece.video' => 'uvv', 'video/vnd.dvb.file' => 'dvb', 'video/vnd.fvt' => 'fvt', 'video/vnd.mpegurl' => 'mxu', 'video/vnd.ms-playready.media.pyv' => 'pyv', 'video/vnd.uvvu.mp4' => 'uvu', 'video/vnd.vivo' => 'viv', 'video/webm' => 'webm', 'video/x-f4v' => 'f4v', 'video/x-fli' => 'fli', 'video/x-flv' => 'flv', 'video/x-m4v' => 'm4v', 'video/x-matroska' => 'mkv', 'video/x-mng' => 'mng', 'video/x-ms-asf' => 'asf', 'video/x-ms-vob' => 'vob', 'video/x-ms-wm' => 'wm', 'video/x-ms-wmv' => 'wmv', 'video/x-ms-wmx' => 'wmx', 'video/x-ms-wvx' => 'wvx', 'video/x-msvideo' => 'avi', 'video/x-sgi-movie' => 'movie', 'video/x-smv' => 'smv', 'x-conference/x-cooltalk' => 'ice'];
         /**
          * Original file name.
          *
@@ -9983,10 +16752,30 @@ namespace FluentForm\Framework\Request {
         public function __construct($app, $get, $post, $files)
         {
         }
-        public function clean($request)
+        /**
+         * Clean up the slashes from GET/POST added by WP
+         * using "wp_magic_quotes" function in load.php.
+         * 
+         * @param  array $data
+         * @return array
+         */
+        public function clean($data)
         {
         }
-        public function trimAndStrip($value)
+        /**
+         * Variable exists
+         * @param  string $key
+         * @return bool
+         */
+        public function exists($key)
+        {
+        }
+        /**
+         * Variable exists and has truthy value
+         * @param  string $key
+         * @return bool
+         */
+        public function has($key)
         {
         }
         public function set($key, $value)
@@ -10006,10 +16795,10 @@ namespace FluentForm\Framework\Request {
         public function files()
         {
         }
-        public function query($key = null)
+        public function query($key = null, $default = null)
         {
         }
-        public function post($key = null)
+        public function post($key = null, $default = null)
         {
         }
         public function only($args)
@@ -10028,13 +16817,13 @@ namespace FluentForm\Framework\Request {
         public function getIp()
         {
         }
-        public function server($key = null)
+        public function server($key = null, $default = null)
         {
         }
-        public function header($key = null)
+        public function header($key = null, $default = null)
         {
         }
-        public function cookie($key = null)
+        public function cookie($key = null, $default = null)
         {
         }
         /**
@@ -10046,11 +16835,14 @@ namespace FluentForm\Framework\Request {
     }
     class RequestProvider extends \FluentForm\Framework\Foundation\Provider
     {
+        public function booting()
+        {
+        }
         /**
          * The provider booting method to boot this provider
          * @return void
          */
-        public function booting()
+        public function booted()
         {
         }
     }
@@ -10058,14 +16850,144 @@ namespace FluentForm\Framework\Request {
 namespace FluentForm\Framework\View {
     class View
     {
-        protected $app = null;
+        /**
+         * The Application (Framework)
+         * @var FluentForm\Framework\Foundation\Application
+         */
+        protected $app;
+        /**
+         * Resolved path of view
+         * @var string
+         */
+        protected $path;
+        /**
+         * Passed data for the view
+         * @var array
+         */
+        protected $data = [];
+        /**
+         * Shared data for the view
+         * @var array
+         */
+        protected static $sharedData = [];
+        /**
+         * Registered composer callbacks for the view
+         * @var array
+         */
+        protected static $composerCallbacks = [];
+        /**
+         * Make an instance of the the class
+         * @param FluentForm\Framework\Foundation\Application $app
+         */
         public function __construct($app)
         {
         }
+        /**
+         * Add aditional view path mapped by a namespace
+         * 
+         * This will allow a developer to add additional view location from any
+         * service provider (basically in booted method), so instead of loading
+         * the view from resources/views directory, one can instruct the framework
+         * to load a view from a different place registerd using following method:
+         * add a namespaced path: $this->app->addNamespace('Public', path('public'));
+         * once it is registered, then one can use: View::make('Public::view_name');
+         * 
+         * @param string $namespace
+         * @param string $path
+         */
+        public function addNamespace($namespace, $path)
+        {
+        }
+        /**
+         * Generate and echo/print a view file
+         * @param  string $path
+         * @param  array  $data
+         * @return void
+         */
+        public function render($path, $data = [])
+        {
+        }
+        /**
+         * Generate a view file
+         * @param  string $path
+         * @param  array  $data
+         * @return string [generated html]
+         * @throws InvalidArgumentException
+         */
         public function make($path, $data = [])
         {
         }
-        public function render($path, $data = [])
+        /**
+         * Resolve the view file path
+         * @param  string $path
+         * @return string
+         */
+        protected function resolveFilePath($path)
+        {
+        }
+        /**
+         * Evaluate the view file
+         * @param  string $path
+         * @param  string $data
+         * @return $this
+         */
+        protected function renderContent()
+        {
+        }
+        /**
+         * Call registered composer callbacks for this view
+         * @return void
+         */
+        protected function callComposerCallbacks()
+        {
+        }
+        /**
+         * Gether shared & view data
+         * @return array
+         */
+        protected function gatherData()
+        {
+        }
+        /**
+         * Share global data for any view
+         * @param  string $key
+         * @param  mixed $value
+         * @return void
+         */
+        public function share($key, $value)
+        {
+        }
+        /**
+         * Register view composer calbacks for specific view
+         * @param  string $viewName
+         * @param  closure $callback
+         * @return void
+         */
+        public function composer($viewName, $callback)
+        {
+        }
+        /**
+         * Provides a fluent interface to set data
+         * @param  mixed $key
+         * @param  mixed $data
+         * @return $this
+         */
+        public function with($name, $data = [])
+        {
+        }
+        /**
+         * Setter for the view
+         * @param string $key
+         * @param mixed $value
+         */
+        public function __set($key, $value)
+        {
+        }
+        /**
+         * Dump the view result
+         * @return string
+         */
+        public function __toString()
         {
         }
     }
@@ -10103,6 +17025,12 @@ namespace FluentForm {
     }
 }
 namespace {
+    function wpFluentForm($key = \null)
+    {
+    }
+    function wpFluentFormAddComponent(\FluentForm\App\Modules\Component\BaseComponent $component)
+    {
+    }
     function dd()
     {
     }
@@ -10131,6 +17059,9 @@ namespace {
     function fluentFormEditorShortCodes()
     {
     }
+    function fluentFormGetAllEditorShortCodes($form)
+    {
+    }
     /**
      * Recursively implode a multi-dimentional array
      * @param string $glue
@@ -10138,6 +17069,27 @@ namespace {
      * @return string
      */
     function implodeRecursive($glue, array $array)
+    {
+    }
+    function getFluentFormCountryList()
+    {
+    }
+    function fluentFormWasSubmitted($action = 'fluentform_submit')
+    {
+    }
+    function isWpAsyncRequest($action)
+    {
+    }
+    function fluentFormIsHandlingSubmission()
+    {
+    }
+    function fluentform_mb_strpos($haystack, $needle)
+    {
+    }
+    function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
+    {
+    }
+    function fluentform_after_submission_api_response_failed($form, $entryId, $data, $feed, $res, $msg = '')
     {
     }
     function fluentValidator($data = [], $rules = [], $messages = [])
