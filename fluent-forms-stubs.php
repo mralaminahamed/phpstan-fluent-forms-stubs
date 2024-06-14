@@ -363,6 +363,15 @@ namespace FluentForm\App\Helpers {
         public static function isAutoloadCaptchaEnabled()
         {
         }
+        public static function maybeDecryptUrl($url)
+        {
+        }
+        public static function arrayFilterRecursive($arrayItems)
+        {
+        }
+        public static function isBlockEditor()
+        {
+        }
     }
     class IntegrationManagerHelper
     {
