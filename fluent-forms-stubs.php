@@ -364,7 +364,7 @@ namespace FluentForm\App\Modules\Entries {
          * @todo: Implement Caching mechanism so we don't have to parse these things for every request
          * @return array
          */
-        private function getFormInputsAndLabels($formId)
+        private function getFormInputsAndLabels($form)
         {
         }
         public function getNotes()
@@ -537,6 +537,44 @@ namespace FluentForm\App\Modules\Form {
         {
         }
         public function getAllForms()
+        {
+        }
+    }
+    class FormDataParser
+    {
+        protected static $data = null;
+        public static function parseFormEntries($entries, $form, $fields = null)
+        {
+        }
+        public static function parseFormEntry($entry, $form, $fields = null)
+        {
+        }
+        public static function parseFormSubmission($submition, $form, $fields)
+        {
+        }
+        public static function parseData($response, $fields, $formId)
+        {
+        }
+        public static function formatValue($value)
+        {
+        }
+    }
+    class FormFieldsParser
+    {
+        protected static $forms = array();
+        public static function getFields($form, $asArray = false)
+        {
+        }
+        public function getInputs($form, $with = [])
+        {
+        }
+        public function getEntryInputs($form, $with = ['admin_label'])
+        {
+        }
+        public function parse($key, $form, $with)
+        {
+        }
+        public static function getAdminLabels($form, $fields = [])
         {
         }
     }
@@ -3240,6 +3278,7 @@ namespace FluentForm\App\Services\FormBuilder {
     }
     class MessageShortCodeParser
     {
+        protected static $data = null;
         /**
          * Parse Norifications
          * @param array $notifications
@@ -3248,7 +3287,7 @@ namespace FluentForm\App\Services\FormBuilder {
          * @param object $form
          * @return  array $notifications
          */
-        public static function parseMessageShortCode($notifications, $insertId, $data, $form)
+        public static function parseMessageShortCode($notifications, $insertId, $data, $form, $cache = true)
         {
         }
         public static function parsePropertiesFor($parsableFields, $notifications)
@@ -3439,31 +3478,6 @@ namespace FluentForm\App\Services {
          * @return array|null
          */
         public function getField($element, $attribute, $with = [])
-        {
-        }
-    }
-    class FormResponseParser
-    {
-        public static function transformResponse($response, $fields, $formId)
-        {
-        }
-        public static function transformSubmissions($submissions, $fields, $formId)
-        {
-        }
-        public static function transformSubmission($submission, $fields, $formId)
-        {
-        }
-        /**
-         * Transform the select field response.
-         * 
-         * @param string|null $response
-         *
-         * @return string|null $response
-         */
-        public static function transformSelectField($response = null)
-        {
-        }
-        public static function transformNameField($response = null)
         {
         }
     }
