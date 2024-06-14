@@ -32,11 +32,6 @@ for V in  3.1 3.2 3.3 3.4 3.5 3.6 4.0 4.1 4.2 4.3 5.0 5.1; do
     # Clean up source/ directory
     git status --ignored --short -- source/ | sed -n -e 's#^!! ##p' | xargs --no-run-if-empty -- rm -rf
     # Get new version
-    printf -v SED_EXP 's#\\("fluentform/fluentform"\\): "[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+"#\\1: "%s"#' "${LATEST}"
-    sed -i -e "$SED_EXP" source/composer.json
-    #composer run-script post-install-cmd
-    ## FIXME https://github.com/fluentform/fluentform/issues/29078#issuecomment-777706511
-    #composer run-script post-install-cmd
     wget -P source/ "https://downloads.wordpress.org/plugin/fluentform.${LATEST}.zip"
     unzip -q -d source/ source/fluentform.*.zip
 
@@ -45,6 +40,7 @@ for V in  3.1 3.2 3.3 3.4 3.5 3.6 4.0 4.1 4.2 4.3 5.0 5.1; do
     ./generate.sh
 
     # Tag version
+    echo "Tagging version ${LATEST} ..."
     git commit --all -m "Generate stubs for Fluent Forms ${LATEST}"
     git tag "v${LATEST}"
 done
