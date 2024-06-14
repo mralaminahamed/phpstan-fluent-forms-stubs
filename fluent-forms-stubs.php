@@ -372,6 +372,9 @@ namespace FluentForm\App\Helpers {
         private function unreadCount($formId)
         {
         }
+        public static function getForms()
+        {
+        }
     }
     class Str
     {
@@ -584,6 +587,20 @@ namespace FluentForm\App\Modules {
         {
         }
         public function getPremiumAddOns()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\CLI {
+    class Commands
+    {
+        public function stats($args, $assoc_args)
+        {
+        }
+        public function activate_license($args, $assoc_args)
+        {
+        }
+        public function license_status()
         {
         }
     }
@@ -2473,9 +2490,6 @@ namespace FluentForm\App\Modules\Widgets {
         public function enqueueAssets()
         {
         }
-        public static function getForms()
-        {
-        }
     }
     // Exit if accessed directly
     class FluentFormWidget extends \Elementor\Widget_Base
@@ -2501,7 +2515,7 @@ namespace FluentForm\App\Modules\Widgets {
         public function get_script_depends()
         {
         }
-        protected function _register_controls()
+        protected function register_controls()
         {
         }
         protected function register_general_controls()
@@ -2576,7 +2590,116 @@ namespace FluentForm\App\Modules\Widgets {
          *
          * @access protected
          */
-        protected function _content_template()
+        protected function content_template()
+        {
+        }
+    }
+    class OxygenEl extends \OxyEl
+    {
+        public function init()
+        {
+        }
+        public function class_names()
+        {
+        }
+        public function button_place()
+        {
+        }
+        public function button_priority()
+        {
+        }
+        public function isBuilderEditorActive()
+        {
+        }
+    }
+    class OxyFluentFormWidget extends \FluentForm\App\Modules\Widgets\OxygenEl
+    {
+        public $css_added = false;
+        public function name()
+        {
+        }
+        public function slug()
+        {
+        }
+        public function accordion_button_place()
+        {
+        }
+        public function icon()
+        {
+        }
+        public function controls()
+        {
+        }
+        public function formContainerStyleControls()
+        {
+        }
+        public function formInputLabelsStyle()
+        {
+        }
+        public function formInputsStyle()
+        {
+        }
+        public function checkboxGridStyle()
+        {
+        }
+        public function gdprAndTermsConditionStyle()
+        {
+        }
+        public function sectionBreakStyle()
+        {
+        }
+        public function render($options, $defaults, $content)
+        {
+        }
+        public function init()
+        {
+        }
+        public function enablePresets()
+        {
+        }
+        public function enableFullPresets()
+        {
+        }
+        public function customCSS($options, $selector)
+        {
+        }
+        public function checkboxAndRadioStyle()
+        {
+        }
+        public function fileUploadStyle()
+        {
+        }
+        public function progressBarStyle()
+        {
+        }
+        public function submitBtnStyle()
+        {
+        }
+        public function stepButtonStyle()
+        {
+        }
+        public function successMessageStyle()
+        {
+        }
+        public function errorMessageStyle()
+        {
+        }
+    }
+    class OxygenWidget
+    {
+        public function __construct()
+        {
+        }
+        public function initOxygenEl()
+        {
+        }
+        public function initWidgets()
+        {
+        }
+        public function addAccordionSection()
+        {
+        }
+        public function registerAddPlusSubsections()
         {
         }
     }
@@ -14318,7 +14441,7 @@ namespace FluentValidator {
          *
          * @var array
          */
-        protected $bag = ['email' => 'The :attribute must be a valid email address.', 'max' => ['numeric' => 'The :attribute may not be greater than :max.', 'file' => 'The :attribute may not be greater than :max kilobytes.', 'string' => 'The :attribute may not be greater than :max characters.', 'array' => 'The :attribute may not have more than :max items.'], 'mimes' => 'The :attribute must be a file of type: :values.', 'mimetypes' => 'The :attribute must be a file of type: :values.', 'min' => ['numeric' => 'The :attribute must be at least :min.', 'file' => 'The :attribute must be at least :min kilobytes.', 'string' => 'The :attribute must be at least :min characters.', 'array' => 'The :attribute must have at least :min items.'], 'numeric' => 'The :attribute must be a number.', 'required' => 'The :attribute field is required.', 'required_if' => 'The :attribute field is required when :other is :value.', 'same' => 'The :attribute and :other must match.', 'size' => ['numeric' => 'The :attribute must be :size.', 'file' => 'The :attribute must be :size kilobytes.', 'string' => 'The :attribute must be :size characters.', 'array' => 'The :attribute must contain :size items.'], 'url' => 'The :attribute format is invalid.'];
+        protected $bag = ['email' => 'The :attribute must be a valid email address.', 'max' => ['numeric' => 'The :attribute may not be greater than :max.', 'file' => 'The :attribute may not be greater than :max kilobytes.', 'string' => 'The :attribute may not be greater than :max characters.', 'array' => 'The :attribute may not have more than :max items.'], 'mimes' => 'The :attribute must be a file of type: :values.', 'mimetypes' => 'The :attribute must be a file of type: :values.', 'min' => ['numeric' => 'The :attribute must be at least :min.', 'file' => 'The :attribute must be at least :min kilobytes.', 'string' => 'The :attribute must be at least :min characters.', 'array' => 'The :attribute must have at least :min items.'], 'numeric' => 'The :attribute must be a number.', 'required' => 'The :attribute field is required.', 'required_if' => 'The :attribute field is required when :other is :value.', 'same' => 'The :attribute and :other must match.', 'size' => ['numeric' => 'The :attribute must be :size.', 'file' => 'The :attribute must be :size kilobytes.', 'string' => 'The :attribute must be :size characters.', 'array' => 'The :attribute must contain :size items.'], 'url' => 'The :attribute format is invalid.', 'digits' => 'The :attribute must be :digits characters.'];
         /**
          * Generate a validation error message.
          *
@@ -14461,6 +14584,17 @@ namespace FluentValidator {
          * @return string
          */
         protected function replaceMimes($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the digits rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceDigits($attribute, $parameters)
         {
         }
     }
@@ -14657,6 +14791,18 @@ namespace FluentValidator {
          * @return bool
          */
         protected function validatePresent($attribute, $value)
+        {
+        }
+        /**
+         * Validate that an attribute has a given number of digits.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         * @param array $parameters
+         * 
+         * @return bool
+         */
+        public function validateDigits($attribute, $value, $parameters)
         {
         }
     }
@@ -18180,6 +18326,15 @@ namespace {
     {
     }
     function fluentFormGetRandomPhoto()
+    {
+    }
+    function fluentFormRender($atts)
+    {
+    }
+    /**
+     * Print internal content (not user input) without escaping.
+     */
+    function fluentFormPrintUnescapedInternalString($string)
     {
     }
     function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
