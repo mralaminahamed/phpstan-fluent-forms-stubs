@@ -2065,7 +2065,7 @@ namespace FluentForm\App\Modules\ReCaptcha {
          *
          * @return bool
          */
-        public static function validate($token, $secret = null)
+        public static function validate($token, $secret = null, $version = 'v2_visible')
         {
         }
     }
@@ -2266,7 +2266,7 @@ namespace FluentForm\App\Modules\Track {
     }
     class TrackModule
     {
-        private $apiUrl = 'https://wpfluentform.com';
+        private $apiUrl = 'https://fluentform.com';
         private $initialConsentKey = '_fluentform_notice_pref';
         private $newsletterDelayTimeStamp = 172800;
         // 7 days
@@ -4342,6 +4342,9 @@ namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
         public static function fieldTypes()
         {
         }
+        public static function hasPictureMode($field, $question)
+        {
+        }
         public static function hex2rgb($color, $opacity = 0.3)
         {
         }
@@ -4631,6 +4634,9 @@ namespace FluentForm\App\Services\FluentConversational\Classes {
         private function getRandomPhoto()
         {
         }
+        private function renderFormHtml($formId, $providedKey = '')
+        {
+        }
     }
 }
 namespace FluentForm\App\Services\FormBuilder {
@@ -4815,7 +4821,13 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         public function getAvailableDateFormats()
         {
         }
-        private function getDateFormatConfigJSON($settings, $form, $id)
+        public function getDateFormatConfigJSON($settings, $form)
+        {
+        }
+        public function getCustomConfig($settings)
+        {
+        }
+        private function loadToFooter($config, $customConfigObject, $form, $id)
         {
         }
         private function hasTime($string)
@@ -6148,7 +6160,7 @@ namespace FluentForm\App\Services\Parser {
         /**
          * Set input types of the form.
          *
-         * @param  array                                $types
+         * @param array $types
          * @return \FluentForm\App\Services\Parser\Form $this
          */
         public function setInputTypes($types = [])
@@ -6157,7 +6169,7 @@ namespace FluentForm\App\Services\Parser {
         /**
          * Get form fields.
          *
-         * @param  boolean $asArray
+         * @param boolean $asArray
          * @return array
          */
         public function getFields($asArray = false)
@@ -6167,7 +6179,7 @@ namespace FluentForm\App\Services\Parser {
          * Get flatten form inputs. Flatten implies that all
          * of the form fields will be in a simple array.
          *
-         * @param  array $with
+         * @param array $with
          * @return array
          */
         public function getInputs($with = [])
@@ -6177,7 +6189,7 @@ namespace FluentForm\App\Services\Parser {
          * Get the inputs just as they setup in the form editor.
          * e.g. `names` as `names` not with the child fields.
          *
-         * @param  array $with
+         * @param array $with
          * @return array
          */
         public function getEntryInputs($with = ['admin_label'])
@@ -6197,7 +6209,7 @@ namespace FluentForm\App\Services\Parser {
         /**
          * Get admin labels of the form fields.
          *
-         * @param  array $fields
+         * @param array $fields
          * @return array
          */
         public function getAdminLabels($fields = [])
@@ -6206,8 +6218,8 @@ namespace FluentForm\App\Services\Parser {
         /**
          * Get admin labels of the form fields.
          *
-         * @param  array $inputs
-         * @param  array $fields
+         * @param array $inputs
+         * @param array $fields
          * @return array
          */
         public function getValidations($inputs, $fields = [])
@@ -6216,8 +6228,8 @@ namespace FluentForm\App\Services\Parser {
         /**
          * Get an element by it's name.
          *
-         * @param  string|array $name
-         * @param  array        $with
+         * @param string|array $name
+         * @param array $with
          * @return array
          */
         public function getElement($name, $with = [])
@@ -6226,7 +6238,7 @@ namespace FluentForm\App\Services\Parser {
         /**
          * Determine whether the form has an element.
          *
-         * @param  string $name
+         * @param string $name
          * @return bool
          */
         public function hasElement($name)
@@ -6235,7 +6247,7 @@ namespace FluentForm\App\Services\Parser {
         /**
          * Determine whether the form has any required fields.
          *
-         * @param  array $fields
+         * @param array $fields
          * @return bool
          */
         public function hasRequiredFields($fields = [])
@@ -6271,7 +6283,7 @@ namespace FluentForm\App\Services\Parser {
          *
          * @param $element
          * @param $attribute
-         * @param  array      $with
+         * @param array $with
          * @return array|null
          */
         public function getField($element, $attribute, $with = [])
