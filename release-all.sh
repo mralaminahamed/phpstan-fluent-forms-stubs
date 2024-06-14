@@ -48,9 +48,11 @@ while IFS= read -r VERSION; do
         ./generate.sh
 
         # Add files
+        echo "Adding files ..."
         git add .
 
         # Tag version
+        echo "Tagging version ${VERSION} ..."
         git commit --all -m "Generate stubs for Fluent Form ${VERSION}"
         git tag "v${VERSION}"
     } || {
