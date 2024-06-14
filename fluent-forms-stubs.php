@@ -32739,7 +32739,7 @@ namespace FluentForm\Framework\Database {
         }
         /**
          * Replace placeholders with bindings
-         * 
+         *
          * @param  string $search
          * @param  array  $replace
          * @param  string $subject
@@ -36710,7 +36710,7 @@ namespace FluentForm\Framework\Validator {
          * @param string $attribute
          * @param mixed $value
          * @param array $parameters
-         * 
+         *
          * @return bool
          */
         public function validateDigits($attribute, $value, $parameters)
