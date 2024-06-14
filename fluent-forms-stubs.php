@@ -246,11 +246,13 @@ namespace FluentForm\App\Modules\Component {
     {
         /**
          * FluentForm\Framework\Foundation\Application
+         *
          * @var $app
          */
         protected $app = null;
         /**
          * Biuld the instance of this class
+         *
          * @param \FluentForm\Framework\Foundation\Application $app
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $app)
@@ -258,6 +260,7 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Get all the available components
+         *
          * @return  void
          * @throws \Exception
          * @throws \FluentForm\Framework\Exception\UnResolveableEntityException
@@ -267,6 +270,7 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Get disabled components
+         *
          * @return array
          */
         private function getDisabledComponents()
@@ -274,6 +278,7 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Get available shortcodes for editor
+         *
          * @return void
          * @throws \Exception
          */
@@ -282,6 +287,7 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Register the form renderer shortcode
+         *
          * @return  void
          */
         public function addFluentFormShortCode()
@@ -289,6 +295,7 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Register renderer actions for compiling each element
+         *
          * @return  void
          */
         public function addRendererActions()
@@ -296,6 +303,7 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Register dynamic value shortcode parser (filter default value)
+         *
          * @return  void
          */
         public function addFluentFormDefaultValueParser()
@@ -303,6 +311,7 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Register filter to check whether the form is renderable
+         *
          * @return  mixed
          */
         public function addIsRenderableFilter()
@@ -310,7 +319,9 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Check if limit is set on form submits and it's valid yet
+         *
          * @param  array $restrictions
+         *
          * @return bool
          */
         private function limitNumberOfEntries($restrictions, $form, &$isRenderable)
@@ -318,7 +329,9 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Check if form has scheduled date and open for submission
+         *
          * @param  array $restrictions
+         *
          * @return bool
          */
         private function scheduleForm($restrictions, $form, &$isRenderable)
@@ -326,7 +339,9 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * * Check if form requires loged in user and user is logged in
+         *
          * @param  array $restrictions
+         *
          * @return bool
          */
         private function requireLogin($restrictions, $form, &$isRenderable)
@@ -334,6 +349,7 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Register fluentform_submission_inserted action
+         *
          * @return  void
          */
         public function addFluentformSubmissionInsertedFilter()
@@ -341,8 +357,10 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Add inline scripts [Add localized script using same var]
+         *
          * @param array $vars
-         * @param int $form_id
+         * @param int   $form_id
+         *
          * @return  void
          */
         private function addInlineVars($vars, $form_id)
