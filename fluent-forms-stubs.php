@@ -2681,6 +2681,9 @@ namespace FluentForm\App\Modules\Turnstile {
         public static function validate($token, $secret)
         {
         }
+        public static function ensureSettings($values)
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules\Widgets {
