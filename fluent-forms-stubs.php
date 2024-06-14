@@ -1526,6 +1526,31 @@ namespace FluentForm\App\Modules\Form {
     }
 }
 namespace FluentForm\App\Modules\Form\Settings {
+    class EntryColumnViewSettings
+    {
+        /**
+         * Save settings for visible entry columns
+         * @return void
+         */
+        public function saveVisibleColumnsAjax()
+        {
+        }
+        /**
+         * Save settings for entry column display order
+         */
+        public function saveEntryColumnsOrderAjax()
+        {
+        }
+        /**
+         * Reset column display order settings
+         */
+        public function resetEntryDisplaySettings()
+        {
+        }
+        protected function store($formId, $metaKey, $metaValue)
+        {
+        }
+    }
     class ExtraSettings
     {
         /**
@@ -1589,6 +1614,9 @@ namespace FluentForm\App\Modules\Form\Settings {
          * @return void
          */
         public function saveSettingsAjax()
+        {
+        }
+        protected function escCss($css)
         {
         }
         protected function getData($formId, $metaKey)
@@ -4477,7 +4505,27 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         {
         }
     }
-    class Name extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
+    class Select extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
+    {
+        /**
+         * Compile and echo the html element
+         * @param array $data [element data]
+         * @param stdClass $form [Form Object]
+         * @return viod
+         */
+        public function compile($data, $form)
+        {
+        }
+        /**
+         * Build options for select
+         * @param array $options
+         * @return string/html [compiled options]
+         */
+        protected function buildOptions($data, $defaultValues)
+        {
+        }
+    }
+    class Name extends \FluentForm\App\Services\FormBuilder\Components\Select
     {
         /**
          * Compile and echo the html element
@@ -4522,26 +4570,6 @@ namespace FluentForm\App\Services\FormBuilder\Components {
          * @return viod
          */
         public function compile($data, $form)
-        {
-        }
-    }
-    class Select extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
-    {
-        /**
-         * Compile and echo the html element
-         * @param array $data [element data]
-         * @param stdClass $form [Form Object]
-         * @return viod
-         */
-        public function compile($data, $form)
-        {
-        }
-        /**
-         * Build options for select
-         * @param array $options
-         * @return string/html [compiled options]
-         */
-        protected function buildOptions($data, $defaultValues)
         {
         }
     }
@@ -5577,6 +5605,23 @@ namespace FluentForm\App\Services\Integrations\Slack {
         {
         }
         public function notify($feed, $formData, $entry, $form)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Migrator {
+    abstract class BaseMigrator
+    {
+    }
+    class CalderaMigrator extends \FluentForm\App\Services\Migrator\BaseMigrator
+    {
+        public function exist()
+        {
+        }
+        public function getForms()
+        {
+        }
+        public function getFields($form)
         {
         }
     }
