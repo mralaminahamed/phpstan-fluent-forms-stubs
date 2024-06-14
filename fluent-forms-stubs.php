@@ -111,6 +111,39 @@ namespace FluentForm\App\Helpers {
         {
         }
     }
+    class Str
+    {
+        /**
+         * Determine if a given string starts with a given substring.
+         *
+         * @param string $haystack
+         * @param string|array $needles
+         * @return bool
+         */
+        public static function startsWith($haystack, $needles)
+        {
+        }
+        /**
+         * Determine if a given string ends with a given substring.
+         *
+         * @param string $haystack
+         * @param string|array $needles
+         * @return bool
+         */
+        public static function endsWith($haystack, $needles)
+        {
+        }
+        /**
+         * Determine if a given string contains a given substring.
+         *
+         * @param string $haystack
+         * @param string|array $needles
+         * @return bool
+         */
+        public static function contains($haystack, $needles)
+        {
+        }
+    }
 }
 namespace FluentForm\App\Modules\Acl {
     class Acl
@@ -559,9 +592,17 @@ namespace FluentForm\App\Modules\Form {
         {
         }
     }
+    /**
+     * @method array getShortCodeInputs(\stdClass $form, array $with = ['admin_label'])
+     * @method array getValidations(\stdClass $form, array $inputs, array $fields = [])
+     * @method array getElement(\stdClass $form, string $name, array $with = [])
+     * @method boolean hasElement(\stdClass $form, string $name)
+     * @method boolean hasRequiredFields(\stdClass $form, array $fields)
+     * @method array|null getField(\stdClass $form, string|array $element, string|array $attribute, array $with = [])
+     */
     class FormFieldsParser
     {
-        protected static $forms = array();
+        protected static $forms = [];
         public static function getFields($form, $asArray = false)
         {
         }
@@ -577,6 +618,17 @@ namespace FluentForm\App\Modules\Form {
         public static function getAdminLabels($form, $fields = [])
         {
         }
+        /**
+         * Deligate dynamic static method calls to FormParser method.
+         * And set the result to the store before returning to dev.
+         *
+         * @param  string $method
+         * @param  array  $parameters
+         * @return mixed
+         */
+        public static function __callStatic($method, $parameters)
+        {
+        }
     }
     class FormHandler
     {
@@ -589,13 +641,15 @@ namespace FluentForm\App\Modules\Form {
          */
         protected $request;
         /**
-         * @var \FluentForm\App\Services\FormParser
-         */
-        protected $parser;
-        /**
          * @var array $formData
          */
         protected $formData;
+        /**
+         * The fluent form object.
+         *
+         * @var \stdClass
+         */
+        protected $form;
         /**
          * Form Handler constructor.
          *
@@ -605,19 +659,16 @@ namespace FluentForm\App\Modules\Form {
         {
         }
         /**
-         * Find the form using it's ID.
+         * Set the form using it's ID.
          *
          * @param $formId
-         *
-         * @return null|\stdClass
+         * @return $this
          */
-        public function findForm($formId)
+        public function setForm($formId)
         {
         }
         /**
          * Handle form submition
-         *
-         * @return \Exception
          */
         public function onSubmit()
         {
@@ -626,37 +677,28 @@ namespace FluentForm\App\Modules\Form {
          * Prepare response and do actions/filters
          * and send the response to the client.
          *
-         * @param  int $insertId
-         * @param  \StdClass $form
-         *
-         * @return void
+         * @param int $insertId
          */
-        private function sendResponse($insertId, $form)
+        private function sendResponse($insertId)
         {
         }
         /**
          * Validate form data.
          *
-         * @param $form
          * @param $fields
-         *
          * @return bool
          */
-        private function validate($form, &$fields)
+        private function validate(&$fields)
         {
         }
         /**
          * Validate nonce.
-         *
-         * @param $formId
          */
-        protected function validateNonce($formId)
+        protected function validateNonce()
         {
         }
         /**
          * Validate reCaptcha.
-         *
-         * @param $formId
          */
         private function validateReCaptcha()
         {
@@ -664,10 +706,9 @@ namespace FluentForm\App\Modules\Form {
         /**
          * Validate form data based on the form restrictions settings.
          *
-         * @param \stdClass $form
          * @param $fields
          */
-        private function validateRestrictions($form, &$fields)
+        private function validateRestrictions(&$fields)
         {
         }
         /**
@@ -682,20 +723,18 @@ namespace FluentForm\App\Modules\Form {
         /**
          * Prepare the data to be inserted to the database.
          *
-         * @param $formId
-         *
+         * @param  boolean $formData
          * @return array
          */
-        public function prepareInsertData($formId, $formData = false)
+        public function prepareInsertData($formData = false)
         {
         }
         /**
          * Delegate the validation rules & messages to the
          * ones that the validation library recognizes.
          *
-         * @param $rules
-         * @param $messages
-         *
+         * @param  $rules
+         * @param  $messages
          * @return array
          */
         protected function delegateValidations($rules, $messages, $search = [], $replace = [])
@@ -716,8 +755,7 @@ namespace FluentForm\App\Modules\Form {
         {
         }
         /**
-         * Get all the flatten form inputs
-         * @return  void
+         * Get all the flatten form inputs for shortcode generation.
          */
         public function index()
         {
@@ -1013,6 +1051,73 @@ namespace FluentForm\App\Modules\Integration {
         {
         }
     }
+}
+namespace FluentForm\App\Modules\Integration\ActiveCampaign {
+    class Integrator extends \FluentForm\App\Modules\Integration\BaseIntegration
+    {
+        /**
+         * Option `key` for Active Campaign List settings.
+         *
+         * @var string $key
+         */
+        private $key = 'activecampaign_details';
+        /**
+         * Application instance
+         *
+         * @var \FluentForm\Framework\Foundation\Application $app
+         */
+        private $app;
+        /**
+         * Global settings for the integration.
+         *
+         * @var array $settings
+         */
+        protected $settings;
+        /**
+         * Active Campaign integration constructor.
+         *
+         * @param \FluentForm\Framework\Foundation\Application $app
+         */
+        public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        {
+        }
+        /**
+         * Get all of the integrations.
+         *
+         * @return void
+         */
+        public function index()
+        {
+        }
+        /**
+         * Determine if the integration is active.
+         *
+         * @return boolean
+         */
+        private function isActive()
+        {
+        }
+        /**
+         * Get all available lists.
+         *
+         * @return void
+         */
+        public function getLists()
+        {
+        }
+        /**
+         * Format the lists excluding some keys so that we only have
+         * the plain array of the lists containing each list info.
+         *
+         * @param array $lists
+         * @return array
+         */
+        private function formatLists($lists)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Integration {
     trait MailChimpSubscriber
     {
         /**
@@ -1286,6 +1391,9 @@ namespace FluentForm\App\Modules\Track {
         {
         }
         public function getInitialNotice()
+        {
+        }
+        private function isLocalhost()
         {
         }
     }
@@ -3221,7 +3329,7 @@ namespace FluentForm\App\Services\FormBuilder {
         public static function setUserProperties(&$formattedProperties, $userProperties, $data, $form, $insertId)
         {
         }
-        public static function setPostProperties(&$formattedProperties, $postProperties, $data, $form)
+        public static function setPostProperties(&$formattedProperties, $postProperties, $data, $form, $insetId)
         {
         }
         public static function setOtherProperties(&$formattedProperties, $others, $data, $form, $insertId)
@@ -3261,145 +3369,6 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
          * @return array
          */
         private function getFormInputsAndLabels($form)
-        {
-        }
-    }
-}
-namespace FluentForm\App\Services {
-    class FormParser
-    {
-        /**
-         * @var \stdClass $form
-         */
-        protected $form;
-        /**
-         * @var array $inputTypes
-         */
-        protected $inputTypes;
-        /**
-         * @var array flattened inputs.
-         */
-        protected $inputs;
-        /**
-         * Form Parser constructor.
-         *
-         * @param \stdClass $form
-         */
-        public function __construct($form)
-        {
-        }
-        /**
-         * Get form fields.
-         *
-         * @return array
-         */
-        public function getFields($asArray = false)
-        {
-        }
-        /**
-         * Get flatten form inputs. Flatten implies that all
-         * of the form fields will be in a simple array.
-         *
-         * @return array
-         */
-        public function getInputs($with = [])
-        {
-        }
-        /**
-         * Extract form fields recursively.
-         *
-         * @param array $fields
-         * @param array $inputs
-         *
-         * @return array
-         */
-        public function extractor($fields = [], &$inputs = [], $with = [])
-        {
-        }
-        /**
-         * Get flatten form inputs. Flatten implies that all
-         * of the form fields will be in a simple array.
-         *
-         * @todo: We may need to refactor this
-         * @return array
-         */
-        public function getEntryInputs($with = ['admin_label'])
-        {
-        }
-        /**
-         * Extract form fields recursively.
-         *
-         * @todo: We may need to refactor this
-         *
-         * @param array $fields
-         * @param array $inputs
-         *
-         * @return array
-         */
-        public function entryExtractor($fields = [], &$inputs = [], $with = [])
-        {
-        }
-        /**
-         * Get admin labels of the form fields.
-         *
-         * @param array $fields
-         *
-         * @return array
-         */
-        public function getAdminLabels($fields = [])
-        {
-        }
-        /**
-         * Get admin labels of the form fields.
-         *
-         * @param array $fields
-         *
-         * @return array
-         */
-        public function getValidations($inputs, $fields = [])
-        {
-        }
-        /**
-         * Get an element by it's name.
-         *
-         * @param string|array $name
-         * @param array $with
-         *
-         * @return array
-         */
-        public function getElement($name, $with = [])
-        {
-        }
-        /**
-         * Determine whether the form has an element.
-         *
-         * @param $name
-         *
-         * @return bool
-         */
-        public function hasElement($name)
-        {
-        }
-        /**
-         * Determine whether the form has any required fields.
-         *
-         * @param array $fields
-         *
-         * @return bool
-         */
-        public function hasRequiredFields($fields = [])
-        {
-        }
-        /**
-         * Get an specific field for an element type.
-         *
-         * @param $element
-         * @param $attribute
-         * @param array $with
-         *
-         * @return array|null
-         */
-        public function getField($element, $attribute, $with = [])
         {
         }
     }
@@ -4413,6 +4382,419 @@ namespace {
          * Get the failure message for this exception.
          */
         public function getFailedMessage()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Parser {
+    class Extractor
+    {
+        /**
+         * The form field settings.
+         *
+         * @var array
+         */
+        protected $fields;
+        /**
+         * The properties that need to be extracted.
+         *
+         * @var array
+         */
+        protected $with;
+        /**
+         * The supported form input types defined for Fluent Form.
+         *
+         * @var array
+         */
+        protected $inputTypes;
+        /**
+         * The extracted result.
+         *
+         * @var array
+         */
+        protected $result = [];
+        /**
+         * The current form field that's being set when we loop
+         * through all the form fields in the looper method.
+         *
+         * @var array
+         */
+        protected $field = [];
+        /**
+         * The current field attribute that's being set when we loop
+         * through all the form fields in the looper method.
+         *
+         * @var string
+         */
+        protected $attribute;
+        /**
+         * Extractor constructor.
+         *
+         * @param array $fields
+         * @param array $with
+         * @param array $inputTypes
+         */
+        public function __construct($fields, $with, $inputTypes)
+        {
+        }
+        /**
+         * The extractor initializer for getting the extracted data.
+         *
+         * @return array
+         */
+        public function extract()
+        {
+        }
+        /**
+         * The recursive looper method to loop each
+         * of the fields and extract it's data.
+         *
+         * @param array $fields
+         */
+        protected function looper($fields = [])
+        {
+        }
+        /**
+         * Extract the form field.
+         *
+         * @param  array $field
+         * @return $this
+         */
+        protected function extractField($field)
+        {
+        }
+        /**
+         * Set the field and attribute of the current iteration when
+         * we loop through the form fields using the looper method.
+         *
+         * @param  array  $field
+         * @param  string $attribute
+         * @return $this
+         */
+        protected function prepareIteration($field, $attribute)
+        {
+        }
+        /**
+         * Set the element of the form field.
+         *
+         * @param  array  $field
+         * @param  string $attributeName
+         * @return $this
+         */
+        protected function setElement()
+        {
+        }
+        /**
+         * Set the admin label of the form field.
+         *
+         * @return $this
+         */
+        protected function setAdminLabel()
+        {
+        }
+        /**
+         * Set the options of the form field.
+         *
+         * @return $this
+         */
+        protected function setOptions()
+        {
+        }
+        /**
+         * Set the attributes of the form field.
+         *
+         * @return $this
+         */
+        protected function setAttributes()
+        {
+        }
+        /**
+         * Set the validation rules and conditions of the form field.
+         *
+         * @return $this
+         */
+        protected function setValidations()
+        {
+        }
+        /**
+         * Handle the child fields of the custom field.
+         *
+         * @return $this
+         */
+        protected function handleCustomField()
+        {
+        }
+    }
+    class Form
+    {
+        /**
+         * @var \stdClass $form
+         */
+        protected $form;
+        /**
+         * @var array $inputTypes
+         */
+        protected $inputTypes;
+        /**
+         * The parsed form fields.
+         *
+         * @var array
+         */
+        protected $parsed;
+        /**
+         * The parsed validations
+         *
+         * @var array
+         */
+        protected $validations;
+        /**
+         * Form Parser constructor.
+         *
+         * @param \stdClass $form
+         */
+        public function __construct($form)
+        {
+        }
+        /**
+         * Set input types of the form.
+         *
+         * @param  array                                $types
+         * @return \FluentForm\App\Services\Parser\Form $this
+         */
+        public function setInputTypes($types = [])
+        {
+        }
+        /**
+         * Get form fields.
+         *
+         * @param  boolean $asArray
+         * @return array
+         */
+        public function getFields($asArray = false)
+        {
+        }
+        /**
+         * Get flatten form inputs. Flatten implies that all
+         * of the form fields will be in a simple array.
+         *
+         * @param  array $with
+         * @return array
+         */
+        public function getInputs($with = [])
+        {
+        }
+        /**
+         * Get the inputs just as they setup in the form editor.
+         * e.g. `names` as `names` not with the child fields.
+         *
+         * @param  array $with
+         * @return array
+         */
+        public function getEntryInputs($with = ['admin_label'])
+        {
+        }
+        /**
+         * Get the flatten inputs as the result of the `getInputs`
+         * method but replace the keys those have `[]` with `.`
+         * And also remove the repeat fields' child fields.
+         *
+         * @param array $with
+         * @param array
+         */
+        public function getShortCodeInputs($with = ['admin_label'])
+        {
+        }
+        /**
+         * Get admin labels of the form fields.
+         *
+         * @param  array $fields
+         * @return array
+         */
+        public function getAdminLabels($fields = [])
+        {
+        }
+        /**
+         * Get admin labels of the form fields.
+         *
+         * @param  array $inputs
+         * @param  array $fields
+         * @return array
+         */
+        public function getValidations($inputs, $fields = [])
+        {
+        }
+        /**
+         * Get an element by it's name.
+         *
+         * @param  string|array $name
+         * @param  array        $with
+         * @return array
+         */
+        public function getElement($name, $with = [])
+        {
+        }
+        /**
+         * Determine whether the form has an element.
+         *
+         * @param  string $name
+         * @return bool
+         */
+        public function hasElement($name)
+        {
+        }
+        /**
+         * Determine whether the form has any required fields.
+         *
+         * @param  array $fields
+         * @return bool
+         */
+        public function hasRequiredFields($fields = [])
+        {
+        }
+        /**
+         * Get an specific field for an element type.
+         *
+         * @param $element
+         * @param $attribute
+         * @param  array      $with
+         * @return array|null
+         */
+        public function getField($element, $attribute, $with = [])
+        {
+        }
+    }
+    class Validations
+    {
+        /**
+         * Form fields that were defined when the form was created.
+         *
+         * @var array
+         */
+        protected $fields;
+        /**
+         * Form inputs that were submited by the user.
+         *
+         * @var array
+         */
+        protected $inputs;
+        /**
+         * The current field accessor of the fields' iteration.
+         *
+         * @var string
+         */
+        protected $accessor;
+        /**
+         * The repeater field settings. It is being set if the
+         * field in iteration is indeed a repeater field.
+         *
+         * @var array
+         */
+        protected $repeater = ['status' => false, 'attribute' => '', 'length' => 0, 'rule' => ''];
+        /**
+         * The extracted validation rules.
+         *
+         * @var array
+         */
+        protected $rules = [];
+        /**
+         * The extracted validation messages.
+         *
+         * @var array
+         */
+        protected $messages = [];
+        /**
+         * The validation extractor constructor.
+         *
+         * @param array $formFields
+         * @param array $formData
+         */
+        public function __construct($formFields = [], $formData = [])
+        {
+        }
+        /**
+         * Get the extracted validation rules and messages.
+         *
+         * @return array
+         */
+        public function get()
+        {
+        }
+        /**
+         * Set the field accessor by replacing the `[]`, `*` by `.`
+         * so that dot notation can be used to access the inputs.
+         *
+         * @param  string $fieldName
+         * @return $this
+         */
+        protected function setFieldAccessor($fieldName)
+        {
+        }
+        /**
+         * Determines if the filed is applicable for extracting validations.
+         *
+         * @param  array   $field
+         * @return boolean
+         */
+        protected function isApplicable($field)
+        {
+        }
+        /**
+         * Get the field value from the form data.
+         *
+         * @return mixed
+         */
+        protected function getFieldValue()
+        {
+        }
+        /**
+         * Set the repeater settings if the field in
+         * iteration is indeed a repeater field.
+         *
+         * @param  string $fieldName
+         * @param  array  $field
+         * @return $this
+         */
+        protected function setRepeater($fieldName, $field)
+        {
+        }
+        /**
+         * Determines if the iteration should skip this rule or not.
+         *
+         * @param  array   $rule
+         * @return boolean
+         */
+        protected function shouldNotSkipThisRule($rule, $fieldValue, $hasRequiredRule)
+        {
+        }
+        /**
+         * Prepare the validation extraction.
+         *
+         * @param string $fieldName
+         * @param string $ruleName
+         * @param array  $rule
+         */
+        protected function prepareValidations($fieldName, $ruleName, $rule)
+        {
+        }
+        /**
+         * Set the validation rules & messages
+         *
+         * @param string $fieldName
+         * @param string $ruleName
+         * @param array  $rule
+         * @param string $logic
+         */
+        protected function setValidations($fieldName, $ruleName, $rule, $logic)
+        {
+        }
+        /**
+         * Get the logic name for the current rule.
+         *
+         * @param  string $ruleName
+         * @param  array  $rule
+         * @return string
+         */
+        protected function getLogic($ruleName, $rule)
         {
         }
     }
@@ -8711,6 +9093,11 @@ namespace FluentForm\Framework\Foundation {
     trait HelpersTrait
     {
         /**
+         * $hookReference Current action reference
+         * @var null
+         */
+        protected $hookReference = null;
+        /**
          * Load a file using include_once
          * @return boolean
          */
@@ -8909,6 +9296,32 @@ namespace FluentForm\Framework\Foundation {
          * @return string
          */
         public function formatShortCode($tag, $atts, $content = null)
+        {
+        }
+        /**
+         * Store a reference of last action handler
+         * @param reference $ref (Reference of registered function/handler)
+         * @param string $tag
+         * @return $this
+         */
+        public function setHookReference($ref, $tag)
+        {
+        }
+        /**
+         * Save the hook's handler reference
+         * @param  string $key
+         * @return reference
+         */
+        public function saveReference($key = null)
+        {
+        }
+        /**
+         * Register any callback/middleware to run before ajax callback
+         * @param  string $actionName
+         * @param  mixed $fn (WordPress permission name/closure)
+         * @return $this
+         */
+        public function before($action, $fn)
         {
         }
     }
