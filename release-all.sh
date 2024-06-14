@@ -38,7 +38,7 @@ while IFS= read -r VERSION; do
     git status --ignored --short -- source/ | sed -n -e 's#^!! ##p' | xargs --no-run-if-empty -- rm -rf
 
     # Get new version
-    wget -P source/ "https://downloads.wordpress.org/plugin/fluentform.${VERSION}.zip"
+    wget -q -P source/ "https://downloads.wordpress.org/plugin/fluentform.${VERSION}.zip"
     unzip -q -d source/ source/fluentform.*.zip
 
     # Generate stubs
