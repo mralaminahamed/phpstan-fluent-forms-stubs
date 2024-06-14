@@ -95,6 +95,7 @@ namespace FluentForm\App\Databases\Migrations {
 namespace FluentForm\App\Helpers {
     class Helper
     {
+        static $tabIndex = 0;
         /**
          * Sanitize form inputs recursively.
          *
@@ -140,6 +141,15 @@ namespace FluentForm\App\Helpers {
         {
         }
         public static function isEntryAutoDeleteEnabled($formId)
+        {
+        }
+        public static function formExtraCssClass($formId)
+        {
+        }
+        public static function getNextTabIndex($increment = 1)
+        {
+        }
+        public static function resetTabIndex()
         {
         }
     }
@@ -616,14 +626,6 @@ namespace FluentForm\App\Modules\Component {
         {
         }
         /**
-         * Register the Scripts that the inner components can use
-         *
-         * @return  void
-         */
-        private function registerScripts()
-        {
-        }
-        /**
          * Process the output HTML to generate the default values.
          *
          * @param string $output
@@ -721,6 +723,9 @@ namespace FluentForm\App\Modules {
         {
         }
         private function getInstallUrl($plugin)
+        {
+        }
+        private function getUnreadCount($formId)
         {
         }
     }
@@ -958,14 +963,14 @@ namespace FluentForm\App\Modules\Form {
          * 
          * @return json respoonse
          */
-        public function record()
+        public function record($formId)
         {
         }
         /**
          * Save form view analytics data
          * @return void
          */
-        private function saveViewAnalytics()
+        private function saveViewAnalytics($formId)
         {
         }
         /**
@@ -1086,6 +1091,9 @@ namespace FluentForm\App\Modules\Form {
         {
         }
         public function getAllForms()
+        {
+        }
+        private function getUnreadCount($formId)
         {
         }
     }
@@ -1214,7 +1222,10 @@ namespace FluentForm\App\Modules\Form {
          *
          * @param int $insertId
          */
-        private function sendResponse($insertId)
+        private function sendResponse($insertId, $returnData)
+        {
+        }
+        private function getReturnData($insertId)
         {
         }
         /**
@@ -1594,6 +1605,9 @@ namespace FluentForm\App\Modules\Form {
         public function import()
         {
         }
+        public function getFormMetas($formId)
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules {
@@ -1651,6 +1665,15 @@ namespace FluentForm\App\Modules\Registerer {
         public function __construct(\FluentForm\Framework\Foundation\Application $application)
         {
         }
+        public function reisterScripts()
+        {
+        }
+        private function isFluentPages()
+        {
+        }
+        public function enqueuePageScripts()
+        {
+        }
         /**
          * Register menu and sub-menus.
          */
@@ -1661,6 +1684,9 @@ namespace FluentForm\App\Modules\Registerer {
         {
         }
         public function renderFormAdminRoute()
+        {
+        }
+        private function renderFormInnerPages()
         {
         }
         public function renderSettings($form_id)
@@ -3987,7 +4013,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
          * Container wrapper class
          * @var string
          */
-        protected $wrapperClass = 'ff-t-container';
+        protected $wrapperClass = 'ff-t-container ff-column-container';
         /**
          * Compile and echo the html element
          * @param  array $data [element data]
@@ -4342,6 +4368,7 @@ namespace FluentForm\App\Services\FormBuilder {
          * @var array
          */
         public $validationRules = array();
+        public $tabIndex = 1;
         /**
          * Construct the form builder instance
          * @param Framework\Foundation\Application $app
@@ -4355,6 +4382,9 @@ namespace FluentForm\App\Services\FormBuilder {
          * @return mixed
          */
         public function build($form)
+        {
+        }
+        public function buildFormBody($form)
         {
         }
         /**
@@ -16186,7 +16216,8 @@ namespace FluentForm\Framework\Foundation {
         /**
          * Conveniently start the framework
          * @param  string $file
-         * @return $ */
+         * @return $
+         */
         public static function run($file)
         {
         }
