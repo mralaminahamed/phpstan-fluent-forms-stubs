@@ -252,10 +252,10 @@ namespace FluentForm\App\Databases\Migrations {
 namespace FluentForm\App\Helpers {
     class Helper
     {
-        static $tabIndex = 0;
-        static $formInstance = 0;
-        static $loadedForms = [];
-        static $tabIndexStatus = 'na';
+        public static $tabIndex = 0;
+        public static $formInstance = 0;
+        public static $loadedForms = [];
+        public static $tabIndexStatus = 'na';
         /**
          * Sanitize form inputs recursively.
          *
@@ -376,6 +376,21 @@ namespace FluentForm\App\Helpers {
         {
         }
         public static function getForms()
+        {
+        }
+        public static function replaceBrTag($content, $with = '')
+        {
+        }
+        public static function hasBrTag($content)
+        {
+        }
+        public static function sanitizeForCSV($content)
+        {
+        }
+        public static function getForm($id)
+        {
+        }
+        public static function shouldHidePassword($formId)
         {
         }
     }
@@ -1738,6 +1753,12 @@ namespace FluentForm\App\Modules\Form {
         {
         }
         /**
+         * Validate turnstile.
+         */
+        private function validateTurnstile()
+        {
+        }
+        /**
          * Validate form data based on the form restrictions settings.
          *
          * @param $fields
@@ -2391,10 +2412,34 @@ namespace FluentForm\App\Modules\Registerer {
         public function renderSmtpPromo()
         {
         }
-        private function getAdminI18n()
+        private function usedNameAttributes($formId)
         {
         }
-        private function usedNameAttributes($formId)
+    }
+    class TranslationString
+    {
+        public static function getAdminI18n()
+        {
+        }
+        public static function getSettingsI18n()
+        {
+        }
+        public static function getGlobalSettingsI18n()
+        {
+        }
+        public static function getEditorI18n()
+        {
+        }
+        public static function getEntriesI18n()
+        {
+        }
+        public static function getAddOnModuleI18n()
+        {
+        }
+        public static function getTransferModuleI18n()
+        {
+        }
+        public static function getPaymentsI18n()
         {
         }
     }
@@ -2467,6 +2512,9 @@ namespace FluentForm\App\Modules\Settings {
         public function storeHCaptcha()
         {
         }
+        public function storeTurnstile()
+        {
+        }
         public function storeSaveGlobalLayoutSettings()
         {
         }
@@ -2519,6 +2567,22 @@ namespace FluentForm\App\Modules\Track {
         {
         }
         private function isLocalhost()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Turnstile {
+    class Turnstile
+    {
+        /**
+         * Verify turnstile response.
+         *
+         * @param string $token response from the user.
+         * @param null $secret provided or already stored secret key.
+         *
+         * @return bool
+         */
+        public static function validate($token, $secret)
         {
         }
     }
@@ -5382,6 +5446,18 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         {
         }
     }
+    class Turnstile extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
+    {
+        /**
+         * Compile and echo the html element
+         * @param  array $data [element data]
+         * @param  stdClass $form [Form Object]
+         * @return void
+         */
+        public function compile($data, $form)
+        {
+        }
+    }
 }
 namespace FluentForm\App\Services\FormBuilder {
     class EditorShortCode
@@ -6334,6 +6410,11 @@ namespace FluentForm\App\Services\Integrations\Slack {
          * @param $form
          */
         public static function handle($feed, $formData, $form, $entry)
+        {
+        }
+        // @todo make helper function for formatting in MarkDown Format
+        // make tabular-grid value markdown format
+        protected static function getTabularGridMarkdownValue($girdData, $field = [], $rowJoiner = '<br />', $colJoiner = ', ')
         {
         }
     }
@@ -18404,6 +18485,9 @@ namespace {
     {
     }
     function fluentform_upgrade_url()
+    {
+    }
+    function fluentform_integrations_url()
     {
     }
     function fluentFormApi($module = 'forms')
