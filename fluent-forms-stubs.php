@@ -286,6 +286,15 @@ namespace FluentForm\App\Modules\Component {
         {
         }
         /**
+         * Get all available shortcodes for editor
+         *
+         * @return void
+         * @throws \Exception
+         */
+        public function getAllEditorShortcodes()
+        {
+        }
+        /**
          * Register the form renderer shortcode
          *
          * @return  void
@@ -481,11 +490,13 @@ namespace FluentForm\App\Modules\Entries {
         {
         }
         /**
-         * @param $formId
-         * @todo: Implement Caching mechanism so we don't have to parse these things for every request
+         * @param       $form
+         * @param array $with
+         *
          * @return array
+         * @todo: Implement Caching mechanism so we don't have to parse these things for every request
          */
-        private function getFormInputsAndLabels($form)
+        private function getFormInputsAndLabels($form, $with = ['admin_label', 'raw'])
         {
         }
         public function getNotes()
@@ -679,6 +690,15 @@ namespace FluentForm\App\Modules\Form {
         public static function formatValue($value)
         {
         }
+        public static function formatRepeatFieldValue($value, $field, $form_id)
+        {
+        }
+        public static function formatTabularGridFieldValue($value, $field, $form_id)
+        {
+        }
+        public static function makeTabularData($data)
+        {
+        }
         /**
          * Format input_name field value by concatenating all name fields.
          *
@@ -856,6 +876,9 @@ namespace FluentForm\App\Modules\Form {
          * Get all the flatten form inputs for shortcode generation.
          */
         public function index()
+        {
+        }
+        public function supportedConditionalFields()
         {
         }
     }
@@ -1465,9 +1488,6 @@ namespace FluentForm\App\Modules\Settings {
         {
         }
         public function storeMailChimpSettings()
-        {
-        }
-        public function storeActiveCampaignSettings()
         {
         }
     }
@@ -3004,7 +3024,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
          * @param  array  $data
          * @return string [label Html element]
          */
-        protected function buildElementLabel($data)
+        protected function buildElementLabel($data, $form)
         {
         }
         /**
@@ -3229,6 +3249,27 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         {
         }
     }
+    class TabularGrid extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
+    {
+        /**
+         * Compile and echo the html element
+         * @param  array $data [element data]
+         * @param  stdClass $form [Form Object]
+         * @return viod
+         */
+        public function compile($data, $form)
+        {
+        }
+        public function makeTabularData($data)
+        {
+        }
+        protected function getElementHelpMessage($data, $form)
+        {
+        }
+        protected function setClasses(&$data)
+        {
+        }
+    }
     class TermsAndConditions extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
     {
         /**
@@ -3274,6 +3315,30 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     }
 }
 namespace FluentForm\App\Services\FormBuilder {
+    class EditorShortcode
+    {
+        public static function getGeneralShortCodes()
+        {
+        }
+        public static function getFormShortCodes($form)
+        {
+        }
+        public static function getShortCodes($form)
+        {
+        }
+        public static function parse($string, $data, callable $arrayFormatter = null)
+        {
+        }
+        public static function parseArray($string, $data, $arrayFormatter)
+        {
+        }
+        public static function parseString($string, $data, callable $arrayFormatter = null)
+        {
+        }
+        protected static function getForm($form)
+        {
+        }
+    }
     class EditorShortcodeParser
     {
         /**
@@ -3476,8 +3541,160 @@ namespace FluentForm\App\Services\FormBuilder {
         {
         }
     }
+    class NotificationParser
+    {
+        protected static $cache = null;
+        /**
+         * Parse Norifications
+         * @param array $notifications
+         * @param int $insertId
+         * @param array $data
+         * @param object $form
+         * @return  bool $cache
+         */
+        public static function parse($notifications, $insertId, $data, $form, $cache = true)
+        {
+        }
+        protected static function setRecepient(&$notification, $data)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\WPAsync {
+    /**
+     * Abstract WPAsyncRequest class.
+     *
+     * @abstract
+     */
+    abstract class WPAsyncRequest
+    {
+        /**
+         * Prefix
+         *
+         * (default value: 'wp')
+         *
+         * @var string
+         * @access protected
+         */
+        protected $prefix = 'wp';
+        /**
+         * Action
+         *
+         * (default value: 'async_request')
+         *
+         * @var string
+         * @access protected
+         */
+        protected $action = 'async_request';
+        /**
+         * Identifier
+         *
+         * @var mixed
+         * @access protected
+         */
+        protected $identifier;
+        /**
+         * Data
+         *
+         * (default value: array())
+         *
+         * @var array
+         * @access protected
+         */
+        protected $data = array();
+        /**
+         * Initiate new async request
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Set data used during the request
+         *
+         * @param array $data Data.
+         *
+         * @return $this
+         */
+        public function data($data)
+        {
+        }
+        /**
+         * Dispatch the async request
+         *
+         * @return array|WP_Error
+         */
+        public function dispatch()
+        {
+        }
+        /**
+         * Get query args
+         *
+         * @return array
+         */
+        protected function get_query_args()
+        {
+        }
+        /**
+         * Get query URL
+         *
+         * @return string
+         */
+        protected function get_query_url()
+        {
+        }
+        /**
+         * Get post args
+         *
+         * @return array
+         */
+        protected function get_post_args()
+        {
+        }
+        /**
+         * Maybe handle
+         *
+         * Check for correct nonce and pass to handler.
+         */
+        public function maybe_handle()
+        {
+        }
+        /**
+         * Handle
+         *
+         * Override this method to perform any actions required
+         * during the async request.
+         */
+        protected abstract function handle();
+    }
 }
 namespace FluentForm\App\Services\FormBuilder\Notifications {
+    class AsyncEmailSender extends \FluentForm\App\Services\WPAsync\WPAsyncRequest
+    {
+        /**
+         * @var null
+         */
+        protected $app = null;
+        /**
+         * @var string
+         */
+        protected $action = 'fluentform_send_mail_async';
+        /**
+         * @var string
+         */
+        protected $class = 'FluentForm\\App\\Services\\FormBuilder\\Notifications\\EmailNotification';
+        public function __construct($app)
+        {
+        }
+        /**
+         * Handle
+         *
+         * Override this method to perform any actions required
+         * during the async request.
+         */
+        public function handle()
+        {
+        }
+    }
     class EmailNotification
     {
         /**
@@ -3504,6 +3721,14 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         {
         }
         /**
+         * Delete attached files from tmp directory
+         * @param  array $attachments
+         * @return void
+         */
+        protected function emptyTmp($attachments)
+        {
+        }
+        /**
          * @param $formId
          * @todo: Implement Caching mechanism so we don't have to parse these things for every request
          * @return array
@@ -3513,7 +3738,117 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         }
     }
 }
+namespace FluentForm\App\Services\FormBuilder {
+    class ShortCodeParser
+    {
+        protected static $form = null;
+        protected static $entry = null;
+        protected static $browser = null;
+        protected static $formFields = null;
+        protected static $store = ['inputs' => null, 'user' => null, 'post' => null, 'other' => null];
+        public static function parse($parsable, $entryId, $data = null, $form = null)
+        {
+        }
+        protected static function setDependencies($entry, $data, $form)
+        {
+        }
+        protected static function setEntry($entry)
+        {
+        }
+        protected static function setdata($data)
+        {
+        }
+        protected static function setForm($form)
+        {
+        }
+        protected static function parseShortCodeFromArray($parsable)
+        {
+        }
+        protected static function parseShortCodeFromString($parsable)
+        {
+        }
+        protected static function getFormData($key)
+        {
+        }
+        protected static function getUserData($key)
+        {
+        }
+        protected static function getPostData($key)
+        {
+        }
+        protected static function getOtherData($key)
+        {
+        }
+        protected static function getForm()
+        {
+        }
+        protected static function getEntry()
+        {
+        }
+        protected static function getRequest()
+        {
+        }
+        protected static function getUserAgent()
+        {
+        }
+    }
+}
 namespace FluentForm\App\Services\Integrations {
+    class BaseIntegration
+    {
+        private $setting_key = '';
+        private $isMultiple = false;
+        private $formId = false;
+        private $isJsonValue = true;
+        public function __construct($settings_key = '', $form_id = false, $isMultiple = false)
+        {
+        }
+        public function setSettingsKey($key)
+        {
+        }
+        public function setIsMultiple($isMultiple)
+        {
+        }
+        public function setFormId($formId)
+        {
+        }
+        public function setJasonType($type)
+        {
+        }
+        public function save($settings)
+        {
+        }
+        public function update($settingsId, $settings)
+        {
+        }
+        public function get($settingsId)
+        {
+        }
+        public function getAll()
+        {
+        }
+        public function delete($settingsId)
+        {
+        }
+        protected function validate($notification)
+        {
+        }
+        private function getFormattedValue($setting)
+        {
+        }
+        public function deleteAll()
+        {
+        }
+    }
+    trait LogResponseTrait
+    {
+        protected function logResponse($response, $feed, $data, $form, $entryId, $status)
+        {
+        }
+        protected function getApiResponseMessage($response, $status)
+        {
+        }
+    }
     /**
      * Super-simple, minimum abstraction MailChimp API v3 wrapper
      * MailChimp API v3: http://developer.mailchimp.com
@@ -3728,6 +4063,379 @@ namespace FluentForm\App\Services\Integrations {
          * @return int  HTTP status code
          */
         private function findHTTPStatus($response, $formattedResponse)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Integrations\MailChimp {
+    /**
+     * Super-simple, minimum abstraction MailChimp API v3 wrapper
+     * MailChimp API v3: http://developer.mailchimp.com
+     * This wrapper: https://github.com/drewm/mailchimp-api
+     *
+     * @author Drew McLellan <drew.mclellan@gmail.com>
+     * @version 2.4
+     */
+    class MailChimp
+    {
+        private $api_key;
+        private $api_endpoint = 'https://<dc>.api.mailchimp.com/3.0';
+        const TIMEOUT = 10;
+        /*  SSL Verification
+                Read before disabling:
+                http://snippets.webaware.com.au/howto/stop-turning-off-curlopt_ssl_verifypeer-and-fix-your-php-config/
+            */
+        public $verify_ssl = true;
+        private $request_successful = false;
+        private $last_error = '';
+        private $last_response = array();
+        private $last_request = array();
+        /**
+         * Create a new instance
+         * @param string $api_key Your MailChimp API key
+         * @param string $api_endpoint Optional custom API endpoint
+         * @throws \Exception
+         */
+        public function __construct($api_key, $api_endpoint = null)
+        {
+        }
+        /**
+         * @return string The url to the API endpoint
+         */
+        public function getApiEndpoint()
+        {
+        }
+        /**
+         * Convert an email address into a 'subscriber hash' for identifying the subscriber in a method URL
+         * @param   string $email The subscriber's email address
+         * @return  string          Hashed version of the input
+         */
+        public function subscriberHash($email)
+        {
+        }
+        /**
+         * Was the last request successful?
+         * @return bool  True for success, false for failure
+         */
+        public function success()
+        {
+        }
+        /**
+         * Get the last error returned by either the network transport, or by the API.
+         * If something didn't work, this should contain the string describing the problem.
+         * @return  string|false  describing the error
+         */
+        public function getLastError()
+        {
+        }
+        /**
+         * Get an array containing the HTTP headers and the body of the API response.
+         * @return array  Assoc array with keys 'headers' and 'body'
+         */
+        public function getLastResponse()
+        {
+        }
+        /**
+         * Get an array containing the HTTP headers and the body of the API request.
+         * @return array  Assoc array
+         */
+        public function getLastRequest()
+        {
+        }
+        /**
+         * Make an HTTP DELETE request - for deleting data
+         * @param   string $method URL of the API request method
+         * @param   array $args Assoc array of arguments (if any)
+         * @param   int $timeout Timeout limit for request in seconds
+         * @return  array|false   Assoc array of API response, decoded from JSON
+         */
+        public function delete($method, $args = array(), $timeout = self::TIMEOUT)
+        {
+        }
+        /**
+         * Make an HTTP GET request - for retrieving data
+         * @param   string $method URL of the API request method
+         * @param   array $args Assoc array of arguments (usually your data)
+         * @param   int $timeout Timeout limit for request in seconds
+         * @return  array|false   Assoc array of API response, decoded from JSON
+         */
+        public function get($method, $args = array(), $timeout = self::TIMEOUT)
+        {
+        }
+        /**
+         * Make an HTTP PATCH request - for performing partial updates
+         * @param   string $method URL of the API request method
+         * @param   array $args Assoc array of arguments (usually your data)
+         * @param   int $timeout Timeout limit for request in seconds
+         * @return  array|false   Assoc array of API response, decoded from JSON
+         */
+        public function patch($method, $args = array(), $timeout = self::TIMEOUT)
+        {
+        }
+        /**
+         * Make an HTTP POST request - for creating and updating items
+         * @param   string $method URL of the API request method
+         * @param   array $args Assoc array of arguments (usually your data)
+         * @param   int $timeout Timeout limit for request in seconds
+         * @return  array|false   Assoc array of API response, decoded from JSON
+         */
+        public function post($method, $args = array(), $timeout = self::TIMEOUT)
+        {
+        }
+        /**
+         * Make an HTTP PUT request - for creating new items
+         * @param   string $method URL of the API request method
+         * @param   array $args Assoc array of arguments (usually your data)
+         * @param   int $timeout Timeout limit for request in seconds
+         * @return  array|false   Assoc array of API response, decoded from JSON
+         */
+        public function put($method, $args = array(), $timeout = self::TIMEOUT)
+        {
+        }
+        /**
+         * Performs the underlying HTTP request. Not very exciting.
+         * @param  string $http_verb The HTTP verb to use: get, post, put, patch, delete
+         * @param  string $method The API method to be called
+         * @param  array $args Assoc array of parameters to be passed
+         * @param int $timeout
+         * @return array|false Assoc array of decoded result
+         * @throws \Exception
+         */
+        private function makeRequest($http_verb, $method, $args = array(), $timeout = self::TIMEOUT)
+        {
+        }
+        /**
+         * @param string $http_verb
+         * @param string $method
+         * @param string $url
+         * @param integer $timeout
+         */
+        private function prepareStateForRequest($http_verb, $method, $url, $timeout)
+        {
+        }
+        /**
+         * Get the HTTP headers as an array of header-name => header-value pairs.
+         * 
+         * The "Link" header is parsed into an associative array based on the
+         * rel names it contains. The original value is available under
+         * the "_raw" key.
+         * 
+         * @param string $headersAsString
+         * @return array
+         */
+        private function getHeadersAsArray($headersAsString)
+        {
+        }
+        /**
+         * Extract all rel => URL pairs from the provided Link header value
+         * 
+         * Mailchimp only implements the URI reference and relation type from
+         * RFC 5988, so the value of the header is something like this:
+         * 
+         * 'https://us13.api.mailchimp.com/schema/3.0/Lists/Instance.json; rel="describedBy", <https://us13.admin.mailchimp.com/lists/members/?id=XXXX>; rel="dashboard"'
+         * 
+         * @param string $linkHeaderAsString
+         * @return array
+         */
+        private function getLinkHeaderAsArray($linkHeaderAsString)
+        {
+        }
+        /**
+         * Encode the data and attach it to the request
+         * @param   resource $ch cURL session handle, used by reference
+         * @param   array $data Assoc array of data to attach
+         */
+        private function attachRequestPayload(&$ch, $data)
+        {
+        }
+        /**
+         * Decode the response and format any error messages for debugging
+         * @param array $response The response from the curl request
+         * @return array|false    The JSON decoded into an array
+         */
+        private function formatResponse($response)
+        {
+        }
+        /**
+         * Do post-request formatting and setting state from the response
+         * @param array $response The response from the curl request
+         * @param string $responseContent The body of the response from the curl request
+         * * @return array    The modified response
+         */
+        private function setResponseState($response, $responseContent, $ch)
+        {
+        }
+        /**
+         * Check if the response was successful or a failure. If it failed, store the error.
+         * @param array $response The response from the curl request
+         * @param array|false $formattedResponse The response body payload from the curl request
+         * @param int $timeout The timeout supplied to the curl request.
+         * @return bool     If the request was successful
+         */
+        private function determineSuccess($response, $formattedResponse, $timeout)
+        {
+        }
+        /**
+         * Find the HTTP status code from the headers or API response body
+         * @param array $response The response from the curl request
+         * @param array|false $formattedResponse The response body payload from the curl request
+         * @return int  HTTP status code
+         */
+        private function findHTTPStatus($response, $formattedResponse)
+        {
+        }
+    }
+    class MailChimpAsyncSubscriber extends \FluentForm\App\Services\WPAsync\WPAsyncRequest
+    {
+        protected $app = null;
+        /**
+         * @var string
+         */
+        protected $action = 'fluentform_subscribe_mailchimp';
+        public function __construct($app)
+        {
+        }
+        /**
+         * Handle
+         *
+         * Override this method to perform any actions required
+         * during the async request.
+         */
+        public function handle()
+        {
+        }
+    }
+    trait MailChimpSubscriber
+    {
+        use \FluentForm\App\Services\Integrations\LogResponseTrait;
+        /**
+         * Enabled MailChimp feed settings.
+         *
+         * @var array $feeds
+         */
+        protected $feeds = [];
+        /**
+         * Required for api response logging
+         * @var string
+         */
+        protected $metaKey = 'fluentform_mailchimp_feed';
+        /**
+         * Form input data.
+         *
+         * @param array $formData
+         */
+        public function setApplicableFeeds($formData)
+        {
+        }
+        /**
+         * Determine if the feed is eligible to be applied.
+         *
+         * @param $feed
+         * @param $formData
+         *
+         * @return bool
+         */
+        public function isApplicable(&$feed, &$formData)
+        {
+        }
+        /**
+         * Subscribe a user to the list on form submission.
+         *
+         * @param $formData
+         */
+        public function subscribe($formData, $form, $entryId)
+        {
+        }
+    }
+    class MailChimpIntegration extends \FluentForm\App\Services\Integrations\BaseIntegration
+    {
+        /**
+         * MailChimp Subscriber that handles & process all the subscribing logics.
+         */
+        use \FluentForm\App\Services\Integrations\MailChimp\MailChimpSubscriber;
+        private $app;
+        private $key = 'mailchimp_feeds';
+        public function __construct(\FluentForm\Framework\Foundation\Application $application)
+        {
+        }
+        public function getMailChimpSettings()
+        {
+        }
+        public function getMailChimpLists()
+        {
+        }
+        public function getMailChimpList()
+        {
+        }
+        public function saveNotification()
+        {
+        }
+        public function deleteNotification()
+        {
+        }
+        private function isConfigured()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Integrations\Slack {
+    class Slack
+    {
+        use \FluentForm\App\Services\Integrations\LogResponseTrait;
+        /**
+         * The slack integration settings of the form.
+         *
+         * @var array $settings
+         */
+        protected $settings = [];
+        /**
+         * Determine whether the slack notification should be sent or not.
+         *
+         * @param $formId
+         *
+         * @return boolean
+         */
+        public function shouldApply($formId)
+        {
+        }
+        /**
+         * Handle slack notifier.
+         *
+         * @param $submissionId
+         * @param $formData
+         * @param $form
+         */
+        public function handle($formData, $form, $submissionId)
+        {
+        }
+        /**
+         * Invoke slack notifier.
+         *
+         * @param $submissionId
+         * @param $formData
+         * @param $form
+         */
+        public static function notify($submissionId, $formData, $form)
+        {
+        }
+    }
+    class SlackAsyncNotifier extends \FluentForm\App\Services\WPAsync\WPAsyncRequest
+    {
+        protected $app = null;
+        /**
+         * @var string
+         */
+        protected $action = 'fluentform_subscribe_slack';
+        public function __construct($app)
+        {
+        }
+        /**
+         * Handle
+         *
+         * Override this method to perform any actions required
+         * during the async request.
+         */
+        public function handle()
         {
         }
     }
@@ -4664,6 +5372,14 @@ namespace FluentForm\App\Services\Parser {
         protected function handleCustomField()
         {
         }
+        /**
+         * Set the raw field of the form field.
+         *
+         * @return $this
+         */
+        protected function setRaw()
+        {
+        }
     }
     class Form
     {
@@ -4978,6 +5694,271 @@ namespace FluentForm\App\Services {
         public static function notify($submissionId, $formData, $form)
         {
         }
+    }
+}
+namespace FluentForm\App\Services\WPAsync {
+    /**
+     * Abstract WPBackgroundProcess class.
+     *
+     * @abstract
+     * @extends WP_Async_Request
+     */
+    abstract class WPBackgroundProcess extends \FluentForm\App\Services\WPAsync\WPAsyncRequest
+    {
+        /**
+         * Action
+         *
+         * (default value: 'background_process')
+         *
+         * @var string
+         * @access protected
+         */
+        protected $action = 'background_process';
+        /**
+         * Start time of current process.
+         *
+         * (default value: 0)
+         *
+         * @var int
+         * @access protected
+         */
+        protected $start_time = 0;
+        /**
+         * Cron_hook_identifier
+         *
+         * @var mixed
+         * @access protected
+         */
+        protected $cron_hook_identifier;
+        /**
+         * Cron_interval_identifier
+         *
+         * @var mixed
+         * @access protected
+         */
+        protected $cron_interval_identifier;
+        /**
+         * Initiate new background process
+         */
+        public function __construct()
+        {
+        }
+        /**
+         * Dispatch
+         *
+         * @access public
+         * @return void
+         */
+        public function dispatch()
+        {
+        }
+        /**
+         * Push to queue
+         *
+         * @param mixed $data Data.
+         *
+         * @return $this
+         */
+        public function push_to_queue($data)
+        {
+        }
+        /**
+         * Save queue
+         *
+         * @return $this
+         */
+        public function save()
+        {
+        }
+        /**
+         * Update queue
+         *
+         * @param string $key Key.
+         * @param array  $data Data.
+         *
+         * @return $this
+         */
+        public function update($key, $data)
+        {
+        }
+        /**
+         * Delete queue
+         *
+         * @param string $key Key.
+         *
+         * @return $this
+         */
+        public function delete($key)
+        {
+        }
+        /**
+         * Generate key
+         *
+         * Generates a unique key based on microtime. Queue items are
+         * given a unique key so that they can be merged upon save.
+         *
+         * @param int $length Length.
+         *
+         * @return string
+         */
+        protected function generate_key($length = 64)
+        {
+        }
+        /**
+         * Maybe process queue
+         *
+         * Checks whether data exists within the queue and that
+         * the process is not already running.
+         */
+        public function maybe_handle()
+        {
+        }
+        /**
+         * Is queue empty
+         *
+         * @return bool
+         */
+        protected function is_queue_empty()
+        {
+        }
+        /**
+         * Is process running
+         *
+         * Check whether the current process is already running
+         * in a background process.
+         */
+        protected function is_process_running()
+        {
+        }
+        /**
+         * Lock process
+         *
+         * Lock the process so that multiple instances can't run simultaneously.
+         * Override if applicable, but the duration should be greater than that
+         * defined in the time_exceeded() method.
+         */
+        protected function lock_process()
+        {
+        }
+        /**
+         * Unlock process
+         *
+         * Unlock the process so that other instances can spawn.
+         *
+         * @return $this
+         */
+        protected function unlock_process()
+        {
+        }
+        /**
+         * Get batch
+         *
+         * @return stdClass Return the first batch from the queue
+         */
+        protected function get_batch()
+        {
+        }
+        /**
+         * Handle
+         *
+         * Pass each queue item to the task handler, while remaining
+         * within server memory and time limit constraints.
+         */
+        protected function handle()
+        {
+        }
+        /**
+         * Memory exceeded
+         *
+         * Ensures the batch process never exceeds 90%
+         * of the maximum WordPress memory.
+         *
+         * @return bool
+         */
+        protected function memory_exceeded()
+        {
+        }
+        /**
+         * Get memory limit
+         *
+         * @return int
+         */
+        protected function get_memory_limit()
+        {
+        }
+        /**
+         * Time exceeded.
+         *
+         * Ensures the batch never exceeds a sensible time limit.
+         * A timeout limit of 30s is common on shared hosting.
+         *
+         * @return bool
+         */
+        protected function time_exceeded()
+        {
+        }
+        /**
+         * Complete.
+         *
+         * Override if applicable, but ensure that the below actions are
+         * performed, or, call parent::complete().
+         */
+        protected function complete()
+        {
+        }
+        /**
+         * Schedule cron healthcheck
+         *
+         * @access public
+         * @param mixed $schedules Schedules.
+         * @return mixed
+         */
+        public function schedule_cron_healthcheck($schedules)
+        {
+        }
+        /**
+         * Handle cron healthcheck
+         *
+         * Restart the background process if not already running
+         * and data exists in the queue.
+         */
+        public function handle_cron_healthcheck()
+        {
+        }
+        /**
+         * Schedule event
+         */
+        protected function schedule_event()
+        {
+        }
+        /**
+         * Clear scheduled event
+         */
+        protected function clear_scheduled_event()
+        {
+        }
+        /**
+         * Cancel Process
+         *
+         * Stop processing queue items, clear cronjob and delete batch.
+         *
+         */
+        public function cancel_process()
+        {
+        }
+        /**
+         * Task
+         *
+         * Override this method to perform any actions required on each
+         * queue item. Return the modified item for further processing
+         * in the next pass through. Or, return false to remove the
+         * item from the queue.
+         *
+         * @param mixed $item Queue item to iterate over.
+         *
+         * @return mixed
+         */
+        protected abstract function task($item);
     }
 }
 namespace League\Csv\Config {
@@ -9395,7 +10376,7 @@ namespace FluentForm\Framework\Foundation {
          * @param  integer $acceptedArgs
          * @return Framework\Foundation\HookReference
          */
-        public function addfilter($tag, $handler, $priority = 10, $acceptedArgs = 1)
+        public function addFilter($tag, $handler, $priority = 10, $acceptedArgs = 1)
         {
         }
         /**
@@ -10113,6 +11094,22 @@ namespace FluentForm\Framework\Request {
         public function trimAndStrip($value)
         {
         }
+        /**
+         * Variable exists
+         * @param  string $key
+         * @return bool
+         */
+        public function exists($key)
+        {
+        }
+        /**
+         * Variable exists and has truthy value
+         * @param  string $key
+         * @return bool
+         */
+        public function has($key)
+        {
+        }
         public function set($key, $value)
         {
         }
@@ -10385,6 +11382,9 @@ namespace {
     function fluentFormEditorShortCodes()
     {
     }
+    function fluentFormGetAllEditorShortCodes($form)
+    {
+    }
     /**
      * Recursively implode a multi-dimentional array
      * @param string $glue
@@ -10392,6 +11392,18 @@ namespace {
      * @return string
      */
     function implodeRecursive($glue, array $array)
+    {
+    }
+    function fluentformRegisterSlackAsyncSubscriber($app)
+    {
+    }
+    function fluentformRegisterMailChimpAsyncSubscriber($app)
+    {
+    }
+    function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
+    {
+    }
+    function fluentform_after_submission_api_response_failed($form, $entryId, $data, $feed, $res, $msg = '')
     {
     }
     function fluentValidator($data = [], $rules = [], $messages = [])
