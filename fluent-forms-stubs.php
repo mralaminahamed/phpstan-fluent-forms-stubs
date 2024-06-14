@@ -208,7 +208,7 @@ namespace FluentForm\App\Modules {
          *
          * @var string
          */
-        protected $addOnsFetchUrl = 'https://wpfluentform.com/add-ons.json';
+        protected $addOnsFetchUrl = 'https://wpmanageninja.com/add-ons.json';
         /**
          * Render the add-ons list page.
          */
@@ -881,6 +881,9 @@ namespace FluentForm\App\Modules\Form {
         public function supportedConditionalFields()
         {
         }
+        public function filterEditorFields($fields)
+        {
+        }
     }
     class Predefined extends \FluentForm\App\Modules\Form\Form
     {
@@ -1377,6 +1380,14 @@ namespace FluentForm\App\Modules\Registerer {
         {
         }
         public function renderSettings($form_id)
+        {
+        }
+        /**
+         * Remove the inactive addOn menu items
+         * @param  string  $addOn
+         * @return boolean
+         */
+        public function filterFormSettingsMenu($settingsMenus, $form_id)
         {
         }
         public function renderFormSettings($form_id)
@@ -3584,8 +3595,10 @@ namespace FluentForm\App\Services\WPAsync {
          *
          * @var string
          * @access protected
+         *
+         * Must Declare this Property in Derrived Class
+         * protected $action = 'some_unique_async_request';
          */
-        protected $action = 'async_request';
         /**
          * Identifier
          *
@@ -10753,7 +10766,7 @@ namespace FluentForm\Framework\Foundation {
         {
         }
         /**
-         * Register "plugins_loaded" hook to run the plugin
+         * Register "init" hook to run the plugin
          * @return void
          */
         public static function registerApplication()
@@ -11088,10 +11101,14 @@ namespace FluentForm\Framework\Request {
         public function __construct($app, $get, $post, $files)
         {
         }
-        public function clean($request)
-        {
-        }
-        public function trimAndStrip($value)
+        /**
+         * Clean up the slashes from GET/POST added by WP
+         * using "wp_magic_quotes" function in load.php.
+         * 
+         * @param  array $data
+         * @return array
+         */
+        public function clean($data)
         {
         }
         /**
@@ -11127,10 +11144,10 @@ namespace FluentForm\Framework\Request {
         public function files()
         {
         }
-        public function query($key = null)
+        public function query($key = null, $default = null)
         {
         }
-        public function post($key = null)
+        public function post($key = null, $default = null)
         {
         }
         public function only($args)
@@ -11149,13 +11166,13 @@ namespace FluentForm\Framework\Request {
         public function getIp()
         {
         }
-        public function server($key = null)
+        public function server($key = null, $default = null)
         {
         }
-        public function header($key = null)
+        public function header($key = null, $default = null)
         {
         }
-        public function cookie($key = null)
+        public function cookie($key = null, $default = null)
         {
         }
         /**
@@ -11354,6 +11371,9 @@ namespace FluentForm {
     }
 }
 namespace {
+    function wpFluentForm($key = \null)
+    {
+    }
     function dd()
     {
     }
@@ -11394,10 +11414,13 @@ namespace {
     function implodeRecursive($glue, array $array)
     {
     }
-    function fluentformRegisterSlackAsyncSubscriber($app)
+    function getFluentFormCountryList()
     {
     }
-    function fluentformRegisterMailChimpAsyncSubscriber($app)
+    function fluentFormWasSubmitted($action = 'fluentform_submit')
+    {
+    }
+    function isWpAsyncRequest($action)
     {
     }
     function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
