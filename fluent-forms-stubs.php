@@ -420,6 +420,8 @@ namespace FluentForm\App\Helpers {
 namespace FluentForm\App\Modules\Acl {
     class Acl
     {
+        static $capability = '';
+        static $role = '';
         public static function getPermissionSet()
         {
         }
@@ -442,13 +444,65 @@ namespace FluentForm\App\Modules\Acl {
         public static function verify($permission, $formId = null, $message = 'You do not have permission to perform this action.', $json = true)
         {
         }
-        public static function hasPermission($permission, $formId = false)
+        public static function hasPermission($permissions, $formId = false)
         {
         }
         public static function hasAnyFormPermission($form_id = false)
         {
         }
+        public static function getCurrentUserCapability()
+        {
+        }
+        public static function findUserCapability($user)
+        {
+        }
+        public static function getCurrentUserRole()
+        {
+        }
         public static function verifyNonce($key = 'fluent_forms_admin_nonce')
+        {
+        }
+        public static function getReadablePermissions()
+        {
+        }
+        public static function getUserPermissions($user = false)
+        {
+        }
+        public static function isSuperMan($user = false)
+        {
+        }
+        public static function getCurrentUserPermissions()
+        {
+        }
+        public static function attachPermissions($user, $permissions)
+        {
+        }
+    }
+    class Managers
+    {
+        /**
+         * @var \FluentForm\Framework\Request\Request $request
+         */
+        protected $request;
+        public function __construct()
+        {
+        }
+        public function get()
+        {
+        }
+        public function store()
+        {
+        }
+        public function remove()
+        {
+        }
+        private function validate()
+        {
+        }
+        private function sendError($data, $code = 423)
+        {
+        }
+        public function dependencyValidate($permissions)
         {
         }
     }
@@ -813,6 +867,12 @@ namespace FluentForm\App\Modules\Component {
          */
         protected $app = null;
         /**
+         * Determine whether to register Elementor PopUp handler.
+         *
+         * @var bool
+         */
+        protected $elementorPopUpHandler = false;
+        /**
          * Biuld the instance of this class
          *
          * @param \FluentForm\Framework\Foundation\Application $app
@@ -1148,6 +1208,9 @@ namespace FluentForm\App\Modules\Entries {
         public function changeEntryUser()
         {
         }
+        public function getAvailableForms()
+        {
+        }
     }
     class Export
     {
@@ -1209,6 +1272,12 @@ namespace FluentForm\App\Modules\Entries {
         {
         }
         public function getSubFieldInputReport($formId, $fieldNames, $whereClasuses)
+        {
+        }
+        protected function getFormattedReportsForSubInputs($reports, $formId, $whereClasuses)
+        {
+        }
+        protected function setReportForSubInput($report, &$formattedReports)
         {
         }
         public function getEntryTotal($fieldName, $formId, $whereClasuses)
@@ -1402,6 +1471,9 @@ namespace FluentForm\App\Modules\Form {
         private function validate()
         {
         }
+        public function convertToConversational()
+        {
+        }
         private function getAdminPermalink($route, $form)
         {
         }
@@ -1483,14 +1555,14 @@ namespace FluentForm\App\Modules\Form {
     /**
      * @method array getShortCodeInputs(\stdClass $form, array $with = ['admin_label'])
      * @method array getValidations(\stdClass $form, array $inputs, array $fields = [])
-     * @method array getElement(\stdClass $form, string $name, array $with = [])
+     * @method array getElement(\stdClass $form, string|array $name, array $with = [])
      * @method boolean hasElement(\stdClass $form, string $name)
      * @method boolean hasPaymentFields(\stdClass $form)
      * @method array getPaymentFields(\stdClass $form, $with = [])
      * @method array getPaymentInputFields(\stdClass $form, $with = [])
      * @method array getAttachmentInputFields(\stdClass $form, $with = [])
      * @method boolean hasRequiredFields(\stdClass $form, array $fields)
-     * @method array getInputsByElementTypes(\stdClass $form, array $elements)
+     * @method array getInputsByElementTypes(\stdClass $form, array $elements, array $with = [])
      * @method array|null getField(\stdClass $form, string|array $element, string|array $attribute, array $with = [])
      */
     class FormFieldsParser
@@ -1545,7 +1617,7 @@ namespace FluentForm\App\Modules\Form {
          */
         protected $formData;
         /**
-         * The fluent form object.
+         * The Fluent Forms object.
          *
          * @var \stdClass
          */
@@ -4443,6 +4515,9 @@ namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
         public static function convert($form)
         {
         }
+        public static function convertExistingForm($form)
+        {
+        }
         public static function fieldTypes()
         {
         }
@@ -4735,7 +4810,7 @@ namespace FluentForm\App\Services\FluentConversational\Classes {
         private function getExtraHiddenInputs($formId)
         {
         }
-        private function getRandomPhoto()
+        public function getRandomPhoto()
         {
         }
         private function renderFormHtml($formId, $providedKey = '')
@@ -4749,7 +4824,7 @@ namespace FluentForm\App\Services\FluentConversational\Classes {
         }
         /**
          * Get the payment configuration of this form.
-         * 
+         *
          * @param $form
          */
         private function getPaymentConfig($form)
@@ -6022,6 +6097,9 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         public function getMergeFields($list, $listId, $formId)
         {
         }
+        public function findMergeFields($listId)
+        {
+        }
         public function fetchInterestGroups()
         {
         }
@@ -6543,7 +6621,7 @@ namespace FluentForm\App\Services\Parser {
          */
         protected $with;
         /**
-         * The supported form input types defined for Fluent Form.
+         * The supported form input types defined for Fluent Forms.
          *
          * @var array
          */
@@ -18099,6 +18177,9 @@ namespace {
     {
     }
     function fluentFormApi($module = 'forms')
+    {
+    }
+    function fluentFormGetRandomPhoto()
     {
     }
     function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
