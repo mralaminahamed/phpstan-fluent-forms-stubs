@@ -37096,6 +37096,26 @@ namespace FluentForm\Framework\Validator {
         protected function presentOrRuleIsImplicit($rule, $attribute, $value)
         {
         }
+        /**
+         * Determine if the given attribute has a rule in the given set.
+         *
+         * @param string $attribute
+         * @param string|array $rules
+         * @return bool
+         */
+        public function hasRule($attribute, $rules)
+        {
+        }
+        /**
+         * Get a rule and its parameters for a given attribute.
+         *
+         * @param string $attribute
+         * @param string|array $rules
+         * @return array|null
+         */
+        protected function getRule($attribute, $rules)
+        {
+        }
     }
 }
 namespace FluentForm\Framework\View {
