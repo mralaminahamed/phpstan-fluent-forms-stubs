@@ -1174,6 +1174,9 @@ namespace FluentForm\App\Modules\Form {
         public function updateMeta($formId, $metaKey, $metaValue)
         {
         }
+        public function deleteMeta($formId, $metaKey)
+        {
+        }
         /**
          * Find/Read a from from the database
          * @return void
@@ -4661,7 +4664,7 @@ namespace FluentForm\App\Services\FormBuilder {
         private static $handlers = ['ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'http_referer' => 'parseWPProperties', 'wp.admin_email' => 'parseWPProperties', 'wp.site_url' => 'parseWPProperties', 'wp.site_title' => 'parseWPProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties', 'get.param_name' => 'parseQueryParam'];
         /**
          * Filter dynamic shortcodes in input value
-         * @param  string $value
+         * @param string $value
          * @return string
          */
         public static function filter($value, $form)
@@ -4669,7 +4672,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse the curly braced shortcode into array
-         * @param  string $value
+         * @param string $value
          * @return mixed
          */
         public static function parseValue($value)
@@ -4680,15 +4683,15 @@ namespace FluentForm\App\Services\FormBuilder {
          */
         /**
          * Parse loggedin user properties
-         * @param  string $value
+         * @param string $value
          * @return string
          */
         private static function parseUserProperties($value, $form = null)
         {
         }
         /**
-         * Parse loggedin user properties
-         * @param  string $value
+         * Parse embedded post properties
+         * @param string $value
          * @return string
          */
         private static function parsePostProperties($value, $form = null)
@@ -4696,7 +4699,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse WP Properties
-         * @param  string $value
+         * @param string $value
          * @return string
          */
         private static function parseWPProperties($value, $form = null)
@@ -4704,7 +4707,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse browser/user-agent properties
-         * @param  string $value
+         * @param string $value
          * @return string
          */
         private static function parseBrowserProperties($value, $form = null)
@@ -4712,7 +4715,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse ip shortcode
-         * @param  string $value
+         * @param string $value
          * @return string
          */
         private static function parseIp($value, $form = null)
@@ -4720,7 +4723,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse date shortcode
-         * @param  string $value
+         * @param string $value
          * @return string
          */
         private static function parseDate($value, $form = null)
@@ -4729,8 +4732,8 @@ namespace FluentForm\App\Services\FormBuilder {
         /**
          * Parse request query param.
          *
-         * @param  string $value
-         * @param  \stdClass $form
+         * @param string $value
+         * @param \stdClass $form
          * @return string
          */
         public static function parseQueryParam($value)
