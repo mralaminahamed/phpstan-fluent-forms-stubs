@@ -5330,7 +5330,10 @@ namespace FluentForm\App\Modules\Form\Settings {
         public function __construct()
         {
         }
-        public function addCssJs($formId, $styles = [])
+        public function addCustomCssJs($formId)
+        {
+        }
+        public function addStylerCSS($formId, $styles = [])
         {
         }
         public function getCss($formId)
@@ -17775,7 +17778,7 @@ namespace FluentForm\App\Services\Scheduler {
 namespace FluentForm\App\Services\Settings {
     class Customizer
     {
-        public function get($formId, $metaKeys = [])
+        public function get($formId, $metaKeys = ['_custom_form_css', '_custom_form_js'])
         {
         }
         public function store($attributes = [])
