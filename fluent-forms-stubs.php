@@ -88,8 +88,6 @@ namespace FluentForm\App\Api {
          * Get Email Notifications as an array
          *
          * @return array
-         *
-         * @throws \WpFluent\Exception
          */
         public function emailNotifications()
         {
@@ -163,100 +161,35 @@ namespace FluentForm\App\Api {
         }
     }
 }
-namespace FluentForm\App\Databases {
-    class DatabaseMigrator
+namespace FluentForm\Framework\Foundation {
+    class App
     {
-        public static function run()
+        protected static $instance = null;
+        public static function setInstance($app)
+        {
+        }
+        public static function getInstance($module = null)
+        {
+        }
+        public static function make($module = null)
+        {
+        }
+        public static function __callStatic($method, $params)
         {
         }
     }
 }
-namespace FluentForm\App\Databases\Migrations {
-    class FormAnalytics
+namespace FluentForm\App {
+    class App extends \FluentForm\Framework\Foundation\App
     {
-        /**
-         * Migrate the table.
-         *
-         * @return void
-         */
-        public static function migrate()
+        // ...
+    }
+    class ComposerScript
+    {
+        public static function postInstall(\Composer\Script\Event $event)
         {
         }
-    }
-    class FormLogs
-    {
-        /**
-         * Migrate the table.
-         *
-         * @return void
-         */
-        public static function migrate()
-        {
-        }
-    }
-    class FormMeta
-    {
-        /**
-         * Migrate the table.
-         *
-         * @return void
-         */
-        public static function migrate()
-        {
-        }
-    }
-    class FormSubmissionDetails
-    {
-        /**
-         * Migrate the table.
-         *
-         * @return void
-         */
-        public static function migrate()
-        {
-        }
-    }
-    class FormSubmissionMeta
-    {
-        /**
-         * Migrate the table.
-         *
-         * @return void
-         */
-        public static function migrate()
-        {
-        }
-    }
-    class FormSubmissions
-    {
-        /**
-         * Migrate the table.
-         *
-         * @return void
-         */
-        public static function migrate($force = false)
-        {
-        }
-    }
-    class Forms
-    {
-        /**
-         * Migrate the table.
-         *
-         * @return void
-         */
-        public static function migrate()
-        {
-        }
-    }
-    class ScheduledActions
-    {
-        /**
-         * Migrate the table.
-         *
-         * @return void
-         */
-        public static function migrate()
+        public static function postUpdate(\Composer\Script\Event $event)
         {
         }
     }
@@ -351,6 +284,9 @@ namespace FluentForm\App\Helpers {
         public static function isUniqueValidation($validation, $field, $formData, $fields, $form)
         {
         }
+        public static function hasPartialEntries($formId)
+        {
+        }
         public static function getNumericFormatters()
         {
         }
@@ -384,7 +320,7 @@ namespace FluentForm\App\Helpers {
         public static function fileUploadLocations()
         {
         }
-        private function unreadCount($formId)
+        public static function unreadCount($formId)
         {
         }
         public static function getForms()
@@ -413,6 +349,46 @@ namespace FluentForm\App\Helpers {
         {
         }
         public static function getInputNameFromShortCode($value)
+        {
+        }
+        public static function getRestInfo()
+        {
+        }
+        public static function getLogInitiator($action, $type = 'log')
+        {
+        }
+    }
+    class IntegrationManagerHelper
+    {
+        protected $settingsKey;
+        protected $formId;
+        protected $isMultiple;
+        protected $integrationService;
+        public function __construct($settingsKey = '', $form_id = false, $isMultiple = false)
+        {
+        }
+        public function get($settingsId)
+        {
+        }
+        public function save($settings)
+        {
+        }
+        public function update($settingsId, $settings)
+        {
+        }
+        public function delete($settingsId)
+        {
+        }
+        public function getAll()
+        {
+        }
+        protected function logResponse($response, $feed, $data, $form, $entryId, $status)
+        {
+        }
+        protected function getApiResponseMessage($response, $status)
+        {
+        }
+        public function getFormattedValue($setting)
         {
         }
     }
@@ -491,6 +467,3303 @@ namespace FluentForm\App\Helpers {
         public static function doNotContains($haystack, $needles)
         {
         }
+        /**
+         * Split string as array of string on given substring.
+         *
+         * @param string       $haystack
+         * @param string|array $needles
+         *
+         * @return array
+         */
+        public static function separateString($haystack, $needles)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Hooks\Handlers {
+    class ActivationHandler
+    {
+        public function handle($network_wide = false)
+        {
+        }
+        public function migrate()
+        {
+        }
+        private function setDefaultGlobalSettings()
+        {
+        }
+        private function setCurrentVersion()
+        {
+        }
+        public function maybeMigrateDB()
+        {
+        }
+        public function migrateGlobalAddOns()
+        {
+        }
+        public function maybeMigrateDefaultForms()
+        {
+        }
+        public function setCronSchedule()
+        {
+        }
+    }
+    class DeactivationHandler
+    {
+        public function handle()
+        {
+        }
+        private function disableCronSchedule()
+        {
+        }
+    }
+    class GlobalNotificationHandler
+    {
+        /**
+         * @param \FluentForm\Framework\Foundation\Application $app
+         */
+        protected $app;
+        /**
+         * @var GlobalNotificationService
+         */
+        private $globalNotificationService;
+        public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        {
+        }
+        public function globalNotify($insertId, $formData, $form)
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Http {
+    abstract class Controller
+    {
+        /**
+         * @var \FluentForm\Framework\Foundation\Application
+         */
+        protected $app = null;
+        /**
+         * @var \FluentForm\Framework\Request\Request
+         */
+        protected $request = null;
+        /**
+         * @var \FluentForm\Framework\Response\Response
+         */
+        protected $response = null;
+        public function __construct()
+        {
+        }
+        public function validate($data, $rules, $messages = [])
+        {
+        }
+        public function json($data = null, $code = 200)
+        {
+        }
+        public function send($data = null, $code = 200)
+        {
+        }
+        public function sendSuccess($data = null, $code = 200)
+        {
+        }
+        public function sendError($data = null, $code = null)
+        {
+        }
+        public function __get($key)
+        {
+        }
+        public function response($data, $code = 200)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Http\Controllers {
+    abstract class Controller extends \FluentForm\Framework\Http\Controller
+    {
+        //
+    }
+    class AdminNoticeController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        private $notice = false;
+        private $noticeDisabledTime = 60 * 60 * 24 * 15;
+        // 15 days
+        private $noticePrefKey = '_fluentform_notice_pref';
+        private $pref = false;
+        public function showNotice()
+        {
+        }
+        public function addNotice($notice)
+        {
+        }
+        public function noticeActions()
+        {
+        }
+        public function renderNotice($notice, $notice_key = false)
+        {
+        }
+        public function hasNotice()
+        {
+        }
+        private function disableNotice($notice_key, $type = 'temp')
+        {
+        }
+        public function getNoticePref()
+        {
+        }
+        public function shouldShowNotice($noticeName)
+        {
+        }
+        private function haveTempHideNotice($noticeName)
+        {
+        }
+        private function hasPermission()
+        {
+        }
+    }
+    class AnalyticsController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        /**
+         * Store Form Analytics data
+         *
+         * @param  \FluentForm\App\Services\Form\FormService $formService
+         * @return \WP_REST_Response
+         */
+        public function store($formId)
+        {
+        }
+        public function reset(\FluentForm\App\Services\Analytics\AnalyticsService $analyticsService, $formId)
+        {
+        }
+    }
+    class FormController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        /**
+         * Get the paginated forms matching search criteria.
+         *
+         * @param  \FluentForm\App\Services\Form\FormService $formService
+         * @return \WP_REST_Response
+         */
+        public function index(\FluentForm\App\Services\Form\FormService $formService)
+        {
+        }
+        /**
+         * Create a form from backend/editor
+         *
+         * @param  \FluentForm\App\Services\Form\FormService $formService
+         * @return \WP_REST_Response
+         */
+        public function store(\FluentForm\App\Services\Form\FormService $formService)
+        {
+        }
+        public function duplicate(\FluentForm\App\Services\Form\FormService $formService)
+        {
+        }
+        public function find(\FluentForm\App\Services\Form\FormService $formService)
+        {
+        }
+        public function delete(\FluentForm\App\Services\Form\FormService $formService)
+        {
+        }
+        public function update(\FluentForm\App\Services\Form\FormService $formService)
+        {
+        }
+        public function convert(\FluentForm\App\Services\Form\FormService $formService)
+        {
+        }
+        public function templates(\FluentForm\App\Services\Form\FormService $formService)
+        {
+        }
+        public function resources(\FluentForm\App\Services\Form\FormService $formService, $formId)
+        {
+        }
+        public function fields(\FluentForm\App\Services\Form\FormService $formService, $formId)
+        {
+        }
+        public function shortcodes(\FluentForm\App\Services\Form\FormService $formService, $formId)
+        {
+        }
+        public function pages(\FluentForm\App\Services\Form\FormService $formService)
+        {
+        }
+        public function findShortCodePage(\FluentForm\App\Services\Form\FormService $formService, $formId)
+        {
+        }
+    }
+    class FormIntegrationController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        public function index(\FluentForm\App\Services\Integrations\FormIntegrationService $integrationService)
+        {
+        }
+        public function find(\FluentForm\App\Services\Integrations\FormIntegrationService $integrationService)
+        {
+        }
+        public function update(\FluentForm\App\Services\Integrations\FormIntegrationService $integrationService)
+        {
+        }
+        public function delete(\FluentForm\App\Services\Integrations\FormIntegrationService $integrationService)
+        {
+        }
+        public function integrationListComponent()
+        {
+        }
+    }
+    class FormSettingsController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        public function index(\FluentForm\App\Services\Settings\SettingsService $settingsService)
+        {
+        }
+        public function general(\FluentForm\App\Services\Settings\SettingsService $settingsService, $formId)
+        {
+        }
+        public function saveGeneral(\FluentForm\App\Services\Settings\SettingsService $settingsService)
+        {
+        }
+        public function store(\FluentForm\App\Services\Settings\SettingsService $settingsService)
+        {
+        }
+        public function remove(\FluentForm\App\Services\Settings\SettingsService $settingsService)
+        {
+        }
+        public function customizer(\FluentForm\App\Services\Settings\Customizer $customizer, $id)
+        {
+        }
+        public function storeCustomizer(\FluentForm\App\Services\Settings\Customizer $customizer, $id)
+        {
+        }
+        public function storeEntryColumns(\FluentForm\App\Services\Submission\SubmissionService $submissionService, $id)
+        {
+        }
+        public function conversationalDesign(\FluentForm\App\Services\Settings\SettingsService $settingsService, $formId)
+        {
+        }
+        public function storeConversationalDesign(\FluentForm\App\Services\Settings\SettingsService $settingsService, $formId)
+        {
+        }
+    }
+    class GlobalIntegrationController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        /**
+         * Request object
+         *
+         * @var \FluentForm\Framework\Request\Request $request
+         */
+        protected $request;
+        public function index(\FluentForm\App\Services\Integrations\GlobalIntegrationService $globalIntegrationService)
+        {
+        }
+        public function update()
+        {
+        }
+        public function updateModuleStatus(\FluentForm\App\Services\Integrations\GlobalIntegrationService $globalIntegrationService)
+        {
+        }
+    }
+    class GlobalSettingsController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        public function index(\FluentForm\App\Services\GlobalSettings\GlobalSettingsService $globalSettingsService)
+        {
+        }
+        public function store(\FluentForm\App\Services\GlobalSettings\GlobalSettingsService $globalSettingsService)
+        {
+        }
+    }
+    abstract class IntegrationManagerController extends \FluentForm\App\Helpers\IntegrationManagerHelper
+    {
+        protected $app = null;
+        protected $subscriber = null;
+        protected $title = '';
+        protected $description = '';
+        protected $integrationKey = '';
+        protected $optionKey = '';
+        protected $settingsKey = '';
+        protected $priority = 11;
+        public $logo = '';
+        public $hasGlobalMenu = true;
+        public $category = 'crm';
+        public $disableGlobalSettings = 'no';
+        public function __construct($app, $title, $integrationKey, $optionKey, $settingsKey, $priority = 11)
+        {
+        }
+        public function registerAdminHooks()
+        {
+        }
+        public function registerNotificationHooks()
+        {
+        }
+        public function notify($feed, $formData, $entry, $form)
+        {
+        }
+        public function addGlobalMenu($setting)
+        {
+        }
+        public function addNotificationType($types)
+        {
+        }
+        public function addActiveNotificationType($types)
+        {
+        }
+        public function getGlobalSettings($settings)
+        {
+        }
+        public function saveGlobalSettings($settings)
+        {
+        }
+        public function getGlobalFields($fields)
+        {
+        }
+        public function setMetaKey($data)
+        {
+        }
+        public function prepareIntegrationFeed($setting, $feed, $formId)
+        {
+        }
+        public abstract function getIntegrationDefaults($settings, $formId);
+        public abstract function pushIntegration($integrations, $formId);
+        public abstract function getSettingsFields($settings, $formId);
+        public abstract function getMergeFields($list, $listId, $formId);
+        public function setFeedAttributes($feed, $formId)
+        {
+        }
+        public function isConfigured()
+        {
+        }
+        public function isEnabled()
+        {
+        }
+        public function getApiSettings()
+        {
+        }
+        protected function getSelectedTagIds($data, $inputData, $simpleKey = 'tag_ids', $routingId = 'tag_ids_selection_type', $routersKey = 'tag_routers')
+        {
+        }
+        protected function evaluateRoutings($routings, $inputData)
+        {
+        }
+    }
+    class LogController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        public function get(\FluentForm\App\Services\Logger\Logger $logger)
+        {
+        }
+        public function getFilters(\FluentForm\App\Services\Logger\Logger $logger)
+        {
+        }
+        public function remove(\FluentForm\App\Services\Logger\Logger $logger)
+        {
+        }
+    }
+    class ManagersController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        public function index(\FluentForm\App\Services\Manager\ManagerService $managerService)
+        {
+        }
+        public function addManager(\FluentForm\App\Services\Manager\ManagerService $managerService)
+        {
+        }
+        public function removeManager(\FluentForm\App\Services\Manager\ManagerService $managerService)
+        {
+        }
+    }
+    class ReportController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        public function form(\FluentForm\App\Services\Report\ReportService $reportService)
+        {
+        }
+        /**
+         * Get Submission Report
+         * @return \WP_REST_Response
+         */
+        public function submissions(\FluentForm\App\Services\Report\ReportService $reportService)
+        {
+        }
+    }
+    class RolesController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        public function index(\FluentForm\App\Services\Roles\RolesService $rolesService)
+        {
+        }
+        public function addCapability(\FluentForm\App\Services\Roles\RolesService $rolesService)
+        {
+        }
+    }
+    class SubmissionController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        public function index(\FluentForm\App\Services\Submission\SubmissionService $submissionService)
+        {
+        }
+        public function find(\FluentForm\App\Services\Submission\SubmissionService $submissionService, $submissionId)
+        {
+        }
+        public function resources(\FluentForm\App\Services\Submission\SubmissionService $submissionService)
+        {
+        }
+        public function updateStatus(\FluentForm\App\Services\Submission\SubmissionService $submissionService)
+        {
+        }
+        public function toggleIsFavorite(\FluentForm\App\Services\Submission\SubmissionService $submissionService)
+        {
+        }
+        public function handleBulkActions(\FluentForm\App\Services\Submission\SubmissionService $submissionService)
+        {
+        }
+        public function remove(\FluentForm\App\Models\Submission $submission, $submissionId)
+        {
+        }
+        /**
+         * Get user list for submission page
+         * @return \WP_REST_Response
+         */
+        public function submissionUsers()
+        {
+        }
+        /**
+         * Update User of a submission
+         * @param SubmissionService $submissionService
+         * @return \WP_REST_Response
+         */
+        public function updateSubmissionUser(\FluentForm\App\Services\Submission\SubmissionService $submissionService)
+        {
+        }
+        /**
+         * Get All Submissions
+         * @param Submission $submission
+         * @return \WP_REST_Response
+         */
+        public function all(\FluentForm\App\Models\Submission $submission)
+        {
+        }
+    }
+    class SubmissionHandlerController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        /**
+         * Handle form submission
+         */
+        public function submit()
+        {
+        }
+    }
+    class SubmissionLogController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        public function get(\FluentForm\App\Services\Logger\Logger $logger, $submissionId)
+        {
+        }
+        public function remove(\FluentForm\App\Services\Logger\Logger $logger)
+        {
+        }
+    }
+    class SubmissionNoteController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        public function get(\FluentForm\App\Services\Submission\SubmissionService $submissionService, $submissionId)
+        {
+        }
+        public function store(\FluentForm\App\Services\Submission\SubmissionService $submissionService, $submissionId)
+        {
+        }
+    }
+    class TransferController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        /**
+         * Export forms as JSON.
+         */
+        public function exportForms()
+        {
+        }
+        /**
+         * Import forms from a previously exported JSON file.
+         */
+        public function importForms()
+        {
+        }
+        public function exportEntries()
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Foundation {
+    abstract class Policy
+    {
+        /**
+         * Fallback method even if verifyRequest is not implemented.
+         * @return bool true
+         */
+        public function __returnTrue()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Http\Policies {
+    class FormPolicy extends \FluentForm\Framework\Foundation\Policy
+    {
+        /**
+         * Check permission for any method
+         *
+         * @param  \FluentForm\Framework\Request\Request $request
+         * @return bool
+         */
+        public function verifyRequest(\FluentForm\Framework\Request\Request $request)
+        {
+        }
+        public function index()
+        {
+        }
+        public function templates()
+        {
+        }
+        public function updateModuleStatus()
+        {
+        }
+    }
+    class GlobalSettingsPolicy extends \FluentForm\Framework\Foundation\Policy
+    {
+        public function index()
+        {
+        }
+    }
+    class PublicPolicy extends \FluentForm\Framework\Foundation\Policy
+    {
+        /**
+         * Check permission for any method
+         *
+         * @param \FluentForm\Framework\Request\Request $request
+         * @return bool
+         */
+        public function verifyRequest(\FluentForm\Framework\Request\Request $request)
+        {
+        }
+    }
+    class ReportPolicy extends \FluentForm\Framework\Foundation\Policy
+    {
+        /**
+         * Check permission for any method
+         *
+         * @param  \FluentForm\Framework\Request\Request $request
+         * @return bool
+         */
+        public function verifyRequest(\FluentForm\Framework\Request\Request $request)
+        {
+        }
+        public function form(\FluentForm\Framework\Request\Request $request)
+        {
+        }
+        public function submissions()
+        {
+        }
+    }
+    class RoleManagerPolicy extends \FluentForm\Framework\Foundation\Policy
+    {
+        public function index()
+        {
+        }
+    }
+    class SubmissionPolicy extends \FluentForm\Framework\Foundation\Policy
+    {
+        /**
+         * Check permission for any method
+         *
+         * @param  \FluentForm\Framework\Request\Request $request
+         * @return bool
+         */
+        public function verifyRequest(\FluentForm\Framework\Request\Request $request)
+        {
+        }
+        public function handleBulkActions()
+        {
+        }
+        public function updateStatus()
+        {
+        }
+        public function toggleIsFavorite()
+        {
+        }
+        public function remove()
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Foundation {
+    abstract class RequestGuard
+    {
+        public function rules()
+        {
+        }
+        public function messages()
+        {
+        }
+        public function beforeValidation()
+        {
+        }
+        public function afterValidation()
+        {
+        }
+        public function validate(\FluentForm\Framework\Validator\Validator $validator)
+        {
+        }
+        /**
+         * Get an input element from the request.
+         *
+         * @param  string $key
+         * @return mixed
+         */
+        public function __get($key)
+        {
+        }
+        public function __call($method, $params)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Http\Requests {
+    class UserRequest extends \FluentForm\Framework\Foundation\RequestGuard
+    {
+        /**
+         * @return array
+         */
+        public function rules()
+        {
+        }
+        /**
+         * @return array
+         */
+        public function messages()
+        {
+        }
+        /**
+         * @return array
+         */
+        public function sanitize()
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Support {
+    interface ArrayableInterface
+    {
+        /**
+         * Get the instance as an array.
+         *
+         * @return array
+         */
+        public function toArray();
+    }
+    interface JsonableInterface
+    {
+        /**
+         * Convert the object to its JSON representation.
+         *
+         * @param  int  $options
+         * @return string
+         */
+        public function toJson($options = 0);
+    }
+    interface QueueableEntity
+    {
+        /**
+         * Get the queueable identity for the entity.
+         *
+         * @return mixed
+         */
+        public function getQueueableId();
+    }
+    interface UrlRoutable
+    {
+        /**
+         * Get the value of the model's route key.
+         *
+         * @return mixed
+         */
+        public function getRouteKey();
+        /**
+         * Get the route key for the model.
+         *
+         * @return string
+         */
+        public function getRouteKeyName();
+    }
+}
+namespace FluentForm\Framework\Database\Orm {
+    trait ModelHelperTrait
+    {
+        public static function classBasename($class)
+        {
+        }
+        public static function classUsesRecursive($class)
+        {
+        }
+        public static function traitUsesRecursive($trait)
+        {
+        }
+        #[\ReturnTypeWillChange]
+        public function getTimezone()
+        {
+        }
+        protected function getDateFormat()
+        {
+        }
+        #[\ReturnTypeWillChange]
+        public static function createFromFormat($format, $datetime, $timezone = null)
+        {
+        }
+    }
+    abstract class Model implements \ArrayAccess, \FluentForm\Framework\Support\ArrayableInterface, \FluentForm\Framework\Support\JsonableInterface, \JsonSerializable, \FluentForm\Framework\Support\QueueableEntity, \FluentForm\Framework\Support\UrlRoutable
+    {
+        use \FluentForm\Framework\Database\Orm\ModelHelperTrait;
+        /**
+         * The connection name for the model.
+         *
+         * @var string
+         */
+        protected $connection;
+        /**
+         * The table associated with the model.
+         *
+         * @var string
+         */
+        protected $table;
+        /**
+         * The primary key for the model.
+         *
+         * @var string
+         */
+        protected $primaryKey = 'id';
+        /**
+         * The "type" of the auto-incrementing ID.
+         *
+         * @var string
+         */
+        protected $keyType = 'int';
+        /**
+         * The number of models to return for pagination.
+         *
+         * @var int
+         */
+        protected $perPage = 15;
+        /**
+         * Indicates if the IDs are auto-incrementing.
+         *
+         * @var bool
+         */
+        public $incrementing = true;
+        /**
+         * Indicates if the model should be timestamped.
+         *
+         * @var bool
+         */
+        public $timestamps = true;
+        /**
+         * The model's attributes.
+         *
+         * @var array
+         */
+        protected $attributes = [];
+        /**
+         * The model attribute's original state.
+         *
+         * @var array
+         */
+        protected $original = [];
+        /**
+         * The loaded relationships for the model.
+         *
+         * @var array
+         */
+        protected $relations = [];
+        /**
+         * The attributes that should be hidden for arrays.
+         *
+         * @var array
+         */
+        protected $hidden = [];
+        /**
+         * The attributes that should be visible in arrays.
+         *
+         * @var array
+         */
+        protected $visible = [];
+        /**
+         * The accessors to append to the model's array form.
+         *
+         * @var array
+         */
+        protected $appends = [];
+        /**
+         * The attributes that are mass assignable.
+         *
+         * @var array
+         */
+        protected $fillable = [];
+        /**
+         * The attributes that aren't mass assignable.
+         *
+         * @var array
+         */
+        protected $guarded = ['*'];
+        /**
+         * The attributes that should be mutated to dates.
+         *
+         * @var array
+         */
+        protected $dates = [];
+        /**
+         * The storage format of the model's date columns.
+         *
+         * @var string
+         */
+        protected $dateFormat;
+        /**
+         * The attributes that should be cast to native types.
+         *
+         * @var array
+         */
+        protected $casts = [];
+        /**
+         * The relationships that should be touched on save.
+         *
+         * @var array
+         */
+        protected $touches = [];
+        /**
+         * User exposed observable events
+         *
+         * @var array
+         */
+        protected $observables = [];
+        /**
+         * The relations to eager load on every query.
+         *
+         * @var array
+         */
+        protected $with = [];
+        /**
+         * The class name to be used in polymorphic relations.
+         *
+         * @var string
+         */
+        protected $morphClass;
+        /**
+         * Indicates if the model exists.
+         *
+         * @var bool
+         */
+        public $exists = false;
+        /**
+         * Indicates if the model was inserted during the current request lifecycle.
+         *
+         * @var bool
+         */
+        public $wasRecentlyCreated = false;
+        /**
+         * Indicates whether attributes are snake cased on arrays.
+         *
+         * @var bool
+         */
+        public static $snakeAttributes = true;
+        /**
+         * The connection resolver instance.
+         *
+         * @var \FluentForm\Framework\Database\ConnectionResolverInterface
+         */
+        protected static $resolver;
+        /**
+         * The event dispatcher instance.
+         *
+         * @var \FluentForm\Framework\Foundation\Dispatcher
+         */
+        protected static $dispatcher;
+        /**
+         * The array of booted models.
+         *
+         * @var array
+         */
+        protected static $booted = [];
+        /**
+         * The array of global scopes on the model.
+         *
+         * @var array
+         */
+        protected static $globalScopes = [];
+        /**
+         * Indicates if all mass assignment is enabled.
+         *
+         * @var bool
+         */
+        protected static $unguarded = false;
+        /**
+         * The cache of the mutated attributes for each class.
+         *
+         * @var array
+         */
+        protected static $mutatorCache = [];
+        /**
+         * The many to many relationship methods.
+         *
+         * @var array
+         */
+        public static $manyMethods = ['belongsToMany', 'morphToMany', 'morphedByMany'];
+        /**
+         * The name of the "created at" column.
+         *
+         * @var string
+         */
+        const CREATED_AT = 'created_at';
+        /**
+         * The name of the "updated at" column.
+         *
+         * @var string
+         */
+        const UPDATED_AT = 'updated_at';
+        /**
+         * Create a new Eloquent model instance.
+         *
+         * @param  array  $attributes
+         * @return void
+         */
+        public function __construct(array $attributes = array())
+        {
+        }
+        /**
+         * Check if the model needs to be booted and if so, do it.
+         *
+         * @return void
+         */
+        protected function bootIfNotBooted()
+        {
+        }
+        /**
+         * The "booting" method of the model.
+         *
+         * @return void
+         */
+        protected static function boot()
+        {
+        }
+        /**
+         * Boot all of the bootable traits on the model.
+         *
+         * @return void
+         */
+        protected static function bootTraits()
+        {
+        }
+        /**
+         * Clear the list of booted models so they will be re-booted.
+         *
+         * @return void
+         */
+        public static function clearBootedModels()
+        {
+        }
+        /**
+         * Register a new global scope on the model.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Scope|\Closure|string  $scope
+         * @param  \Closure|null  $implementation
+         * @return mixed
+         *
+         * @throws \InvalidArgumentException
+         */
+        public static function addGlobalScope($scope, \Closure $implementation = null)
+        {
+        }
+        /**
+         * Determine if a model has a global scope.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Scope|string  $scope
+         * @return bool
+         */
+        public static function hasGlobalScope($scope)
+        {
+        }
+        /**
+         * Get a global scope registered with the model.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Scope|string  $scope
+         * @return \FluentForm\Framework\Database\Orm\Scope|\Closure|null
+         */
+        public static function getGlobalScope($scope)
+        {
+        }
+        /**
+         * Get the global scopes for this class instance.
+         *
+         * @return array
+         */
+        public function getGlobalScopes()
+        {
+        }
+        /**
+         * Register an observer with the Model.
+         *
+         * @param  object|string  $class
+         * @param  int  $priority
+         * @return void
+         */
+        public static function observe($class, $priority = 0)
+        {
+        }
+        /**
+         * Fill the model with an array of attributes.
+         *
+         * @param  array  $attributes
+         * @return $this
+         *
+         * @throws \FluentForm\Framework\Database\Orm\MassAssignmentException
+         */
+        public function fill(array $attributes)
+        {
+        }
+        /**
+         * Fill the model with an array of attributes. Force mass assignment.
+         *
+         * @param  array  $attributes
+         * @return $this
+         */
+        public function forceFill(array $attributes)
+        {
+        }
+        /**
+         * Get the fillable attributes of a given array.
+         *
+         * @param  array  $attributes
+         * @return array
+         */
+        protected function fillableFromArray(array $attributes)
+        {
+        }
+        /**
+         * Create a new instance of the given model.
+         *
+         * @param  array  $attributes
+         * @param  bool  $exists
+         * @return static
+         */
+        public function newInstance($attributes = [], $exists = false)
+        {
+        }
+        /**
+         * Create a new model instance that is existing.
+         *
+         * @param  array  $attributes
+         * @param  string|null  $connection
+         * @return static
+         */
+        public function newFromBuilder($attributes = [], $connection = null)
+        {
+        }
+        /**
+         * Create a collection of models from plain arrays.
+         *
+         * @param  array  $items
+         * @param  string|null  $connection
+         * @return \FluentForm\Framework\Database\Orm\Collection
+         */
+        public static function hydrate(array $items, $connection = null)
+        {
+        }
+        /**
+         * Create a collection of models from a raw query.
+         *
+         * @param  string  $query
+         * @param  array  $bindings
+         * @param  string|null  $connection
+         * @return \FluentForm\Framework\Database\Orm\Collection
+         */
+        public static function hydrateRaw($query, $bindings = [], $connection = null)
+        {
+        }
+        /**
+         * Save a new model and return the instance.
+         *
+         * @param  array  $attributes
+         * @return static
+         */
+        public static function create(array $attributes = [])
+        {
+        }
+        /**
+         * Save a new model and return the instance. Allow mass-assignment.
+         *
+         * @param  array  $attributes
+         * @return static
+         */
+        public static function forceCreate(array $attributes)
+        {
+        }
+        /**
+         * Begin querying the model.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public static function query()
+        {
+        }
+        /**
+         * Begin querying the model on a given connection.
+         *
+         * @param  string|null  $connection
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public static function on($connection = null)
+        {
+        }
+        /**
+         * Begin querying the model on the write connection.
+         *
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        public static function onWriteConnection()
+        {
+        }
+        /**
+         * Get all of the models from the database.
+         *
+         * @param  array|mixed  $columns
+         * @return \FluentForm\Framework\Database\Orm\Collection|static[]
+         */
+        public static function all($columns = ['*'])
+        {
+        }
+        /**
+         * Reload a fresh model instance from the database.
+         *
+         * @param  array|string  $with
+         * @return $this|null
+         */
+        public function fresh($with = [])
+        {
+        }
+        /**
+         * Eager load relations on the model.
+         *
+         * @param  array|string  $relations
+         * @return $this
+         */
+        public function load($relations)
+        {
+        }
+        /**
+         * Begin querying a model with eager loading.
+         *
+         * @param  array|string  $relations
+         * @return \FluentForm\Framework\Database\Orm\Builder|static
+         */
+        public static function with($relations)
+        {
+        }
+        /**
+         * Append attributes to query when building a query.
+         *
+         * @param  array|string  $attributes
+         * @return $this
+         */
+        public function append($attributes)
+        {
+        }
+        /**
+         * Define a one-to-one relationship.
+         *
+         * @param  string  $related
+         * @param  string  $foreignKey
+         * @param  string  $localKey
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasOne
+         */
+        public function hasOne($related, $foreignKey = null, $localKey = null)
+        {
+        }
+        /**
+         * Define a polymorphic one-to-one relationship.
+         *
+         * @param  string  $related
+         * @param  string  $name
+         * @param  string  $type
+         * @param  string  $id
+         * @param  string  $localKey
+         * @return \FluentForm\Framework\Database\Orm\Relations\MorphOne
+         */
+        public function morphOne($related, $name, $type = null, $id = null, $localKey = null)
+        {
+        }
+        /**
+         * Define an inverse one-to-one or many relationship.
+         *
+         * @param  string  $related
+         * @param  string  $foreignKey
+         * @param  string  $otherKey
+         * @param  string  $relation
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+         */
+        public function belongsTo($related, $foreignKey = null, $otherKey = null, $relation = null)
+        {
+        }
+        /**
+         * Define a polymorphic, inverse one-to-one or many relationship.
+         *
+         * @param  string  $name
+         * @param  string  $type
+         * @param  string  $id
+         * @return \FluentForm\Framework\Database\Orm\Relations\MorphTo
+         */
+        public function morphTo($name = null, $type = null, $id = null)
+        {
+        }
+        /**
+         * Retrieve the fully qualified class name from a slug.
+         *
+         * @param  string  $class
+         * @return string
+         */
+        public function getActualClassNameForMorph($class)
+        {
+        }
+        /**
+         * Define a one-to-many relationship.
+         *
+         * @param  string  $related
+         * @param  string  $foreignKey
+         * @param  string  $localKey
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasMany
+         */
+        public function hasMany($related, $foreignKey = null, $localKey = null)
+        {
+        }
+        /**
+         * Define a has-many-through relationship.
+         *
+         * @param  string  $related
+         * @param  string  $through
+         * @param  string|null  $firstKey
+         * @param  string|null  $secondKey
+         * @param  string|null  $localKey
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasManyThrough
+         */
+        public function hasManyThrough($related, $through, $firstKey = null, $secondKey = null, $localKey = null)
+        {
+        }
+        /**
+         * Define a polymorphic one-to-many relationship.
+         *
+         * @param  string  $related
+         * @param  string  $name
+         * @param  string  $type
+         * @param  string  $id
+         * @param  string  $localKey
+         * @return \FluentForm\Framework\Database\Orm\Relations\MorphMany
+         */
+        public function morphMany($related, $name, $type = null, $id = null, $localKey = null)
+        {
+        }
+        /**
+         * Define a many-to-many relationship.
+         *
+         * @param  string  $related
+         * @param  string  $table
+         * @param  string  $foreignKey
+         * @param  string  $otherKey
+         * @param  string  $relation
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsToMany
+         */
+        public function belongsToMany($related, $table = null, $foreignKey = null, $otherKey = null, $relation = null)
+        {
+        }
+        /**
+         * Define a polymorphic many-to-many relationship.
+         *
+         * @param  string  $related
+         * @param  string  $name
+         * @param  string  $table
+         * @param  string  $foreignKey
+         * @param  string  $otherKey
+         * @param  bool  $inverse
+         * @return \FluentForm\Framework\Database\Orm\Relations\MorphToMany
+         */
+        public function morphToMany($related, $name, $table = null, $foreignKey = null, $otherKey = null, $inverse = false)
+        {
+        }
+        /**
+         * Define a polymorphic, inverse many-to-many relationship.
+         *
+         * @param  string  $related
+         * @param  string  $name
+         * @param  string  $table
+         * @param  string  $foreignKey
+         * @param  string  $otherKey
+         * @return \FluentForm\Framework\Database\Orm\Relations\MorphToMany
+         */
+        public function morphedByMany($related, $name, $table = null, $foreignKey = null, $otherKey = null)
+        {
+        }
+        /**
+         * Get the relationship name of the belongs to many.
+         *
+         * @return string
+         */
+        protected function getBelongsToManyCaller()
+        {
+        }
+        /**
+         * Get the joining table name for a many-to-many relation.
+         *
+         * @param  string  $related
+         * @return string
+         */
+        public function joiningTable($related)
+        {
+        }
+        /**
+         * Destroy the models for the given IDs.
+         *
+         * @param  array|int  $ids
+         * @return int
+         */
+        public static function destroy($ids)
+        {
+        }
+        /**
+         * Delete the model from the database.
+         *
+         * @return bool|null
+         *
+         * @throws \Exception
+         */
+        public function delete()
+        {
+        }
+        /**
+         * Force a hard delete on a soft deleted model.
+         *
+         * This method protects developers from running forceDelete when trait is missing.
+         *
+         * @return bool|null
+         */
+        public function forceDelete()
+        {
+        }
+        /**
+         * Perform the actual delete query on this model instance.
+         *
+         * @return void
+         */
+        protected function performDeleteOnModel()
+        {
+        }
+        /**
+         * Register a saving model event with the dispatcher.
+         *
+         * @param  \Closure|string  $callback
+         * @param  int  $priority
+         * @return void
+         */
+        public static function saving($callback, $priority = 0)
+        {
+        }
+        /**
+         * Register a saved model event with the dispatcher.
+         *
+         * @param  \Closure|string  $callback
+         * @param  int  $priority
+         * @return void
+         */
+        public static function saved($callback, $priority = 0)
+        {
+        }
+        /**
+         * Register an updating model event with the dispatcher.
+         *
+         * @param  \Closure|string  $callback
+         * @param  int  $priority
+         * @return void
+         */
+        public static function updating($callback, $priority = 0)
+        {
+        }
+        /**
+         * Register an updated model event with the dispatcher.
+         *
+         * @param  \Closure|string  $callback
+         * @param  int  $priority
+         * @return void
+         */
+        public static function updated($callback, $priority = 0)
+        {
+        }
+        /**
+         * Register a creating model event with the dispatcher.
+         *
+         * @param  \Closure|string  $callback
+         * @param  int  $priority
+         * @return void
+         */
+        public static function creating($callback, $priority = 0)
+        {
+        }
+        /**
+         * Register a created model event with the dispatcher.
+         *
+         * @param  \Closure|string  $callback
+         * @param  int  $priority
+         * @return void
+         */
+        public static function created($callback, $priority = 0)
+        {
+        }
+        /**
+         * Register a deleting model event with the dispatcher.
+         *
+         * @param  \Closure|string  $callback
+         * @param  int  $priority
+         * @return void
+         */
+        public static function deleting($callback, $priority = 0)
+        {
+        }
+        /**
+         * Register a deleted model event with the dispatcher.
+         *
+         * @param  \Closure|string  $callback
+         * @param  int  $priority
+         * @return void
+         */
+        public static function deleted($callback, $priority = 0)
+        {
+        }
+        /**
+         * Remove all of the event listeners for the model.
+         *
+         * @return void
+         */
+        public static function flushEventListeners()
+        {
+        }
+        /**
+         * Register a model event with the dispatcher.
+         *
+         * @param  string  $event
+         * @param  \Closure|string  $callback
+         * @param  int  $priority
+         * @return void
+         */
+        protected static function registerModelEvent($event, $callback, $priority = 0)
+        {
+        }
+        /**
+         * Get the observable event names.
+         *
+         * @return array
+         */
+        public function getObservableEvents()
+        {
+        }
+        /**
+         * Set the observable event names.
+         *
+         * @param  array  $observables
+         * @return $this
+         */
+        public function setObservableEvents(array $observables)
+        {
+        }
+        /**
+         * Add an observable event name.
+         *
+         * @param  array|mixed  $observables
+         * @return void
+         */
+        public function addObservableEvents($observables)
+        {
+        }
+        /**
+         * Remove an observable event name.
+         *
+         * @param  array|mixed  $observables
+         * @return void
+         */
+        public function removeObservableEvents($observables)
+        {
+        }
+        /**
+         * Increment a column's value by a given amount.
+         *
+         * @param  string  $column
+         * @param  int  $amount
+         * @param  array  $extra
+         * @return int
+         */
+        protected function increment($column, $amount = 1, array $extra = [])
+        {
+        }
+        /**
+         * Decrement a column's value by a given amount.
+         *
+         * @param  string  $column
+         * @param  int  $amount
+         * @param  array  $extra
+         * @return int
+         */
+        protected function decrement($column, $amount = 1, array $extra = [])
+        {
+        }
+        /**
+         * Run the increment or decrement method on the model.
+         *
+         * @param  string  $column
+         * @param  int  $amount
+         * @param  array  $extra
+         * @param  string  $method
+         * @return int
+         */
+        protected function incrementOrDecrement($column, $amount, $extra, $method)
+        {
+        }
+        /**
+         * Increment the underlying attribute value and sync with original.
+         *
+         * @param  string  $column
+         * @param  int  $amount
+         * @param  string  $method
+         * @return void
+         */
+        protected function incrementOrDecrementAttributeValue($column, $amount, $method)
+        {
+        }
+        /**
+         * Update the model in the database.
+         *
+         * @param  array  $attributes
+         * @param  array  $options
+         * @return bool|int
+         */
+        public function update(array $attributes = [], array $options = [])
+        {
+        }
+        /**
+         * Save the model and all of its relationships.
+         *
+         * @return bool
+         */
+        public function push()
+        {
+        }
+        /**
+         * Save the model to the database.
+         *
+         * @param  array  $options
+         * @return bool
+         */
+        public function save(array $options = [])
+        {
+        }
+        /**
+         * Save the model to the database using transaction.
+         *
+         * @param  array  $options
+         * @return bool
+         *
+         * @throws \Throwable
+         */
+        public function saveOrFail(array $options = [])
+        {
+        }
+        /**
+         * Finish processing on a successful save operation.
+         *
+         * @param  array  $options
+         * @return void
+         */
+        protected function finishSave(array $options)
+        {
+        }
+        /**
+         * Perform a model update operation.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  array  $options
+         * @return bool
+         */
+        protected function performUpdate(\FluentForm\Framework\Database\Orm\Builder $query, array $options = [])
+        {
+        }
+        /**
+         * Perform a model insert operation.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  array  $options
+         * @return bool
+         */
+        protected function performInsert(\FluentForm\Framework\Database\Orm\Builder $query, array $options = [])
+        {
+        }
+        /**
+         * Insert the given attributes and set the ID on the model.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  array  $attributes
+         * @return void
+         */
+        protected function insertAndSetId(\FluentForm\Framework\Database\Orm\Builder $query, $attributes)
+        {
+        }
+        /**
+         * Touch the owning relations of the model.
+         *
+         * @return void
+         */
+        public function touchOwners()
+        {
+        }
+        /**
+         * Determine if the model touches a given relation.
+         *
+         * @param  string  $relation
+         * @return bool
+         */
+        public function touches($relation)
+        {
+        }
+        /**
+         * Fire the given event for the model.
+         *
+         * @param  string  $event
+         * @param  bool  $halt
+         * @return mixed
+         */
+        protected function fireModelEvent($event, $halt = true)
+        {
+        }
+        /**
+         * Set the keys for a save update query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        protected function setKeysForSaveQuery(\FluentForm\Framework\Database\Orm\Builder $query)
+        {
+        }
+        /**
+         * Get the primary key value for a save query.
+         *
+         * @return mixed
+         */
+        protected function getKeyForSaveQuery()
+        {
+        }
+        /**
+         * Update the model's update timestamp.
+         *
+         * @return bool
+         */
+        public function touch()
+        {
+        }
+        /**
+         * Update the creation and update timestamps.
+         *
+         * @return void
+         */
+        protected function updateTimestamps()
+        {
+        }
+        /**
+         * Set the value of the "created at" attribute.
+         *
+         * @param  mixed  $value
+         * @return $this
+         */
+        public function setCreatedAt($value)
+        {
+        }
+        /**
+         * Set the value of the "updated at" attribute.
+         *
+         * @param  mixed  $value
+         * @return $this
+         */
+        public function setUpdatedAt($value)
+        {
+        }
+        /**
+         * Get the name of the "created at" column.
+         *
+         * @return string
+         */
+        public function getCreatedAtColumn()
+        {
+        }
+        /**
+         * Get the name of the "updated at" column.
+         *
+         * @return string
+         */
+        public function getUpdatedAtColumn()
+        {
+        }
+        /**
+         * Get a fresh timestamp for the model.
+         *
+         * @return \FluentForm\Framework\Database\Orm\DateTime
+         */
+        public function freshTimestamp()
+        {
+        }
+        /**
+         * Get a fresh timestamp for the model.
+         *
+         * @return string
+         */
+        public function freshTimestampString()
+        {
+        }
+        /**
+         * Get a new query builder for the model's table.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public function newQuery()
+        {
+        }
+        /**
+         * Get a new query instance without a given scope.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Scope|string  $scope
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public function newQueryWithoutScope($scope)
+        {
+        }
+        /**
+         * Get a new query builder that doesn't have any global scopes.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Builder|static
+         */
+        public function newQueryWithoutScopes()
+        {
+        }
+        /**
+         * Create a new Eloquent query builder for the model.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @return \FluentForm\Framework\Database\Orm\Builder|static
+         */
+        public function newEloquentBuilder($query)
+        {
+        }
+        /**
+         * Get a new query builder instance for the connection.
+         *
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        protected function newBaseQueryBuilder()
+        {
+        }
+        /**
+         * Create a new Eloquent Collection instance.
+         *
+         * @param  array  $models
+         * @return \FluentForm\Framework\Database\Orm\Collection
+         */
+        public function newCollection(array $models = [])
+        {
+        }
+        /**
+         * Create a new pivot model instance.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Model  $parent
+         * @param  array  $attributes
+         * @param  string  $table
+         * @param  bool  $exists
+         * @return \FluentForm\Framework\Database\Orm\Relations\Pivot
+         */
+        public function newPivot(\FluentForm\Framework\Database\Orm\Model $parent, array $attributes, $table, $exists)
+        {
+        }
+        /**
+         * Get the table associated with the model.
+         *
+         * @return string
+         */
+        public function getTable()
+        {
+        }
+        /**
+         * Set the table associated with the model.
+         *
+         * @param  string  $table
+         * @return $this
+         */
+        public function setTable($table)
+        {
+        }
+        /**
+         * Get the value of the model's primary key.
+         *
+         * @return mixed
+         */
+        public function getKey()
+        {
+        }
+        /**
+         * Get the queueable identity for the entity.
+         *
+         * @return mixed
+         */
+        public function getQueueableId()
+        {
+        }
+        /**
+         * Get the primary key for the model.
+         *
+         * @return string
+         */
+        public function getKeyName()
+        {
+        }
+        /**
+         * Set the primary key for the model.
+         *
+         * @param  string  $key
+         * @return $this
+         */
+        public function setKeyName($key)
+        {
+        }
+        /**
+         * Get the table qualified key name.
+         *
+         * @return string
+         */
+        public function getQualifiedKeyName()
+        {
+        }
+        /**
+         * Get the value of the model's route key.
+         *
+         * @return mixed
+         */
+        public function getRouteKey()
+        {
+        }
+        /**
+         * Get the route key for the model.
+         *
+         * @return string
+         */
+        public function getRouteKeyName()
+        {
+        }
+        /**
+         * Determine if the model uses timestamps.
+         *
+         * @return bool
+         */
+        public function usesTimestamps()
+        {
+        }
+        /**
+         * Get the polymorphic relationship columns.
+         *
+         * @param  string  $name
+         * @param  string  $type
+         * @param  string  $id
+         * @return array
+         */
+        protected function getMorphs($name, $type, $id)
+        {
+        }
+        /**
+         * Get the class name for polymorphic relations.
+         *
+         * @return string
+         */
+        public function getMorphClass()
+        {
+        }
+        /**
+         * Get the number of models to return per page.
+         *
+         * @return int
+         */
+        public function getPerPage()
+        {
+        }
+        /**
+         * Set the number of models to return per page.
+         *
+         * @param  int  $perPage
+         * @return $this
+         */
+        public function setPerPage($perPage)
+        {
+        }
+        /**
+         * Get the default foreign key name for the model.
+         *
+         * @return string
+         */
+        public function getForeignKey()
+        {
+        }
+        /**
+         * Get the hidden attributes for the model.
+         *
+         * @return array
+         */
+        public function getHidden()
+        {
+        }
+        /**
+         * Set the hidden attributes for the model.
+         *
+         * @param  array  $hidden
+         * @return $this
+         */
+        public function setHidden(array $hidden)
+        {
+        }
+        /**
+         * Add hidden attributes for the model.
+         *
+         * @param  array|string|null  $attributes
+         * @return void
+         */
+        public function addHidden($attributes = null)
+        {
+        }
+        /**
+         * Make the given, typically hidden, attributes visible.
+         *
+         * @param  array|string  $attributes
+         * @return $this
+         */
+        public function makeVisible($attributes)
+        {
+        }
+        /**
+         * Make the given, typically visible, attributes hidden.
+         *
+         * @param  array|string  $attributes
+         * @return $this
+         */
+        public function makeHidden($attributes)
+        {
+        }
+        /**
+         * Make the given, typically hidden, attributes visible.
+         *
+         * @param  array|string  $attributes
+         * @return $this
+         *
+         * @deprecated since version 5.2. Use the "makeVisible" method directly.
+         */
+        public function withHidden($attributes)
+        {
+        }
+        /**
+         * Get the visible attributes for the model.
+         *
+         * @return array
+         */
+        public function getVisible()
+        {
+        }
+        /**
+         * Set the visible attributes for the model.
+         *
+         * @param  array  $visible
+         * @return $this
+         */
+        public function setVisible(array $visible)
+        {
+        }
+        /**
+         * Add visible attributes for the model.
+         *
+         * @param  array|string|null  $attributes
+         * @return void
+         */
+        public function addVisible($attributes = null)
+        {
+        }
+        /**
+         * Set the accessors to append to model arrays.
+         *
+         * @param  array  $appends
+         * @return $this
+         */
+        public function setAppends(array $appends)
+        {
+        }
+        /**
+         * Get the fillable attributes for the model.
+         *
+         * @return array
+         */
+        public function getFillable()
+        {
+        }
+        /**
+         * Set the fillable attributes for the model.
+         *
+         * @param  array  $fillable
+         * @return $this
+         */
+        public function fillable(array $fillable)
+        {
+        }
+        /**
+         * Get the guarded attributes for the model.
+         *
+         * @return array
+         */
+        public function getGuarded()
+        {
+        }
+        /**
+         * Set the guarded attributes for the model.
+         *
+         * @param  array  $guarded
+         * @return $this
+         */
+        public function guard(array $guarded)
+        {
+        }
+        /**
+         * Disable all mass assignable restrictions.
+         *
+         * @param  bool  $state
+         * @return void
+         */
+        public static function unguard($state = true)
+        {
+        }
+        /**
+         * Enable the mass assignment restrictions.
+         *
+         * @return void
+         */
+        public static function reguard()
+        {
+        }
+        /**
+         * Determine if current state is "unguarded".
+         *
+         * @return bool
+         */
+        public static function isUnguarded()
+        {
+        }
+        /**
+         * Run the given callable while being unguarded.
+         *
+         * @param  callable  $callback
+         * @return mixed
+         */
+        public static function unguarded(callable $callback)
+        {
+        }
+        /**
+         * Determine if the given attribute may be mass assigned.
+         *
+         * @param  string  $key
+         * @return bool
+         */
+        public function isFillable($key)
+        {
+        }
+        /**
+         * Determine if the given key is guarded.
+         *
+         * @param  string  $key
+         * @return bool
+         */
+        public function isGuarded($key)
+        {
+        }
+        /**
+         * Determine if the model is totally guarded.
+         *
+         * @return bool
+         */
+        public function totallyGuarded()
+        {
+        }
+        /**
+         * Remove the table name from a given key.
+         *
+         * @param  string  $key
+         * @return string
+         */
+        protected function removeTableFromKey($key)
+        {
+        }
+        /**
+         * Get the relationships that are touched on save.
+         *
+         * @return array
+         */
+        public function getTouchedRelations()
+        {
+        }
+        /**
+         * Set the relationships that are touched on save.
+         *
+         * @param  array  $touches
+         * @return $this
+         */
+        public function setTouchedRelations(array $touches)
+        {
+        }
+        /**
+         * Get the value indicating whether the IDs are incrementing.
+         *
+         * @return bool
+         */
+        public function getIncrementing()
+        {
+        }
+        /**
+         * Set whether IDs are incrementing.
+         *
+         * @param  bool  $value
+         * @return $this
+         */
+        public function setIncrementing($value)
+        {
+        }
+        /**
+         * Convert the model instance to JSON.
+         *
+         * @param  int  $options
+         * @return string
+         */
+        public function toJson($options = 0)
+        {
+        }
+        /**
+         * Convert the object into something JSON serializable.
+         *
+         * @return array
+         */
+        #[\ReturnTypeWillChange]
+        public function jsonSerialize()
+        {
+        }
+        /**
+         * Convert the model instance to an array.
+         *
+         * @return array
+         */
+        public function toArray()
+        {
+        }
+        /**
+         * Convert the model's attributes to an array.
+         *
+         * @return array
+         */
+        public function attributesToArray()
+        {
+        }
+        /**
+         * Get an attribute array of all arrayable attributes.
+         *
+         * @return array
+         */
+        protected function getArrayableAttributes()
+        {
+        }
+        /**
+         * Get all of the appendable values that are arrayable.
+         *
+         * @return array
+         */
+        protected function getArrayableAppends()
+        {
+        }
+        /**
+         * Get the model's relationships in array form.
+         *
+         * @return array
+         */
+        public function relationsToArray()
+        {
+        }
+        /**
+         * Get an attribute array of all arrayable relations.
+         *
+         * @return array
+         */
+        protected function getArrayableRelations()
+        {
+        }
+        /**
+         * Get an attribute array of all arrayable values.
+         *
+         * @param  array  $values
+         * @return array
+         */
+        protected function getArrayableItems(array $values)
+        {
+        }
+        /**
+         * Get an attribute from the model.
+         *
+         * @param  string  $key
+         * @return mixed
+         */
+        public function getAttribute($key)
+        {
+        }
+        /**
+         * Get a plain attribute (not a relationship).
+         *
+         * @param  string  $key
+         * @return mixed
+         */
+        public function getAttributeValue($key)
+        {
+        }
+        /**
+         * Get a relationship.
+         *
+         * @param  string  $key
+         * @return mixed
+         */
+        public function getRelationValue($key)
+        {
+        }
+        /**
+         * Get an attribute from the $attributes array.
+         *
+         * @param  string  $key
+         * @return mixed
+         */
+        protected function getAttributeFromArray($key)
+        {
+        }
+        /**
+         * Get a relationship value from a method.
+         *
+         * @param  string  $method
+         * @return mixed
+         *
+         * @throws \LogicException
+         */
+        protected function getRelationshipFromMethod($method)
+        {
+        }
+        /**
+         * Determine if a get mutator exists for an attribute.
+         *
+         * @param  string  $key
+         * @return bool
+         */
+        public function hasGetMutator($key)
+        {
+        }
+        /**
+         * Get the value of an attribute using its mutator.
+         *
+         * @param  string  $key
+         * @param  mixed  $value
+         * @return mixed
+         */
+        protected function mutateAttribute($key, $value)
+        {
+        }
+        /**
+         * Get the value of an attribute using its mutator for array conversion.
+         *
+         * @param  string  $key
+         * @param  mixed  $value
+         * @return mixed
+         */
+        protected function mutateAttributeForArray($key, $value)
+        {
+        }
+        /**
+         * Determine whether an attribute should be cast to a native type.
+         *
+         * @param  string  $key
+         * @param  array|string|null  $types
+         * @return bool
+         */
+        public function hasCast($key, $types = null)
+        {
+        }
+        /**
+         * Get the casts array.
+         *
+         * @return array
+         */
+        public function getCasts()
+        {
+        }
+        /**
+         * Determine whether a value is Date / DateTime castable for inbound manipulation.
+         *
+         * @param  string  $key
+         * @return bool
+         */
+        protected function isDateCastable($key)
+        {
+        }
+        /**
+         * Determine whether a value is JSON castable for inbound manipulation.
+         *
+         * @param  string  $key
+         * @return bool
+         */
+        protected function isJsonCastable($key)
+        {
+        }
+        /**
+         * Get the type of cast for a model attribute.
+         *
+         * @param  string  $key
+         * @return string
+         */
+        protected function getCastType($key)
+        {
+        }
+        /**
+         * Cast an attribute to a native PHP type.
+         *
+         * @param  string  $key
+         * @param  mixed  $value
+         * @return mixed
+         */
+        protected function castAttribute($key, $value)
+        {
+        }
+        /**
+         * Set a given attribute on the model.
+         *
+         * @param  string  $key
+         * @param  mixed  $value
+         * @return $this
+         */
+        public function setAttribute($key, $value)
+        {
+        }
+        /**
+         * Determine if a set mutator exists for an attribute.
+         *
+         * @param  string  $key
+         * @return bool
+         */
+        public function hasSetMutator($key)
+        {
+        }
+        /**
+         * Get the attributes that should be converted to dates.
+         *
+         * @return array
+         */
+        public function getDates()
+        {
+        }
+        /**
+         * Convert a DateTime to a storable string.
+         *
+         * @param  \DateTime|int  $value
+         * @return string
+         */
+        public function fromDateTime($value)
+        {
+        }
+        /**
+         * Return a timestamp as DateTime object.
+         *
+         * @param  mixed  $value
+         * @return \DateTime
+         */
+        protected function asDateTime($value)
+        {
+        }
+        /**
+         * Return a timestamp as unix timestamp.
+         *
+         * @param  mixed  $value
+         * @return int
+         */
+        protected function asTimeStamp($value)
+        {
+        }
+        /**
+         * Prepare a date for array / JSON serialization.
+         *
+         * @param  \DateTime  $date
+         * @return string
+         */
+        protected function serializeDate(\FluentForm\Framework\Database\Orm\DateTime $date)
+        {
+        }
+        /**
+         * Set the date format used by the model.
+         *
+         * @param  string  $format
+         * @return $this
+         */
+        public function setDateFormat($format)
+        {
+        }
+        /**
+         * Encode the given value as JSON.
+         *
+         * @param  mixed  $value
+         * @return string
+         */
+        protected function asJson($value)
+        {
+        }
+        /**
+         * Decode the given JSON back into an array or object.
+         *
+         * @param  string  $value
+         * @param  bool  $asObject
+         * @return mixed
+         */
+        public function fromJson($value, $asObject = false)
+        {
+        }
+        /**
+         * Clone the model into a new, non-existing instance.
+         *
+         * @param  array|null  $except
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function replicate(array $except = null)
+        {
+        }
+        /**
+         * Get all of the current attributes on the model.
+         *
+         * @return array
+         */
+        public function getAttributes()
+        {
+        }
+        /**
+         * Set the array of model attributes. No checking is done.
+         *
+         * @param  array  $attributes
+         * @param  bool  $sync
+         * @return $this
+         */
+        public function setRawAttributes(array $attributes, $sync = false)
+        {
+        }
+        /**
+         * Get the model's original attribute values.
+         *
+         * @param  string|null  $key
+         * @param  mixed  $default
+         * @return mixed|array
+         */
+        public function getOriginal($key = null, $default = null)
+        {
+        }
+        /**
+         * Sync the original attributes with the current.
+         *
+         * @return $this
+         */
+        public function syncOriginal()
+        {
+        }
+        /**
+         * Sync a single original attribute with its current value.
+         *
+         * @param  string  $attribute
+         * @return $this
+         */
+        public function syncOriginalAttribute($attribute)
+        {
+        }
+        /**
+         * Determine if the model or given attribute(s) have been modified.
+         *
+         * @param  array|string|null  $attributes
+         * @return bool
+         */
+        public function isDirty($attributes = null)
+        {
+        }
+        /**
+         * Get the attributes that have been changed since last sync.
+         *
+         * @return array
+         */
+        public function getDirty()
+        {
+        }
+        /**
+         * Determine if the new and old values for a given key are numerically equivalent.
+         *
+         * @param  string  $key
+         * @return bool
+         */
+        protected function originalIsNumericallyEquivalent($key)
+        {
+        }
+        /**
+         * Get all the loaded relations for the instance.
+         *
+         * @return array
+         */
+        public function getRelations()
+        {
+        }
+        /**
+         * Get a specified relationship.
+         *
+         * @param  string  $relation
+         * @return mixed
+         */
+        public function getRelation($relation)
+        {
+        }
+        /**
+         * Determine if the given relation is loaded.
+         *
+         * @param  string  $key
+         * @return bool
+         */
+        public function relationLoaded($key)
+        {
+        }
+        /**
+         * Set the specific relationship in the model.
+         *
+         * @param  string  $relation
+         * @param  mixed  $value
+         * @return $this
+         */
+        public function setRelation($relation, $value)
+        {
+        }
+        /**
+         * Set the entire relations array on the model.
+         *
+         * @param  array  $relations
+         * @return $this
+         */
+        public function setRelations(array $relations)
+        {
+        }
+        /**
+         * Get the database connection for the model.
+         *
+         * @return \FluentForm\Framework\Database\Connection
+         */
+        public function getConnection()
+        {
+        }
+        /**
+         * Get the current connection name for the model.
+         *
+         * @return string
+         */
+        public function getConnectionName()
+        {
+        }
+        /**
+         * Set the connection associated with the model.
+         *
+         * @param  string  $name
+         * @return $this
+         */
+        public function setConnection($name)
+        {
+        }
+        /**
+         * Resolve a connection instance.
+         *
+         * @param  string|null  $connection
+         * @return \FluentForm\Framework\Database\Connection
+         */
+        public static function resolveConnection($connection = null)
+        {
+        }
+        /**
+         * Get the connection resolver instance.
+         *
+         * @return \FluentForm\Framework\Database\ConnectionResolverInterface
+         */
+        public static function getConnectionResolver()
+        {
+        }
+        /**
+         * Set the connection resolver instance.
+         *
+         * @param  \FluentForm\Framework\Database\ConnectionResolverInterface  $resolver
+         * @return void
+         */
+        public static function setConnectionResolver(\FluentForm\Framework\Database\ConnectionResolverInterface $resolver)
+        {
+        }
+        /**
+         * Unset the connection resolver for models.
+         *
+         * @return void
+         */
+        public static function unsetConnectionResolver()
+        {
+        }
+        /**
+         * Get the event dispatcher instance.
+         *
+         * @return \FluentForm\Framework\Contracts\Events\Dispatcher
+         */
+        public static function getEventDispatcher()
+        {
+        }
+        /**
+         * Set the event dispatcher instance.
+         *
+         * @param  \FluentForm\Framework\Foundation\Dispatcher  $dispatcher
+         * @return void
+         */
+        public static function setEventDispatcher(\FluentForm\Framework\Foundation\Dispatcher $dispatcher)
+        {
+        }
+        /**
+         * Unset the event dispatcher for models.
+         *
+         * @return void
+         */
+        public static function unsetEventDispatcher()
+        {
+        }
+        /**
+         * Get the mutated attributes for a given instance.
+         *
+         * @return array
+         */
+        public function getMutatedAttributes()
+        {
+        }
+        /**
+         * Extract and cache all the mutated attributes of a class.
+         *
+         * @param  string  $class
+         * @return void
+         */
+        public static function cacheMutatedAttributes($class)
+        {
+        }
+        /**
+         * Dynamically retrieve attributes on the model.
+         *
+         * @param  string  $key
+         * @return mixed
+         */
+        public function __get($key)
+        {
+        }
+        /**
+         * Dynamically set attributes on the model.
+         *
+         * @param  string  $key
+         * @param  mixed  $value
+         * @return void
+         */
+        public function __set($key, $value)
+        {
+        }
+        /**
+         * Determine if the given attribute exists.
+         *
+         * @param  mixed  $offset
+         * @return bool
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetExists($offset)
+        {
+        }
+        /**
+         * Get the value for a given offset.
+         *
+         * @param  mixed  $offset
+         * @return mixed
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetGet($offset)
+        {
+        }
+        /**
+         * Set the value for a given offset.
+         *
+         * @param  mixed  $offset
+         * @param  mixed  $value
+         * @return void
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetSet($offset, $value)
+        {
+        }
+        /**
+         * Unset the value for a given offset.
+         *
+         * @param  mixed  $offset
+         * @return void
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetUnset($offset)
+        {
+        }
+        /**
+         * Determine if an attribute or relation exists on the model.
+         *
+         * @param  string  $key
+         * @return bool
+         */
+        public function __isset($key)
+        {
+        }
+        /**
+         * Unset an attribute on the model.
+         *
+         * @param  string  $key
+         * @return void
+         */
+        public function __unset($key)
+        {
+        }
+        /**
+         * Handle dynamic method calls into the model.
+         *
+         * @param  string  $method
+         * @param  array  $parameters
+         * @return mixed
+         */
+        public function __call($method, $parameters)
+        {
+        }
+        /**
+         * Handle dynamic static method calls into the method.
+         *
+         * @param  string  $method
+         * @param  array  $parameters
+         * @return mixed
+         */
+        public static function __callStatic($method, $parameters)
+        {
+        }
+        /**
+         * Convert the model to its string representation.
+         *
+         * @return string
+         */
+        public function __toString()
+        {
+        }
+        /**
+         * When a model is being unserialized, check if it needs to be booted.
+         *
+         * @return void
+         */
+        public function __wakeup()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Models {
+    class Model extends \FluentForm\Framework\Database\Orm\Model
+    {
+        /**
+         * The attributes that aren't mass assignable.
+         *
+         * @var array
+         */
+        protected $guarded = ['id', 'ID'];
+        /**
+         * Get the number of models to return per page.
+         *
+         * @return int
+         */
+        public function getPerPage()
+        {
+        }
+    }
+    class Entry extends \FluentForm\App\Models\Model
+    {
+        /**
+         * The table associated with the model.
+         *
+         * @var string
+         */
+        protected $table = 'fluentform_submissions';
+        /**
+         * A formMeta is owned by a form.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+         */
+        public function form()
+        {
+        }
+        /**
+         * An entry has many meta.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasMany
+         */
+        public function entryMeta()
+        {
+        }
+        /**
+         * An entry has many logs.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasMany
+         */
+        public function logs()
+        {
+        }
+        /**
+         * An entry has many entry details.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasMany
+         */
+        public function entryDetails()
+        {
+        }
+        public function paginateEntries($attributes = [])
+        {
+        }
+        public function countByGroup($formId)
+        {
+        }
+        public function amend($id, $data = [])
+        {
+        }
+        public static function remove($entryIds)
+        {
+        }
+    }
+    class EntryDetails extends \FluentForm\App\Models\Model
+    {
+        /**
+         * The table associated with the model.
+         *
+         * @var string
+         */
+        protected $table = 'fluentform_entry_details';
+        /**
+         * Indicates if the model should be timestamped.
+         *
+         * @var bool
+         */
+        public $timestamps = false;
+        /**
+         * A formMeta is owned by a form.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+         */
+        public function form()
+        {
+        }
+        /**
+         * A submission detail is owned by a submission.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+         */
+        public function submission()
+        {
+        }
+    }
+    class EntryMeta extends \FluentForm\App\Models\Model
+    {
+        /**
+         * The table associated with the model.
+         *
+         * @var string
+         */
+        protected $table = 'fluentform_submission_meta';
+        /**
+         * A formMeta is owned by a form.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+         */
+        public function form()
+        {
+        }
+        /**
+         * A formMeta is owned by an entry.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+         */
+        public function entry()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Models\Traits {
+    trait PredefinedForms
+    {
+        public static function resolvePredefinedForm($attributes = [])
+        {
+        }
+        public static function findPredefinedForm($attributes = [])
+        {
+        }
+        public static function getPredefinedForms()
+        {
+        }
+        public static function getBlankConversationalForm()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Models {
+    class Form extends \FluentForm\App\Models\Model
+    {
+        use \FluentForm\App\Models\Traits\PredefinedForms;
+        /**
+         * The table associated with the model.
+         *
+         * @var string
+         */
+        protected $table = 'fluentform_forms';
+        /**
+         * A form has many form meta.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasMany
+         */
+        public function formMeta()
+        {
+        }
+        /**
+         * A form may have one form meta to determine if
+         * the form is a regular or conversational one.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasOne
+         */
+        public function conversationalMeta()
+        {
+        }
+        /**
+         * A form has many submissions.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasMany
+         */
+        public function submissions()
+        {
+        }
+        /**
+         * A form has many submission meta.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasMany
+         */
+        public function submissionMeta()
+        {
+        }
+        /**
+         * A form has many entry details.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasMany
+         */
+        public function entryDetails()
+        {
+        }
+        /**
+         * A form has many form analytics.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasMany
+         */
+        public function formAnalytics()
+        {
+        }
+        /**
+         * A form has many logs.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasMany
+         */
+        public function logs()
+        {
+        }
+        public static function prepare($attributes = [])
+        {
+        }
+        public static function getFormMeta($metaKey, $formId = null)
+        {
+        }
+        public static function getFormsDefaultSettings($formId = false)
+        {
+        }
+        public static function getAdvancedValidationSettings($formId)
+        {
+        }
+        public static function remove($formId)
+        {
+        }
+    }
+    class FormAnalytics extends \FluentForm\App\Models\Model
+    {
+        /**
+         * The table associated with the model.
+         *
+         * @var string
+         */
+        protected $table = 'fluentform_form_analytics';
+        /**
+         * Indicates if the model should be timestamped.
+         *
+         * @var bool
+         */
+        public $timestamps = false;
+        /**
+         * A formMeta is owned by a form.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+         */
+        public function form()
+        {
+        }
+    }
+    class FormMeta extends \FluentForm\App\Models\Model
+    {
+        /**
+         * The table associated with the model.
+         *
+         * @var string
+         */
+        protected $table = 'fluentform_form_meta';
+        /**
+         * Indicates if the model should be timestamped.
+         *
+         * @var bool
+         */
+        public $timestamps = false;
+        /**
+         * A formMeta is owned by a form.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+         */
+        public function form()
+        {
+        }
+        public static function prepare($attributes, $predefinedForm)
+        {
+        }
+        public static function retrieve($key, $formId = null, $default = null)
+        {
+        }
+        public static function store(\FluentForm\App\Models\Form $form, $formMeta)
+        {
+        }
+        public static function persist($formId, $metaKey, $metaValue)
+        {
+        }
+        public static function remove($formId, $metaKey)
+        {
+        }
+    }
+    class Log extends \FluentForm\App\Models\Model
+    {
+        /**
+         * The table associated with the model.
+         *
+         * @var string
+         */
+        protected $table = 'fluentform_logs';
+        /**
+         * Indicates if the model should be timestamped.
+         *
+         * @var bool
+         */
+        public $timestamps = false;
+        /**
+         * A formMeta is owned by a form.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+         */
+        public function form()
+        {
+        }
+    }
+    class Scheduler extends \FluentForm\App\Models\Model
+    {
+        /**
+         * The table associated with the model.
+         *
+         * @var string
+         */
+        protected $table = 'ff_scheduled_actions';
+        /**
+         * A formMeta is owned by a form.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+         */
+        public function form()
+        {
+        }
+        /**
+         * A schedule action is owned by a submission.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+         */
+        public function submission()
+        {
+        }
+    }
+    class Submission extends \FluentForm\App\Models\Model
+    {
+        /**
+         * The table associated with the model.
+         *
+         * @var string
+         */
+        protected $table = 'fluentform_submissions';
+        /**
+         * A submission is owned by a User.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+         */
+        public function user()
+        {
+        }
+        /**
+         * A submission is owned by a form.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+         */
+        public function form()
+        {
+        }
+        /**
+         * A submission has many meta.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasMany
+         */
+        public function submissionMeta()
+        {
+        }
+        /**
+         * A submission has many logs.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasMany
+         */
+        public function logs()
+        {
+        }
+        /**
+         * A submission has many entry details.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\HasMany
+         */
+        public function entryDetails()
+        {
+        }
+        public function customQuery($attributes = [])
+        {
+        }
+        public function paginateEntries($attributes = [])
+        {
+        }
+        public function findPreviousSubmission($attributes = [])
+        {
+        }
+        public function findAdjacentSubmission($attributes = [])
+        {
+        }
+        public function countByGroup($formId)
+        {
+        }
+        public function amend($id, $data = [])
+        {
+        }
+        public static function remove($submissionIds)
+        {
+        }
+        public function allSubmissions($attributes = [])
+        {
+        }
+        public function availableForms()
+        {
+        }
+        public static function report($attributes)
+        {
+        }
+    }
+    class SubmissionMeta extends \FluentForm\App\Models\Model
+    {
+        /**
+         * The table associated with the model.
+         *
+         * @var string
+         */
+        protected $table = 'fluentform_submission_meta';
+        /**
+         * A formMeta is owned by a form.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+         */
+        public function form()
+        {
+        }
+        /**
+         * A formMeta is owned by a submission.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+         */
+        public function submission()
+        {
+        }
+        public static function retrieve($key, $submissionId = null, $default = null)
+        {
+        }
+        public static function persist($submissionId, $metaKey, $metaValue, $formId = null)
+        {
+        }
+    }
+    class User extends \FluentForm\App\Models\Model
+    {
+        /**
+         * The table associated with the model.
+         *
+         * @var string
+         */
+        protected $table = 'users';
+        /**
+         * The accessors to append to the model's array form.
+         *
+         * @var array
+         */
+        protected $appends = ['id', 'name', 'email', 'permalink'];
+        /**
+         * The attributes that should be hidden for arrays.
+         *
+         * @var array
+         */
+        protected $hidden = ['ID', 'user_email', 'user_pass', 'display_name'];
+        /**
+         * Get the id of the user.
+         *
+         * @return bool
+         */
+        public function getIdAttribute()
+        {
+        }
+        /**
+         * Get the name of the user.
+         *
+         * @return string
+         */
+        public function getNameAttribute()
+        {
+        }
+        /**
+         * Get the email of the user.
+         *
+         * @return string
+         */
+        public function getEmailAttribute()
+        {
+        }
+        /**
+         * Get the permalink of the user.
+         *
+         * @return string
+         */
+        public function getPermalinkAttribute()
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules\Acl {
@@ -554,6 +3827,9 @@ namespace FluentForm\App\Modules\Acl {
         {
         }
     }
+    /**
+     * @deprecated deprecated use FluentForm\App\Http\Controllers\RoleManagerController
+     */
     class Managers
     {
         /**
@@ -584,6 +3860,9 @@ namespace FluentForm\App\Modules\Acl {
         {
         }
     }
+    /**
+     * @deprecated deprecated use FluentForm\App\Http\Controllers\RoleManagerController
+     */
     class RoleManager
     {
         public function getRoles()
@@ -601,38 +3880,6 @@ namespace FluentForm\App\Modules\Acl {
     }
 }
 namespace FluentForm\App\Modules {
-    class Activator
-    {
-        /**
-         * This method will be called on plugin activation
-         *
-         * @return void
-         */
-        public function handleActivation($network_wide)
-        {
-        }
-        public function migrate()
-        {
-        }
-        public function maybeMigrateDB()
-        {
-        }
-        public function migrateGlobalAddOns()
-        {
-        }
-        private function setDefaultGlobalSettings()
-        {
-        }
-        private function setCurrentVersion()
-        {
-        }
-        public static function setCronSchedule()
-        {
-        }
-        public static function maybeMigrateDefaultForms()
-        {
-        }
-    }
     class AddOnModule
     {
         /**
@@ -996,7 +4243,7 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Get all the available components
-         *
+         * @deprecated Use \FluentForm\App\Http\Controllers\FormController::resources
          * @return void
          *
          * @throws \Exception
@@ -1024,6 +4271,7 @@ namespace FluentForm\App\Modules\Component {
         {
         }
         /**
+         * @deprecated Use \FluentForm\App\Services\Form\FormService::shortcodes
          * Get all available shortcodes for editor
          *
          * @return void
@@ -1151,23 +4399,6 @@ namespace FluentForm\App\Modules {
         private function getInstallUrl($plugin)
         {
         }
-        private function getUnreadCount($formId)
-        {
-        }
-    }
-    class Deactivator
-    {
-        /**
-         * This method will be called on plugin deactivation
-         *
-         * @return void
-         */
-        public function handleDeactivation()
-        {
-        }
-        public static function disableCronSchedule()
-        {
-        }
     }
     class DocumentationModule
     {
@@ -1237,6 +4468,9 @@ namespace FluentForm\App\Modules\Entries {
         {
         }
     }
+    /**
+     * @deprecated deprecated use FluentForm\App\Http\Controllers\SubmissionController
+     */
     class Entries extends \FluentForm\App\Modules\Entries\EntryQuery
     {
         /**
@@ -1312,6 +4546,13 @@ namespace FluentForm\App\Modules\Entries {
         public function handleBulkAction()
         {
         }
+        /**
+         * @deprecated Use \FluentForm\App\Services\Submission\SubmissionService::recordEntryDetails
+         * @param $entryId
+         * @param $formId
+         * @param $data
+         * @return bool
+         */
         public function recordEntryDetails($entryId, $formId, $data)
         {
         }
@@ -1357,7 +4598,7 @@ namespace FluentForm\App\Modules\Entries {
         {
         }
         /**
-         * Exports form entries as CSV.
+         * Only used exports form partial entries
          *
          * @todo:: refactor.
          */
@@ -1374,6 +4615,12 @@ namespace FluentForm\App\Modules\Entries {
         {
         }
     }
+    /**
+     *
+     * @deprecated  use FluentForm\App\Services\Report\ReportHelper
+     * all used method reference updated with new ReportHelper, except Fluentformpro
+     *
+     */
     class Report
     {
         private $app;
@@ -1506,21 +4753,20 @@ namespace FluentForm\App\Modules\Form {
         protected $metas = [];
         protected $formType = 'form';
         protected $hasPayment = 0;
-        protected $model;
+        /**
+         * @var \FluentForm\Framework\Database\Query\Builder
+         */
+        protected $model = null;
         /**
          * Form constructor.
          *
          * @param \FluentForm\Framework\Foundation\Application $application
-         *
-         * @throws \Exception
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $application)
         {
         }
         /**
          * Get all forms from database
-         *
-         * @throws \Exception
          */
         public function index()
         {
@@ -1565,8 +4811,6 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Save/update a form from backend/editor
-         *
-         * @throws \WpFluent\Exception
          */
         public function update()
         {
@@ -1579,8 +4823,6 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Delete a from from database
-         *
-         * @throws \WpFluent\Exception
          */
         public function delete()
         {
@@ -1590,8 +4832,6 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Duplicate a from
-         *
-         * @throws \WpFluent\Exception
          */
         public function duplicate()
         {
@@ -1696,17 +4936,17 @@ namespace FluentForm\App\Modules\Form {
     /**
      * Available methods
      *
-     * @method array      getShortCodeInputs(\stdClass $form, array $with = ['admin_label'])
-     * @method array      getValidations(\stdClass $form, array $inputs, array $fields = [])
-     * @method array      getElement(\stdClass $form, string|array $name, array $with = [])
-     * @method boolean    hasElement(\stdClass $form, string $name)
-     * @method boolean    hasPaymentFields(\stdClass $form)
-     * @method array      getPaymentFields(\stdClass $form, $with = [])
-     * @method array      getPaymentInputFields(\stdClass $form, $with = [])
-     * @method array      getAttachmentInputFields(\stdClass $form, $with = [])
-     * @method boolean    hasRequiredFields(\stdClass $form, array $fields)
-     * @method array      getInputsByElementTypes(\stdClass $form, array $elements, array $with = [])
-     * @method array|null getField(\stdClass $form, string|array $element, string|array $attribute, array $with = [])
+     * @method static array      getShortCodeInputs(\stdClass $form, array $with = ['admin_label'])
+     * @method static array      getValidations(\stdClass $form, array $inputs, array $fields = [])
+     * @method static array      getElement(\stdClass $form, string|array $name, array $with = [])
+     * @method static boolean    hasElement(\stdClass $form, string $name)
+     * @method static boolean    hasPaymentFields(\stdClass $form)
+     * @method static array      getPaymentFields(\stdClass $form, $with = [])
+     * @method static array      getPaymentInputFields(\stdClass $form, $with = [])
+     * @method static array      getAttachmentInputFields(\stdClass $form, $with = [])
+     * @method static boolean    hasRequiredFields(\stdClass $form, array $fields)
+     * @method static array      getInputsByElementTypes(\stdClass $form, array $elements, array $with = [])
+     * @method static array|null getField(\stdClass $form, string|array $element, string|array $attribute, array $with = [])
      */
     class FormFieldsParser
     {
@@ -1746,6 +4986,7 @@ namespace FluentForm\App\Modules\Form {
         {
         }
     }
+    /* @deprecated Use class \FluentForm\App\Http\Controllers\SubmissionHandlerController */
     class FormHandler
     {
         /**
@@ -1937,6 +5178,7 @@ namespace FluentForm\App\Modules\Form {
         {
         }
     }
+    /* @deprecated  Use FluentForm\App\Services\Form\FormService*/
     class Predefined extends \FluentForm\App\Modules\Form\Form
     {
         /**
@@ -2171,11 +5413,11 @@ namespace FluentForm\App\Modules\Form\Settings\Validator {
         /**
          * Add conditional validations to the validator.
          *
-         * @param FluentValidator $validator
+         * @param \FluentForm\Framework\Validator\Validator $validator
          *
-         * @return FluentValidator
+         * @return \FluentForm\Framework\Validator\Validator
          */
-        public static function conditionalValidations(\FluentValidator\Validator $validator)
+        public static function conditionalValidations(\FluentForm\Framework\Validator\Validator $validator)
         {
         }
     }
@@ -2202,11 +5444,11 @@ namespace FluentForm\App\Modules\Form\Settings\Validator {
         /**
          * Add conditional validations to the validator.
          *
-         * @param FluentValidator $validator
+         * @param \FluentForm\Framework\Validator\Validator $validator
          *
-         * @return FluentValidator
+         * @return \FluentForm\Framework\Validator\Validator
          */
-        public static function conditionalValidations(\FluentValidator\Validator $validator)
+        public static function conditionalValidations(\FluentForm\Framework\Validator\Validator $validator)
         {
         }
     }
@@ -2233,11 +5475,11 @@ namespace FluentForm\App\Modules\Form\Settings\Validator {
         /**
          * Add conditional validations to the validator.
          *
-         * @param FluentValidator $validator
+         * @param \FluentForm\Framework\Validator\Validator $validator
          *
-         * @return FluentValidator
+         * @return \FluentForm\Framework\Validator\Validator
          */
-        public static function conditionalValidations(\FluentValidator\Validator $validator)
+        public static function conditionalValidations(\FluentForm\Framework\Validator\Validator $validator)
         {
         }
     }
@@ -2264,11 +5506,11 @@ namespace FluentForm\App\Modules\Form\Settings\Validator {
         /**
          * Add conditional validations to the validator.
          *
-         * @param FluentValidator $validator
+         * @param \FluentForm\Framework\Validator\Validator $validator
          *
-         * @return FluentValidator
+         * @return \FluentForm\Framework\Validator\Validator
          */
-        public static function conditionalValidations(\FluentValidator\Validator $validator)
+        public static function conditionalValidations(\FluentForm\Framework\Validator\Validator $validator)
         {
         }
     }
@@ -2286,6 +5528,7 @@ namespace FluentForm\App\Modules\Form\Settings\Validator {
     }
 }
 namespace FluentForm\App\Modules\Form {
+    /* @deprecated Current File FluentForm\App\Http\Controllers\TransferController */
     class Transfer
     {
         /**
@@ -2537,6 +5780,18 @@ namespace FluentForm\App\Modules\Registerer {
         {
         }
     }
+    class ReviewQuery
+    {
+        public function register()
+        {
+        }
+        public function show()
+        {
+        }
+        private function getMessage()
+        {
+        }
+    }
     class TranslationString
     {
         public static function getAdminI18n()
@@ -2606,6 +5861,9 @@ namespace FluentForm\App\Modules\Settings {
      *
      * @package FluentForm\App\Modules\Settings
      */
+    /**
+     * @deprecated deprecated use FluentForm\App\Http\Controllers\GlobalSettingsController
+     */
     class Settings
     {
         /**
@@ -2667,12 +5925,17 @@ namespace FluentForm\App\Modules\Track {
         {
         }
     }
+    //Could not Find any Usage any where
     class TrackModule
     {
         private $apiUrl = 'https://fluentform.com';
         private $initialConsentKey = '_fluentform_notice_pref';
         private $newsletterDelayTimeStamp = 172800;
         // 7 days
+        private $adminNotice;
+        public function __construct()
+        {
+        }
         public function initTrack()
         {
         }
@@ -2957,210 +6220,21 @@ namespace FluentForm\App\Modules\Widgets {
         }
     }
 }
-namespace FluentForm\Framework\Foundation {
-    abstract class Provider
+namespace FluentForm\App\Services\Analytics {
+    class AnalyticsService
     {
-        /**
-         * $app \Framework\Foundation\Application
-         * @var null
-         */
-        protected $app = null;
-        /**
-         * Build the instance
-         * @param \FluentForm\Framework\Foundation\Application $app
-         */
-        public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        public function reset($formId)
+        {
+        }
+        public function store($data)
         {
         }
         /**
-         * Booted method for any provider
-         * @return void
-         */
-        public function booted()
-        {
-        }
-        /**
-         * Abstract booting method for provider
-         * @return void
-         */
-        public abstract function booting();
-    }
-}
-namespace FluentForm\App\Providers {
-    class AdminNoticeProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        /**
-         * The provider booting method to boot this provider
-         * @return void
-         */
-        public function booting()
-        {
-        }
-        /**
-         * The provider booted method to be called after booting
-         * @return void
-         */
-        public function booted()
-        {
-        }
-    }
-    /**
-     * This provider will be loaded only on backend (admin)
-     */
-    class BackendProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        /**
-         * The provider booting method to boot this provider
-         * @return void
-         */
-        public function booting()
-        {
-        }
-        /**
-         * The provider booted method to be called after booting
-         * @return void
-         */
-        public function booted()
-        {
-        }
-    }
-    class CommonProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        /**
-         * The provider booting method to boot this provider
-         * @return void
-         */
-        public function booting()
-        {
-        }
-        /**
-         * The provider booted method to be called after booting
-         * @return void
-         */
-        public function booted()
-        {
-        }
-    }
-    class FluentConversationalProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        public function booting()
-        {
-        }
-        public function booted()
-        {
-        }
-    }
-    class FluentValidatorProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        public function booting()
-        {
-        }
-    }
-    class FormBuilderProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        /**
-         * The provider booting method to boot this provider
-         * @return void
-         */
-        public function booting()
-        {
-        }
-        /**
-         * The provider booted method to be called after booting
-         * @return void
-         */
-        public function booted()
-        {
-        }
-    }
-    /**
-     * This provider will be loaded only on frontend (public)
-     */
-    class FrontendProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        /**
-         * The provider booting method to boot this provider
-         * @return void
-         */
-        public function booting()
-        {
-        }
-        /**
-         * The provider booted method to be called after booting
-         * @return void
-         */
-        public function booted()
-        {
-        }
-    }
-    class MenuProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        /**
-         * Bootstrap any application services.
+         * Store (create/update) total view of a form
          *
-         * @return void
+         * @param int $formId
          */
-        public function booting()
-        {
-        }
-    }
-    class MigratorProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        public function booting()
-        {
-        }
-        public function booted()
-        {
-        }
-    }
-    class WpFluentProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        public function booting()
-        {
-        }
-    }
-}
-namespace FluentForm\App\Services {
-    class AdminNotices
-    {
-        private $notice = false;
-        private $noticeKey = false;
-        private $noticeDisabledTime = 172800;
-        // 7 days
-        private $noticePrefKey = '_fluentform_notice_pref';
-        private $app;
-        private $pref = false;
-        public function __construct(\FluentForm\Framework\Foundation\Application $app)
-        {
-        }
-        public function showNotice()
-        {
-        }
-        public function addNotice($notice)
-        {
-        }
-        public function noticeActions()
-        {
-        }
-        public function renderNotice($notice, $notice_key = false)
-        {
-        }
-        public function hasNotice()
-        {
-        }
-        private function disableNotice($notice_key, $type = 'temp')
-        {
-        }
-        public function getNoticePref()
-        {
-        }
-        public function shouldShowNotice($noticeName)
-        {
-        }
-        private function haveTempHideNotice($noticeName)
-        {
-        }
-        private function hasPermission()
+        private function increaseTotalViews($formId)
         {
         }
     }
@@ -4926,7 +8000,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         {
         }
         /**
-         * Build unique ID concating form id and name attribute
+         * Build unique ID concatenating form id and name attribute
          *
          * @param array $data $form
          *
@@ -5156,12 +8230,6 @@ namespace FluentForm\App\Services\FluentConversational\Classes {
         public function renderDesignSettings($formId)
         {
         }
-        public function getSettingsAjax()
-        {
-        }
-        public function saveSettingsAjax()
-        {
-        }
         public function getDesignSettings($formId)
         {
         }
@@ -5222,6 +8290,334 @@ namespace FluentForm\App\Services\FluentConversational\Classes {
         {
         }
         protected function getAsteriskPlacement($formId)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Form {
+    class Duplicator
+    {
+        public function duplicateFormMeta(\FluentForm\App\Models\Form $form, \FluentForm\App\Models\Form $existingForm)
+        {
+        }
+        public function maybeDuplicateFiles($form, $existingForm, $data)
+        {
+        }
+        /**
+         * Map pdf feed ID to replace with duplicated PDF feed ID when duplicating form
+         *
+         * @param  \FluentForm\App\Models\Form $form
+         * @param  array                       $formMeta
+         * @return array                       $pdfFeedMap
+         */
+        private function getPdfFeedMap(\FluentForm\App\Models\Form $form, $formMeta)
+        {
+        }
+        /**
+         * Map notification data with PDF feed map
+         *
+         * @param  array $formMeta
+         * @param  array $pdfFeedMap
+         * @return array $formMeta
+         */
+        private function notificationWithPdfMap($formMeta, $pdfFeedMap)
+        {
+        }
+    }
+    class Fields
+    {
+        public function get($formId)
+        {
+        }
+        public function supportedConditionalFields()
+        {
+        }
+        public function filterEditorFields($fields)
+        {
+        }
+    }
+    class FormService
+    {
+        /**
+         * @var \FluentForm\Framework\Foundation\Application
+         */
+        protected $app;
+        /**
+         * @var \FluentForm\App\Models\Form|\FluentForm\Framework\Database\Query\Builder
+         */
+        protected $model;
+        /**
+         * @var \FluentForm\App\Services\Form\Updater
+         */
+        protected $updater;
+        /**
+         * @var \FluentForm\App\Services\Form\Duplicator
+         */
+        protected $duplicator;
+        /**
+         * @var \FluentForm\App\Services\Form\Fields
+         */
+        protected $fields;
+        public function __construct()
+        {
+        }
+        /**
+         * Get the paginated forms matching search criteria.
+         *
+         * @param  array $attributes
+         * @return array
+         */
+        public function get($attributes = [])
+        {
+        }
+        /**
+         * Store a form with its associated meta.
+         *
+         * @param  array                       $attributes
+         * @throws Exception
+         * @return \FluentForm\App\Models\Form $form
+         */
+        public function store($attributes = [])
+        {
+        }
+        /**
+         * Duplicate a form with its associated meta.
+         *
+         * @param  array                       $attributes
+         * @throws Exception
+         * @return \FluentForm\App\Models\Form $form
+         */
+        public function duplicate($attributes = [])
+        {
+        }
+        public function find($id)
+        {
+        }
+        public function delete($id)
+        {
+        }
+        /**
+         * Update a form with its relevant fields.
+         *
+         * @param  array                       $attributes
+         * @throws Exception
+         * @return \FluentForm\App\Models\Form $form
+         */
+        public function update($attributes = [])
+        {
+        }
+        /**
+         * Duplicate a form with its associated meta.
+         *
+         * @param  int                         $id
+         * @throws Exception
+         * @return \FluentForm\App\Models\Form $form
+         */
+        public function convert($id)
+        {
+        }
+        public function templates()
+        {
+        }
+        public function components($formId)
+        {
+        }
+        public function getDisabledComponents()
+        {
+        }
+        public function fields($id)
+        {
+        }
+        public function shortcodes($id)
+        {
+        }
+        public function pages()
+        {
+        }
+        public function getInputsAndLabels($formId, $with = ['admin_label', 'raw'])
+        {
+        }
+        public function findShortCodePage($formId)
+        {
+        }
+        public static function getShortCodeId($content, $shortcodeTag = 'fluentform')
+        {
+        }
+    }
+    class FormValidationService
+    {
+        protected $app;
+        protected $form;
+        protected $formData;
+        public function __construct()
+        {
+        }
+        public function setForm($form)
+        {
+        }
+        public function setFormData($formData)
+        {
+        }
+        /**
+         * @param $fields
+         * @return bool
+         * @throws ValidationException
+         */
+        public function validateSubmission(&$fields, &$formData)
+        {
+        }
+        /**
+         * Prevents malicious attacks when the submission
+         * count exceeds in an allowed interval.
+         * @throws ValidationException
+         */
+        public function preventMaliciousAttacks()
+        {
+        }
+        /**
+         * Validate form data based on the form restrictions settings.
+         *
+         * @param $fields
+         * @throws ValidationException
+         */
+        private function validateRestrictions(&$fields)
+        {
+        }
+        /**
+         * Handle response when empty form submission is not allowed.
+         *
+         * @param array $settings
+         * @param $fields
+         * @throws ValidationException
+         */
+        private function handleDenyEmptySubmission($settings, &$fields)
+        {
+        }
+        /**
+         * Validate nonce.
+         * @throws ValidationException
+         */
+        protected function validateNonce()
+        {
+        }
+        /** Validate Spam
+         * @throws ValidationException
+         */
+        public function handleSpamError()
+        {
+        }
+        public function isSpam($formData, $form)
+        {
+        }
+        /**
+         * Validate reCaptcha.
+         * @throws ValidationException
+         */
+        private function validateReCaptcha()
+        {
+        }
+        /**
+         * Validate hCaptcha.
+         * @throws ValidationException
+         */
+        private function validateHCaptcha()
+        {
+        }
+        /**
+         * Validate turnstile.
+         * @throws ValidationException
+         */
+        private function validateTurnstile()
+        {
+        }
+        /**
+         * Delegate the validation rules & messages to the
+         * ones that the validation library recognizes.
+         *
+         * @param $rules
+         * @param $messages
+         * @param array $search
+         * @param array $replace
+         * @return array
+         */
+        protected function delegateValidations($rules, $messages, $search = [], $replace = [])
+        {
+        }
+    }
+    class SubmissionHandlerService
+    {
+        protected $app;
+        protected $form;
+        protected $fields;
+        protected $formData;
+        protected $validationService;
+        protected $submissionService;
+        public function __construct()
+        {
+        }
+        /**
+         * Form Submission
+         * @param $formDataRaw
+         * @param $formId
+         * @return array
+         * @throws \FluentForm\Framework\Validator\ValidationException
+         */
+        public function handleSubmission($formDataRaw, $formId)
+        {
+        }
+        /**
+         * @throws ValidationException
+         */
+        protected function prepareHandler($formId, $formDataRaw)
+        {
+        }
+        /**
+         * Prepare the data to be inserted to the database.
+         * @param boolean $formData
+         * @return array
+         */
+        public function prepareInsertData($formData = false)
+        {
+        }
+        public function processSubmissionData($insertId, $formData, $form)
+        {
+        }
+        /**
+         * Return Formatted Response Data
+         * @param $insertId
+         * @param $form
+         * @param $formData
+         * @return mixed
+         */
+        public function getReturnData($insertId, $form, $formData)
+        {
+        }
+        /**
+         * Validates Submission
+         * @throws ValidationException
+         */
+        private function handleValidation()
+        {
+        }
+        protected function insertSubmission($insertData, $formDataRaw, $formId)
+        {
+        }
+    }
+    class Updater
+    {
+        public function update($attributes = [])
+        {
+        }
+        private function validate($attributes)
+        {
+        }
+        private function sanitizeFields($formFields)
+        {
+        }
+        private function sanitizeFieldMaps($fields)
+        {
+        }
+        private function updatePrimaryEmail($form)
         {
         }
     }
@@ -5301,6 +8697,7 @@ namespace FluentForm\App\Services\FormBuilder {
          *
          * @return array
          */
+        #[\ReturnTypeWillChange]
         public function jsonSerialize()
         {
         }
@@ -5873,7 +9270,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * @param \stdClass $form
-         * 
+         *
          * @return string form body
          */
         public function buildFormBody($form)
@@ -5910,7 +9307,7 @@ namespace FluentForm\App\Services\FormBuilder {
         {
         }
         /**
-         * Extract conditipnal logic from a given element
+         * Extract conditional logic from a given element
          *
          * @param array $item
          *
@@ -6151,7 +9548,42 @@ namespace FluentForm\App\Services\FormBuilder {
         }
     }
 }
+namespace FluentForm\App\Services\GlobalSettings {
+    class GlobalSettingsHelper
+    {
+        public function storeReCaptcha($attributes)
+        {
+        }
+        public function storeHCaptcha($attributes)
+        {
+        }
+        public function storeTurnstile($attributes)
+        {
+        }
+        public function storeSaveGlobalLayoutSettings($attributes)
+        {
+        }
+        public function storeMailChimpSettings($attributes)
+        {
+        }
+        public function storeEmailSummarySettings($attributes)
+        {
+        }
+    }
+    class GlobalSettingsService
+    {
+        public function get($attributes = [])
+        {
+        }
+        public function store($attributes = [])
+        {
+        }
+    }
+}
 namespace FluentForm\App\Services\Integrations {
+    /**
+     * @deprecated deprecated use FluentForm\App\Http\Controllers\IntegrationManagerHelper;
+     */
     class BaseIntegration
     {
         private $setting_key = '';
@@ -6198,6 +9630,24 @@ namespace FluentForm\App\Services\Integrations {
         {
         }
     }
+    class FormIntegrationService
+    {
+        public function find($attr)
+        {
+        }
+        public function update($attr)
+        {
+        }
+        public function get($formId)
+        {
+        }
+        public function delete($id)
+        {
+        }
+    }
+    /**
+     * @deprecated deprecated use FluentForm\App\Http\Controllers\GlobalIntegrationController;
+     */
     class GlobalIntegrationManager
     {
         /**
@@ -6237,6 +9687,26 @@ namespace FluentForm\App\Services\Integrations {
         {
         }
     }
+    class GlobalIntegrationService
+    {
+        public function get($attr)
+        {
+        }
+        public function isEnabled($integrationKey)
+        {
+        }
+        /**
+         * @param $args - key value pair array
+         * @throws Exception
+         * @return void
+         */
+        public function updateModuleStatus($args)
+        {
+        }
+    }
+    /**
+     * @deprecated deprecated use  FluentForm\App\Hooks\Handlers\GlobalNotificationHandler;
+     */
     class GlobalNotificationManager
     {
         private $app;
@@ -6266,79 +9736,40 @@ namespace FluentForm\App\Services\Integrations {
         {
         }
     }
-    abstract class IntegrationManager
+    class GlobalNotificationService
     {
-        protected $app = null;
-        protected $subscriber = null;
-        protected $title = '';
-        protected $description = '';
-        protected $integrationKey = '';
-        protected $optionKey = '';
-        protected $settingsKey = '';
-        protected $priority = 11;
-        public $logo = '';
-        public $hasGlobalMenu = true;
-        public $category = 'crm';
-        public $disableGlobalSettings = 'no';
-        public function __construct($app, $title, $integrationKey, $optionKey, $settingsKey, $priority = 11)
+        public function checkCondition($parsedValue, $formData, $insertId)
         {
         }
-        public function registerAdminHooks()
+        public function getEntry($id, $form)
         {
         }
-        public function registerNotificationHooks()
+        public function cleanUpPassword($insertId, $form)
         {
         }
-        public function notify($feed, $formData, $entry, $form)
+        /**
+         * @param $feeds
+         * @param $formData
+         * @param $insertId
+         *
+         * @return array
+         */
+        public function getEnabledFeeds($feeds, $formData, $insertId)
         {
         }
-        public function addGlobalMenu($setting)
-        {
-        }
-        public function addNotificationType($types)
-        {
-        }
-        public function addActiveNotificationType($types)
-        {
-        }
-        public function getGlobalSettings($settings)
-        {
-        }
-        public function saveGlobalSettings($settings)
-        {
-        }
-        public function getGlobalFields($fields)
-        {
-        }
-        public function setMetaKey($data, $integrationId)
-        {
-        }
-        public function prepareIntegrationFeed($setting, $feed, $formId)
-        {
-        }
-        public abstract function getIntegrationDefaults($settings, $formId);
-        public abstract function pushIntegration($integrations, $formId);
-        public abstract function getSettingsFields($settings, $formId);
-        public abstract function getMergeFields($list, $listId, $formId);
-        public function setFeedAtributes($feed, $formId)
-        {
-        }
-        public function isConfigured()
-        {
-        }
-        public function isEnabled()
-        {
-        }
-        public function getApiSettings()
-        {
-        }
-        protected function getSelectedTagIds($data, $inputData, $simpleKey = 'tag_ids', $routingId = 'tag_ids_selection_type', $routersKey = 'tag_routers')
-        {
-        }
-        protected function evaluateRoutings($routings, $inputData)
+        public function getNotificationFeeds($form, $feedMetaKeys)
         {
         }
     }
+    /**
+     * @deprecated deprecated use  FluentForm\App\Http\Controllers\IntegrationManagerController;
+     */
+    abstract class IntegrationManager extends \FluentForm\App\Http\Controllers\IntegrationManagerController
+    {
+    }
+    /**
+     * @deprecated deprecated use FluentForm\App\Http\Controllers\GlobalIntegrationController;
+     */
     trait LogResponseTrait
     {
         protected function logResponse($response, $feed, $data, $form, $entryId, $status)
@@ -6752,6 +10183,49 @@ namespace FluentForm\App\Services\Integrations\Slack {
         {
         }
         public function notify($feed, $formData, $entry, $form)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Logger {
+    class Logger
+    {
+        public function get($attributes = [])
+        {
+        }
+        protected function getBases($type)
+        {
+        }
+        public function getFilters($attributes = [])
+        {
+        }
+        public function getSubmissionLogs($submissionId, $attributes = [])
+        {
+        }
+        public function remove($attributes = [])
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Manager {
+    class ManagerService
+    {
+        public function getManagers($attributes = [])
+        {
+        }
+        public function addManager($attributes = [])
+        {
+        }
+        public function removeManager($attributes = [])
+        {
+        }
+        private function validate($manager)
+        {
+        }
+        private function dependencyValidate($permissions)
+        {
+        }
+        private function getUserRoles($roles)
         {
         }
     }
@@ -7788,6 +11262,78 @@ namespace FluentForm\App\Services\Parser {
         }
     }
 }
+namespace FluentForm\App\Services\Report {
+    class ReportHelper
+    {
+        public static function generateReport($form, $statuses = [])
+        {
+        }
+        public static function getInputReport($formId, $fieldNames, $statuses = [])
+        {
+        }
+        public static function getSubFieldInputReport($formId, $fieldNames, $statuses)
+        {
+        }
+        protected static function getFormattedReportsForSubInputs($reports, $formId, $statuses)
+        {
+        }
+        protected static function setReportForSubInput($report, &$formattedReports)
+        {
+        }
+        public static function getEntryTotal($fieldName, $formId, $statuses = false)
+        {
+        }
+        private static function getEntryCounts($formId, $statuses = false)
+        {
+        }
+        public static function getBrowserCounts($formId, $statuses = false)
+        {
+        }
+        public static function getDeviceCounts($formId, $statuses = false)
+        {
+        }
+        private static function getCounts($formId, $for, $statuses)
+        {
+        }
+        public static function maybeMigrateData($formId)
+        {
+        }
+    }
+    class ReportService
+    {
+        /**
+         * Get Form Report
+         * @param array $attr
+         * @return array|mixed $response
+         * @throws Exception
+         */
+        public function form($attr = [])
+        {
+        }
+        /**
+         * Get Submissions Report
+         *
+         * @throws Exception
+         */
+        public function submissions($args)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Roles {
+    class RolesService
+    {
+        public function getRoles($attributes = [])
+        {
+        }
+        public function setCapability($attributes = [])
+        {
+        }
+        private function getFormattedRoles()
+        {
+        }
+    }
+}
 namespace FluentForm\App\Services\Scheduler {
     class Scheduler
     {
@@ -7795,6 +11341,153 @@ namespace FluentForm\App\Services\Scheduler {
         {
         }
         private static function cleanUpOldData()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Settings {
+    class Customizer
+    {
+        public function get($formId)
+        {
+        }
+        public function store($attributes = [])
+        {
+        }
+    }
+    class SettingsService
+    {
+        public function get($attributes = [])
+        {
+        }
+        public function general($formId)
+        {
+        }
+        public function saveGeneral($attributes = [])
+        {
+        }
+        private function sanitizeData($settings)
+        {
+        }
+        public function store($attributes = [])
+        {
+        }
+        public function remove($attributes = [])
+        {
+        }
+        public function conversationalDesign($formId)
+        {
+        }
+        public function storeConversationalDesign($attributes, $formId)
+        {
+        }
+    }
+    class Validator
+    {
+        /**
+         * Centralized validator for all the settings data.
+         *
+         * @param $key
+         * @param array $data
+         */
+        public static function validate($key, $data = [])
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Settings\Validator {
+    abstract class Validate
+    {
+        /**
+         * Validates confirmations settings data.
+         *
+         * @param array $data
+         *
+         * @return bool
+         */
+        public static function validate($data = [])
+        {
+        }
+        /**
+         * Produce the necessary validation rules and corresponding messages
+         *
+         * @return array
+         */
+        public static function validations()
+        {
+        }
+        /**
+         * Add conditional validations to the validator.
+         *
+         * @param \FluentForm\Framework\Validator\Validator $validator
+         *
+         * @return \FluentForm\Framework\Validator\Validator
+         */
+        public static function conditionalValidations(\FluentForm\Framework\Validator\Validator $validator)
+        {
+        }
+    }
+    class Confirmations extends \FluentForm\App\Services\Settings\Validator\Validate
+    {
+        /**
+         * Produce the necessary validation rules and corresponding messages
+         *
+         * @return array
+         */
+        public static function validations()
+        {
+        }
+        /**
+         * Add conditional validations to the validator.
+         *
+         * @param \FluentForm\Framework\Validator\Validator $validator
+         *
+         * @return \FluentForm\Framework\Validator\Validator
+         */
+        public static function conditionalValidations(\FluentForm\Framework\Validator\Validator $validator)
+        {
+        }
+    }
+    class MailChimps extends \FluentForm\App\Services\Settings\Validator\Validate
+    {
+        /**
+         * Produce the necessary validation rules and corresponding messages
+         *
+         * @return array
+         */
+        public static function validations()
+        {
+        }
+    }
+    class Notifications extends \FluentForm\App\Services\Settings\Validator\Validate
+    {
+        /**
+         * Produce the necessary validation rules and corresponding messages
+         *
+         * @return array
+         */
+        public static function validations()
+        {
+        }
+        /**
+         * Add conditional validations to the validator.
+         *
+         * @param \FluentForm\Framework\Validator\Validator $validator
+         *
+         * @return \FluentForm\Framework\Validator\Validator
+         */
+        public static function conditionalValidations(\FluentForm\Framework\Validator\Validator $validator)
+        {
+        }
+    }
+    class Pdfs extends \FluentForm\App\Services\Settings\Validator\Validate
+    {
+        /**
+         * Produce the necessary validation rules and corresponding messages
+         *
+         * @return array
+         */
+        public static function validations()
         {
         }
     }
@@ -14807,6 +18500,87 @@ namespace Box\Spout\Writer\XLSX {
         }
     }
 }
+namespace FluentForm\App\Services\Submission {
+    class SubmissionService
+    {
+        /**
+         * @var \FluentForm\App\Models\Submission|\FluentForm\Framework\Database\Query\Builder|\FluentForm\Framework\Database\Orm\Builder
+         */
+        protected $model;
+        protected $formService;
+        public function __construct()
+        {
+        }
+        public function get($attributes = [])
+        {
+        }
+        public function find($submissionId)
+        {
+        }
+        public function resources($attributes)
+        {
+        }
+        public function updateStatus($attributes = [])
+        {
+        }
+        public function toggleIsFavorite($submissionId)
+        {
+        }
+        public function storeColumnSettings($attributes = [])
+        {
+        }
+        public function handleBulkActions($attributes = [])
+        {
+        }
+        public function deleteEntries($submissionIds, $formId)
+        {
+        }
+        public function deleteFiles($submissionIds, $formId)
+        {
+        }
+        public function getAttachments($submissionIds, $form)
+        {
+        }
+        public function getNotes($submissionId, $attributes)
+        {
+        }
+        public function storeNote($submissionId, $attributes = [])
+        {
+        }
+        public function updateSubmissionUser($userId, $submissionId)
+        {
+        }
+        public function recordEntryDetails($entryId, $formId, $data)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Transfer {
+    class TransferService
+    {
+        public static function exportForms($formIds)
+        {
+        }
+        /**
+         * @throws Exception
+         */
+        public static function importForms($file)
+        {
+        }
+        public static function exportEntries($args)
+        {
+        }
+        private static function exportAsJSON($form, $args)
+        {
+        }
+        private static function getSubmissions($args)
+        {
+        }
+        private static function downloadOfficeDoc($data, $type = 'csv', $fileName = null)
+        {
+        }
+    }
+}
 namespace FluentForm\App\Services\WPAsync {
     class FluentFormAsyncRequest
     {
@@ -14854,35 +18628,9214 @@ namespace FluentForm\App\Services\WPAsync {
         }
     }
 }
-namespace FluentValidator {
-    /**
-     * Class Arr: Taken from Illuminate\Support\Arr (Laravel Framework)
-     *
-     * @package FluentValidator
-     */
-    class Arr
+namespace FluentForm\Database {
+    class DBMigrator
+    {
+        public static function run($network_wide = false)
+        {
+        }
+    }
+}
+namespace FluentForm\Database\Migrations {
+    class FormAnalytics
     {
         /**
-         * Check if an item or items exist in an array using "dot" notation.
+         * Migrate the table.
          *
-         * @param \ArrayAccess|array $array
-         * @param string|array       $keys
+         * @return void
+         */
+        public static function migrate()
+        {
+        }
+    }
+    class FormMeta
+    {
+        /**
+         * Migrate the table.
+         *
+         * @return void
+         */
+        public static function migrate()
+        {
+        }
+    }
+    class Forms
+    {
+        /**
+         * Migrate the table.
+         *
+         * @return void
+         */
+        public static function migrate()
+        {
+        }
+    }
+    class Logs
+    {
+        /**
+         * Migrate the table.
+         *
+         * @return void
+         */
+        public static function migrate()
+        {
+        }
+    }
+    class ScheduledActions
+    {
+        /**
+         * Migrate the table.
+         *
+         * @return void
+         */
+        public static function migrate()
+        {
+        }
+    }
+    class SubmissionDetails
+    {
+        /**
+         * Migrate the table.
+         *
+         * @return void
+         */
+        public static function migrate()
+        {
+        }
+    }
+    class SubmissionMeta
+    {
+        /**
+         * Migrate the table.
+         *
+         * @return void
+         */
+        public static function migrate()
+        {
+        }
+    }
+    class Submissions
+    {
+        /**
+         * Migrate the table.
+         *
+         * @return void
+         */
+        public static function migrate($force = false)
+        {
+        }
+    }
+}
+namespace {
+    // autoload_real.php @generated by Composer
+    class ComposerAutoloaderInitb99e07d253bf4705bf50ef1db90791ef
+    {
+        private static $loader;
+        public static function loadClassLoader($class)
+        {
+        }
+        /**
+         * @return \Composer\Autoload\ClassLoader
+         */
+        public static function getLoader()
+        {
+        }
+    }
+}
+namespace Composer\Autoload {
+    class ComposerStaticInitb99e07d253bf4705bf50ef1db90791ef
+    {
+        public static $prefixLengthsPsr4 = array('W' => array('WPFluent\\' => 9), 'F' => array('FluentForm\\Framework\\' => 21, 'FluentForm\\App\\' => 15));
+        public static $prefixDirsPsr4 = array('WPFluent\\' => array(0 => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent'), 'FluentForm\\Framework\\' => array(0 => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent'), 'FluentForm\\App\\' => array(0 => __DIR__ . '/../..' . '/app'));
+        public static $classMap = array('Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php', 'FluentForm\\App\\Api\\Entry' => __DIR__ . '/../..' . '/app/Api/Entry.php', 'FluentForm\\App\\Api\\Form' => __DIR__ . '/../..' . '/app/Api/Form.php', 'FluentForm\\App\\Api\\FormProperties' => __DIR__ . '/../..' . '/app/Api/FormProperties.php', 'FluentForm\\App\\Api\\Submission' => __DIR__ . '/../..' . '/app/Api/Submission.php', 'FluentForm\\App\\App' => __DIR__ . '/../..' . '/app/App.php', 'FluentForm\\App\\ComposerScript' => __DIR__ . '/../..' . '/app/ComposerScript.php', 'FluentForm\\App\\Helpers\\Helper' => __DIR__ . '/../..' . '/app/Helpers/Helper.php', 'FluentForm\\App\\Helpers\\IntegrationManagerHelper' => __DIR__ . '/../..' . '/app/Helpers/IntegrationManagerHelper.php', 'FluentForm\\App\\Helpers\\Protector' => __DIR__ . '/../..' . '/app/Helpers/Protector.php', 'FluentForm\\App\\Helpers\\Str' => __DIR__ . '/../..' . '/app/Helpers/Str.php', 'FluentForm\\App\\Hooks\\Handlers\\ActivationHandler' => __DIR__ . '/../..' . '/app/Hooks/Handlers/ActivationHandler.php', 'FluentForm\\App\\Hooks\\Handlers\\DeactivationHandler' => __DIR__ . '/../..' . '/app/Hooks/Handlers/DeactivationHandler.php', 'FluentForm\\App\\Hooks\\Handlers\\GlobalNotificationHandler' => __DIR__ . '/../..' . '/app/Hooks/Handlers/GlobalNotificationHandler.php', 'FluentForm\\App\\Http\\Controllers\\AdminNoticeController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminNoticeController.php', 'FluentForm\\App\\Http\\Controllers\\AnalyticsController' => __DIR__ . '/../..' . '/app/Http/Controllers/AnalyticsController.php', 'FluentForm\\App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php', 'FluentForm\\App\\Http\\Controllers\\FormController' => __DIR__ . '/../..' . '/app/Http/Controllers/FormController.php', 'FluentForm\\App\\Http\\Controllers\\FormIntegrationController' => __DIR__ . '/../..' . '/app/Http/Controllers/FormIntegrationController.php', 'FluentForm\\App\\Http\\Controllers\\FormSettingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/FormSettingsController.php', 'FluentForm\\App\\Http\\Controllers\\GlobalIntegrationController' => __DIR__ . '/../..' . '/app/Http/Controllers/GlobalIntegrationController.php', 'FluentForm\\App\\Http\\Controllers\\GlobalSettingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/GlobalSettingsController.php', 'FluentForm\\App\\Http\\Controllers\\IntegrationManagerController' => __DIR__ . '/../..' . '/app/Http/Controllers/IntegrationManagerController.php', 'FluentForm\\App\\Http\\Controllers\\LogController' => __DIR__ . '/../..' . '/app/Http/Controllers/LogController.php', 'FluentForm\\App\\Http\\Controllers\\ManagersController' => __DIR__ . '/../..' . '/app/Http/Controllers/ManagersController.php', 'FluentForm\\App\\Http\\Controllers\\ReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReportController.php', 'FluentForm\\App\\Http\\Controllers\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/RolesController.php', 'FluentForm\\App\\Http\\Controllers\\SubmissionController' => __DIR__ . '/../..' . '/app/Http/Controllers/SubmissionController.php', 'FluentForm\\App\\Http\\Controllers\\SubmissionHandlerController' => __DIR__ . '/../..' . '/app/Http/Controllers/SubmissionHandlerController.php', 'FluentForm\\App\\Http\\Controllers\\SubmissionLogController' => __DIR__ . '/../..' . '/app/Http/Controllers/SubmissionLogController.php', 'FluentForm\\App\\Http\\Controllers\\SubmissionNoteController' => __DIR__ . '/../..' . '/app/Http/Controllers/SubmissionNoteController.php', 'FluentForm\\App\\Http\\Controllers\\TransferController' => __DIR__ . '/../..' . '/app/Http/Controllers/TransferController.php', 'FluentForm\\App\\Http\\Policies\\FormPolicy' => __DIR__ . '/../..' . '/app/Http/Policies/FormPolicy.php', 'FluentForm\\App\\Http\\Policies\\GlobalSettingsPolicy' => __DIR__ . '/../..' . '/app/Http/Policies/GlobalSettingsPolicy.php', 'FluentForm\\App\\Http\\Policies\\PublicPolicy' => __DIR__ . '/../..' . '/app/Http/Policies/PublicPolicy.php', 'FluentForm\\App\\Http\\Policies\\ReportPolicy' => __DIR__ . '/../..' . '/app/Http/Policies/ReportPolicy.php', 'FluentForm\\App\\Http\\Policies\\RoleManagerPolicy' => __DIR__ . '/../..' . '/app/Http/Policies/RoleManagerPolicy.php', 'FluentForm\\App\\Http\\Policies\\SubmissionPolicy' => __DIR__ . '/../..' . '/app/Http/Policies/SubmissionPolicy.php', 'FluentForm\\App\\Http\\Requests\\UserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UserRequest.php', 'FluentForm\\App\\Models\\Entry' => __DIR__ . '/../..' . '/app/Models/Entry.php', 'FluentForm\\App\\Models\\EntryDetails' => __DIR__ . '/../..' . '/app/Models/EntryDetails.php', 'FluentForm\\App\\Models\\EntryMeta' => __DIR__ . '/../..' . '/app/Models/EntryMeta.php', 'FluentForm\\App\\Models\\Form' => __DIR__ . '/../..' . '/app/Models/Form.php', 'FluentForm\\App\\Models\\FormAnalytics' => __DIR__ . '/../..' . '/app/Models/FormAnalytics.php', 'FluentForm\\App\\Models\\FormMeta' => __DIR__ . '/../..' . '/app/Models/FormMeta.php', 'FluentForm\\App\\Models\\Log' => __DIR__ . '/../..' . '/app/Models/Log.php', 'FluentForm\\App\\Models\\Model' => __DIR__ . '/../..' . '/app/Models/Model.php', 'FluentForm\\App\\Models\\Scheduler' => __DIR__ . '/../..' . '/app/Models/Scheduler.php', 'FluentForm\\App\\Models\\Submission' => __DIR__ . '/../..' . '/app/Models/Submission.php', 'FluentForm\\App\\Models\\SubmissionMeta' => __DIR__ . '/../..' . '/app/Models/SubmissionMeta.php', 'FluentForm\\App\\Models\\Traits\\PredefinedForms' => __DIR__ . '/../..' . '/app/Models/Traits/PredefinedForms.php', 'FluentForm\\App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php', 'FluentForm\\App\\Modules\\Acl\\Acl' => __DIR__ . '/../..' . '/app/Modules/Acl/Acl.php', 'FluentForm\\App\\Modules\\Acl\\Managers' => __DIR__ . '/../..' . '/app/Modules/Acl/Managers.php', 'FluentForm\\App\\Modules\\Acl\\RoleManager' => __DIR__ . '/../..' . '/app/Modules/Acl/RoleManager.php', 'FluentForm\\App\\Modules\\AddOnModule' => __DIR__ . '/../..' . '/app/Modules/AddOnModule.php', 'FluentForm\\App\\Modules\\CLI\\Commands' => __DIR__ . '/../..' . '/app/Modules/CLI/Commands.php', 'FluentForm\\App\\Modules\\Component\\BaseComponent' => __DIR__ . '/../..' . '/app/Modules/Component/BaseComponent.php', 'FluentForm\\App\\Modules\\Component\\Component' => __DIR__ . '/../..' . '/app/Modules/Component/Component.php', 'FluentForm\\App\\Modules\\Component\\ComponentInitTrait' => __DIR__ . '/../..' . '/app/Modules/Component/ComponentInitTrait.php', 'FluentForm\\App\\Modules\\DashboardWidgetModule' => __DIR__ . '/../..' . '/app/Modules/DashboardWidgetModule.php', 'FluentForm\\App\\Modules\\DocumentationModule' => __DIR__ . '/../..' . '/app/Modules/DocumentationModule.php', 'FluentForm\\App\\Modules\\EditorButtonModule' => __DIR__ . '/../..' . '/app/Modules/EditorButtonModule.php', 'FluentForm\\App\\Modules\\Entries\\Entries' => __DIR__ . '/../..' . '/app/Modules/Entries/Entries.php', 'FluentForm\\App\\Modules\\Entries\\EntryQuery' => __DIR__ . '/../..' . '/app/Modules/Entries/EntryQuery.php', 'FluentForm\\App\\Modules\\Entries\\Export' => __DIR__ . '/../..' . '/app/Modules/Entries/Export.php', 'FluentForm\\App\\Modules\\Entries\\Report' => __DIR__ . '/../..' . '/app/Modules/Entries/Report.php', 'FluentForm\\App\\Modules\\Form\\AkismetHandler' => __DIR__ . '/../..' . '/app/Modules/Form/AkismetHandler.php', 'FluentForm\\App\\Modules\\Form\\Analytics' => __DIR__ . '/../..' . '/app/Modules/Form/Analytics.php', 'FluentForm\\App\\Modules\\Form\\Form' => __DIR__ . '/../..' . '/app/Modules/Form/Form.php', 'FluentForm\\App\\Modules\\Form\\FormDataParser' => __DIR__ . '/../..' . '/app/Modules/Form/FormDataParser.php', 'FluentForm\\App\\Modules\\Form\\FormFieldsParser' => __DIR__ . '/../..' . '/app/Modules/Form/FormFieldsParser.php', 'FluentForm\\App\\Modules\\Form\\FormHandler' => __DIR__ . '/../..' . '/app/Modules/Form/FormHandler.php', 'FluentForm\\App\\Modules\\Form\\HoneyPot' => __DIR__ . '/../..' . '/app/Modules/Form/HoneyPot.php', 'FluentForm\\App\\Modules\\Form\\Inputs' => __DIR__ . '/../..' . '/app/Modules/Form/Inputs.php', 'FluentForm\\App\\Modules\\Form\\Predefined' => __DIR__ . '/../..' . '/app/Modules/Form/Predefined.php', 'FluentForm\\App\\Modules\\Form\\Settings\\EntryColumnViewSettings' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/EntryColumnViewSettings.php', 'FluentForm\\App\\Modules\\Form\\Settings\\ExtraSettings' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/ExtraSettings.php', 'FluentForm\\App\\Modules\\Form\\Settings\\FormCssJs' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/FormCssJs.php', 'FluentForm\\App\\Modules\\Form\\Settings\\FormSettings' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/FormSettings.php', 'FluentForm\\App\\Modules\\Form\\Settings\\Validator\\Confirmations' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/Validator/Confirmations.php', 'FluentForm\\App\\Modules\\Form\\Settings\\Validator\\MailChimps' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/Validator/MailChimps.php', 'FluentForm\\App\\Modules\\Form\\Settings\\Validator\\Notifications' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/Validator/Notifications.php', 'FluentForm\\App\\Modules\\Form\\Settings\\Validator\\Pdfs' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/Validator/Pdfs.php', 'FluentForm\\App\\Modules\\Form\\Settings\\Validator\\Validator' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/Validator/Validator.php', 'FluentForm\\App\\Modules\\Form\\Transfer' => __DIR__ . '/../..' . '/app/Modules/Form/Transfer.php', 'FluentForm\\App\\Modules\\HCaptcha\\HCaptcha' => __DIR__ . '/../..' . '/app/Modules/HCaptcha/HCaptcha.php', 'FluentForm\\App\\Modules\\Logger\\DataLogger' => __DIR__ . '/../..' . '/app/Modules/Logger/DataLogger.php', 'FluentForm\\App\\Modules\\ProcessExteriorModule' => __DIR__ . '/../..' . '/app/Modules/ProcessExteriorModule.php', 'FluentForm\\App\\Modules\\ReCaptcha\\ReCaptcha' => __DIR__ . '/../..' . '/app/Modules/ReCaptcha/ReCaptcha.php', 'FluentForm\\App\\Modules\\Registerer\\AdminBar' => __DIR__ . '/../..' . '/app/Modules/Registerer/AdminBar.php', 'FluentForm\\App\\Modules\\Registerer\\Menu' => __DIR__ . '/../..' . '/app/Modules/Registerer/Menu.php', 'FluentForm\\App\\Modules\\Registerer\\ReviewQuery' => __DIR__ . '/../..' . '/app/Modules/Registerer/ReviewQuery.php', 'FluentForm\\App\\Modules\\Registerer\\TranslationString' => __DIR__ . '/../..' . '/app/Modules/Registerer/TranslationString.php', 'FluentForm\\App\\Modules\\Renderer\\GlobalSettings\\Settings' => __DIR__ . '/../..' . '/app/Modules/Renderer/GlobalSettings/Settings.php', 'FluentForm\\App\\Modules\\Settings\\Settings' => __DIR__ . '/../..' . '/app/Modules/Settings/Settings.php', 'FluentForm\\App\\Modules\\Track\\SetupModule' => __DIR__ . '/../..' . '/app/Modules/Track/SetupModule.php', 'FluentForm\\App\\Modules\\Track\\TrackModule' => __DIR__ . '/../..' . '/app/Modules/Track/TrackModule.php', 'FluentForm\\App\\Modules\\Turnstile\\Turnstile' => __DIR__ . '/../..' . '/app/Modules/Turnstile/Turnstile.php', 'FluentForm\\App\\Modules\\Widgets\\ElementorWidget' => __DIR__ . '/../..' . '/app/Modules/Widgets/ElementorWidget.php', 'FluentForm\\App\\Modules\\Widgets\\FluentFormWidget' => __DIR__ . '/../..' . '/app/Modules/Widgets/FluentFormWidget.php', 'FluentForm\\App\\Modules\\Widgets\\OxyFluentFormWidget' => __DIR__ . '/../..' . '/app/Modules/Widgets/OxyFluentFormWidget.php', 'FluentForm\\App\\Modules\\Widgets\\OxygenEl' => __DIR__ . '/../..' . '/app/Modules/Widgets/OxygenEl.php', 'FluentForm\\App\\Modules\\Widgets\\OxygenWidget' => __DIR__ . '/../..' . '/app/Modules/Widgets/OxygenWidget.php', 'FluentForm\\App\\Modules\\Widgets\\SidebarWidgets' => __DIR__ . '/../..' . '/app/Modules/Widgets/SidebarWidgets.php', 'FluentForm\\App\\Services\\Analytics\\AnalyticsService' => __DIR__ . '/../..' . '/app/Services/Analytics/AnalyticsService.php', 'FluentForm\\App\\Services\\Browser\\Browser' => __DIR__ . '/../..' . '/app/Services/Browser/Browser.php', 'FluentForm\\App\\Services\\ConditionAssesor' => __DIR__ . '/../..' . '/app/Services/ConditionAssesor.php', 'FluentForm\\App\\Services\\Emogrifier\\Emogrifier' => __DIR__ . '/../..' . '/app/Services/Emogrifier/Emogrifier.php', 'FluentForm\\App\\Services\\FluentConversational\\Classes\\Converter\\Converter' => __DIR__ . '/../..' . '/app/Services/FluentConversational/Classes/Converter/Converter.php', 'FluentForm\\App\\Services\\FluentConversational\\Classes\\Elements\\WelcomeScreen' => __DIR__ . '/../..' . '/app/Services/FluentConversational/Classes/Elements/WelcomeScreen.php', 'FluentForm\\App\\Services\\FluentConversational\\Classes\\Fonts' => __DIR__ . '/../..' . '/app/Services/FluentConversational/Classes/Fonts.php', 'FluentForm\\App\\Services\\FluentConversational\\Classes\\Form' => __DIR__ . '/../..' . '/app/Services/FluentConversational/Classes/Form.php', 'FluentForm\\App\\Services\\FormBuilder\\BaseFieldManager' => __DIR__ . '/../..' . '/app/Services/FormBuilder/BaseFieldManager.php', 'FluentForm\\App\\Services\\FormBuilder\\Components' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Address' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Address.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\BaseComponent' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/BaseComponent.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Checkable' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Checkable.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Container' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Container.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\CustomHtml' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/CustomHtml.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\CustomSubmitButton' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/CustomSubmitButton.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\DateTime' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/DateTime.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Hcaptcha' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Hcaptcha.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Name' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Name.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Rating' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Rating.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Recaptcha' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Recaptcha.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\SectionBreak' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/SectionBreak.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Select' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Select.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\SelectCountry' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/SelectCountry.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\SubmitButton' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/SubmitButton.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\TabularGrid' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/TabularGrid.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\TermsAndConditions' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/TermsAndConditions.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Text' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Text.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\TextArea' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/TextArea.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Turnstile' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Turnstile.php', 'FluentForm\\App\\Services\\FormBuilder\\EditorShortCode' => __DIR__ . '/../..' . '/app/Services/FormBuilder/EditorShortCode.php', 'FluentForm\\App\\Services\\FormBuilder\\EditorShortcodeParser' => __DIR__ . '/../..' . '/app/Services/FormBuilder/EditorShortcodeParser.php', 'FluentForm\\App\\Services\\FormBuilder\\FormBuilder' => __DIR__ . '/../..' . '/app/Services/FormBuilder/FormBuilder.php', 'FluentForm\\App\\Services\\FormBuilder\\GroupSetterProxy' => __DIR__ . '/../..' . '/app/Services/FormBuilder/GroupSetterProxy.php', 'FluentForm\\App\\Services\\FormBuilder\\NotificationParser' => __DIR__ . '/../..' . '/app/Services/FormBuilder/NotificationParser.php', 'FluentForm\\App\\Services\\FormBuilder\\Notifications\\EmailNotification' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Notifications/EmailNotification.php', 'FluentForm\\App\\Services\\FormBuilder\\Notifications\\EmailNotificationActions' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Notifications/EmailNotificationActions.php', 'FluentForm\\App\\Services\\FormBuilder\\ShortCodeParser' => __DIR__ . '/../..' . '/app/Services/FormBuilder/ShortCodeParser.php', 'FluentForm\\App\\Services\\Form\\Duplicator' => __DIR__ . '/../..' . '/app/Services/Form/Duplicator.php', 'FluentForm\\App\\Services\\Form\\Fields' => __DIR__ . '/../..' . '/app/Services/Form/Fields.php', 'FluentForm\\App\\Services\\Form\\FormService' => __DIR__ . '/../..' . '/app/Services/Form/FormService.php', 'FluentForm\\App\\Services\\Form\\FormValidationService' => __DIR__ . '/../..' . '/app/Services/Form/FormValidationService.php', 'FluentForm\\App\\Services\\Form\\SubmissionHandlerService' => __DIR__ . '/../..' . '/app/Services/Form/SubmissionHandlerService.php', 'FluentForm\\App\\Services\\Form\\Updater' => __DIR__ . '/../..' . '/app/Services/Form/Updater.php', 'FluentForm\\App\\Services\\GlobalSettings\\GlobalSettingsHelper' => __DIR__ . '/../..' . '/app/Services/GlobalSettings/GlobalSettingsHelper.php', 'FluentForm\\App\\Services\\GlobalSettings\\GlobalSettingsService' => __DIR__ . '/../..' . '/app/Services/GlobalSettings/GlobalSettingsService.php', 'FluentForm\\App\\Services\\Integrations\\BaseIntegration' => __DIR__ . '/../..' . '/app/Services/Integrations/BaseIntegration.php', 'FluentForm\\App\\Services\\Integrations\\FormIntegrationService' => __DIR__ . '/../..' . '/app/Services/Integrations/FormIntegrationService.php', 'FluentForm\\App\\Services\\Integrations\\GlobalIntegrationManager' => __DIR__ . '/../..' . '/app/Services/Integrations/GlobalIntegrationManager.php', 'FluentForm\\App\\Services\\Integrations\\GlobalIntegrationService' => __DIR__ . '/../..' . '/app/Services/Integrations/GlobalIntegrationService.php', 'FluentForm\\App\\Services\\Integrations\\GlobalNotificationManager' => __DIR__ . '/../..' . '/app/Services/Integrations/GlobalNotificationManager.php', 'FluentForm\\App\\Services\\Integrations\\GlobalNotificationService' => __DIR__ . '/../..' . '/app/Services/Integrations/GlobalNotificationService.php', 'FluentForm\\App\\Services\\Integrations\\IntegrationManager' => __DIR__ . '/../..' . '/app/Services/Integrations/IntegrationManager.php', 'FluentForm\\App\\Services\\Integrations\\LogResponseTrait' => __DIR__ . '/../..' . '/app/Services/Integrations/LogResponseTrait.php', 'FluentForm\\App\\Services\\Integrations\\MailChimp\\MailChimp' => __DIR__ . '/../..' . '/app/Services/Integrations/MailChimp/MailChimp.php', 'FluentForm\\App\\Services\\Integrations\\MailChimp\\MailChimpIntegration' => __DIR__ . '/../..' . '/app/Services/Integrations/MailChimp/MailChimpIntegration.php', 'FluentForm\\App\\Services\\Integrations\\MailChimp\\MailChimpSubscriber' => __DIR__ . '/../..' . '/app/Services/Integrations/MailChimp/MailChimpSubscriber.php', 'FluentForm\\App\\Services\\Integrations\\Slack\\Slack' => __DIR__ . '/../..' . '/app/Services/Integrations/Slack/Slack.php', 'FluentForm\\App\\Services\\Integrations\\Slack\\SlackNotificationActions' => __DIR__ . '/../..' . '/app/Services/Integrations/Slack/SlackNotificationActions.php', 'FluentForm\\App\\Services\\Logger\\Logger' => __DIR__ . '/../..' . '/app/Services/Logger/Logger.php', 'FluentForm\\App\\Services\\Manager\\ManagerService' => __DIR__ . '/../..' . '/app/Services/Manager/ManagerService.php', 'FluentForm\\App\\Services\\Migrator\\Bootstrap' => __DIR__ . '/../..' . '/app/Services/Migrator/Bootstrap.php', 'FluentForm\\App\\Services\\Migrator\\Classes\\BaseMigrator' => __DIR__ . '/../..' . '/app/Services/Migrator/Classes/BaseMigrator.php', 'FluentForm\\App\\Services\\Migrator\\Classes\\CalderaMigrator' => __DIR__ . '/../..' . '/app/Services/Migrator/Classes/CalderaMigrator.php', 'FluentForm\\App\\Services\\Migrator\\Classes\\GravityFormsMigrator' => __DIR__ . '/../..' . '/app/Services/Migrator/Classes/GravityFormsMigrator.php', 'FluentForm\\App\\Services\\Migrator\\Classes\\NinjaFormsMigrator' => __DIR__ . '/../..' . '/app/Services/Migrator/Classes/NinjaFormsMigrator.php', 'FluentForm\\App\\Services\\Migrator\\Classes\\WpFormsMigrator' => __DIR__ . '/../..' . '/app/Services/Migrator/Classes/WpFormsMigrator.php', 'FluentForm\\App\\Services\\Parser\\Extractor' => __DIR__ . '/../..' . '/app/Services/Parser/Extractor.php', 'FluentForm\\App\\Services\\Parser\\Form' => __DIR__ . '/../..' . '/app/Services/Parser/Form.php', 'FluentForm\\App\\Services\\Parser\\Validations' => __DIR__ . '/../..' . '/app/Services/Parser/Validations.php', 'FluentForm\\App\\Services\\Report\\ReportHelper' => __DIR__ . '/../..' . '/app/Services/Report/ReportHelper.php', 'FluentForm\\App\\Services\\Report\\ReportService' => __DIR__ . '/../..' . '/app/Services/Report/ReportService.php', 'FluentForm\\App\\Services\\Roles\\RolesService' => __DIR__ . '/../..' . '/app/Services/Roles/RolesService.php', 'FluentForm\\App\\Services\\Scheduler\\Scheduler' => __DIR__ . '/../..' . '/app/Services/Scheduler/Scheduler.php', 'FluentForm\\App\\Services\\Settings\\Customizer' => __DIR__ . '/../..' . '/app/Services/Settings/Customizer.php', 'FluentForm\\App\\Services\\Settings\\SettingsService' => __DIR__ . '/../..' . '/app/Services/Settings/SettingsService.php', 'FluentForm\\App\\Services\\Settings\\Validator' => __DIR__ . '/../..' . '/app/Services/Settings/Validator.php', 'FluentForm\\App\\Services\\Settings\\Validator\\Confirmations' => __DIR__ . '/../..' . '/app/Services/Settings/Validator/Confirmations.php', 'FluentForm\\App\\Services\\Settings\\Validator\\MailChimps' => __DIR__ . '/../..' . '/app/Services/Settings/Validator/MailChimps.php', 'FluentForm\\App\\Services\\Settings\\Validator\\Notifications' => __DIR__ . '/../..' . '/app/Services/Settings/Validator/Notifications.php', 'FluentForm\\App\\Services\\Settings\\Validator\\Pdfs' => __DIR__ . '/../..' . '/app/Services/Settings/Validator/Pdfs.php', 'FluentForm\\App\\Services\\Settings\\Validator\\Validate' => __DIR__ . '/../..' . '/app/Services/Settings/Validator/Validate.php', 'FluentForm\\App\\Services\\Submission\\SubmissionService' => __DIR__ . '/../..' . '/app/Services/Submission/SubmissionService.php', 'FluentForm\\App\\Services\\Transfer\\TransferService' => __DIR__ . '/../..' . '/app/Services/Transfer/TransferService.php', 'FluentForm\\App\\Services\\WPAsync\\FluentFormAsyncRequest' => __DIR__ . '/../..' . '/app/Services/WPAsync/FluentFormAsyncRequest.php', 'FluentForm\\Database\\DBMigrator' => __DIR__ . '/../..' . '/database/DBMigrator.php', 'FluentForm\\Database\\Migrations\\FormAnalytics' => __DIR__ . '/../..' . '/database/Migrations/FormAnalytics.php', 'FluentForm\\Database\\Migrations\\FormMeta' => __DIR__ . '/../..' . '/database/Migrations/FormMeta.php', 'FluentForm\\Database\\Migrations\\Forms' => __DIR__ . '/../..' . '/database/Migrations/Forms.php', 'FluentForm\\Database\\Migrations\\Logs' => __DIR__ . '/../..' . '/database/Migrations/Logs.php', 'FluentForm\\Database\\Migrations\\ScheduledActions' => __DIR__ . '/../..' . '/database/Migrations/ScheduledActions.php', 'FluentForm\\Database\\Migrations\\SubmissionDetails' => __DIR__ . '/../..' . '/database/Migrations/SubmissionDetails.php', 'FluentForm\\Database\\Migrations\\SubmissionMeta' => __DIR__ . '/../..' . '/database/Migrations/SubmissionMeta.php', 'FluentForm\\Database\\Migrations\\Submissions' => __DIR__ . '/../..' . '/database/Migrations/Submissions.php', 'FluentForm\\Framework\\Database\\BaseGrammar' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/BaseGrammar.php', 'FluentForm\\Framework\\Database\\ConnectionInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/ConnectionInterface.php', 'FluentForm\\Framework\\Database\\ConnectionResolver' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/ConnectionResolver.php', 'FluentForm\\Framework\\Database\\ConnectionResolverInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/ConnectionResolverInterface.php', 'FluentForm\\Framework\\Database\\Orm\\Builder' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Builder.php', 'FluentForm\\Framework\\Database\\Orm\\Collection' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Collection.php', 'FluentForm\\Framework\\Database\\Orm\\DateTime' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/DateTime.php', 'FluentForm\\Framework\\Database\\Orm\\MassAssignmentException' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/MassAssignmentException.php', 'FluentForm\\Framework\\Database\\Orm\\Model' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Model.php', 'FluentForm\\Framework\\Database\\Orm\\ModelHelperTrait' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/ModelHelperTrait.php', 'FluentForm\\Framework\\Database\\Orm\\ModelNotFoundException' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/ModelNotFoundException.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\BelongsTo' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/BelongsTo.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\BelongsToMany' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/BelongsToMany.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\HasMany' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/HasMany.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\HasManyThrough' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/HasManyThrough.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\HasOne' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/HasOne.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\HasOneOrMany' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/HasOneOrMany.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\MorphMany' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/MorphMany.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\MorphOne' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/MorphOne.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\MorphOneOrMany' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/MorphOneOrMany.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\MorphPivot' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/MorphPivot.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\MorphTo' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/MorphTo.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\MorphToMany' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/MorphToMany.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\Pivot' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/Pivot.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\Relation' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/Relation.php', 'FluentForm\\Framework\\Database\\Orm\\Scope' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Scope.php', 'FluentForm\\Framework\\Database\\Orm\\ScopeInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/ScopeInterface.php', 'FluentForm\\Framework\\Database\\Orm\\SoftDeletes' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/SoftDeletes.php', 'FluentForm\\Framework\\Database\\Orm\\SoftDeletingScope' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/SoftDeletingScope.php', 'FluentForm\\Framework\\Database\\QueryException' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/QueryException.php', 'FluentForm\\Framework\\Database\\Query\\Builder' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/Builder.php', 'FluentForm\\Framework\\Database\\Query\\Expression' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/Expression.php', 'FluentForm\\Framework\\Database\\Query\\Grammar' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/Grammar.php', 'FluentForm\\Framework\\Database\\Query\\JoinClause' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/JoinClause.php', 'FluentForm\\Framework\\Database\\Query\\JsonExpression' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/JsonExpression.php', 'FluentForm\\Framework\\Database\\Query\\MySqlGrammar' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/MySqlGrammar.php', 'FluentForm\\Framework\\Database\\Query\\Processor' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/Processor.php', 'FluentForm\\Framework\\Database\\Query\\WPDBConnection' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/WPDBConnection.php', 'FluentForm\\Framework\\Foundation\\App' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/App.php', 'FluentForm\\Framework\\Foundation\\Application' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/Application.php', 'FluentForm\\Framework\\Foundation\\AsyncRequestTrait' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/AsyncRequestTrait.php', 'FluentForm\\Framework\\Foundation\\BindingResolutionException' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/BindingResolutionException.php', 'FluentForm\\Framework\\Foundation\\ComponentBinder' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/ComponentBinder.php', 'FluentForm\\Framework\\Foundation\\Config' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/Config.php', 'FluentForm\\Framework\\Foundation\\Container' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/Container.php', 'FluentForm\\Framework\\Foundation\\ContainerContract' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/ContainerContract.php', 'FluentForm\\Framework\\Foundation\\ContextualBindingBuilder' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/ContextualBindingBuilder.php', 'FluentForm\\Framework\\Foundation\\ContextualBindingBuilderContract' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/ContextualBindingBuilderContract.php', 'FluentForm\\Framework\\Foundation\\CronTaskSchedulerTrait' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/CronTaskSchedulerTrait.php', 'FluentForm\\Framework\\Foundation\\Dispatcher' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/Dispatcher.php', 'FluentForm\\Framework\\Foundation\\ForbiddenException' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/ForbiddenException.php', 'FluentForm\\Framework\\Foundation\\FoundationTrait' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/FoundationTrait.php', 'FluentForm\\Framework\\Foundation\\Policy' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/Policy.php', 'FluentForm\\Framework\\Foundation\\RequestGuard' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/RequestGuard.php', 'FluentForm\\Framework\\Foundation\\UnAuthorizedException' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/UnAuthorizedException.php', 'FluentForm\\Framework\\Helpers\\ArrayHelper' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Helpers/ArrayHelper.php', 'FluentForm\\Framework\\Http\\Controller' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Http/Controller.php', 'FluentForm\\Framework\\Http\\Route' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Http/Route.php', 'FluentForm\\Framework\\Http\\Router' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Http/Router.php', 'FluentForm\\Framework\\Pagination\\AbstractPaginator' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Pagination/AbstractPaginator.php', 'FluentForm\\Framework\\Pagination\\LengthAwarePaginator' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Pagination/LengthAwarePaginator.php', 'FluentForm\\Framework\\Pagination\\LengthAwarePaginatorInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Pagination/LengthAwarePaginatorInterface.php', 'FluentForm\\Framework\\Pagination\\Paginator' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Pagination/Paginator.php', 'FluentForm\\Framework\\Pagination\\PaginatorInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Pagination/PaginatorInterface.php', 'FluentForm\\Framework\\Pagination\\Presenter' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Pagination/Presenter.php', 'FluentForm\\Framework\\Request\\Cleaner' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Request/Cleaner.php', 'FluentForm\\Framework\\Request\\File' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Request/File.php', 'FluentForm\\Framework\\Request\\FileHandler' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Request/FileHandler.php', 'FluentForm\\Framework\\Request\\Request' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Request/Request.php', 'FluentForm\\Framework\\Response\\Response' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Response/Response.php', 'FluentForm\\Framework\\Support\\Arr' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/Arr.php', 'FluentForm\\Framework\\Support\\ArrayableInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/ArrayableInterface.php', 'FluentForm\\Framework\\Support\\Collection' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/Collection.php', 'FluentForm\\Framework\\Support\\Helper' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/Helper.php', 'FluentForm\\Framework\\Support\\Htmlable' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/Htmlable.php', 'FluentForm\\Framework\\Support\\JsonableInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/JsonableInterface.php', 'FluentForm\\Framework\\Support\\MacroableTrait' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/MacroableTrait.php', 'FluentForm\\Framework\\Support\\Pluralizer' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/Pluralizer.php', 'FluentForm\\Framework\\Support\\QueueableCollectionInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/QueueableCollectionInterface.php', 'FluentForm\\Framework\\Support\\QueueableEntity' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/QueueableEntity.php', 'FluentForm\\Framework\\Support\\Sanitizer' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/Sanitizer.php', 'FluentForm\\Framework\\Support\\Str' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/Str.php', 'FluentForm\\Framework\\Support\\UrlRoutable' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/UrlRoutable.php', 'FluentForm\\Framework\\Validator\\Contracts\\File' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Validator/Contracts/File.php', 'FluentForm\\Framework\\Validator\\MessageBag' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Validator/MessageBag.php', 'FluentForm\\Framework\\Validator\\ValidatesAttributes' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Validator/ValidatesAttributes.php', 'FluentForm\\Framework\\Validator\\ValidationData' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Validator/ValidationData.php', 'FluentForm\\Framework\\Validator\\ValidationException' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Validator/ValidationException.php', 'FluentForm\\Framework\\Validator\\ValidationRuleParser' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Validator/ValidationRuleParser.php', 'FluentForm\\Framework\\Validator\\Validator' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Validator/Validator.php', 'FluentForm\\Framework\\View\\View' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/View/View.php');
+        public static function getInitializer(\Composer\Autoload\ClassLoader $loader)
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Database {
+    abstract class BaseGrammar
+    {
+        /**
+         * The grammar table prefix.
+         *
+         * @var string
+         */
+        protected $tablePrefix = '';
+        /**
+         * Wrap an array of values.
+         *
+         * @param  array  $values
+         * @return array
+         */
+        public function wrapArray(array $values)
+        {
+        }
+        /**
+         * Wrap a table in keyword identifiers.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Expression|string  $table
+         * @return string
+         */
+        public function wrapTable($table)
+        {
+        }
+        /**
+         * Wrap a value in keyword identifiers.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Expression|string  $value
+         * @param  bool    $prefixAlias
+         * @return string
+         */
+        public function wrap($value, $prefixAlias = false)
+        {
+        }
+        /**
+         * Wrap a single string in keyword identifiers.
+         *
+         * @param  string  $value
+         * @return string
+         */
+        protected function wrapValue($value)
+        {
+        }
+        /**
+         * Convert an array of column names into a delimited string.
+         *
+         * @param  array   $columns
+         * @return string
+         */
+        public function columnize(array $columns)
+        {
+        }
+        /**
+         * Create query parameter place-holders for an array.
+         *
+         * @param  array   $values
+         * @return string
+         */
+        public function parameterize($values)
+        {
+        }
+        /**
+         * Get the appropriate query parameter place-holder for a value.
+         *
+         * @param  mixed   $value
+         * @return string
+         */
+        public function parameter($value)
+        {
+        }
+        /**
+         * Get the value of a raw expression.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Expression  $expression
+         * @return string
+         */
+        public function getValue($expression)
+        {
+        }
+        /**
+         * Determine if the given value is a raw expression.
+         *
+         * @param  mixed  $value
+         * @return bool
+         */
+        public function isExpression($value)
+        {
+        }
+        /**
+         * Get the format for database stored dates.
+         *
+         * @return string
+         */
+        public function getDateFormat()
+        {
+        }
+        /**
+         * Get the grammar's table prefix.
+         *
+         * @return string
+         */
+        public function getTablePrefix()
+        {
+        }
+        /**
+         * Set the grammar's table prefix.
+         *
+         * @param  string  $prefix
+         * @return $this
+         */
+        public function setTablePrefix($prefix)
+        {
+        }
+    }
+    interface ConnectionInterface
+    {
+        /**
+         * Begin a fluent query against a database table.
+         *
+         * @param  string  $table
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        public function table($table);
+        /**
+         * Get a new raw query expression.
+         *
+         * @param  mixed  $value
+         * @return \FluentForm\Framework\Database\Query\Expression
+         */
+        public function raw($value);
+        /**
+         * Run a select statement and return a single result.
+         *
+         * @param  string  $query
+         * @param  array   $bindings
+         * @return mixed
+         */
+        public function selectOne($query, $bindings = []);
+        /**
+         * Run a select statement against the database.
+         *
+         * @param  string  $query
+         * @param  array   $bindings
+         * @return array
+         */
+        public function select($query, $bindings = []);
+        /**
+         * Run an insert statement against the database.
+         *
+         * @param  string  $query
+         * @param  array   $bindings
+         * @return bool
+         */
+        public function insert($query, $bindings = []);
+        /**
+         * Run an update statement against the database.
+         *
+         * @param  string  $query
+         * @param  array   $bindings
+         * @return int
+         */
+        public function update($query, $bindings = []);
+        /**
+         * Run a delete statement against the database.
+         *
+         * @param  string  $query
+         * @param  array   $bindings
+         * @return int
+         */
+        public function delete($query, $bindings = []);
+        /**
+         * Execute an SQL statement and return the boolean result.
+         *
+         * @param  string  $query
+         * @param  array   $bindings
+         * @return bool
+         */
+        public function statement($query, $bindings = []);
+        /**
+         * Run an SQL statement and get the number of rows affected.
+         *
+         * @param  string  $query
+         * @param  array   $bindings
+         * @return int
+         */
+        public function affectingStatement($query, $bindings = []);
+        /**
+         * Run a raw, unprepared query against the PDO connection.
+         *
+         * @param  string  $query
+         * @return bool
+         */
+        public function unprepared($query);
+        /**
+         * Prepare the query bindings for execution.
+         *
+         * @param  array  $bindings
+         * @return array
+         */
+        public function prepareBindings(array $bindings);
+        /**
+         * Execute a Closure within a transaction.
+         *
+         * @param  \Closure  $callback
+         * @return mixed
+         *
+         * @throws \Throwable
+         */
+        public function transaction(\Closure $callback);
+        /**
+         * Start a new database transaction.
+         *
+         * @return void
+         */
+        public function beginTransaction();
+        /**
+         * Commit the active database transaction.
+         *
+         * @return void
+         */
+        public function commit();
+        /**
+         * Rollback the active database transaction.
+         *
+         * @return void
+         */
+        public function rollBack();
+        /**
+         * Get the number of active transactions.
+         *
+         * @return int
+         */
+        public function transactionLevel();
+        /**
+         * Execute the given callback in "dry run" mode.
+         *
+         * @param  \Closure  $callback
+         * @return array
+         */
+        public function pretend(\Closure $callback);
+    }
+    interface ConnectionResolverInterface
+    {
+        /**
+         * Get a database connection instance.
+         */
+        public function connection($name = null);
+        /**
+         * Get the default connection name.
+         *
+         * @return string
+         */
+        public function getDefaultConnection();
+        /**
+         * Set the default connection name.
+         *
+         * @param  string  $name
+         * @return void
+         */
+        public function setDefaultConnection($name);
+    }
+    class ConnectionResolver implements \FluentForm\Framework\Database\ConnectionResolverInterface
+    {
+        /**
+         * Get a database connection instance.
+         *
+         * @param  string  $name
+         * @return \FluentForm\Framework\Database\ConnectionInterface
+         */
+        public function connection($name = null)
+        {
+        }
+        /**
+         * Get the default connection name.
+         *
+         * @return string
+         */
+        public function getDefaultConnection()
+        {
+        }
+        /**
+         * Set the default connection name.
+         *
+         * @param  string  $name
+         * @return void
+         */
+        public function setDefaultConnection($name)
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Database\Orm {
+    class Builder
+    {
+        /**
+         * The base query builder instance.
+         *
+         * @var \FluentForm\Framework\Database\Query\Builder
+         */
+        protected $query;
+        /**
+         * The model being queried.
+         *
+         * @var \FluentForm\Framework\Database\Orm\Model
+         */
+        protected $model;
+        /**
+         * The relationships that should be eager loaded.
+         *
+         * @var array
+         */
+        protected $eagerLoad = [];
+        /**
+         * All of the registered builder macros.
+         *
+         * @var array
+         */
+        protected $macros = [];
+        /**
+         * A replacement for the typical delete function.
+         *
+         * @var \Closure
+         */
+        protected $onDelete;
+        /**
+         * The methods that should be returned from query builder.
+         *
+         * @var array
+         */
+        protected $passthru = ['insert', 'insertGetId', 'getBindings', 'toSql', 'exists', 'count', 'min', 'max', 'avg', 'sum', 'getConnection'];
+        /**
+         * Applied global scopes.
+         *
+         * @var array
+         */
+        protected $scopes = [];
+        /**
+         * Removed global scopes.
+         *
+         * @var array
+         */
+        protected $removedScopes = [];
+        /**
+         * Create a new Eloquent query builder instance.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @return void
+         */
+        public function __construct(\FluentForm\Framework\Database\Query\Builder $query)
+        {
+        }
+        /**
+         * Register a new global scope.
+         *
+         * @param  string  $identifier
+         * @param  \FluentForm\Framework\Database\Orm\Scope|\Closure  $scope
+         * @return $this
+         */
+        public function withGlobalScope($identifier, $scope)
+        {
+        }
+        /**
+         * Remove a registered global scope.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Scope|string  $scope
+         * @return $this
+         */
+        public function withoutGlobalScope($scope)
+        {
+        }
+        /**
+         * Remove all or passed registered global scopes.
+         *
+         * @param  array|null  $scopes
+         * @return $this
+         */
+        public function withoutGlobalScopes(array $scopes = null)
+        {
+        }
+        /**
+         * Get an array of global scopes that were removed from the query.
+         *
+         * @return array
+         */
+        public function removedScopes()
+        {
+        }
+        /**
+         * Find a model by its primary key.
+         *
+         * @param  mixed  $id
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Model|\FluentForm\Framework\Database\Orm\Collection|static[]|static|null
+         */
+        public function find($id, $columns = ['*'])
+        {
+        }
+        /**
+         * Find multiple models by their primary keys.
+         *
+         * @param  array  $ids
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Collection
+         */
+        public function findMany($ids, $columns = ['*'])
+        {
+        }
+        /**
+         * Find a model by its primary key or throw an exception.
+         *
+         * @param  mixed  $id
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Model|\FluentForm\Framework\Database\Orm\Collection
+         *
+         * @throws \FluentForm\Framework\Database\Orm\ModelNotFoundException
+         */
+        public function findOrFail($id, $columns = ['*'])
+        {
+        }
+        /**
+         * Find a model by its primary key or return fresh model instance.
+         *
+         * @param  mixed  $id
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function findOrNew($id, $columns = ['*'])
+        {
+        }
+        /**
+         * Get the first record matching the attributes or instantiate it.
+         *
+         * @param  array  $attributes
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function firstOrNew(array $attributes)
+        {
+        }
+        /**
+         * Get the first record matching the attributes or create it.
+         *
+         * @param  array  $attributes
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function firstOrCreate(array $attributes)
+        {
+        }
+        /**
+         * Create or update a record matching the attributes, and fill it with values.
+         *
+         * @param  array  $attributes
+         * @param  array  $values
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function updateOrCreate(array $attributes, array $values = [])
+        {
+        }
+        /**
+         * Execute the query and get the first result.
+         *
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Model|static|null
+         */
+        public function first($columns = ['*'])
+        {
+        }
+        /**
+         * Execute the query and get the first result or throw an exception.
+         *
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Model|static
+         *
+         * @throws \FluentForm\Framework\Database\Orm\ModelNotFoundException
+         */
+        public function firstOrFail($columns = ['*'])
+        {
+        }
+        /**
+         * Execute the query as a "select" statement.
+         *
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Collection|static[]
+         */
+        public function get($columns = ['*'])
+        {
+        }
+        /**
+         * Get a single column's value from the first result of a query.
+         *
+         * @param  string  $column
+         * @return mixed
+         */
+        public function value($column)
+        {
+        }
+        /**
+         * Get a generator for the given query.
+         *
+         * @return \Generator
+         */
+        public function cursor()
+        {
+        }
+        /**
+         * Chunk the results of the query.
+         *
+         * @param  int  $count
+         * @param  callable  $callback
+         * @return bool
+         */
+        public function chunk($count, callable $callback)
+        {
+        }
+        /**
+         * Chunk the results of a query by comparing numeric IDs.
+         *
+         * @param  int  $count
+         * @param  callable  $callback
+         * @param  string  $column
+         * @return bool
+         */
+        public function chunkById($count, callable $callback, $column = 'id')
+        {
+        }
+        /**
+         * Execute a callback over each item while chunking.
+         *
+         * @param  callable  $callback
+         * @param  int  $count
+         * @return bool
+         */
+        public function each(callable $callback, $count = 1000)
+        {
+        }
+        /**
+         * Get an array with the values of a given column.
+         *
+         * @param  string  $column
+         * @param  string|null  $key
+         * @return \Illuminate\Support\Collection
+         */
+        public function pluck($column, $key = null)
+        {
+        }
+        /**
+         * Alias for the "pluck" method.
+         *
+         * @param  string  $column
+         * @param  string  $key
+         * @return \Illuminate\Support\Collection
+         *
+         * @deprecated since version 5.2. Use the "pluck" method directly.
+         */
+        public function lists($column, $key = null)
+        {
+        }
+        /**
+         * Paginate the given query.
+         *
+         * @param  int  $perPage
+         * @param  array  $columns
+         * @param  string  $pageName
+         * @param  int|null  $page
+         * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+         *
+         * @throws \InvalidArgumentException
+         */
+        public function paginate($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
+        {
+        }
+        /**
+         * Paginate the given query into a simple paginator.
+         *
+         * @param  int  $perPage
+         * @param  array  $columns
+         * @param  string  $pageName
+         * @param  int|null  $page
+         * @return \Illuminate\Contracts\Pagination\Paginator
+         */
+        public function simplePaginate($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
+        {
+        }
+        /**
+         * Update a record in the database.
+         *
+         * @param  array  $values
+         * @return int
+         */
+        public function update(array $values)
+        {
+        }
+        /**
+         * Increment a column's value by a given amount.
+         *
+         * @param  string  $column
+         * @param  int  $amount
+         * @param  array  $extra
+         * @return int
+         */
+        public function increment($column, $amount = 1, array $extra = [])
+        {
+        }
+        /**
+         * Decrement a column's value by a given amount.
+         *
+         * @param  string  $column
+         * @param  int  $amount
+         * @param  array  $extra
+         * @return int
+         */
+        public function decrement($column, $amount = 1, array $extra = [])
+        {
+        }
+        /**
+         * Add the "updated at" column to an array of values.
+         *
+         * @param  array  $values
+         * @return array
+         */
+        protected function addUpdatedAtColumn(array $values)
+        {
+        }
+        /**
+         * Delete a record from the database.
+         *
+         * @return mixed
+         */
+        public function delete()
+        {
+        }
+        /**
+         * Run the default delete function on the builder.
+         *
+         * @return mixed
+         */
+        public function forceDelete()
+        {
+        }
+        /**
+         * Register a replacement for the default delete function.
+         *
+         * @param  \Closure  $callback
+         * @return void
+         */
+        public function onDelete(\Closure $callback)
+        {
+        }
+        /**
+         * Get the hydrated models without eager loading.
+         *
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Model[]
+         */
+        public function getModels($columns = ['*'])
+        {
+        }
+        /**
+         * Eager load the relationships for the models.
+         *
+         * @param  array  $models
+         * @return array
+         */
+        public function eagerLoadRelations(array $models)
+        {
+        }
+        /**
+         * Eagerly load the relationship on a set of models.
+         *
+         * @param  array  $models
+         * @param  string  $name
+         * @param  \Closure  $constraints
+         * @return array
+         */
+        protected function loadRelation(array $models, $name, \Closure $constraints)
+        {
+        }
+        /**
+         * Get the relation instance for the given relation name.
+         *
+         * @param  string  $name
+         * @return \FluentForm\Framework\Database\Orm\Relations\Relation
+         */
+        public function getRelation($name)
+        {
+        }
+        /**
+         * Get the deeply nested relations for a given top-level relation.
+         *
+         * @param  string  $relation
+         * @return array
+         */
+        protected function nestedRelations($relation)
+        {
+        }
+        /**
+         * Determine if the relationship is nested.
+         *
+         * @param  string  $name
+         * @param  string  $relation
+         * @return bool
+         */
+        protected function isNested($name, $relation)
+        {
+        }
+        /**
+         * Apply the callback's query changes if the given "value" is true.
+         *
+         * @param  bool  $value
+         * @param  \Closure  $callback
+         * @return $this
+         */
+        public function when($value, $callback)
+        {
+        }
+        /**
+         * Add a basic where clause to the query.
+         *
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  mixed   $value
+         * @param  string  $boolean
+         * @return $this
+         */
+        public function where($column, $operator = null, $value = null, $boolean = 'and')
+        {
+        }
+        /**
+         * Add an "or where" clause to the query.
+         *
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  mixed   $value
+         * @return \FluentForm\Framework\Database\Orm\Builder|static
+         */
+        public function orWhere($column, $operator = null, $value = null)
+        {
+        }
+        /**
+         * Add a relationship count / exists condition to the query.
+         *
+         * @param  string  $relation
+         * @param  string  $operator
+         * @param  int     $count
+         * @param  string  $boolean
+         * @param  \Closure|null  $callback
+         * @return \FluentForm\Framework\Database\Orm\Builder|static
+         */
+        public function has($relation, $operator = '>=', $count = 1, $boolean = 'and', \Closure $callback = null)
+        {
+        }
+        /**
+         * Add nested relationship count / exists conditions to the query.
+         *
+         * @param  string  $relations
+         * @param  string  $operator
+         * @param  int     $count
+         * @param  string  $boolean
+         * @param  \Closure|null  $callback
+         * @return \FluentForm\Framework\Database\Orm\Builder|static
+         */
+        protected function hasNested($relations, $operator = '>=', $count = 1, $boolean = 'and', $callback = null)
+        {
+        }
+        /**
+         * Add a relationship count / exists condition to the query.
+         *
+         * @param  string  $relation
+         * @param  string  $boolean
+         * @param  \Closure|null  $callback
+         * @return \FluentForm\Framework\Database\Orm\Builder|static
+         */
+        public function doesntHave($relation, $boolean = 'and', \Closure $callback = null)
+        {
+        }
+        /**
+         * Add a relationship count / exists condition to the query with where clauses.
+         *
+         * @param  string    $relation
+         * @param  \Closure  $callback
+         * @param  string    $operator
+         * @param  int       $count
+         * @return \FluentForm\Framework\Database\Orm\Builder|static
+         */
+        public function whereHas($relation, \Closure $callback, $operator = '>=', $count = 1)
+        {
+        }
+        /**
+         * Add a relationship count / exists condition to the query with where clauses.
+         *
+         * @param  string  $relation
+         * @param  \Closure|null  $callback
+         * @return \FluentForm\Framework\Database\Orm\Builder|static
+         */
+        public function whereDoesntHave($relation, \Closure $callback = null)
+        {
+        }
+        /**
+         * Add a relationship count / exists condition to the query with an "or".
+         *
+         * @param  string  $relation
+         * @param  string  $operator
+         * @param  int     $count
+         * @return \FluentForm\Framework\Database\Orm\Builder|static
+         */
+        public function orHas($relation, $operator = '>=', $count = 1)
+        {
+        }
+        /**
+         * Add a relationship count / exists condition to the query with where clauses and an "or".
+         *
+         * @param  string    $relation
+         * @param  \Closure  $callback
+         * @param  string    $operator
+         * @param  int       $count
+         * @return \FluentForm\Framework\Database\Orm\Builder|static
+         */
+        public function orWhereHas($relation, \Closure $callback, $operator = '>=', $count = 1)
+        {
+        }
+        /**
+         * Add the "has" condition where clause to the query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $hasQuery
+         * @param  \FluentForm\Framework\Database\Orm\Relations\Relation  $relation
+         * @param  string  $operator
+         * @param  int  $count
+         * @param  string  $boolean
+         * @return \FluentForm\Framework\Database\Orm\Builder|static
+         */
+        protected function addHasWhere(\FluentForm\Framework\Database\Orm\Builder $hasQuery, \FluentForm\Framework\Database\Orm\Relations\Relation $relation, $operator, $count, $boolean)
+        {
+        }
+        /**
+         * Check if we can run an "exists" query to optimize performance.
+         *
+         * @param  string  $operator
+         * @param  int  $count
+         * @return bool
+         */
+        protected function shouldRunExistsQuery($operator, $count)
+        {
+        }
+        /**
+         * Add a sub query count clause to the query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder $query
+         * @param  string  $operator
+         * @param  int  $count
+         * @param  string  $boolean
+         * @return $this
+         */
+        protected function whereCountQuery(\FluentForm\Framework\Database\Query\Builder $query, $operator = '>=', $count = 1, $boolean = 'and')
+        {
+        }
+        /**
+         * Merge the constraints from a relation query to the current query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $relation
+         * @return \FluentForm\Framework\Database\Orm\Builder|static
+         */
+        public function mergeModelDefinedRelationConstraints(\FluentForm\Framework\Database\Orm\Builder $relation)
+        {
+        }
+        /**
+         * Get the "has relation" base query instance.
+         *
+         * @param  string  $relation
+         * @return \FluentForm\Framework\Database\Orm\Relations\Relation
+         */
+        protected function getHasRelationQuery($relation)
+        {
+        }
+        /**
+         * Set the relationships that should be eager loaded.
+         *
+         * @param  mixed  $relations
+         * @return $this
+         */
+        public function with($relations)
+        {
+        }
+        /**
+         * Prevent the specified relations from being eager loaded.
+         *
+         * @param  mixed  $relations
+         * @return $this
+         */
+        public function without($relations)
+        {
+        }
+        /**
+         * Add subselect queries to count the relations.
+         *
+         * @param  mixed  $relations
+         * @return $this
+         */
+        public function withCount($relations)
+        {
+        }
+        /**
+         * Parse a list of relations into individuals.
+         *
+         * @param  array  $relations
+         * @return array
+         */
+        protected function parseWithRelations(array $relations)
+        {
+        }
+        /**
+         * Parse the nested relationships in a relation.
+         *
+         * @param  string  $name
+         * @param  array   $results
+         * @return array
+         */
+        protected function parseNestedWith($name, $results)
+        {
+        }
+        /**
+         * Add the given scopes to the current builder instance.
+         *
+         * @param  array  $scopes
+         * @return mixed
+         */
+        public function scopes(array $scopes)
+        {
+        }
+        /**
+         * Apply the given scope on the current builder instance.
+         *
+         * @param  callable $scope
+         * @param  array $parameters
+         * @return mixed
+         */
+        protected function callScope(callable $scope, $parameters = [])
+        {
+        }
+        /**
+         * Apply the scopes to the Eloquent builder instance and return it.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Builder|static
+         */
+        public function applyScopes()
+        {
+        }
+        /**
+         * Determine if the scope added after the given offset should be nested.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  int  $originalWhereCount
+         * @return bool
+         */
+        protected function shouldNestWheresForScope(\FluentForm\Framework\Database\Query\Builder $query, $originalWhereCount)
+        {
+        }
+        /**
+         * Nest where conditions by slicing them at the given where count.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  int  $originalWhereCount
+         * @return void
+         */
+        protected function nestWheresForScope(\FluentForm\Framework\Database\Query\Builder $query, $originalWhereCount)
+        {
+        }
+        /**
+         * Slice where conditions at the given offset and add them to the query as a nested condition.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $wheres
+         * @param  int  $offset
+         * @param  int  $length
+         * @return void
+         */
+        protected function addNestedWhereSlice(\FluentForm\Framework\Database\Query\Builder $query, $wheres, $offset, $length = null)
+        {
+        }
+        /**
+         * Create a where array with nested where conditions.
+         *
+         * @param  array  $whereSlice
+         * @return array
+         */
+        protected function nestWhereSlice($whereSlice)
+        {
+        }
+        /**
+         * Get the underlying query builder instance.
+         *
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        public function getQuery()
+        {
+        }
+        /**
+         * Get a base query builder instance.
+         *
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        public function toBase()
+        {
+        }
+        /**
+         * Set the underlying query builder instance.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @return $this
+         */
+        public function setQuery($query)
+        {
+        }
+        /**
+         * Get the relationships being eagerly loaded.
+         *
+         * @return array
+         */
+        public function getEagerLoads()
+        {
+        }
+        /**
+         * Set the relationships being eagerly loaded.
+         *
+         * @param  array  $eagerLoad
+         * @return $this
+         */
+        public function setEagerLoads(array $eagerLoad)
+        {
+        }
+        /**
+         * Get the model instance being queried.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function getModel()
+        {
+        }
+        /**
+         * Set a model instance for the model being queried.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Model  $model
+         * @return $this
+         */
+        public function setModel(\FluentForm\Framework\Database\Orm\Model $model)
+        {
+        }
+        /**
+         * Extend the builder with a given callback.
+         *
+         * @param  string    $name
+         * @param  \Closure  $callback
+         * @return void
+         */
+        public function macro($name, \Closure $callback)
+        {
+        }
+        /**
+         * Get the given macro by name.
+         *
+         * @param  string  $name
+         * @return \Closure
+         */
+        public function getMacro($name)
+        {
+        }
+        /**
+         * Dynamically handle calls into the query instance.
+         *
+         * @param  string  $method
+         * @param  array   $parameters
+         * @return mixed
+         */
+        public function __call($method, $parameters)
+        {
+        }
+        /**
+         * Force a clone of the underlying query builder when cloning.
+         *
+         * @return void
+         */
+        public function __clone()
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Support {
+    interface QueueableCollectionInterface
+    {
+        /**
+         * Get the type of the entities being queued.
+         *
+         * @return string|null
+         */
+        public function getQueueableClass();
+        /**
+         * Get the identifiers for all of the entities.
+         *
+         * @return array
+         */
+        public function getQueueableIds();
+    }
+    trait MacroableTrait
+    {
+        /**
+         * The registered string macros.
+         *
+         * @var array
+         */
+        protected static $macros = [];
+        /**
+         * Register a custom macro.
+         *
+         * @param  string    $name
+         * @param  callable  $macro
+         * @return void
+         */
+        public static function macro($name, callable $macro)
+        {
+        }
+        /**
+         * Checks if macro is registered.
+         *
+         * @param  string  $name
+         * @return bool
+         */
+        public static function hasMacro($name)
+        {
+        }
+        /**
+         * Dynamically handle calls to the class.
+         *
+         * @param  string  $method
+         * @param  array   $parameters
+         * @return mixed
+         *
+         * @throws \BadMethodCallException
+         */
+        public static function __callStatic($method, $parameters)
+        {
+        }
+        /**
+         * Dynamically handle calls to the class.
+         *
+         * @param  string  $method
+         * @param  array   $parameters
+         * @return mixed
+         *
+         * @throws \BadMethodCallException
+         */
+        public function __call($method, $parameters)
+        {
+        }
+    }
+    class Collection implements \ArrayAccess, \FluentForm\Framework\Support\ArrayableInterface, \Countable, \IteratorAggregate, \FluentForm\Framework\Support\JsonableInterface, \JsonSerializable
+    {
+        use \FluentForm\Framework\Support\MacroableTrait;
+        /**
+         * The items contained in the collection.
+         *
+         * @var array
+         */
+        protected $items = [];
+        /**
+         * Create a new collection.
+         *
+         * @param  mixed  $items
+         * @return void
+         */
+        public function __construct($items = [])
+        {
+        }
+        /**
+         * Create a new collection instance if the value isn't one already.
+         *
+         * @param  mixed  $items
+         * @return static
+         */
+        public static function make($items = [])
+        {
+        }
+        /**
+         * Get all of the items in the collection.
+         *
+         * @return array
+         */
+        public function all()
+        {
+        }
+        /**
+         * Get the average value of a given key.
+         *
+         * @param  string|null  $key
+         * @return mixed
+         */
+        public function avg($key = null)
+        {
+        }
+        /**
+         * Alias for the "avg" method.
+         *
+         * @param  string|null  $key
+         * @return mixed
+         */
+        public function average($key = null)
+        {
+        }
+        /**
+         * Get the median of a given key.
+         *
+         * @param  null $key
+         * @return mixed|null
+         */
+        public function median($key = null)
+        {
+        }
+        /**
+         * Get the mode of a given key.
+         *
+         * @param  null $key
+         * @return array
+         */
+        public function mode($key = null)
+        {
+        }
+        /**
+         * Collapse the collection of items into a single array.
+         *
+         * @return static
+         */
+        public function collapse()
+        {
+        }
+        /**
+         * Determine if an item exists in the collection.
+         *
+         * @param  mixed  $key
+         * @param  mixed  $value
+         * @return bool
+         */
+        public function contains($key, $value = null)
+        {
+        }
+        /**
+         * Get the items in the collection that are not present in the given items.
+         *
+         * @param  mixed  $items
+         * @return static
+         */
+        public function diff($items)
+        {
+        }
+        /**
+         * Get the items in the collection whose keys are not present in the given items.
+         *
+         * @param  mixed  $items
+         * @return static
+         */
+        public function diffKeys($items)
+        {
+        }
+        /**
+         * Execute a callback over each item.
+         *
+         * @param  callable  $callback
+         * @return $this
+         */
+        public function each(callable $callback)
+        {
+        }
+        /**
+         * Create a new collection consisting of every n-th element.
+         *
+         * @param  int  $step
+         * @param  int  $offset
+         * @return static
+         */
+        public function every($step, $offset = 0)
+        {
+        }
+        /**
+         * Get all items except for those with the specified keys.
+         *
+         * @param  mixed  $keys
+         * @return static
+         */
+        public function except($keys)
+        {
+        }
+        /**
+         * Run a filter over each of the items.
+         *
+         * @param  callable|null  $callback
+         * @return static
+         */
+        public function filter(callable $callback = null)
+        {
+        }
+        /**
+         * Filter items by the given key value pair.
+         *
+         * @param  string  $key
+         * @param  mixed  $value
+         * @param  bool  $strict
+         * @return static
+         */
+        public function where($key, $value, $strict = true)
+        {
+        }
+        /**
+         * Filter items by the given key value pair using loose comparison.
+         *
+         * @param  string  $key
+         * @param  mixed  $value
+         * @return static
+         */
+        public function whereLoose($key, $value)
+        {
+        }
+        /**
+         * Filter items by the given key value pair.
+         *
+         * @param  string  $key
+         * @param  array  $values
+         * @param  bool  $strict
+         * @return static
+         */
+        public function whereIn($key, array $values, $strict = true)
+        {
+        }
+        /**
+         * Filter items by the given key value pair using loose comparison.
+         *
+         * @param  string  $key
+         * @param  array  $values
+         * @return static
+         */
+        public function whereInLoose($key, array $values)
+        {
+        }
+        /**
+         * Get the first item from the collection.
+         *
+         * @param  callable|null  $callback
+         * @param  mixed  $default
+         * @return mixed
+         */
+        public function first(callable $callback = null, $default = null)
+        {
+        }
+        /**
+         * Get a flattened array of the items in the collection.
+         *
+         * @param  int  $depth
+         * @return static
+         */
+        public function flatten($depth = INF)
+        {
+        }
+        /**
+         * Flip the items in the collection.
+         *
+         * @return static
+         */
+        public function flip()
+        {
+        }
+        /**
+         * Remove an item from the collection by key.
+         *
+         * @param  string|array  $keys
+         * @return $this
+         */
+        public function forget($keys)
+        {
+        }
+        /**
+         * Get an item from the collection by key.
+         *
+         * @param  mixed  $key
+         * @param  mixed  $default
+         * @return mixed
+         */
+        public function get($key, $default = null)
+        {
+        }
+        /**
+         * Group an associative array by a field or using a callback.
+         *
+         * @param  callable|string  $groupBy
+         * @param  bool  $preserveKeys
+         * @return static
+         */
+        public function groupBy($groupBy, $preserveKeys = false)
+        {
+        }
+        /**
+         * Key an associative array by a field or using a callback.
+         *
+         * @param  callable|string  $keyBy
+         * @return static
+         */
+        public function keyBy($keyBy)
+        {
+        }
+        /**
+         * Determine if an item exists in the collection by key.
+         *
+         * @param  mixed  $key
+         * @return bool
+         */
+        public function has($key)
+        {
+        }
+        /**
+         * Concatenate values of a given key as a string.
+         *
+         * @param  string  $value
+         * @param  string  $glue
+         * @return string
+         */
+        public function implode($value, $glue = null)
+        {
+        }
+        /**
+         * Intersect the collection with the given items.
+         *
+         * @param  mixed  $items
+         * @return static
+         */
+        public function intersect($items)
+        {
+        }
+        /**
+         * Determine if the collection is empty or not.
          *
          * @return bool
          */
-        public static function has($array, $keys)
+        public function isEmpty()
+        {
+        }
+        /**
+         * Determine if the given value is callable, but not a string.
+         *
+         * @param  mixed  $value
+         * @return bool
+         */
+        protected function useAsCallable($value)
+        {
+        }
+        /**
+         * Get the keys of the collection items.
+         *
+         * @return static
+         */
+        public function keys()
+        {
+        }
+        /**
+         * Get the last item from the collection.
+         *
+         * @param  callable|null  $callback
+         * @param  mixed  $default
+         * @return mixed
+         */
+        public function last(callable $callback = null, $default = null)
+        {
+        }
+        /**
+         * Get the values of a given key.
+         *
+         * @param  string  $value
+         * @param  string|null  $key
+         * @return static
+         */
+        public function pluck($value, $key = null)
+        {
+        }
+        /**
+         * Alias for the "pluck" method.
+         *
+         * @param  string  $value
+         * @param  string|null  $key
+         * @return static
+         *
+         * @deprecated since version 5.2. Use the "pluck" method directly.
+         */
+        public function lists($value, $key = null)
+        {
+        }
+        /**
+         * Run a map over each of the items.
+         *
+         * @param  callable  $callback
+         * @return static
+         */
+        public function map(callable $callback)
+        {
+        }
+        /**
+         * Map a collection and flatten the result by a single level.
+         *
+         * @param  callable  $callback
+         * @return static
+         */
+        public function flatMap(callable $callback)
+        {
+        }
+        /**
+         * Get the max value of a given key.
+         *
+         * @param  string|null  $key
+         * @return mixed
+         */
+        public function max($key = null)
+        {
+        }
+        /**
+         * Merge the collection with the given items.
+         *
+         * @param  mixed  $items
+         * @return static
+         */
+        public function merge($items)
+        {
+        }
+        /**
+         * Create a collection by using this collection for keys and another for its values.
+         *
+         * @param  mixed  $values
+         * @return static
+         */
+        public function combine($values)
+        {
+        }
+        /**
+         * Union the collection with the given items.
+         *
+         * @param  mixed  $items
+         * @return static
+         */
+        public function union($items)
+        {
+        }
+        /**
+         * Get the min value of a given key.
+         *
+         * @param  string|null  $key
+         * @return mixed
+         */
+        public function min($key = null)
+        {
+        }
+        /**
+         * Get the items with the specified keys.
+         *
+         * @param  mixed  $keys
+         * @return static
+         */
+        public function only($keys)
+        {
+        }
+        /**
+         * "Paginate" the collection by slicing it into a smaller collection.
+         *
+         * @param  int  $page
+         * @param  int  $perPage
+         * @return static
+         */
+        public function forPage($page, $perPage)
+        {
+        }
+        /**
+         * Pass the collection to the given callback and return the result.
+         *
+         * @param  callable $callback
+         * @return mixed
+         */
+        public function pipe(callable $callback)
+        {
+        }
+        /**
+         * Get and remove the last item from the collection.
+         *
+         * @return mixed
+         */
+        public function pop()
+        {
+        }
+        /**
+         * Push an item onto the beginning of the collection.
+         *
+         * @param  mixed  $value
+         * @param  mixed  $key
+         * @return $this
+         */
+        public function prepend($value, $key = null)
+        {
+        }
+        /**
+         * Push an item onto the end of the collection.
+         *
+         * @param  mixed  $value
+         * @return $this
+         */
+        public function push($value)
+        {
+        }
+        /**
+         * Get and remove an item from the collection.
+         *
+         * @param  mixed  $key
+         * @param  mixed  $default
+         * @return mixed
+         */
+        public function pull($key, $default = null)
+        {
+        }
+        /**
+         * Put an item in the collection by key.
+         *
+         * @param  mixed  $key
+         * @param  mixed  $value
+         * @return $this
+         */
+        public function put($key, $value)
+        {
+        }
+        /**
+         * Get one or more items randomly from the collection.
+         *
+         * @param  int  $amount
+         * @return mixed
+         *
+         * @throws \InvalidArgumentException
+         */
+        public function random($amount = 1)
+        {
+        }
+        /**
+         * Reduce the collection to a single value.
+         *
+         * @param  callable  $callback
+         * @param  mixed     $initial
+         * @return mixed
+         */
+        public function reduce(callable $callback, $initial = null)
+        {
+        }
+        /**
+         * Create a collection of all elements that do not pass a given truth test.
+         *
+         * @param  callable|mixed  $callback
+         * @return static
+         */
+        public function reject($callback)
+        {
+        }
+        /**
+         * Reverse items order.
+         *
+         * @return static
+         */
+        public function reverse()
+        {
+        }
+        /**
+         * Search the collection for a given value and return the corresponding key if successful.
+         *
+         * @param  mixed  $value
+         * @param  bool   $strict
+         * @return mixed
+         */
+        public function search($value, $strict = false)
+        {
+        }
+        /**
+         * Get and remove the first item from the collection.
+         *
+         * @return mixed
+         */
+        public function shift()
+        {
+        }
+        /**
+         * Shuffle the items in the collection.
+         *
+         * @param int $seed
+         * @return static
+         */
+        public function shuffle($seed = null)
+        {
+        }
+        /**
+         * Slice the underlying collection array.
+         *
+         * @param  int   $offset
+         * @param  int   $length
+         * @return static
+         */
+        public function slice($offset, $length = null)
+        {
+        }
+        /**
+         * Chunk the underlying collection array.
+         *
+         * @param  int   $size
+         * @return static
+         */
+        public function chunk($size)
+        {
+        }
+        /**
+         * Sort through each item with a callback.
+         *
+         * @param  callable|null  $callback
+         * @return static
+         */
+        public function sort(callable $callback = null)
+        {
+        }
+        /**
+         * Sort the collection using the given callback.
+         *
+         * @param  callable|string  $callback
+         * @param  int   $options
+         * @param  bool  $descending
+         * @return static
+         */
+        public function sortBy($callback, $options = SORT_REGULAR, $descending = false)
+        {
+        }
+        /**
+         * Sort the collection in descending order using the given callback.
+         *
+         * @param  callable|string  $callback
+         * @param  int  $options
+         * @return static
+         */
+        public function sortByDesc($callback, $options = SORT_REGULAR)
+        {
+        }
+        /**
+         * Splice a portion of the underlying collection array.
+         *
+         * @param  int  $offset
+         * @param  int|null  $length
+         * @param  mixed  $replacement
+         * @return static
+         */
+        public function splice($offset, $length = null, $replacement = [])
+        {
+        }
+        /**
+         * Get the sum of the given values.
+         *
+         * @param  callable|string|null  $callback
+         * @return mixed
+         */
+        public function sum($callback = null)
+        {
+        }
+        /**
+         * Take the first or last {$limit} items.
+         *
+         * @param  int  $limit
+         * @return static
+         */
+        public function take($limit)
+        {
+        }
+        /**
+         * Transform each item in the collection using a callback.
+         *
+         * @param  callable  $callback
+         * @return $this
+         */
+        public function transform(callable $callback)
+        {
+        }
+        /**
+         * Return only unique items from the collection array.
+         *
+         * @param  string|callable|null  $key
+         * @return static
+         */
+        public function unique($key = null)
+        {
+        }
+        /**
+         * Reset the keys on the underlying array.
+         *
+         * @return static
+         */
+        public function values()
+        {
+        }
+        /**
+         * Get a value retrieving callback.
+         *
+         * @param  string  $value
+         * @return callable
+         */
+        protected function valueRetriever($value)
+        {
+        }
+        /**
+         * Zip the collection together with one or more arrays.
+         *
+         * e.g. new Collection([1, 2, 3])->zip([4, 5, 6]);
+         *      => [[1, 4], [2, 5], [3, 6]]
+         *
+         * @param  mixed ...$items
+         * @return static
+         */
+        public function zip($items)
+        {
+        }
+        /**
+         * Get the collection of items as a plain array.
+         *
+         * @return array
+         */
+        public function toArray()
+        {
+        }
+        /**
+         * Convert the object into something JSON serializable.
+         *
+         * @return array
+         */
+        #[\ReturnTypeWillChange]
+        public function jsonSerialize()
+        {
+        }
+        /**
+         * Get the collection of items as JSON.
+         *
+         * @param  int  $options
+         * @return string
+         */
+        public function toJson($options = 0)
+        {
+        }
+        /**
+         * Get an iterator for the items.
+         *
+         * @return \ArrayIterator
+         */
+        #[\ReturnTypeWillChange]
+        public function getIterator()
+        {
+        }
+        /**
+         * Get a CachingIterator instance.
+         *
+         * @param  int  $flags
+         * @return \CachingIterator
+         */
+        public function getCachingIterator($flags = \CachingIterator::CALL_TOSTRING)
+        {
+        }
+        /**
+         * Count the number of items in the collection.
+         *
+         * @return int
+         */
+        #[\ReturnTypeWillChange]
+        public function count()
+        {
+        }
+        /**
+         * Determine if an item exists at an offset.
+         *
+         * @param  mixed  $key
+         * @return bool
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetExists($key)
+        {
+        }
+        /**
+         * Get an item at a given offset.
+         *
+         * @param  mixed  $key
+         * @return mixed
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetGet($key)
+        {
+        }
+        /**
+         * Set the item at a given offset.
+         *
+         * @param  mixed  $key
+         * @param  mixed  $value
+         * @return void
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetSet($key, $value)
+        {
+        }
+        /**
+         * Unset the item at a given offset.
+         *
+         * @param  string  $key
+         * @return void
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetUnset($key)
+        {
+        }
+        /**
+         * Convert the collection to its string representation.
+         *
+         * @return string
+         */
+        public function __toString()
+        {
+        }
+        /**
+         * Results array of items from Collection or ArrayableInterface.
+         *
+         * @param  mixed  $items
+         * @return array
+         */
+        protected function getArrayableItems($items)
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Database\Orm {
+    class Collection extends \FluentForm\Framework\Support\Collection implements \FluentForm\Framework\Support\QueueableCollectionInterface
+    {
+        /**
+         * Find a model in the collection by key.
+         *
+         * @param  mixed  $key
+         * @param  mixed  $default
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function find($key, $default = null)
+        {
+        }
+        /**
+         * Load a set of relationships onto the collection.
+         *
+         * @param  mixed  $relations
+         * @return $this
+         */
+        public function load($relations)
+        {
+        }
+        /**
+         * Add an item to the collection.
+         *
+         * @param  mixed  $item
+         * @return $this
+         */
+        public function add($item)
+        {
+        }
+        /**
+         * Determine if a key exists in the collection.
+         *
+         * @param  mixed  $key
+         * @param  mixed  $value
+         * @return bool
+         */
+        public function contains($key, $value = null)
+        {
+        }
+        /**
+         * Get the array of primary keys.
+         *
+         * @return array
+         */
+        public function modelKeys()
+        {
+        }
+        /**
+         * Merge the collection with the given items.
+         *
+         * @param  \ArrayAccess|array  $items
+         * @return static
+         */
+        public function merge($items)
+        {
+        }
+        /**
+         * Diff the collection with the given items.
+         *
+         * @param  \ArrayAccess|array  $items
+         * @return static
+         */
+        public function diff($items)
+        {
+        }
+        /**
+         * Intersect the collection with the given items.
+         *
+         * @param  \ArrayAccess|array  $items
+         * @return static
+         */
+        public function intersect($items)
+        {
+        }
+        /**
+         * Return only unique items from the collection.
+         *
+         * @param  string|callable|null  $key
+         * @return static
+         */
+        public function unique($key = null)
+        {
+        }
+        /**
+         * Returns only the models from the collection with the specified keys.
+         *
+         * @param  mixed  $keys
+         * @return static
+         */
+        public function only($keys)
+        {
+        }
+        /**
+         * Returns all models in the collection except the models with specified keys.
+         *
+         * @param  mixed  $keys
+         * @return static
+         */
+        public function except($keys)
+        {
+        }
+        /**
+         * Make the given, typically visible, attributes hidden across the entire collection.
+         *
+         * @param  array|string  $attributes
+         * @return $this
+         */
+        public function makeHidden($attributes)
+        {
+        }
+        /**
+         * Make the given, typically hidden, attributes visible across the entire collection.
+         *
+         * @param  array|string  $attributes
+         * @return $this
+         */
+        public function makeVisible($attributes)
+        {
+        }
+        /**
+         * Make the given, typically hidden, attributes visible across the entire collection.
+         *
+         * @param  array|string  $attributes
+         * @return $this
+         *
+         * @deprecated since version 5.2. Use the "makeVisible" method directly.
+         */
+        public function withHidden($attributes)
+        {
+        }
+        /**
+         * Get a dictionary keyed by primary keys.
+         *
+         * @param  \ArrayAccess|array|null  $items
+         * @return array
+         */
+        public function getDictionary($items = null)
+        {
+        }
+        /**
+         * The following methods are intercepted to always return base collections.
+         */
+        /**
+         * Get an array with the values of a given key.
+         *
+         * @param  string  $value
+         * @param  string|null  $key
+         * @return \FluentForm\Framework\Support\Collection
+         */
+        public function pluck($value, $key = null)
+        {
+        }
+        /**
+         * Get the keys of the collection items.
+         *
+         * @return \FluentForm\Framework\Support\Collection
+         */
+        public function keys()
+        {
+        }
+        /**
+         * Zip the collection together with one or more arrays.
+         *
+         * @param  mixed ...$items
+         * @return \FluentForm\Framework\Support\Collection
+         */
+        public function zip($items)
+        {
+        }
+        /**
+         * Collapse the collection of items into a single array.
+         *
+         * @return \FluentForm\Framework\Support\Collection
+         */
+        public function collapse()
+        {
+        }
+        /**
+         * Get a flattened array of the items in the collection.
+         *
+         * @param  int  $depth
+         * @return \FluentForm\Framework\Support\Collection
+         */
+        public function flatten($depth = INF)
+        {
+        }
+        /**
+         * Flip the items in the collection.
+         *
+         * @return \FluentForm\Framework\Support\Collection
+         */
+        public function flip()
+        {
+        }
+        /**
+         * Get the type of the entities being queued.
+         *
+         * @return string|null
+         */
+        public function getQueueableClass()
+        {
+        }
+        /**
+         * Get the identifiers for all of the entities.
+         *
+         * @return array
+         */
+        public function getQueueableIds()
+        {
+        }
+        /**
+         * Get a base Support collection instance from this collection.
+         *
+         * @return \FluentForm\Framework\Support\Collection
+         */
+        public function toBase()
+        {
+        }
+    }
+    class DateTime extends \DateTime
+    {
+        use \FluentForm\Framework\Database\Orm\ModelHelperTrait;
+        public function __construct($datetime = "now", $timezone = null)
+        {
+        }
+        public function __toString()
+        {
+        }
+    }
+    class MassAssignmentException extends \RuntimeException
+    {
+        // Pass
+    }
+    class ModelNotFoundException extends \RuntimeException
+    {
+        /**
+         * Name of the affected Eloquent model.
+         *
+         * @var string
+         */
+        protected $model;
+        /**
+         * Set the affected Eloquent model.
+         *
+         * @param  string   $model
+         * @return $this
+         */
+        public function setModel($model)
+        {
+        }
+        /**
+         * Get the affected Eloquent model.
+         *
+         * @return string
+         */
+        public function getModel()
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Database\Orm\Relations {
+    abstract class Relation
+    {
+        /**
+         * The Eloquent query builder instance.
+         *
+         * @var \FluentForm\Framework\Database\Orm\Builder
+         */
+        protected $query;
+        /**
+         * The parent model instance.
+         *
+         * @var \FluentForm\Framework\Database\Orm\Model
+         */
+        protected $parent;
+        /**
+         * The related model instance.
+         *
+         * @var \FluentForm\Framework\Database\Orm\Model
+         */
+        protected $related;
+        /**
+         * Indicates if the relation is adding constraints.
+         *
+         * @var bool
+         */
+        protected static $constraints = true;
+        /**
+         * An array to map class names to their morph names in database.
+         *
+         * @var array
+         */
+        protected static $morphMap = [];
+        /**
+         * Create a new relation instance.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Model  $parent
+         * @return void
+         */
+        public function __construct(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Model $parent)
+        {
+        }
+        /**
+         * Set the base constraints on the relation query.
+         *
+         * @return void
+         */
+        public abstract function addConstraints();
+        /**
+         * Set the constraints for an eager load of the relation.
+         *
+         * @param  array  $models
+         * @return void
+         */
+        public abstract function addEagerConstraints(array $models);
+        /**
+         * Initialize the relation on a set of models.
+         *
+         * @param  array   $models
+         * @param  string  $relation
+         * @return array
+         */
+        public abstract function initRelation(array $models, $relation);
+        /**
+         * Match the eagerly loaded results to their parents.
+         *
+         * @param  array   $models
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @param  string  $relation
+         * @return array
+         */
+        public abstract function match(array $models, \FluentForm\Framework\Database\Orm\Collection $results, $relation);
+        /**
+         * Get the results of the relationship.
+         *
+         * @return mixed
+         */
+        public abstract function getResults();
+        /**
+         * Get the relationship for eager loading.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Collection
+         */
+        public function getEager()
+        {
+        }
+        /**
+         * Touch all of the related models for the relationship.
+         *
+         * @return void
+         */
+        public function touch()
+        {
+        }
+        /**
+         * Run a raw update against the base query.
+         *
+         * @param  array  $attributes
+         * @return int
+         */
+        public function rawUpdate(array $attributes = [])
+        {
+        }
+        /**
+         * Add the constraints for a relationship count query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $parent
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public function getRelationCountQuery(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Builder $parent)
+        {
+        }
+        /**
+         * Add the constraints for a relationship query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $parent
+         * @param  array|mixed $columns
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public function getRelationQuery(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Builder $parent, $columns = ['*'])
+        {
+        }
+        /**
+         * Run a callback with constraints disabled on the relation.
+         *
+         * @param  \Closure  $callback
+         * @return mixed
+         */
+        public static function noConstraints(\Closure $callback)
+        {
+        }
+        /**
+         * Get all of the primary keys for an array of models.
+         *
+         * @param  array   $models
+         * @param  string  $key
+         * @return array
+         */
+        protected function getKeys(array $models, $key = null)
+        {
+        }
+        /**
+         * Get the underlying query for the relation.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public function getQuery()
+        {
+        }
+        /**
+         * Get the base query builder driving the Eloquent builder.
+         *
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        public function getBaseQuery()
+        {
+        }
+        /**
+         * Get the parent model of the relation.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function getParent()
+        {
+        }
+        /**
+         * Get the fully qualified parent key name.
+         *
+         * @return string
+         */
+        public function getQualifiedParentKeyName()
+        {
+        }
+        /**
+         * Get the related model of the relation.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function getRelated()
+        {
+        }
+        /**
+         * Get the name of the "created at" column.
+         *
+         * @return string
+         */
+        public function createdAt()
+        {
+        }
+        /**
+         * Get the name of the "updated at" column.
+         *
+         * @return string
+         */
+        public function updatedAt()
+        {
+        }
+        /**
+         * Get the name of the related model's "updated at" column.
+         *
+         * @return string
+         */
+        public function relatedUpdatedAt()
+        {
+        }
+        /**
+         * Wrap the given value with the parent query's grammar.
+         *
+         * @param  string  $value
+         * @return string
+         */
+        public function wrap($value)
+        {
+        }
+        /**
+         * Set or get the morph map for polymorphic relations.
+         *
+         * @param  array|null  $map
+         * @param  bool  $merge
+         * @return array
+         */
+        public static function morphMap(array $map = null, $merge = true)
+        {
+        }
+        /**
+         * Builds a table-keyed array from model class names.
+         *
+         * @param  string[]|null  $models
+         * @return array|null
+         */
+        protected static function buildMorphMapFromModels(array $models = null)
+        {
+        }
+        /**
+         * Handle dynamic method calls to the relationship.
+         *
+         * @param  string  $method
+         * @param  array   $parameters
+         * @return mixed
+         */
+        public function __call($method, $parameters)
+        {
+        }
+        /**
+         * Force a clone of the underlying query builder when cloning.
+         *
+         * @return void
+         */
+        public function __clone()
+        {
+        }
+    }
+    class BelongsTo extends \FluentForm\Framework\Database\Orm\Relations\Relation
+    {
+        /**
+         * The foreign key of the parent model.
+         *
+         * @var string
+         */
+        protected $foreignKey;
+        /**
+         * The associated key on the parent model.
+         *
+         * @var string
+         */
+        protected $otherKey;
+        /**
+         * The name of the relationship.
+         *
+         * @var string
+         */
+        protected $relation;
+        /**
+         * The count of self joins.
+         *
+         * @var int
+         */
+        protected static $selfJoinCount = 0;
+        /**
+         * Create a new belongs to relationship instance.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Model  $parent
+         * @param  string  $foreignKey
+         * @param  string  $otherKey
+         * @param  string  $relation
+         * @return void
+         */
+        public function __construct(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Model $parent, $foreignKey, $otherKey, $relation)
+        {
+        }
+        /**
+         * Get the results of the relationship.
+         *
+         * @return mixed
+         */
+        public function getResults()
+        {
+        }
+        /**
+         * Set the base constraints on the relation query.
+         *
+         * @return void
+         */
+        public function addConstraints()
+        {
+        }
+        /**
+         * Add the constraints for a relationship query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $parent
+         * @param  array|mixed  $columns
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public function getRelationQuery(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Builder $parent, $columns = ['*'])
+        {
+        }
+        /**
+         * Add the constraints for a relationship query on the same table.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $parent
+         * @param  array|mixed  $columns
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public function getRelationQueryForSelfRelation(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Builder $parent, $columns = ['*'])
+        {
+        }
+        /**
+         * Get a relationship join table hash.
+         *
+         * @return string
+         */
+        public function getRelationCountHash()
+        {
+        }
+        /**
+         * Set the constraints for an eager load of the relation.
+         *
+         * @param  array  $models
+         * @return void
+         */
+        public function addEagerConstraints(array $models)
+        {
+        }
+        /**
+         * Gather the keys from an array of related models.
+         *
+         * @param  array  $models
+         * @return array
+         */
+        protected function getEagerModelKeys(array $models)
+        {
+        }
+        /**
+         * Initialize the relation on a set of models.
+         *
+         * @param  array   $models
+         * @param  string  $relation
+         * @return array
+         */
+        public function initRelation(array $models, $relation)
+        {
+        }
+        /**
+         * Match the eagerly loaded results to their parents.
+         *
+         * @param  array   $models
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @param  string  $relation
+         * @return array
+         */
+        public function match(array $models, \FluentForm\Framework\Database\Orm\Collection $results, $relation)
+        {
+        }
+        /**
+         * Associate the model instance to the given parent.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Model|int  $model
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function associate($model)
+        {
+        }
+        /**
+         * Dissociate previously associated model from the given parent.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function dissociate()
+        {
+        }
+        /**
+         * Update the parent model on the relationship.
+         *
+         * @param  array  $attributes
+         * @return mixed
+         */
+        public function update(array $attributes)
+        {
+        }
+        /**
+         * Get the foreign key of the relationship.
+         *
+         * @return string
+         */
+        public function getForeignKey()
+        {
+        }
+        /**
+         * Get the fully qualified foreign key of the relationship.
+         *
+         * @return string
+         */
+        public function getQualifiedForeignKey()
+        {
+        }
+        /**
+         * Get the associated key of the relationship.
+         *
+         * @return string
+         */
+        public function getOtherKey()
+        {
+        }
+        /**
+         * Get the fully qualified associated key of the relationship.
+         *
+         * @return string
+         */
+        public function getQualifiedOtherKeyName()
+        {
+        }
+    }
+    class BelongsToMany extends \FluentForm\Framework\Database\Orm\Relations\Relation
+    {
+        use \FluentForm\Framework\Database\Orm\ModelHelperTrait;
+        /**
+         * The intermediate table for the relation.
+         *
+         * @var string
+         */
+        protected $table;
+        /**
+         * The foreign key of the parent model.
+         *
+         * @var string
+         */
+        protected $foreignKey;
+        /**
+         * The associated key of the relation.
+         *
+         * @var string
+         */
+        protected $otherKey;
+        /**
+         * The "name" of the relationship.
+         *
+         * @var string
+         */
+        protected $relationName;
+        /**
+         * The pivot table columns to retrieve.
+         *
+         * @var array
+         */
+        protected $pivotColumns = [];
+        /**
+         * Any pivot table restrictions for where clauses.
+         *
+         * @var array
+         */
+        protected $pivotWheres = [];
+        /**
+         * Any pivot table restrictions for whereIn clauses.
+         *
+         * @var array
+         */
+        protected $pivotWhereIns = [];
+        /**
+         * The custom pivot table column for the created_at timestamp.
+         *
+         * @var string
+         */
+        protected $pivotCreatedAt;
+        /**
+         * The custom pivot table column for the updated_at timestamp.
+         *
+         * @var string
+         */
+        protected $pivotUpdatedAt;
+        /**
+         * The count of self joins.
+         *
+         * @var int
+         */
+        protected static $selfJoinCount = 0;
+        /**
+         * Create a new belongs to many relationship instance.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Model  $parent
+         * @param  string  $table
+         * @param  string  $foreignKey
+         * @param  string  $otherKey
+         * @param  string  $relationName
+         * @return void
+         */
+        public function __construct(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Model $parent, $table, $foreignKey, $otherKey, $relationName = null)
+        {
+        }
+        /**
+         * Get the results of the relationship.
+         *
+         * @return mixed
+         */
+        public function getResults()
+        {
+        }
+        /**
+         * Set a where clause for a pivot table column.
+         *
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  mixed   $value
+         * @param  string  $boolean
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsToMany
+         */
+        public function wherePivot($column, $operator = null, $value = null, $boolean = 'and')
+        {
+        }
+        /**
+         * Set a "where in" clause for a pivot table column.
+         *
+         * @param  string  $column
+         * @param  mixed   $values
+         * @param  string  $boolean
+         * @param  bool    $not
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsToMany
+         */
+        public function wherePivotIn($column, $values, $boolean = 'and', $not = false)
+        {
+        }
+        /**
+         * Set an "or where" clause for a pivot table column.
+         *
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  mixed   $value
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsToMany
+         */
+        public function orWherePivot($column, $operator = null, $value = null)
+        {
+        }
+        /**
+         * Set an "or where in" clause for a pivot table column.
+         *
+         * @param  string  $column
+         * @param  mixed   $values
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsToMany
+         */
+        public function orWherePivotIn($column, $values)
+        {
+        }
+        /**
+         * Execute the query and get the first result.
+         *
+         * @param  array   $columns
+         * @return mixed
+         */
+        public function first($columns = ['*'])
+        {
+        }
+        /**
+         * Execute the query and get the first result or throw an exception.
+         *
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Model|static
+         *
+         * @throws \FluentForm\Framework\Database\Orm\ModelNotFoundException
+         */
+        public function firstOrFail($columns = ['*'])
+        {
+        }
+        /**
+         * Execute the query as a "select" statement.
+         *
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Collection
+         */
+        public function get($columns = ['*'])
+        {
+        }
+        /**
+         * Get a paginator for the "select" statement.
+         *
+         * @param  int  $perPage
+         * @param  array  $columns
+         * @param  string  $pageName
+         * @param  int|null  $page
+         * @return \FluentForm\Framework\Contracts\Pagination\LengthAwarePaginator
+         */
+        public function paginate($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
+        {
+        }
+        /**
+         * Paginate the given query into a simple paginator.
+         *
+         * @param  int  $perPage
+         * @param  array  $columns
+         * @param  string  $pageName
+         * @return \FluentForm\Framework\Contracts\Pagination\Paginator
+         */
+        public function simplePaginate($perPage = null, $columns = ['*'], $pageName = 'page')
+        {
+        }
+        /**
+         * Chunk the results of the query.
+         *
+         * @param  int  $count
+         * @param  callable  $callback
+         * @return bool
+         */
+        public function chunk($count, callable $callback)
+        {
+        }
+        /**
+         * Hydrate the pivot table relationship on the models.
+         *
+         * @param  array  $models
+         * @return void
+         */
+        protected function hydratePivotRelation(array $models)
+        {
+        }
+        /**
+         * Get the pivot attributes from a model.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Model  $model
+         * @return array
+         */
+        protected function cleanPivotAttributes(\FluentForm\Framework\Database\Orm\Model $model)
+        {
+        }
+        /**
+         * Set the base constraints on the relation query.
+         *
+         * @return void
+         */
+        public function addConstraints()
+        {
+        }
+        /**
+         * Add the constraints for a relationship query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $parent
+         * @param  array|mixed  $columns
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public function getRelationQuery(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Builder $parent, $columns = ['*'])
+        {
+        }
+        /**
+         * Add the constraints for a relationship query on the same table.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $parent
+         * @param  array|mixed  $columns
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public function getRelationQueryForSelfJoin(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Builder $parent, $columns = ['*'])
+        {
+        }
+        /**
+         * Get a relationship join table hash.
+         *
+         * @return string
+         */
+        public function getRelationCountHash()
+        {
+        }
+        /**
+         * Set the select clause for the relation query.
+         *
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsToMany
+         */
+        protected function getSelectColumns(array $columns = ['*'])
+        {
+        }
+        /**
+         * Get the pivot columns for the relation.
+         *
+         * @return array
+         */
+        protected function getAliasedPivotColumns()
+        {
+        }
+        /**
+         * Determine whether the given column is defined as a pivot column.
+         *
+         * @param  string  $column
+         * @return bool
+         */
+        protected function hasPivotColumn($column)
+        {
+        }
+        /**
+         * Set the join clause for the relation query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder|null  $query
+         * @return $this
+         */
+        protected function setJoin($query = null)
+        {
+        }
+        /**
+         * Set the where clause for the relation query.
+         *
+         * @return $this
+         */
+        protected function setWhere()
+        {
+        }
+        /**
+         * Set the constraints for an eager load of the relation.
+         *
+         * @param  array  $models
+         * @return void
+         */
+        public function addEagerConstraints(array $models)
+        {
+        }
+        /**
+         * Initialize the relation on a set of models.
+         *
+         * @param  array   $models
+         * @param  string  $relation
+         * @return array
+         */
+        public function initRelation(array $models, $relation)
+        {
+        }
+        /**
+         * Match the eagerly loaded results to their parents.
+         *
+         * @param  array   $models
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @param  string  $relation
+         * @return array
+         */
+        public function match(array $models, \FluentForm\Framework\Database\Orm\Collection $results, $relation)
+        {
+        }
+        /**
+         * Build model dictionary keyed by the relation's foreign key.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @return array
+         */
+        protected function buildDictionary(\FluentForm\Framework\Database\Orm\Collection $results)
+        {
+        }
+        /**
+         * Touch all of the related models for the relationship.
+         *
+         * E.g.: Touch all roles associated with this user.
+         *
+         * @return void
+         */
+        public function touch()
+        {
+        }
+        /**
+         * Get all of the IDs for the related models.
+         *
+         * @return \FluentForm\Framework\Support\Collection
+         */
+        public function getRelatedIds()
+        {
+        }
+        /**
+         * Save a new model and attach it to the parent model.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Model  $model
+         * @param  array  $joining
+         * @param  bool   $touch
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function save(\FluentForm\Framework\Database\Orm\Model $model, array $joining = [], $touch = true)
+        {
+        }
+        /**
+         * Save an array of new models and attach them to the parent model.
+         *
+         * @param  \FluentForm\Framework\Support\Collection|array  $models
+         * @param  array  $joinings
+         * @return array
+         */
+        public function saveMany($models, array $joinings = [])
+        {
+        }
+        /**
+         * Find a related model by its primary key.
+         *
+         * @param  mixed  $id
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Model|\FluentForm\Framework\Database\Orm\Collection|null
+         */
+        public function find($id, $columns = ['*'])
+        {
+        }
+        /**
+         * Find multiple related models by their primary keys.
+         *
+         * @param  mixed  $ids
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Collection
+         */
+        public function findMany($ids, $columns = ['*'])
+        {
+        }
+        /**
+         * Find a related model by its primary key or throw an exception.
+         *
+         * @param  mixed  $id
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Model|\FluentForm\Framework\Database\Orm\Collection
+         *
+         * @throws \FluentForm\Framework\Database\Orm\ModelNotFoundException
+         */
+        public function findOrFail($id, $columns = ['*'])
+        {
+        }
+        /**
+         * Find a related model by its primary key or return new instance of the related model.
+         *
+         * @param  mixed  $id
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Support\Collection|\FluentForm\Framework\Database\Orm\Model
+         */
+        public function findOrNew($id, $columns = ['*'])
+        {
+        }
+        /**
+         * Get the first related model record matching the attributes or instantiate it.
+         *
+         * @param  array  $attributes
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function firstOrNew(array $attributes)
+        {
+        }
+        /**
+         * Get the first related record matching the attributes or create it.
+         *
+         * @param  array  $attributes
+         * @param  array  $joining
+         * @param  bool   $touch
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function firstOrCreate(array $attributes, array $joining = [], $touch = true)
+        {
+        }
+        /**
+         * Create or update a related record matching the attributes, and fill it with values.
+         *
+         * @param  array  $attributes
+         * @param  array  $values
+         * @param  array  $joining
+         * @param  bool   $touch
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function updateOrCreate(array $attributes, array $values = [], array $joining = [], $touch = true)
+        {
+        }
+        /**
+         * Create a new instance of the related model.
+         *
+         * @param  array  $attributes
+         * @param  array  $joining
+         * @param  bool   $touch
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function create(array $attributes, array $joining = [], $touch = true)
+        {
+        }
+        /**
+         * Create an array of new instances of the related models.
+         *
+         * @param  array  $records
+         * @param  array  $joinings
+         * @return array
+         */
+        public function createMany(array $records, array $joinings = [])
+        {
+        }
+        /**
+         * Sync the intermediate tables with a list of IDs without detaching.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Collection|array  $ids
+         * @return array
+         */
+        public function syncWithoutDetaching($ids)
+        {
+        }
+        /**
+         * Sync the intermediate tables with a list of IDs or collection of models.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Collection|array  $ids
+         * @param  bool   $detaching
+         * @return array
+         */
+        public function sync($ids, $detaching = true)
+        {
+        }
+        /**
+         * Format the sync list so that it is keyed by ID.
+         *
+         * @param  array  $records
+         * @return array
+         */
+        protected function formatSyncList(array $records)
+        {
+        }
+        /**
+         * Attach all of the IDs that aren't in the current array.
+         *
+         * @param  array  $records
+         * @param  array  $current
+         * @param  bool   $touch
+         * @return array
+         */
+        protected function attachNew(array $records, array $current, $touch = true)
+        {
+        }
+        /**
+         * Update an existing pivot record on the table.
+         *
+         * @param  mixed  $id
+         * @param  array  $attributes
+         * @param  bool   $touch
+         * @return int
+         */
+        public function updateExistingPivot($id, array $attributes, $touch = true)
+        {
+        }
+        /**
+         * Attach a model to the parent.
+         *
+         * @param  mixed  $id
+         * @param  array  $attributes
+         * @param  bool   $touch
+         * @return void
+         */
+        public function attach($id, array $attributes = [], $touch = true)
+        {
+        }
+        /**
+         * Create an array of records to insert into the pivot table.
+         *
+         * @param  array  $ids
+         * @param  array  $attributes
+         * @return array
+         */
+        protected function createAttachRecords($ids, array $attributes)
+        {
+        }
+        /**
+         * Create a full attachment record payload.
+         *
+         * @param  int    $key
+         * @param  mixed  $value
+         * @param  array  $attributes
+         * @param  bool   $timed
+         * @return array
+         */
+        protected function attacher($key, $value, $attributes, $timed)
+        {
+        }
+        /**
+         * Get the attach record ID and extra attributes.
+         *
+         * @param  mixed  $key
+         * @param  mixed  $value
+         * @param  array  $attributes
+         * @return array
+         */
+        protected function getAttachId($key, $value, array $attributes)
+        {
+        }
+        /**
+         * Create a new pivot attachment record.
+         *
+         * @param  int   $id
+         * @param  bool  $timed
+         * @return array
+         */
+        protected function createAttachRecord($id, $timed)
+        {
+        }
+        /**
+         * Set the creation and update timestamps on an attach record.
+         *
+         * @param  array  $record
+         * @param  bool   $exists
+         * @return array
+         */
+        protected function setTimestampsOnAttach(array $record, $exists = false)
+        {
+        }
+        /**
+         * Detach models from the relationship.
+         *
+         * @param  mixed  $ids
+         * @param  bool  $touch
+         * @return int
+         */
+        public function detach($ids = [], $touch = true)
+        {
+        }
+        /**
+         * If we're touching the parent model, touch.
+         *
+         * @return void
+         */
+        public function touchIfTouching()
+        {
+        }
+        /**
+         * Determine if we should touch the parent on sync.
+         *
+         * @return bool
+         */
+        protected function touchingParent()
+        {
+        }
+        /**
+         * Attempt to guess the name of the inverse of the relation.
+         *
+         * @return string
+         */
+        protected function guessInverseRelation()
+        {
+        }
+        /**
+         * Create a new query builder for the pivot table.
+         *
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        protected function newPivotQuery()
+        {
+        }
+        /**
+         * Get a new plain query builder for the pivot table.
+         *
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        public function newPivotStatement()
+        {
+        }
+        /**
+         * Get a new pivot statement for a given "other" ID.
+         *
+         * @param  mixed  $id
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        public function newPivotStatementForId($id)
+        {
+        }
+        /**
+         * Create a new pivot model instance.
+         *
+         * @param  array  $attributes
+         * @param  bool   $exists
+         * @return \FluentForm\Framework\Database\Orm\Relations\Pivot
+         */
+        public function newPivot(array $attributes = [], $exists = false)
+        {
+        }
+        /**
+         * Create a new existing pivot model instance.
+         *
+         * @param  array  $attributes
+         * @return \FluentForm\Framework\Database\Orm\Relations\Pivot
+         */
+        public function newExistingPivot(array $attributes = [])
+        {
+        }
+        /**
+         * Set the columns on the pivot table to retrieve.
+         *
+         * @param  array|mixed  $columns
+         * @return $this
+         */
+        public function withPivot($columns)
+        {
+        }
+        /**
+         * Specify that the pivot table has creation and update timestamps.
+         *
+         * @param  mixed  $createdAt
+         * @param  mixed  $updatedAt
+         * @return \FluentForm\Framework\Database\Orm\Relations\BelongsToMany
+         */
+        public function withTimestamps($createdAt = null, $updatedAt = null)
+        {
+        }
+        /**
+         * Get the name of the "created at" column.
+         *
+         * @return string
+         */
+        public function createdAt()
+        {
+        }
+        /**
+         * Get the name of the "updated at" column.
+         *
+         * @return string
+         */
+        public function updatedAt()
+        {
+        }
+        /**
+         * Get the related model's updated at column name.
+         *
+         * @return string
+         */
+        public function getRelatedFreshUpdate()
+        {
+        }
+        /**
+         * Get the key for comparing against the parent key in "has" query.
+         *
+         * @return string
+         */
+        public function getHasCompareKey()
+        {
+        }
+        /**
+         * Get the fully qualified foreign key for the relation.
+         *
+         * @return string
+         */
+        public function getForeignKey()
+        {
+        }
+        /**
+         * Get the fully qualified "other key" for the relation.
+         *
+         * @return string
+         */
+        public function getOtherKey()
+        {
+        }
+        /**
+         * Get the intermediate table for the relationship.
+         *
+         * @return string
+         */
+        public function getTable()
+        {
+        }
+        /**
+         * Get the relationship name for the relationship.
+         *
+         * @return string
+         */
+        public function getRelationName()
+        {
+        }
+    }
+    abstract class HasOneOrMany extends \FluentForm\Framework\Database\Orm\Relations\Relation
+    {
+        /**
+         * The foreign key of the parent model.
+         *
+         * @var string
+         */
+        protected $foreignKey;
+        /**
+         * The local key of the parent model.
+         *
+         * @var string
+         */
+        protected $localKey;
+        /**
+         * The count of self joins.
+         *
+         * @var int
+         */
+        protected static $selfJoinCount = 0;
+        /**
+         * Create a new has one or many relationship instance.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Model  $parent
+         * @param  string  $foreignKey
+         * @param  string  $localKey
+         * @return void
+         */
+        public function __construct(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Model $parent, $foreignKey, $localKey)
+        {
+        }
+        /**
+         * Set the base constraints on the relation query.
+         *
+         * @return void
+         */
+        public function addConstraints()
+        {
+        }
+        /**
+         * Add the constraints for a relationship query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $parent
+         * @param  array|mixed  $columns
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public function getRelationQuery(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Builder $parent, $columns = ['*'])
+        {
+        }
+        /**
+         * Add the constraints for a relationship query on the same table.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $parent
+         * @param  array|mixed  $columns
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public function getRelationQueryForSelfRelation(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Builder $parent, $columns = ['*'])
+        {
+        }
+        /**
+         * Get a relationship join table hash.
+         *
+         * @return string
+         */
+        public function getRelationCountHash()
+        {
+        }
+        /**
+         * Set the constraints for an eager load of the relation.
+         *
+         * @param  array  $models
+         * @return void
+         */
+        public function addEagerConstraints(array $models)
+        {
+        }
+        /**
+         * Match the eagerly loaded results to their single parents.
+         *
+         * @param  array   $models
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @param  string  $relation
+         * @return array
+         */
+        public function matchOne(array $models, \FluentForm\Framework\Database\Orm\Collection $results, $relation)
+        {
+        }
+        /**
+         * Match the eagerly loaded results to their many parents.
+         *
+         * @param  array   $models
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @param  string  $relation
+         * @return array
+         */
+        public function matchMany(array $models, \FluentForm\Framework\Database\Orm\Collection $results, $relation)
+        {
+        }
+        /**
+         * Match the eagerly loaded results to their many parents.
+         *
+         * @param  array   $models
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @param  string  $relation
+         * @param  string  $type
+         * @return array
+         */
+        protected function matchOneOrMany(array $models, \FluentForm\Framework\Database\Orm\Collection $results, $relation, $type)
+        {
+        }
+        /**
+         * Get the value of a relationship by one or many type.
+         *
+         * @param  array   $dictionary
+         * @param  string  $key
+         * @param  string  $type
+         * @return mixed
+         */
+        protected function getRelationValue(array $dictionary, $key, $type)
+        {
+        }
+        /**
+         * Build model dictionary keyed by the relation's foreign key.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @return array
+         */
+        protected function buildDictionary(\FluentForm\Framework\Database\Orm\Collection $results)
+        {
+        }
+        /**
+         * Attach a model instance to the parent model.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Model  $model
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function save(\FluentForm\Framework\Database\Orm\Model $model)
+        {
+        }
+        /**
+         * Attach a collection of models to the parent instance.
+         *
+         * @param  \Traversable|array  $models
+         * @return \Traversable|array
+         */
+        public function saveMany($models)
+        {
+        }
+        /**
+         * Find a model by its primary key or return new instance of the related model.
+         *
+         * @param  mixed  $id
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Support\Collection|\FluentForm\Framework\Database\Orm\Model
+         */
+        public function findOrNew($id, $columns = ['*'])
+        {
+        }
+        /**
+         * Get the first related model record matching the attributes or instantiate it.
+         *
+         * @param  array  $attributes
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function firstOrNew(array $attributes)
+        {
+        }
+        /**
+         * Get the first related record matching the attributes or create it.
+         *
+         * @param  array  $attributes
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function firstOrCreate(array $attributes)
+        {
+        }
+        /**
+         * Create or update a related record matching the attributes, and fill it with values.
+         *
+         * @param  array  $attributes
+         * @param  array  $values
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function updateOrCreate(array $attributes, array $values = [])
+        {
+        }
+        /**
+         * Create a new instance of the related model.
+         *
+         * @param  array  $attributes
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function create(array $attributes)
+        {
+        }
+        /**
+         * Create an array of new instances of the related model.
+         *
+         * @param  array  $records
+         * @return array
+         */
+        public function createMany(array $records)
+        {
+        }
+        /**
+         * Perform an update on all the related models.
+         *
+         * @param  array  $attributes
+         * @return int
+         */
+        public function update(array $attributes)
+        {
+        }
+        /**
+         * Get the key for comparing against the parent key in "has" query.
+         *
+         * @return string
+         */
+        public function getHasCompareKey()
+        {
+        }
+        /**
+         * Get the foreign key for the relationship.
+         *
+         * @return string
+         */
+        public function getForeignKey()
+        {
+        }
+        /**
+         * Get the plain foreign key.
+         *
+         * @return string
+         */
+        public function getPlainForeignKey()
+        {
+        }
+        /**
+         * Get the key value of the parent's local key.
+         *
+         * @return mixed
+         */
+        public function getParentKey()
+        {
+        }
+        /**
+         * Get the fully qualified parent key name.
+         *
+         * @return string
+         */
+        public function getQualifiedParentKeyName()
+        {
+        }
+    }
+    class HasMany extends \FluentForm\Framework\Database\Orm\Relations\HasOneOrMany
+    {
+        /**
+         * Get the results of the relationship.
+         *
+         * @return mixed
+         */
+        public function getResults()
+        {
+        }
+        /**
+         * Initialize the relation on a set of models.
+         *
+         * @param  array   $models
+         * @param  string  $relation
+         * @return array
+         */
+        public function initRelation(array $models, $relation)
+        {
+        }
+        /**
+         * Match the eagerly loaded results to their parents.
+         *
+         * @param  array   $models
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @param  string  $relation
+         * @return array
+         */
+        public function match(array $models, \FluentForm\Framework\Database\Orm\Collection $results, $relation)
+        {
+        }
+    }
+    class HasManyThrough extends \FluentForm\Framework\Database\Orm\Relations\Relation
+    {
+        /**
+         * The distance parent model instance.
+         *
+         * @var \FluentForm\Framework\Database\Orm\Model
+         */
+        protected $farParent;
+        /**
+         * The near key on the relationship.
+         *
+         * @var string
+         */
+        protected $firstKey;
+        /**
+         * The far key on the relationship.
+         *
+         * @var string
+         */
+        protected $secondKey;
+        /**
+         * The local key on the relationship.
+         *
+         * @var string
+         */
+        protected $localKey;
+        /**
+         * Create a new has many through relationship instance.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Model  $farParent
+         * @param  \FluentForm\Framework\Database\Orm\Model  $parent
+         * @param  string  $firstKey
+         * @param  string  $secondKey
+         * @param  string  $localKey
+         * @return void
+         */
+        public function __construct(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Model $farParent, \FluentForm\Framework\Database\Orm\Model $parent, $firstKey, $secondKey, $localKey)
+        {
+        }
+        /**
+         * Set the base constraints on the relation query.
+         *
+         * @return void
+         */
+        public function addConstraints()
+        {
+        }
+        /**
+         * Add the constraints for a relationship query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $parent
+         * @param  array|mixed  $columns
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public function getRelationQuery(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Builder $parent, $columns = ['*'])
+        {
+        }
+        /**
+         * Set the join clause on the query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder|null  $query
+         * @return void
+         */
+        protected function setJoin(\FluentForm\Framework\Database\Orm\Builder $query = null)
+        {
+        }
+        /**
+         * Determine whether close parent of the relation uses Soft Deletes.
+         *
+         * @return bool
+         */
+        public function parentSoftDeletes()
+        {
+        }
+        /**
+         * Set the constraints for an eager load of the relation.
+         *
+         * @param  array  $models
+         * @return void
+         */
+        public function addEagerConstraints(array $models)
+        {
+        }
+        /**
+         * Initialize the relation on a set of models.
+         *
+         * @param  array   $models
+         * @param  string  $relation
+         * @return array
+         */
+        public function initRelation(array $models, $relation)
+        {
+        }
+        /**
+         * Match the eagerly loaded results to their parents.
+         *
+         * @param  array   $models
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @param  string  $relation
+         * @return array
+         */
+        public function match(array $models, \FluentForm\Framework\Database\Orm\Collection $results, $relation)
+        {
+        }
+        /**
+         * Build model dictionary keyed by the relation's foreign key.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @return array
+         */
+        protected function buildDictionary(\FluentForm\Framework\Database\Orm\Collection $results)
+        {
+        }
+        /**
+         * Get the results of the relationship.
+         *
+         * @return mixed
+         */
+        public function getResults()
+        {
+        }
+        /**
+         * Execute the query and get the first related model.
+         *
+         * @param  array   $columns
+         * @return mixed
+         */
+        public function first($columns = ['*'])
+        {
+        }
+        /**
+         * Execute the query and get the first result or throw an exception.
+         *
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Model|static
+         *
+         * @throws \FluentForm\Framework\Database\Orm\ModelNotFoundException
+         */
+        public function firstOrFail($columns = ['*'])
+        {
+        }
+        /**
+         * Find a related model by its primary key.
+         *
+         * @param  mixed  $id
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Model|\FluentForm\Framework\Database\Orm\Collection|null
+         */
+        public function find($id, $columns = ['*'])
+        {
+        }
+        /**
+         * Find multiple related models by their primary keys.
+         *
+         * @param  mixed  $ids
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Collection
+         */
+        public function findMany($ids, $columns = ['*'])
+        {
+        }
+        /**
+         * Find a related model by its primary key or throw an exception.
+         *
+         * @param  mixed  $id
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Model|\FluentForm\Framework\Database\Orm\Collection
+         *
+         * @throws \FluentForm\Framework\Database\Orm\ModelNotFoundException
+         */
+        public function findOrFail($id, $columns = ['*'])
+        {
+        }
+        /**
+         * Execute the query as a "select" statement.
+         *
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Database\Orm\Collection
+         */
+        public function get($columns = ['*'])
+        {
+        }
+        /**
+         * Set the select clause for the relation query.
+         *
+         * @param  array  $columns
+         * @return array
+         */
+        protected function getSelectColumns(array $columns = ['*'])
+        {
+        }
+        /**
+         * Get a paginator for the "select" statement.
+         *
+         * @param  int  $perPage
+         * @param  array  $columns
+         * @param  string  $pageName
+         * @param  int  $page
+         * @return \FluentForm\Framework\Contracts\Pagination\LengthAwarePaginator
+         */
+        public function paginate($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
+        {
+        }
+        /**
+         * Paginate the given query into a simple paginator.
+         *
+         * @param  int  $perPage
+         * @param  array  $columns
+         * @param  string  $pageName
+         * @return \FluentForm\Framework\Contracts\Pagination\Paginator
+         */
+        public function simplePaginate($perPage = null, $columns = ['*'], $pageName = 'page')
+        {
+        }
+        /**
+         * Get the key for comparing against the parent key in "has" query.
+         *
+         * @return string
+         */
+        public function getHasCompareKey()
+        {
+        }
+        /**
+         * Get the qualified foreign key on the related model.
+         *
+         * @return string
+         */
+        public function getForeignKey()
+        {
+        }
+        /**
+         * Get the qualified foreign key on the "through" model.
+         *
+         * @return string
+         */
+        public function getThroughKey()
+        {
+        }
+    }
+    class HasOne extends \FluentForm\Framework\Database\Orm\Relations\HasOneOrMany
+    {
+        /**
+         * Get the results of the relationship.
+         *
+         * @return mixed
+         */
+        public function getResults()
+        {
+        }
+        /**
+         * Initialize the relation on a set of models.
+         *
+         * @param  array   $models
+         * @param  string  $relation
+         * @return array
+         */
+        public function initRelation(array $models, $relation)
+        {
+        }
+        /**
+         * Match the eagerly loaded results to their parents.
+         *
+         * @param  array   $models
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @param  string  $relation
+         * @return array
+         */
+        public function match(array $models, \FluentForm\Framework\Database\Orm\Collection $results, $relation)
+        {
+        }
+    }
+    abstract class MorphOneOrMany extends \FluentForm\Framework\Database\Orm\Relations\HasOneOrMany
+    {
+        /**
+         * The foreign key type for the relationship.
+         *
+         * @var string
+         */
+        protected $morphType;
+        /**
+         * The class name of the parent model.
+         *
+         * @var string
+         */
+        protected $morphClass;
+        /**
+         * Create a new morph one or many relationship instance.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Model  $parent
+         * @param  string  $type
+         * @param  string  $id
+         * @param  string  $localKey
+         * @return void
+         */
+        public function __construct(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Model $parent, $type, $id, $localKey)
+        {
+        }
+        /**
+         * Set the base constraints on the relation query.
+         *
+         * @return void
+         */
+        public function addConstraints()
+        {
+        }
+        /**
+         * Get the relationship query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $parent
+         * @param  array|mixed  $columns
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public function getRelationQuery(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Builder $parent, $columns = ['*'])
+        {
+        }
+        /**
+         * Set the constraints for an eager load of the relation.
+         *
+         * @param  array  $models
+         * @return void
+         */
+        public function addEagerConstraints(array $models)
+        {
+        }
+        /**
+         * Attach a model instance to the parent model.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Model  $model
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function save(\FluentForm\Framework\Database\Orm\Model $model)
+        {
+        }
+        /**
+         * Find a related model by its primary key or return new instance of the related model.
+         *
+         * @param  mixed  $id
+         * @param  array  $columns
+         * @return \FluentForm\Framework\Support\Collection|\FluentForm\Framework\Database\Orm\Model
+         */
+        public function findOrNew($id, $columns = ['*'])
+        {
+        }
+        /**
+         * Get the first related model record matching the attributes or instantiate it.
+         *
+         * @param  array  $attributes
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function firstOrNew(array $attributes)
+        {
+        }
+        /**
+         * Get the first related record matching the attributes or create it.
+         *
+         * @param  array  $attributes
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function firstOrCreate(array $attributes)
+        {
+        }
+        /**
+         * Create or update a related record matching the attributes, and fill it with values.
+         *
+         * @param  array  $attributes
+         * @param  array  $values
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function updateOrCreate(array $attributes, array $values = [])
+        {
+        }
+        /**
+         * Create a new instance of the related model.
+         *
+         * @param  array  $attributes
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function create(array $attributes)
+        {
+        }
+        /**
+         * Set the foreign ID and type for creating a related model.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Model  $model
+         * @return void
+         */
+        protected function setForeignAttributesForCreate(\FluentForm\Framework\Database\Orm\Model $model)
+        {
+        }
+        /**
+         * Get the foreign key "type" name.
+         *
+         * @return string
+         */
+        public function getMorphType()
+        {
+        }
+        /**
+         * Get the plain morph type name without the table.
+         *
+         * @return string
+         */
+        public function getPlainMorphType()
+        {
+        }
+        /**
+         * Get the class name of the parent model.
+         *
+         * @return string
+         */
+        public function getMorphClass()
+        {
+        }
+    }
+    class MorphMany extends \FluentForm\Framework\Database\Orm\Relations\MorphOneOrMany
+    {
+        /**
+         * Get the results of the relationship.
+         *
+         * @return mixed
+         */
+        public function getResults()
+        {
+        }
+        /**
+         * Initialize the relation on a set of models.
+         *
+         * @param  array   $models
+         * @param  string  $relation
+         * @return array
+         */
+        public function initRelation(array $models, $relation)
+        {
+        }
+        /**
+         * Match the eagerly loaded results to their parents.
+         *
+         * @param  array   $models
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @param  string  $relation
+         * @return array
+         */
+        public function match(array $models, \FluentForm\Framework\Database\Orm\Collection $results, $relation)
+        {
+        }
+    }
+    class MorphOne extends \FluentForm\Framework\Database\Orm\Relations\MorphOneOrMany
+    {
+        /**
+         * Get the results of the relationship.
+         *
+         * @return mixed
+         */
+        public function getResults()
+        {
+        }
+        /**
+         * Initialize the relation on a set of models.
+         *
+         * @param  array   $models
+         * @param  string  $relation
+         * @return array
+         */
+        public function initRelation(array $models, $relation)
+        {
+        }
+        /**
+         * Match the eagerly loaded results to their parents.
+         *
+         * @param  array   $models
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @param  string  $relation
+         * @return array
+         */
+        public function match(array $models, \FluentForm\Framework\Database\Orm\Collection $results, $relation)
+        {
+        }
+    }
+    class Pivot extends \FluentForm\Framework\Database\Orm\Model
+    {
+        /**
+         * The parent model of the relationship.
+         *
+         * @var \FluentForm\Framework\Database\Orm\Model
+         */
+        protected $parent;
+        /**
+         * The name of the foreign key column.
+         *
+         * @var string
+         */
+        protected $foreignKey;
+        /**
+         * The name of the "other key" column.
+         *
+         * @var string
+         */
+        protected $otherKey;
+        /**
+         * The attributes that aren't mass assignable.
+         *
+         * @var array
+         */
+        protected $guarded = [];
+        /**
+         * Create a new pivot model instance.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Model  $parent
+         * @param  array   $attributes
+         * @param  string  $table
+         * @param  bool    $exists
+         * @return void
+         */
+        public function __construct(\FluentForm\Framework\Database\Orm\Model $parent, $attributes, $table, $exists = false)
+        {
+        }
+        /**
+         * Create a new pivot model from raw values returned from a query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Model  $parent
+         * @param  array   $attributes
+         * @param  string  $table
+         * @param  bool    $exists
+         * @return static
+         */
+        public static function fromRawAttributes(\FluentForm\Framework\Database\Orm\Model $parent, $attributes, $table, $exists = false)
+        {
+        }
+        /**
+         * Set the keys for a save update query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        protected function setKeysForSaveQuery(\FluentForm\Framework\Database\Orm\Builder $query)
+        {
+        }
+        /**
+         * Delete the pivot model record from the database.
+         *
+         * @return int
+         */
+        public function delete()
+        {
+        }
+        /**
+         * Get the query builder for a delete operation on the pivot.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        protected function getDeleteQuery()
+        {
+        }
+        /**
+         * Get the foreign key column name.
+         *
+         * @return string
+         */
+        public function getForeignKey()
+        {
+        }
+        /**
+         * Get the "other key" column name.
+         *
+         * @return string
+         */
+        public function getOtherKey()
+        {
+        }
+        /**
+         * Set the key names for the pivot model instance.
+         *
+         * @param  string  $foreignKey
+         * @param  string  $otherKey
+         * @return $this
+         */
+        public function setPivotKeys($foreignKey, $otherKey)
+        {
+        }
+        /**
+         * Determine if the pivot model has timestamp attributes.
+         *
+         * @return bool
+         */
+        public function hasTimestampAttributes()
+        {
+        }
+        /**
+         * Get the name of the "created at" column.
+         *
+         * @return string
+         */
+        public function getCreatedAtColumn()
+        {
+        }
+        /**
+         * Get the name of the "updated at" column.
+         *
+         * @return string
+         */
+        public function getUpdatedAtColumn()
+        {
+        }
+    }
+    class MorphPivot extends \FluentForm\Framework\Database\Orm\Relations\Pivot
+    {
+        /**
+         * The type of the polymorphic relation.
+         *
+         * Explicitly define this so it's not included in saved attributes.
+         *
+         * @var string
+         */
+        protected $morphType;
+        /**
+         * The value of the polymorphic relation.
+         *
+         * Explicitly define this so it's not included in saved attributes.
+         *
+         * @var string
+         */
+        protected $morphClass;
+        /**
+         * Set the keys for a save update query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        protected function setKeysForSaveQuery(\FluentForm\Framework\Database\Orm\Builder $query)
+        {
+        }
+        /**
+         * Delete the pivot model record from the database.
+         *
+         * @return int
+         */
+        public function delete()
+        {
+        }
+        /**
+         * Set the morph type for the pivot.
+         *
+         * @param  string  $morphType
+         * @return $this
+         */
+        public function setMorphType($morphType)
+        {
+        }
+        /**
+         * Set the morph class for the pivot.
+         *
+         * @param  string  $morphClass
+         * @return \FluentForm\Framework\Database\Orm\Relations\MorphPivot
+         */
+        public function setMorphClass($morphClass)
+        {
+        }
+    }
+    class MorphTo extends \FluentForm\Framework\Database\Orm\Relations\BelongsTo
+    {
+        /**
+         * The type of the polymorphic relation.
+         *
+         * @var string
+         */
+        protected $morphType;
+        /**
+         * The models whose relations are being eager loaded.
+         *
+         * @var \FluentForm\Framework\Database\Orm\Collection
+         */
+        protected $models;
+        /**
+         * All of the models keyed by ID.
+         *
+         * @var array
+         */
+        protected $dictionary = [];
+        /**
+         * A buffer of dynamic calls to query macros.
+         *
+         * @var array
+         */
+        protected $macroBuffer = [];
+        /**
+         * Create a new morph to relationship instance.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Model  $parent
+         * @param  string  $foreignKey
+         * @param  string  $otherKey
+         * @param  string  $type
+         * @param  string  $relation
+         * @return void
+         */
+        public function __construct(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Model $parent, $foreignKey, $otherKey, $type, $relation)
+        {
+        }
+        /**
+         * Get the results of the relationship.
+         *
+         * @return mixed
+         */
+        public function getResults()
+        {
+        }
+        /**
+         * Set the constraints for an eager load of the relation.
+         *
+         * @param  array  $models
+         * @return void
+         */
+        public function addEagerConstraints(array $models)
+        {
+        }
+        /**
+         * Build a dictionary with the models.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $models
+         * @return void
+         */
+        protected function buildDictionary(\FluentForm\Framework\Database\Orm\Collection $models)
+        {
+        }
+        /**
+         * Match the eagerly loaded results to their parents.
+         *
+         * @param  array   $models
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @param  string  $relation
+         * @return array
+         */
+        public function match(array $models, \FluentForm\Framework\Database\Orm\Collection $results, $relation)
+        {
+        }
+        /**
+         * Associate the model instance to the given parent.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Model  $model
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function associate($model)
+        {
+        }
+        /**
+         * Dissociate previously associated model from the given parent.
+         *
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function dissociate()
+        {
+        }
+        /**
+         * Get the results of the relationship.
+         *
+         * Called via eager load method of Eloquent query builder.
+         *
+         * @return mixed
+         */
+        public function getEager()
+        {
+        }
+        /**
+         * Match the results for a given type to their parents.
+         *
+         * @param  string  $type
+         * @param  \FluentForm\Framework\Database\Orm\Collection  $results
+         * @return void
+         */
+        protected function matchToMorphParents($type, \FluentForm\Framework\Database\Orm\Collection $results)
+        {
+        }
+        /**
+         * Get all of the relation results for a type.
+         *
+         * @param  string  $type
+         * @return \FluentForm\Framework\Database\Orm\Collection
+         */
+        protected function getResultsByType($type)
+        {
+        }
+        /**
+         * Gather all of the foreign keys for a given type.
+         *
+         * @param  string  $type
+         * @return array
+         */
+        protected function gatherKeysByType($type)
+        {
+        }
+        /**
+         * Create a new model instance by type.
+         *
+         * @param  string  $type
+         * @return \FluentForm\Framework\Database\Orm\Model
+         */
+        public function createModelByType($type)
+        {
+        }
+        /**
+         * Get the foreign key "type" name.
+         *
+         * @return string
+         */
+        public function getMorphType()
+        {
+        }
+        /**
+         * Get the dictionary used by the relationship.
+         *
+         * @return array
+         */
+        public function getDictionary()
+        {
+        }
+        /**
+         * Replay stored macro calls on the actual related instance.
+         *
+         * @param \FluentForm\Framework\Database\Orm\Builder $query
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        protected function replayMacros(\FluentForm\Framework\Database\Orm\Builder $query)
+        {
+        }
+        /**
+         * Handle dynamic method calls to the relationship.
+         *
+         * @param  string  $method
+         * @param  array   $parameters
+         * @return mixed
+         */
+        public function __call($method, $parameters)
+        {
+        }
+    }
+    class MorphToMany extends \FluentForm\Framework\Database\Orm\Relations\BelongsToMany
+    {
+        /**
+         * The type of the polymorphic relation.
+         *
+         * @var string
+         */
+        protected $morphType;
+        /**
+         * The class name of the morph type constraint.
+         *
+         * @var string
+         */
+        protected $morphClass;
+        /**
+         * Indicates if we are connecting the inverse of the relation.
+         *
+         * This primarily affects the morphClass constraint.
+         *
+         * @var bool
+         */
+        protected $inverse;
+        /**
+         * Create a new morph to many relationship instance.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Model  $parent
+         * @param  string  $name
+         * @param  string  $table
+         * @param  string  $foreignKey
+         * @param  string  $otherKey
+         * @param  string  $relationName
+         * @param  bool  $inverse
+         * @return void
+         */
+        public function __construct(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Model $parent, $name, $table, $foreignKey, $otherKey, $relationName = null, $inverse = false)
+        {
+        }
+        /**
+         * Set the where clause for the relation query.
+         *
+         * @return $this
+         */
+        protected function setWhere()
+        {
+        }
+        /**
+         * Add the constraints for a relationship count query.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $query
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $parent
+         * @param  array|mixed  $columns
+         * @return \FluentForm\Framework\Database\Orm\Builder
+         */
+        public function getRelationQuery(\FluentForm\Framework\Database\Orm\Builder $query, \FluentForm\Framework\Database\Orm\Builder $parent, $columns = ['*'])
+        {
+        }
+        /**
+         * Set the constraints for an eager load of the relation.
+         *
+         * @param  array  $models
+         * @return void
+         */
+        public function addEagerConstraints(array $models)
+        {
+        }
+        /**
+         * Create a new pivot attachment record.
+         *
+         * @param  int   $id
+         * @param  bool  $timed
+         * @return array
+         */
+        protected function createAttachRecord($id, $timed)
+        {
+        }
+        /**
+         * Create a new query builder for the pivot table.
+         *
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        protected function newPivotQuery()
+        {
+        }
+        /**
+         * Create a new pivot model instance.
+         *
+         * @param  array  $attributes
+         * @param  bool   $exists
+         * @return \FluentForm\Framework\Database\Orm\Relations\Pivot
+         */
+        public function newPivot(array $attributes = [], $exists = false)
+        {
+        }
+        /**
+         * Get the foreign key "type" name.
+         *
+         * @return string
+         */
+        public function getMorphType()
+        {
+        }
+        /**
+         * Get the class name of the parent model.
+         *
+         * @return string
+         */
+        public function getMorphClass()
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Database\Orm {
+    interface Scope
+    {
+        /**
+         * Apply the scope to a given Eloquent query builder.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $builder
+         * @param  \FluentForm\Framework\Database\Orm\Model  $model
+         * @return void
+         */
+        public function apply(\FluentForm\Framework\Database\Orm\Builder $builder, \FluentForm\Framework\Database\Orm\Model $model);
+    }
+    interface ScopeInterface extends \FluentForm\Framework\Database\Orm\Scope
+    {
+        // Pass
+    }
+    trait SoftDeletes
+    {
+        /**
+         * Indicates if the model is currently force deleting.
+         *
+         * @var bool
+         */
+        protected $forceDeleting = false;
+        /**
+         * Boot the soft deleting trait for a model.
+         *
+         * @return void
+         */
+        public static function bootSoftDeletes()
+        {
+        }
+        /**
+         * Force a hard delete on a soft deleted model.
+         *
+         * @return bool|null
+         */
+        public function forceDelete()
+        {
+        }
+        /**
+         * Perform the actual delete query on this model instance.
+         *
+         * @return mixed
+         */
+        protected function performDeleteOnModel()
+        {
+        }
+        /**
+         * Perform the actual delete query on this model instance.
+         *
+         * @return void
+         */
+        protected function runSoftDelete()
+        {
+        }
+        /**
+         * Restore a soft-deleted model instance.
+         *
+         * @return bool|null
+         */
+        public function restore()
+        {
+        }
+        /**
+         * Determine if the model instance has been soft-deleted.
+         *
+         * @return bool
+         */
+        public function trashed()
+        {
+        }
+        /**
+         * Register a restoring model event with the dispatcher.
+         *
+         * @param  \Closure|string  $callback
+         * @return void
+         */
+        public static function restoring($callback)
+        {
+        }
+        /**
+         * Register a restored model event with the dispatcher.
+         *
+         * @param  \Closure|string  $callback
+         * @return void
+         */
+        public static function restored($callback)
+        {
+        }
+        /**
+         * Get the name of the "deleted at" column.
+         *
+         * @return string
+         */
+        public function getDeletedAtColumn()
+        {
+        }
+        /**
+         * Get the fully qualified "deleted at" column.
+         *
+         * @return string
+         */
+        public function getQualifiedDeletedAtColumn()
+        {
+        }
+    }
+    class SoftDeletingScope implements \FluentForm\Framework\Database\Orm\Scope
+    {
+        /**
+         * All of the extensions to be added to the builder.
+         *
+         * @var array
+         */
+        protected $extensions = ['ForceDelete', 'Restore', 'WithTrashed', 'WithoutTrashed', 'OnlyTrashed'];
+        /**
+         * Apply the scope to a given Orm query builder.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $builder
+         * @param  \FluentForm\Framework\Database\Orm\Model  $model
+         * @return void
+         */
+        public function apply(\FluentForm\Framework\Database\Orm\Builder $builder, \FluentForm\Framework\Database\Orm\Model $model)
+        {
+        }
+        /**
+         * Extend the query builder with the needed functions.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $builder
+         * @return void
+         */
+        public function extend(\FluentForm\Framework\Database\Orm\Builder $builder)
+        {
+        }
+        /**
+         * Get the "deleted at" column for the builder.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $builder
+         * @return string
+         */
+        protected function getDeletedAtColumn(\FluentForm\Framework\Database\Orm\Builder $builder)
+        {
+        }
+        /**
+         * Add the force delete extension to the builder.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $builder
+         * @return void
+         */
+        protected function addForceDelete(\FluentForm\Framework\Database\Orm\Builder $builder)
+        {
+        }
+        /**
+         * Add the restore extension to the builder.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $builder
+         * @return void
+         */
+        protected function addRestore(\FluentForm\Framework\Database\Orm\Builder $builder)
+        {
+        }
+        /**
+         * Add the with-trashed extension to the builder.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $builder
+         * @return void
+         */
+        protected function addWithTrashed(\FluentForm\Framework\Database\Orm\Builder $builder)
+        {
+        }
+        /**
+         * Add the without-trashed extension to the builder.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $builder
+         * @return void
+         */
+        protected function addWithoutTrashed(\FluentForm\Framework\Database\Orm\Builder $builder)
+        {
+        }
+        /**
+         * Add the only-trashed extension to the builder.
+         *
+         * @param  \FluentForm\Framework\Database\Orm\Builder  $builder
+         * @return void
+         */
+        protected function addOnlyTrashed(\FluentForm\Framework\Database\Orm\Builder $builder)
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Database\Query {
+    class Builder
+    {
+        use \FluentForm\Framework\Support\MacroableTrait {
+            __call as macroCall;
+        }
+        /**
+         * The database connection instance.
+         *
+         * @var \FluentForm\Framework\Database\Query\WPDBConnection
+         */
+        protected $connection;
+        /**
+         * The database query grammar instance.
+         *
+         * @var \FluentForm\Framework\Database\Query\Grammar
+         */
+        protected $grammar;
+        /**
+         * The database query post processor instance.
+         *
+         * @var \FluentForm\Framework\Database\Query\Processor
+         */
+        protected $processor;
+        /**
+         * The current query value bindings.
+         *
+         * @var array
+         */
+        protected $bindings = ['select' => [], 'join' => [], 'where' => [], 'having' => [], 'order' => [], 'union' => []];
+        /**
+         * An aggregate function and column to be run.
+         *
+         * @var array
+         */
+        public $aggregate;
+        /**
+         * The columns that should be returned.
+         *
+         * @var array
+         */
+        public $columns;
+        /**
+         * Indicates if the query returns distinct results.
+         *
+         * @var bool
+         */
+        public $distinct = false;
+        /**
+         * The table which the query is targeting.
+         *
+         * @var string
+         */
+        public $from;
+        /**
+         * The table joins for the query.
+         *
+         * @var array
+         */
+        public $joins;
+        /**
+         * The where constraints for the query.
+         *
+         * @var array
+         */
+        public $wheres = [];
+        /**
+         * The groupings for the query.
+         *
+         * @var array
+         */
+        public $groups;
+        /**
+         * The having constraints for the query.
+         *
+         * @var array
+         */
+        public $havings;
+        /**
+         * The orderings for the query.
+         *
+         * @var array
+         */
+        public $orders;
+        /**
+         * The maximum number of records to return.
+         *
+         * @var int
+         */
+        public $limit;
+        /**
+         * The number of records to skip.
+         *
+         * @var int
+         */
+        public $offset;
+        /**
+         * The query union statements.
+         *
+         * @var array
+         */
+        public $unions;
+        /**
+         * The maximum number of union records to return.
+         *
+         * @var int
+         */
+        public $unionLimit;
+        /**
+         * The number of union records to skip.
+         *
+         * @var int
+         */
+        public $unionOffset;
+        /**
+         * The orderings for the union query.
+         *
+         * @var array
+         */
+        public $unionOrders;
+        /**
+         * Indicates whether row locking is being used.
+         *
+         * @var string|bool
+         */
+        public $lock;
+        /**
+         * The field backups currently in use.
+         *
+         * @var array
+         */
+        protected $backups = [];
+        /**
+         * The binding backups currently in use.
+         *
+         * @var array
+         */
+        protected $bindingBackups = [];
+        /**
+         * All of the available clause operators.
+         *
+         * @var array
+         */
+        protected $operators = ['=', '<', '>', '<=', '>=', '<>', '!=', 'like', 'like binary', 'not like', 'between', 'ilike', '&', '|', '^', '<<', '>>', 'rlike', 'regexp', 'not regexp', '~', '~*', '!~', '!~*', 'similar to', 'not similar to', 'not ilike', '~~*', '!~~*'];
+        /**
+         * Whether use write pdo for select.
+         *
+         * @var bool
+         */
+        protected $useWritePdo = false;
+        /**
+         * Create a new query builder instance.
+         *
+         * @param  \FluentForm\Framework\Database\ConnectionInterface  $connection
+         * @param  \FluentForm\Framework\Database\Query\Grammar  $grammar
+         * @param  \FluentForm\Framework\Database\Query\Processor  $processor
+         * @return void
+         */
+        public function __construct(\FluentForm\Framework\Database\ConnectionInterface $connection, \FluentForm\Framework\Database\Query\Grammar $grammar = null, \FluentForm\Framework\Database\Query\Processor $processor = null)
+        {
+        }
+        /**
+         * Set the columns to be selected.
+         *
+         * @param  array|mixed  $columns
+         * @return $this
+         */
+        public function select($columns = ['*'])
+        {
+        }
+        /**
+         * Add a new "raw" select expression to the query.
+         *
+         * @param  string  $expression
+         * @param  array   $bindings
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function selectRaw($expression, array $bindings = [])
+        {
+        }
+        /**
+         * Add a subselect expression to the query.
+         *
+         * @param  \Closure|\FluentForm\Framework\Database\Query\Builder|string $query
+         * @param  string  $as
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         *
+         * @throws \InvalidArgumentException
+         */
+        public function selectSub($query, $as)
+        {
+        }
+        /**
+         * Add a new select column to the query.
+         *
+         * @param  array|mixed  $column
+         * @return $this
+         */
+        public function addSelect($column)
+        {
+        }
+        /**
+         * Force the query to only return distinct results.
+         *
+         * @return $this
+         */
+        public function distinct()
+        {
+        }
+        /**
+         * Set the table which the query is targeting.
+         *
+         * @param  string  $table
+         * @return $this
+         */
+        public function from($table)
+        {
+        }
+        /**
+         * Add a join clause to the query.
+         *
+         * @param  string  $table
+         * @param  string  $one
+         * @param  string  $operator
+         * @param  string  $two
+         * @param  string  $type
+         * @param  bool    $where
+         * @return $this
+         */
+        public function join($table, $one, $operator = null, $two = null, $type = 'inner', $where = false)
+        {
+        }
+        /**
+         * Add a "join where" clause to the query.
+         *
+         * @param  string  $table
+         * @param  string  $one
+         * @param  string  $operator
+         * @param  string  $two
+         * @param  string  $type
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function joinWhere($table, $one, $operator, $two, $type = 'inner')
+        {
+        }
+        /**
+         * Add a left join to the query.
+         *
+         * @param  string  $table
+         * @param  string  $first
+         * @param  string  $operator
+         * @param  string  $second
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function leftJoin($table, $first, $operator = null, $second = null)
+        {
+        }
+        /**
+         * Add a "join where" clause to the query.
+         *
+         * @param  string  $table
+         * @param  string  $one
+         * @param  string  $operator
+         * @param  string  $two
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function leftJoinWhere($table, $one, $operator, $two)
+        {
+        }
+        /**
+         * Add a right join to the query.
+         *
+         * @param  string  $table
+         * @param  string  $first
+         * @param  string  $operator
+         * @param  string  $second
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function rightJoin($table, $first, $operator = null, $second = null)
+        {
+        }
+        /**
+         * Add a "right join where" clause to the query.
+         *
+         * @param  string  $table
+         * @param  string  $one
+         * @param  string  $operator
+         * @param  string  $two
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function rightJoinWhere($table, $one, $operator, $two)
+        {
+        }
+        /**
+         * Add a "cross join" clause to the query.
+         *
+         * @param  string  $table
+         * @param  string  $first
+         * @param  string  $operator
+         * @param  string  $second
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function crossJoin($table, $first = null, $operator = null, $second = null)
+        {
+        }
+        /**
+         * Apply the callback's query changes if the given "value" is true.
+         *
+         * @param  bool  $value
+         * @param  \Closure  $callback
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        public function when($value, $callback)
+        {
+        }
+        /**
+         * Add a basic where clause to the query.
+         *
+         * @param  string|array|\Closure  $column
+         * @param  string  $operator
+         * @param  mixed   $value
+         * @param  string  $boolean
+         * @return $this
+         *
+         * @throws \InvalidArgumentException
+         */
+        public function where($column, $operator = null, $value = null, $boolean = 'and')
+        {
+        }
+        /**
+         * Add an array of where clauses to the query.
+         *
+         * @param  array  $column
+         * @param  string  $boolean
+         * @param  string  $method
+         * @return $this
+         */
+        protected function addArrayOfWheres($column, $boolean, $method = 'where')
+        {
+        }
+        /**
+         * Determine if the given operator and value combination is legal.
+         *
+         * @param  string  $operator
+         * @param  mixed  $value
+         * @return bool
+         */
+        protected function invalidOperatorAndValue($operator, $value)
+        {
+        }
+        /**
+         * Set a "where not" constraint on the query.
+         *
+         * @param  string  $column
+         * @param  array|string  $value
+         * @return $this
+         */
+        public function whereNot($column, $value)
+        {
+        }
+        /**
+         * Add an "or where" clause to the query.
+         *
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  mixed   $value
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function orWhere($column, $operator = null, $value = null)
+        {
+        }
+        /**
+         * Add a "where" clause comparing two columns to the query.
+         *
+         * @param  string|array  $first
+         * @param  string|null  $operator
+         * @param  string|null  $second
+         * @param  string|null  $boolean
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function whereColumn($first, $operator = null, $second = null, $boolean = 'and')
+        {
+        }
+        /**
+         * Add an "or where" clause comparing two columns to the query.
+         *
+         * @param  string|array  $first
+         * @param  string|null  $operator
+         * @param  string|null  $second
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function orWhereColumn($first, $operator = null, $second = null)
+        {
+        }
+        /**
+         * Add a raw where clause to the query.
+         *
+         * @param  string  $sql
+         * @param  array   $bindings
+         * @param  string  $boolean
+         * @return $this
+         */
+        public function whereRaw($sql, array $bindings = [], $boolean = 'and')
+        {
+        }
+        /**
+         * Add a raw or where clause to the query.
+         *
+         * @param  string  $sql
+         * @param  array   $bindings
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function orWhereRaw($sql, array $bindings = [])
+        {
+        }
+        /**
+         * Add a where between statement to the query.
+         *
+         * @param  string  $column
+         * @param  array   $values
+         * @param  string  $boolean
+         * @param  bool  $not
+         * @return $this
+         */
+        public function whereBetween($column, array $values, $boolean = 'and', $not = false)
+        {
+        }
+        /**
+         * Add an or where between statement to the query.
+         *
+         * @param  string  $column
+         * @param  array   $values
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function orWhereBetween($column, array $values)
+        {
+        }
+        /**
+         * Add a where not between statement to the query.
+         *
+         * @param  string  $column
+         * @param  array   $values
+         * @param  string  $boolean
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function whereNotBetween($column, array $values, $boolean = 'and')
+        {
+        }
+        /**
+         * Add an or where not between statement to the query.
+         *
+         * @param  string  $column
+         * @param  array   $values
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function orWhereNotBetween($column, array $values)
+        {
+        }
+        /**
+         * Add a nested where statement to the query.
+         *
+         * @param  \Closure $callback
+         * @param  string   $boolean
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function whereNested(\Closure $callback, $boolean = 'and')
+        {
+        }
+        /**
+         * Create a new query instance for nested where condition.
+         *
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        public function forNestedWhere()
+        {
+        }
+        /**
+         * Add another query builder as a nested where to the query builder.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder|static $query
+         * @param  string  $boolean
+         * @return $this
+         */
+        public function addNestedWhereQuery($query, $boolean = 'and')
+        {
+        }
+        /**
+         * Add a full sub-select to the query.
+         *
+         * @param  string   $column
+         * @param  string   $operator
+         * @param  \Closure $callback
+         * @param  string   $boolean
+         * @return $this
+         */
+        protected function whereSub($column, $operator, \Closure $callback, $boolean)
+        {
+        }
+        /**
+         * Add an exists clause to the query.
+         *
+         * @param  \Closure $callback
+         * @param  string   $boolean
+         * @param  bool     $not
+         * @return $this
+         */
+        public function whereExists(\Closure $callback, $boolean = 'and', $not = false)
+        {
+        }
+        /**
+         * Add an or exists clause to the query.
+         *
+         * @param  \Closure $callback
+         * @param  bool     $not
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function orWhereExists(\Closure $callback, $not = false)
+        {
+        }
+        /**
+         * Add a where not exists clause to the query.
+         *
+         * @param  \Closure $callback
+         * @param  string   $boolean
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function whereNotExists(\Closure $callback, $boolean = 'and')
+        {
+        }
+        /**
+         * Add a where not exists clause to the query.
+         *
+         * @param  \Closure  $callback
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function orWhereNotExists(\Closure $callback)
+        {
+        }
+        /**
+         * Add an exists clause to the query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder $query
+         * @param  string  $boolean
+         * @param  bool  $not
+         * @return $this
+         */
+        public function addWhereExistsQuery(\FluentForm\Framework\Database\Query\Builder $query, $boolean = 'and', $not = false)
+        {
+        }
+        /**
+         * Add a "where in" clause to the query.
+         *
+         * @param  string  $column
+         * @param  mixed   $values
+         * @param  string  $boolean
+         * @param  bool    $not
+         * @return $this
+         */
+        public function whereIn($column, $values, $boolean = 'and', $not = false)
+        {
+        }
+        /**
+         * Add an "or where in" clause to the query.
+         *
+         * @param  string  $column
+         * @param  mixed   $values
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function orWhereIn($column, $values)
+        {
+        }
+        /**
+         * Add a "where not in" clause to the query.
+         *
+         * @param  string  $column
+         * @param  mixed   $values
+         * @param  string  $boolean
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function whereNotIn($column, $values, $boolean = 'and')
+        {
+        }
+        /**
+         * Add an "or where not in" clause to the query.
+         *
+         * @param  string  $column
+         * @param  mixed   $values
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function orWhereNotIn($column, $values)
+        {
+        }
+        /**
+         * Add a where in with a sub-select to the query.
+         *
+         * @param  string   $column
+         * @param  \Closure $callback
+         * @param  string   $boolean
+         * @param  bool     $not
+         * @return $this
+         */
+        protected function whereInSub($column, \Closure $callback, $boolean, $not)
+        {
+        }
+        /**
+         * Add a external sub-select to the query.
+         *
+         * @param  string   $column
+         * @param  \FluentForm\Framework\Database\Query\Builder|static  $query
+         * @param  string   $boolean
+         * @param  bool     $not
+         * @return $this
+         */
+        protected function whereInExistingQuery($column, $query, $boolean, $not)
+        {
+        }
+        /**
+         * Add a "where null" clause to the query.
+         *
+         * @param  string  $column
+         * @param  string  $boolean
+         * @param  bool    $not
+         * @return $this
+         */
+        public function whereNull($column, $boolean = 'and', $not = false)
+        {
+        }
+        /**
+         * Add an "or where null" clause to the query.
+         *
+         * @param  string  $column
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function orWhereNull($column)
+        {
+        }
+        /**
+         * Add a "where not null" clause to the query.
+         *
+         * @param  string  $column
+         * @param  string  $boolean
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function whereNotNull($column, $boolean = 'and')
+        {
+        }
+        /**
+         * Add an "or where not null" clause to the query.
+         *
+         * @param  string  $column
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function orWhereNotNull($column)
+        {
+        }
+        /**
+         * Add a "where date" statement to the query.
+         *
+         * @param  string  $column
+         * @param  string   $operator
+         * @param  int   $value
+         * @param  string   $boolean
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function whereDate($column, $operator, $value, $boolean = 'and')
+        {
+        }
+        /**
+         * Add an "or where date" statement to the query.
+         *
+         * @param  string  $column
+         * @param  string   $operator
+         * @param  int   $value
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function orWhereDate($column, $operator, $value)
+        {
+        }
+        /**
+         * Add a "where time" statement to the query.
+         *
+         * @param  string  $column
+         * @param  string   $operator
+         * @param  int   $value
+         * @param  string   $boolean
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function whereTime($column, $operator, $value, $boolean = 'and')
+        {
+        }
+        /**
+         * Add an "or where time" statement to the query.
+         *
+         * @param  string  $column
+         * @param  string   $operator
+         * @param  int   $value
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function orWhereTime($column, $operator, $value)
+        {
+        }
+        /**
+         * Add a "where day" statement to the query.
+         *
+         * @param  string  $column
+         * @param  string   $operator
+         * @param  int   $value
+         * @param  string   $boolean
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function whereDay($column, $operator, $value, $boolean = 'and')
+        {
+        }
+        /**
+         * Add a "where month" statement to the query.
+         *
+         * @param  string  $column
+         * @param  string   $operator
+         * @param  int   $value
+         * @param  string   $boolean
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function whereMonth($column, $operator, $value, $boolean = 'and')
+        {
+        }
+        /**
+         * Add a "where year" statement to the query.
+         *
+         * @param  string  $column
+         * @param  string   $operator
+         * @param  int   $value
+         * @param  string   $boolean
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function whereYear($column, $operator, $value, $boolean = 'and')
+        {
+        }
+        /**
+         * Add a date based (year, month, day, time) statement to the query.
+         *
+         * @param  string  $type
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  int  $value
+         * @param  string  $boolean
+         * @return $this
+         */
+        protected function addDateBasedWhere($type, $column, $operator, $value, $boolean = 'and')
+        {
+        }
+        /**
+         * Handles dynamic "where" clauses to the query.
+         *
+         * @param  string  $method
+         * @param  string  $parameters
+         * @return $this
+         */
+        public function dynamicWhere($method, $parameters)
+        {
+        }
+        /**
+         * Add a single dynamic where clause statement to the query.
+         *
+         * @param  string  $segment
+         * @param  string  $connector
+         * @param  array   $parameters
+         * @param  int     $index
+         * @return void
+         */
+        protected function addDynamic($segment, $connector, $parameters, $index)
+        {
+        }
+        /**
+         * Add a "group by" clause to the query.
+         *
+         * @param  array|string  $column,...
+         * @return $this
+         */
+        public function groupBy()
+        {
+        }
+        /**
+         * Add a "having" clause to the query.
+         *
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  string  $value
+         * @param  string  $boolean
+         * @return $this
+         */
+        public function having($column, $operator = null, $value = null, $boolean = 'and')
+        {
+        }
+        /**
+         * Add a "or having" clause to the query.
+         *
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  string  $value
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function orHaving($column, $operator = null, $value = null)
+        {
+        }
+        /**
+         * Add a raw having clause to the query.
+         *
+         * @param  string  $sql
+         * @param  array   $bindings
+         * @param  string  $boolean
+         * @return $this
+         */
+        public function havingRaw($sql, array $bindings = [], $boolean = 'and')
+        {
+        }
+        /**
+         * Add a raw or having clause to the query.
+         *
+         * @param  string  $sql
+         * @param  array   $bindings
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function orHavingRaw($sql, array $bindings = [])
+        {
+        }
+        /**
+         * Add an "order by" clause to the query.
+         *
+         * @param  string  $column
+         * @param  string  $direction
+         * @return $this
+         */
+        public function orderBy($column, $direction = 'asc')
+        {
+        }
+        /**
+         * Add an "order by" clause for a timestamp to the query.
+         *
+         * @param  string  $column
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function latest($column = 'created_at')
+        {
+        }
+        /**
+         * Add an "order by" clause for a timestamp to the query.
+         *
+         * @param  string  $column
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function oldest($column = 'created_at')
+        {
+        }
+        /**
+         * Put the query's results in random order.
+         *
+         * @param  string  $seed
+         * @return $this
+         */
+        public function inRandomOrder($seed = '')
+        {
+        }
+        /**
+         * Add a raw "order by" clause to the query.
+         *
+         * @param  string  $sql
+         * @param  array  $bindings
+         * @return $this
+         */
+        public function orderByRaw($sql, $bindings = [])
+        {
+        }
+        /**
+         * Set the "offset" value of the query.
+         *
+         * @param  int  $value
+         * @return $this
+         */
+        public function offset($value)
+        {
+        }
+        /**
+         * Alias to set the "offset" value of the query.
+         *
+         * @param  int  $value
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function skip($value)
+        {
+        }
+        /**
+         * Set the "limit" value of the query.
+         *
+         * @param  int  $value
+         * @return $this
+         */
+        public function limit($value)
+        {
+        }
+        /**
+         * Alias to set the "limit" value of the query.
+         *
+         * @param  int  $value
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function take($value)
+        {
+        }
+        /**
+         * Set the limit and offset for a given page.
+         *
+         * @param  int  $page
+         * @param  int  $perPage
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function forPage($page, $perPage = 15)
+        {
+        }
+        /**
+         * Constrain the query to the next "page" of results after a given ID.
+         *
+         * @param  int  $perPage
+         * @param  int  $lastId
+         * @param  string  $column
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function forPageAfterId($perPage = 15, $lastId = 0, $column = 'id')
+        {
+        }
+        /**
+         * Add a union statement to the query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder|\Closure  $query
+         * @param  bool  $all
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function union($query, $all = false)
+        {
+        }
+        /**
+         * Add a union all statement to the query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder|\Closure  $query
+         * @return \FluentForm\Framework\Database\Query\Builder|static
+         */
+        public function unionAll($query)
+        {
+        }
+        /**
+         * Lock the selected rows in the table.
+         *
+         * @param  bool  $value
+         * @return $this
+         */
+        public function lock($value = true)
+        {
+        }
+        /**
+         * Lock the selected rows in the table for updating.
+         *
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        public function lockForUpdate()
+        {
+        }
+        /**
+         * Share lock the selected rows in the table.
+         *
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        public function sharedLock()
+        {
+        }
+        /**
+         * Get the SQL representation of the query.
+         *
+         * @return string
+         */
+        public function toSql()
+        {
+        }
+        /**
+         * Execute a query for a single record by ID.
+         *
+         * @param  int    $id
+         * @param  array  $columns
+         * @return mixed|static
+         */
+        public function find($id, $columns = ['*'])
+        {
+        }
+        /**
+         * Get a single column's value from the first result of a query.
+         *
+         * @param  string  $column
+         * @return mixed
+         */
+        public function value($column)
+        {
+        }
+        /**
+         * Execute the query and get the first result.
+         *
+         * @param  array   $columns
+         * @return mixed|static
+         */
+        public function first($columns = ['*'])
+        {
+        }
+        /**
+         * Execute the query as a "select" statement.
+         *
+         * @param  array  $columns
+         * @return array|static[]
+         */
+        public function get($columns = ['*'])
+        {
+        }
+        /**
+         * Run the query as a "select" statement against the connection.
+         *
+         * @return array
+         */
+        protected function runSelect()
+        {
+        }
+        /**
+         * Paginate the given query into a simple paginator.
+         *
+         * @param  int  $perPage
+         * @param  array  $columns
+         * @param  string  $pageName
+         * @param  int|null  $page
+         * @return \FluentForm\Framework\Pagination\LengthAwarePaginatorInterface
+         */
+        public function paginate($perPage = 15, $columns = ['*'], $pageName = 'page', $page = null)
+        {
+        }
+        /**
+         * Get a paginator only supporting simple next and previous links.
+         *
+         * This is more efficient on larger data-sets, etc.
+         *
+         * @param  int  $perPage
+         * @param  array  $columns
+         * @param  string  $pageName
+         * @param  int|null  $page
+         * @return \FluentForm\Framework\Pagination\PaginatorInterface
+         */
+        public function simplePaginate($perPage = 15, $columns = ['*'], $pageName = 'page', $page = null)
+        {
+        }
+        /**
+         * Get the count of the total records for the paginator.
+         *
+         * @param  array  $columns
+         * @return int
+         */
+        public function getCountForPagination($columns = ['*'])
+        {
+        }
+        /**
+         * Backup some fields for the pagination count.
+         *
+         * @return void
+         */
+        protected function backupFieldsForCount()
+        {
+        }
+        /**
+         * Remove the column aliases since they will break count queries.
+         *
+         * @param  array  $columns
+         * @return array
+         */
+        protected function clearSelectAliases(array $columns)
+        {
+        }
+        /**
+         * Restore some fields after the pagination count.
+         *
+         * @return void
+         */
+        protected function restoreFieldsForCount()
+        {
+        }
+        /**
+         * Get a generator for the given query.
+         *
+         * @return \Generator
+         */
+        public function cursor()
+        {
+        }
+        /**
+         * Chunk the results of the query.
+         *
+         * @param  int  $count
+         * @param  callable  $callback
+         * @return  bool
+         */
+        public function chunk($count, callable $callback)
+        {
+        }
+        /**
+         * Chunk the results of a query by comparing numeric IDs.
+         *
+         * @param  int  $count
+         * @param  callable  $callback
+         * @param  string  $column
+         * @param  string  $alias
+         * @return bool
+         */
+        public function chunkById($count, callable $callback, $column = 'id', $alias = null)
+        {
+        }
+        /**
+         * Execute a callback over each item while chunking.
+         *
+         * @param  callable  $callback
+         * @param  int  $count
+         * @return bool
+         *
+         * @throws \RuntimeException
+         */
+        public function each(callable $callback, $count = 1000)
+        {
+        }
+        /**
+         * Get an array with the values of a given column.
+         *
+         * @param  string  $column
+         * @param  string|null  $key
+         * @return array
+         */
+        public function pluck($column, $key = null)
+        {
+        }
+        /**
+         * Alias for the "pluck" method.
+         *
+         * @param  string  $column
+         * @param  string|null  $key
+         * @return array
+         *
+         * @deprecated since version 5.2. Use the "pluck" method directly.
+         */
+        public function lists($column, $key = null)
+        {
+        }
+        /**
+         * Strip off the table name or alias from a column identifier.
+         *
+         * @param  string  $column
+         * @return string|null
+         */
+        protected function stripTableForPluck($column)
+        {
+        }
+        /**
+         * Concatenate values of a given column as a string.
+         *
+         * @param  string  $column
+         * @param  string  $glue
+         * @return string
+         */
+        public function implode($column, $glue = '')
+        {
+        }
+        /**
+         * Determine if any rows exist for the current query.
+         *
+         * @return bool
+         */
+        public function exists()
+        {
+        }
+        /**
+         * Retrieve the "count" result of the query.
+         *
+         * @param  string  $columns
+         * @return int
+         */
+        public function count($columns = '*')
+        {
+        }
+        /**
+         * Retrieve the minimum value of a given column.
+         *
+         * @param  string  $column
+         * @return mixed
+         */
+        public function min($column)
+        {
+        }
+        /**
+         * Retrieve the maximum value of a given column.
+         *
+         * @param  string  $column
+         * @return mixed
+         */
+        public function max($column)
+        {
+        }
+        /**
+         * Retrieve the sum of the values of a given column.
+         *
+         * @param  string  $column
+         * @return mixed
+         */
+        public function sum($column)
+        {
+        }
+        /**
+         * Retrieve the average of the values of a given column.
+         *
+         * @param  string  $column
+         * @return mixed
+         */
+        public function avg($column)
+        {
+        }
+        /**
+         * Alias for the "avg" method.
+         *
+         * @param  string  $column
+         * @return mixed
+         */
+        public function average($column)
+        {
+        }
+        /**
+         * Execute an aggregate function on the database.
+         *
+         * @param  string  $function
+         * @param  array   $columns
+         * @return mixed
+         */
+        public function aggregate($function, $columns = ['*'])
+        {
+        }
+        /**
+         * Execute a numeric aggregate function on the database.
+         *
+         * @param  string  $function
+         * @param  array   $columns
+         * @return float|int
+         */
+        public function numericAggregate($function, $columns = ['*'])
+        {
+        }
+        /**
+         * Insert a new record into the database.
+         *
+         * @param  array  $values
+         * @return bool
+         */
+        public function insert(array $values)
+        {
+        }
+        /**
+         * Insert a new record and get the value of the primary key.
+         *
+         * @param  array   $values
+         * @param  string  $sequence
+         * @return int
+         */
+        public function insertGetId(array $values, $sequence = null)
+        {
+        }
+        /**
+         * Update a record in the database.
+         *
+         * @param  array  $values
+         * @return int
+         */
+        public function update(array $values)
+        {
+        }
+        /**
+         * Insert or update a record matching the attributes, and fill it with values.
+         *
+         * @param  array  $attributes
+         * @param  array  $values
+         * @return bool
+         */
+        public function updateOrInsert(array $attributes, array $values = [])
+        {
+        }
+        /**
+         * Increment a column's value by a given amount.
+         *
+         * @param  string  $column
+         * @param  int     $amount
+         * @param  array   $extra
+         * @return int
+         */
+        public function increment($column, $amount = 1, array $extra = [])
+        {
+        }
+        /**
+         * Decrement a column's value by a given amount.
+         *
+         * @param  string  $column
+         * @param  int     $amount
+         * @param  array   $extra
+         * @return int
+         */
+        public function decrement($column, $amount = 1, array $extra = [])
+        {
+        }
+        /**
+         * Delete a record from the database.
+         *
+         * @param  mixed  $id
+         * @return int
+         */
+        public function delete($id = null)
+        {
+        }
+        /**
+         * Run a truncate statement on the table.
+         *
+         * @return void
+         */
+        public function truncate()
+        {
+        }
+        /**
+         * Get a new instance of the query builder.
+         *
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        public function newQuery()
+        {
+        }
+        /**
+         * Merge an array of where clauses and bindings.
+         *
+         * @param  array  $wheres
+         * @param  array  $bindings
+         * @return void
+         */
+        public function mergeWheres($wheres, $bindings)
+        {
+        }
+        /**
+         * Remove all of the expressions from a list of bindings.
+         *
+         * @param  array  $bindings
+         * @return array
+         */
+        protected function cleanBindings(array $bindings)
+        {
+        }
+        /**
+         * Create a raw database expression.
+         *
+         * @param  mixed  $value
+         * @return \FluentForm\Framework\Database\Query\Expression
+         */
+        public function raw($value)
+        {
+        }
+        /**
+         * Get the current query value bindings in a flattened array.
+         *
+         * @return array
+         */
+        public function getBindings()
+        {
+        }
+        /**
+         * Get the raw array of bindings.
+         *
+         * @return array
+         */
+        public function getRawBindings()
+        {
+        }
+        /**
+         * Set the bindings on the query builder.
+         *
+         * @param  array   $bindings
+         * @param  string  $type
+         * @return $this
+         *
+         * @throws \InvalidArgumentException
+         */
+        public function setBindings(array $bindings, $type = 'where')
+        {
+        }
+        /**
+         * Add a binding to the query.
+         *
+         * @param  mixed   $value
+         * @param  string  $type
+         * @return $this
+         *
+         * @throws \InvalidArgumentException
+         */
+        public function addBinding($value, $type = 'where')
+        {
+        }
+        /**
+         * Merge an array of bindings into our bindings.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @return $this
+         */
+        public function mergeBindings(\FluentForm\Framework\Database\Query\Builder $query)
+        {
+        }
+        /**
+         * Get the database connection instance.
+         *
+         * @return \FluentForm\Framework\Database\ConnectionInterface
+         */
+        public function getConnection()
+        {
+        }
+        /**
+         * Get the database query processor instance.
+         *
+         * @return \FluentForm\Framework\Database\Query\Processor
+         */
+        public function getProcessor()
+        {
+        }
+        /**
+         * Get the query grammar instance.
+         *
+         * @return \FluentForm\Framework\Database\Query\Grammar
+         */
+        public function getGrammar()
+        {
+        }
+        /**
+         * Use the write pdo for query.
+         *
+         * @return $this
+         */
+        public function useWritePdo()
+        {
+        }
+        /**
+         * Handle dynamic method calls into the method.
+         *
+         * @param  string  $method
+         * @param  array   $parameters
+         * @return mixed
+         *
+         * @throws \BadMethodCallException
+         */
+        public function __call($method, $parameters)
+        {
+        }
+    }
+    class Expression
+    {
+        /**
+         * The value of the expression.
+         *
+         * @var mixed
+         */
+        protected $value;
+        /**
+         * Create a new raw query expression.
+         *
+         * @param  mixed  $value
+         * @return void
+         */
+        public function __construct($value)
+        {
+        }
+        /**
+         * Get the value of the expression.
+         *
+         * @return mixed
+         */
+        public function getValue()
+        {
+        }
+        /**
+         * Get the value of the expression.
+         *
+         * @return string
+         */
+        public function __toString()
+        {
+        }
+    }
+    class Grammar extends \FluentForm\Framework\Database\BaseGrammar
+    {
+        /**
+         * The grammar specific operators.
+         *
+         * @var array
+         */
+        protected $operators = [];
+        /**
+         * The components that make up a select clause.
+         *
+         * @var array
+         */
+        protected $selectComponents = ['aggregate', 'columns', 'from', 'joins', 'wheres', 'groups', 'havings', 'orders', 'limit', 'offset', 'unions', 'lock'];
+        /**
+         * Compile a select query into SQL.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @return string
+         */
+        public function compileSelect(\FluentForm\Framework\Database\Query\Builder $query)
+        {
+        }
+        /**
+         * Compile the components necessary for a select clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @return array
+         */
+        protected function compileComponents(\FluentForm\Framework\Database\Query\Builder $query)
+        {
+        }
+        /**
+         * Compile an aggregated select clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $aggregate
+         * @return string
+         */
+        protected function compileAggregate(\FluentForm\Framework\Database\Query\Builder $query, $aggregate)
+        {
+        }
+        /**
+         * Compile the "select *" portion of the query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $columns
+         * @return string|null
+         */
+        protected function compileColumns(\FluentForm\Framework\Database\Query\Builder $query, $columns)
+        {
+        }
+        /**
+         * Compile the "from" portion of the query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  string  $table
+         * @return string
+         */
+        protected function compileFrom(\FluentForm\Framework\Database\Query\Builder $query, $table)
+        {
+        }
+        /**
+         * Compile the "join" portions of the query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $joins
+         * @return string
+         */
+        protected function compileJoins(\FluentForm\Framework\Database\Query\Builder $query, $joins)
+        {
+        }
+        /**
+         * Create a join clause constraint segment.
+         *
+         * @param  array  $clause
+         * @return string
+         */
+        protected function compileJoinConstraint(array $clause)
+        {
+        }
+        /**
+         * Create a nested join clause constraint segment.
+         *
+         * @param  array  $clause
+         * @return string
+         */
+        protected function compileNestedJoinConstraint(array $clause)
+        {
+        }
+        /**
+         * Compile the "where" portions of the query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @return string
+         */
+        protected function compileWheres(\FluentForm\Framework\Database\Query\Builder $query)
+        {
+        }
+        /**
+         * Compile a nested where clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereNested(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a where condition with a sub-select.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder $query
+         * @param  array   $where
+         * @return string
+         */
+        protected function whereSub(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a basic where clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereBasic(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a where clause comparing two columns..
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereColumn(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a "between" where clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereBetween(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a where exists clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereExists(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a where exists clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereNotExists(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a "where in" clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereIn(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a "where not in" clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereNotIn(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a where in sub-select clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereInSub(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a where not in sub-select clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereNotInSub(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a "where null" clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereNull(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a "where not null" clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereNotNull(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a "where date" clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereDate(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a "where time" clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereTime(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a "where day" clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereDay(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a "where month" clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereMonth(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a "where year" clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereYear(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a date based where clause.
+         *
+         * @param  string  $type
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function dateBasedWhere($type, \FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile a raw where clause.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $where
+         * @return string
+         */
+        protected function whereRaw(\FluentForm\Framework\Database\Query\Builder $query, $where)
+        {
+        }
+        /**
+         * Compile the "group by" portions of the query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $groups
+         * @return string
+         */
+        protected function compileGroups(\FluentForm\Framework\Database\Query\Builder $query, $groups)
+        {
+        }
+        /**
+         * Compile the "having" portions of the query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $havings
+         * @return string
+         */
+        protected function compileHavings(\FluentForm\Framework\Database\Query\Builder $query, $havings)
+        {
+        }
+        /**
+         * Compile a single having clause.
+         *
+         * @param  array   $having
+         * @return string
+         */
+        protected function compileHaving(array $having)
+        {
+        }
+        /**
+         * Compile a basic having clause.
+         *
+         * @param  array   $having
+         * @return string
+         */
+        protected function compileBasicHaving($having)
+        {
+        }
+        /**
+         * Compile the "order by" portions of the query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $orders
+         * @return string
+         */
+        protected function compileOrders(\FluentForm\Framework\Database\Query\Builder $query, $orders)
+        {
+        }
+        /**
+         * Compile the random statement into SQL.
+         *
+         * @param  string  $seed
+         * @return string
+         */
+        public function compileRandom($seed)
+        {
+        }
+        /**
+         * Compile the "limit" portions of the query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  int  $limit
+         * @return string
+         */
+        protected function compileLimit(\FluentForm\Framework\Database\Query\Builder $query, $limit)
+        {
+        }
+        /**
+         * Compile the "offset" portions of the query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  int  $offset
+         * @return string
+         */
+        protected function compileOffset(\FluentForm\Framework\Database\Query\Builder $query, $offset)
+        {
+        }
+        /**
+         * Compile the "union" queries attached to the main query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @return string
+         */
+        protected function compileUnions(\FluentForm\Framework\Database\Query\Builder $query)
+        {
+        }
+        /**
+         * Compile a single union statement.
+         *
+         * @param  array  $union
+         * @return string
+         */
+        protected function compileUnion(array $union)
+        {
+        }
+        /**
+         * Compile an exists statement into SQL.
+         *
+         * @param \FluentForm\Framework\Database\Query\Builder $query
+         * @return string
+         */
+        public function compileExists(\FluentForm\Framework\Database\Query\Builder $query)
+        {
+        }
+        /**
+         * Compile an insert statement into SQL.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $values
+         * @return string
+         */
+        public function compileInsert(\FluentForm\Framework\Database\Query\Builder $query, array $values)
+        {
+        }
+        /**
+         * Compile an insert and get ID statement into SQL.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array   $values
+         * @param  string  $sequence
+         * @return string
+         */
+        public function compileInsertGetId(\FluentForm\Framework\Database\Query\Builder $query, $values, $sequence)
+        {
+        }
+        /**
+         * Compile an update statement into SQL.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $values
+         * @return string
+         */
+        public function compileUpdate(\FluentForm\Framework\Database\Query\Builder $query, $values)
+        {
+        }
+        /**
+         * Prepare the bindings for an update statement.
+         *
+         * @param  array  $bindings
+         * @param  array  $values
+         * @return array
+         */
+        public function prepareBindingsForUpdate(array $bindings, array $values)
+        {
+        }
+        /**
+         * Compile a delete statement into SQL.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @return string
+         */
+        public function compileDelete(\FluentForm\Framework\Database\Query\Builder $query)
+        {
+        }
+        /**
+         * Compile a truncate table statement into SQL.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @return array
+         */
+        public function compileTruncate(\FluentForm\Framework\Database\Query\Builder $query)
+        {
+        }
+        /**
+         * Compile the lock into SQL.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  bool|string  $value
+         * @return string
+         */
+        protected function compileLock(\FluentForm\Framework\Database\Query\Builder $query, $value)
+        {
+        }
+        /**
+         * Determine if the grammar supports savepoints.
+         *
+         * @return bool
+         */
+        public function supportsSavepoints()
+        {
+        }
+        /**
+         * Compile the SQL statement to define a savepoint.
+         *
+         * @param  string  $name
+         * @return string
+         */
+        public function compileSavepoint($name)
+        {
+        }
+        /**
+         * Compile the SQL statement to execute a savepoint rollback.
+         *
+         * @param  string  $name
+         * @return string
+         */
+        public function compileSavepointRollBack($name)
+        {
+        }
+        /**
+         * Concatenate an array of segments, removing empties.
+         *
+         * @param  array   $segments
+         * @return string
+         */
+        protected function concatenate($segments)
+        {
+        }
+        /**
+         * Remove the leading boolean from a statement.
+         *
+         * @param  string  $value
+         * @return string
+         */
+        protected function removeLeadingBoolean($value)
+        {
+        }
+        /**
+         * Get the gramar specific operators.
+         *
+         * @return array
+         */
+        public function getOperators()
+        {
+        }
+    }
+    class JoinClause
+    {
+        /**
+         * The type of join being performed.
+         *
+         * @var string
+         */
+        public $type;
+        /**
+         * The table the join clause is joining to.
+         *
+         * @var string
+         */
+        public $table;
+        /**
+         * The "on" clauses for the join.
+         *
+         * @var array
+         */
+        public $clauses = [];
+        /**
+         * The "on" bindings for the join.
+         *
+         * @var array
+         */
+        public $bindings = [];
+        /**
+         * Create a new join clause instance.
+         *
+         * @param  string  $type
+         * @param  string  $table
+         * @return void
+         */
+        public function __construct($type, $table)
+        {
+        }
+        /**
+         * Add an "on" clause to the join.
+         *
+         * On clauses can be chained, e.g.
+         *
+         *  $join->on('contacts.user_id', '=', 'users.id')
+         *       ->on('contacts.info_id', '=', 'info.id')
+         *
+         * will produce the following SQL:
+         *
+         * on `contacts`.`user_id` = `users`.`id`  and `contacts`.`info_id` = `info`.`id`
+         *
+         * @param  \Closure|string  $first
+         * @param  string|null  $operator
+         * @param  string|null  $second
+         * @param  string  $boolean
+         * @param  bool  $where
+         * @return $this
+         *
+         * @throws \InvalidArgumentException
+         */
+        public function on($first, $operator = null, $second = null, $boolean = 'and', $where = false)
+        {
+        }
+        /**
+         * Add an "or on" clause to the join.
+         *
+         * @param  \Closure|string  $first
+         * @param  string|null  $operator
+         * @param  string|null  $second
+         * @return \FluentForm\Framework\Database\Query\JoinClause
+         */
+        public function orOn($first, $operator = null, $second = null)
+        {
+        }
+        /**
+         * Add an "on where" clause to the join.
+         *
+         * @param  \Closure|string  $first
+         * @param  string|null  $operator
+         * @param  string|null  $second
+         * @param  string  $boolean
+         * @return \FluentForm\Framework\Database\Query\JoinClause
+         */
+        public function where($first, $operator = null, $second = null, $boolean = 'and')
+        {
+        }
+        /**
+         * Add an "or on where" clause to the join.
+         *
+         * @param  \Closure|string  $first
+         * @param  string|null  $operator
+         * @param  string|null  $second
+         * @return \FluentForm\Framework\Database\Query\JoinClause
+         */
+        public function orWhere($first, $operator = null, $second = null)
+        {
+        }
+        /**
+         * Add an "on where is null" clause to the join.
+         *
+         * @param  string  $column
+         * @param  string  $boolean
+         * @return \FluentForm\Framework\Database\Query\JoinClause
+         */
+        public function whereNull($column, $boolean = 'and')
+        {
+        }
+        /**
+         * Add an "or on where is null" clause to the join.
+         *
+         * @param  string  $column
+         * @return \FluentForm\Framework\Database\Query\JoinClause
+         */
+        public function orWhereNull($column)
+        {
+        }
+        /**
+         * Add an "on where is not null" clause to the join.
+         *
+         * @param  string  $column
+         * @param  string  $boolean
+         * @return \FluentForm\Framework\Database\Query\JoinClause
+         */
+        public function whereNotNull($column, $boolean = 'and')
+        {
+        }
+        /**
+         * Add an "or on where is not null" clause to the join.
+         *
+         * @param  string  $column
+         * @return \FluentForm\Framework\Database\Query\JoinClause
+         */
+        public function orWhereNotNull($column)
+        {
+        }
+        /**
+         * Add an "on where in (...)" clause to the join.
+         *
+         * @param  string  $column
+         * @param  array  $values
+         * @return \FluentForm\Framework\Database\Query\JoinClause
+         */
+        public function whereIn($column, array $values)
+        {
+        }
+        /**
+         * Add an "on where not in (...)" clause to the join.
+         *
+         * @param  string  $column
+         * @param  array  $values
+         * @return \FluentForm\Framework\Database\Query\JoinClause
+         */
+        public function whereNotIn($column, array $values)
+        {
+        }
+        /**
+         * Add an "or on where in (...)" clause to the join.
+         *
+         * @param  string  $column
+         * @param  array  $values
+         * @return \FluentForm\Framework\Database\Query\JoinClause
+         */
+        public function orWhereIn($column, array $values)
+        {
+        }
+        /**
+         * Add an "or on where not in (...)" clause to the join.
+         *
+         * @param  string  $column
+         * @param  array  $values
+         * @return \FluentForm\Framework\Database\Query\JoinClause
+         */
+        public function orWhereNotIn($column, array $values)
+        {
+        }
+        /**
+         * Add a nested where statement to the query.
+         *
+         * @param  \Closure  $callback
+         * @param  string   $boolean
+         * @return \FluentForm\Framework\Database\Query\JoinClause
+         */
+        public function nest(\Closure $callback, $boolean = 'and')
+        {
+        }
+    }
+    class JsonExpression extends \FluentForm\Framework\Database\Query\Expression
+    {
+        /**
+         * The value of the expression.
+         *
+         * @var mixed
+         */
+        protected $value;
+        /**
+         * Create a new raw query expression.
+         *
+         * @param  mixed  $value
+         * @return void
+         */
+        public function __construct($value)
+        {
+        }
+        /**
+         * Translate the given value into the appropriate JSON binding parameter.
+         *
+         * @param  mixed  $value
+         * @return string
+         */
+        protected function getJsonBindingParameter($value)
+        {
+        }
+        /**
+         * Get the value of the expression.
+         *
+         * @return mixed
+         */
+        public function getValue()
+        {
+        }
+        /**
+         * Get the value of the expression.
+         *
+         * @return string
+         */
+        public function __toString()
+        {
+        }
+    }
+    class MySqlGrammar extends \FluentForm\Framework\Database\Query\Grammar
+    {
+        /**
+         * The components that make up a select clause.
+         *
+         * @var array
+         */
+        protected $selectComponents = ['aggregate', 'columns', 'from', 'joins', 'wheres', 'groups', 'havings', 'orders', 'limit', 'offset', 'lock'];
+        /**
+         * Compile a select query into SQL.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @return string
+         */
+        public function compileSelect(\FluentForm\Framework\Database\Query\Builder $query)
+        {
+        }
+        /**
+         * Compile a single union statement.
+         *
+         * @param  array  $union
+         * @return string
+         */
+        protected function compileUnion(array $union)
+        {
+        }
+        /**
+         * Compile the random statement into SQL.
+         *
+         * @param  string  $seed
+         * @return string
+         */
+        public function compileRandom($seed)
+        {
+        }
+        /**
+         * Compile the lock into SQL.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  bool|string  $value
+         * @return string
+         */
+        protected function compileLock(\FluentForm\Framework\Database\Query\Builder $query, $value)
+        {
+        }
+        /**
+         * Compile an update statement into SQL.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $values
+         * @return string
+         */
+        public function compileUpdate(\FluentForm\Framework\Database\Query\Builder $query, $values)
+        {
+        }
+        /**
+         * Prepares a JSON column being updated using the JSON_SET function.
+         *
+         * @param  string  $key
+         * @param  \FluentForm\Framework\Database\Query\JsonExpression  $value
+         * @return string
+         */
+        protected function compileJsonUpdateColumn($key, \FluentForm\Framework\Database\Query\JsonExpression $value)
+        {
+        }
+        /**
+         * Prepare the bindings for an update statement.
+         *
+         * @param  array  $bindings
+         * @param  array  $values
+         * @return array
+         */
+        public function prepareBindingsForUpdate(array $bindings, array $values)
+        {
+        }
+        /**
+         * Compile a delete statement into SQL.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @return string
+         */
+        public function compileDelete(\FluentForm\Framework\Database\Query\Builder $query)
+        {
+        }
+        /**
+         * Wrap a single string in keyword identifiers.
+         *
+         * @param  string  $value
+         * @return string
+         */
+        protected function wrapValue($value)
+        {
+        }
+        /**
+         * Wrap the given JSON selector.
+         *
+         * @param  string  $value
+         * @return string
+         */
+        protected function wrapJsonSelector($value)
+        {
+        }
+        /**
+         * Determine if the given string is a JSON selector.
+         *
+         * @param  string  $value
+         * @return bool
+         */
+        protected function isJsonSelector($value)
+        {
+        }
+    }
+    class Processor
+    {
+        /**
+         * Process the results of a "select" query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  array  $results
+         * @return array
+         */
+        public function processSelect(\FluentForm\Framework\Database\Query\Builder $query, $results)
+        {
+        }
+        /**
+         * Process an  "insert get ID" query.
+         *
+         * @param  \FluentForm\Framework\Database\Query\Builder  $query
+         * @param  string  $sql
+         * @param  array   $values
+         * @param  string  $sequence
+         * @return int
+         */
+        public function processInsertGetId(\FluentForm\Framework\Database\Query\Builder $query, $sql, $values, $sequence = null)
+        {
+        }
+        /**
+         * Process the results of a column listing query.
+         *
+         * @param  array  $results
+         * @return array
+         */
+        public function processColumnListing($results)
+        {
+        }
+    }
+    class WPDBConnection implements \FluentForm\Framework\Database\ConnectionInterface
+    {
+        protected $wpdb = null;
+        /**
+         * Count of active transactions
+         *
+         * @var int
+         */
+        protected $transactionCount = 0;
+        /**
+         * The database connection configuration options.
+         *
+         * @var array
+         */
+        protected $config = [];
+        /**
+         * Construct the Connection object
+         */
+        public function __construct($wpdb, $config)
+        {
+        }
+        public function getWPDB()
+        {
+        }
+        /**
+         * Get the database connection name.
+         *
+         * @return string|null
+         */
+        public function getName()
+        {
+        }
+        /**
+         * Begin a fluent query against a database table.
+         *
+         * @param  string $table
+         *
+         * @return \FluentForm\Framework\Database\Query\Builder
+         */
+        public function table($table)
+        {
+        }
+        /**
+         * Get a new raw query expression.
+         *
+         * @param  mixed $value
+         *
+         * @return \FluentForm\Framework\Database\Query\Expression
+         */
+        public function raw($value)
+        {
+        }
+        /**
+         * Run a select statement and return a single result.
+         *
+         * @param  string $query
+         * @param  array $bindings
+         * @param  bool $useReadPdo
+         * @throws QueryException
+         *
+         * @return mixed
+         */
+        public function selectOne($query, $bindings = [], $useReadPdo = true)
+        {
+        }
+        /**
+         * Run a select statement against the database.
+         *
+         * @param  string $query
+         * @param  array $bindings
+         * @param  bool $useReadPdo
+         * @throws QueryException
+         *
+         * @return array
+         */
+        public function select($query, $bindings = [], $useReadPdo = true)
+        {
+        }
+        /**
+         * A hacky way to emulate bind parameters into SQL query
+         *
+         * @param $query
+         * @param $bindings
+         *
+         * @return mixed
+         */
+        protected function bindParams($query, $bindings, $update = false)
+        {
+        }
+        /**
+         * Run an insert statement against the database.
+         *
+         * @param  string $query
+         * @param  array $bindings
+         *
+         * @return bool
+         */
+        public function insert($query, $bindings = array())
+        {
+        }
+        /**
+         * Run an update statement against the database.
+         *
+         * @param  string $query
+         * @param  array $bindings
+         *
+         * @return int
+         */
+        public function update($query, $bindings = array())
+        {
+        }
+        /**
+         * Run a delete statement against the database.
+         *
+         * @param  string $query
+         * @param  array $bindings
+         *
+         * @return int
+         */
+        public function delete($query, $bindings = array())
+        {
+        }
+        /**
+         * Execute an SQL statement and return the boolean result.
+         *
+         * @param  string $query
+         * @param  array $bindings
+         *
+         * @return mixed
+         */
+        public function statement($query, $bindings = array())
+        {
+        }
+        /**
+         * Run an SQL statement and get the number of rows affected.
+         *
+         * @param  string $query
+         * @param  array $bindings
+         *
+         * @return int
+         */
+        public function affectingStatement($query, $bindings = array())
+        {
+        }
+        /**
+         * Run a raw, unprepared query against the PDO connection.
+         *
+         * @param  string $query
+         *
+         * @return bool
+         */
+        public function unprepared($query)
+        {
+        }
+        /**
+         * Prepare the query bindings for execution.
+         *
+         * @param  array $bindings
+         *
+         * @return array
+         */
+        public function prepareBindings(array $bindings)
+        {
+        }
+        /**
+         * Execute a Closure within a transaction.
+         *
+         * @param  Closure $callback
+         * @param  int  $attempts
+         *
+         * @return mixed
+         *
+         * @throws Exception
+         */
+        public function transaction(\Closure $callback, $attempts = 1)
+        {
+        }
+        /**
+         * Start a new database transaction.
+         *
+         * @return void
+         */
+        public function beginTransaction()
+        {
+        }
+        /**
+         * Commit the active database transaction.
+         *
+         * @return void
+         */
+        public function commit()
+        {
+        }
+        /**
+         * Rollback the active database transaction.
+         *
+         * @return void
+         */
+        public function rollBack()
+        {
+        }
+        /**
+         * Get the number of active transactions.
+         *
+         * @return int
+         */
+        public function transactionLevel()
+        {
+        }
+        /**
+         * Execute the given callback in "dry run" mode.
+         *
+         * @param  Closure $callback
+         *
+         * @return array
+         */
+        public function pretend(\Closure $callback)
+        {
+        }
+        public function getPostProcessor()
+        {
+        }
+        public function getQueryGrammar()
+        {
+        }
+        /**
+         * Return self as PDO
+         *
+         * @return \FluentForm\Framework\Database\Query\WPDBConnection
+         */
+        public function getPdo()
+        {
+        }
+        /**
+         * Return the last insert id
+         *
+         * @param  string $args
+         *
+         * @return int
+         */
+        public function lastInsertId($args)
+        {
+        }
+        /**
+         * Get an option from the configuration options.
+         *
+         * @param  string|null  $option
+         * @return mixed
+         */
+        public function getConfig($option)
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Database {
+    class QueryException extends \PDOException
+    {
+        /**
+         * The SQL for the query.
+         *
+         * @var string
+         */
+        protected $sql;
+        /**
+         * The bindings for the query.
+         *
+         * @var array
+         */
+        protected $bindings;
+        /**
+         * Create a new query exception instance.
+         *
+         * @param  string  $sql
+         * @param  array  $bindings
+         * @param  \Exception $previous
+         * @return void
+         */
+        public function __construct($sql, array $bindings, $previous)
+        {
+        }
+        /**
+         * Format the SQL error message.
+         *
+         * @param  string  $sql
+         * @param  array  $bindings
+         * @param  \Exception $previous
+         * @return string
+         */
+        protected function formatMessage($sql, $bindings, $previous)
+        {
+        }
+        /**
+         * Get the SQL for the query.
+         *
+         * @return string
+         */
+        public function getSql()
+        {
+        }
+        /**
+         * Get the bindings for the query.
+         *
+         * @return array
+         */
+        public function getBindings()
+        {
+        }
+        /**
+         * Replace placeholders with bindings
+         * 
+         * @param  string $search
+         * @param  array  $replace
+         * @param  string $subject
+         * @return string $subject
+         */
+        protected function strReplaceArray($search, array $replace, $subject)
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Foundation {
+    interface ContainerContract
+    {
+        /**
+         * Determine if the given abstract type has been bound.
+         *
+         * @param  string  $abstract
+         * @return bool
+         */
+        public function bound($abstract);
+        /**
+         * Alias a type to a different name.
+         *
+         * @param  string  $abstract
+         * @param  string  $alias
+         * @return void
+         */
+        public function alias($abstract, $alias);
+        /**
+         * Assign a set of tags to a given binding.
+         *
+         * @param  array|string  $abstracts
+         * @param  array|mixed   ...$tags
+         * @return void
+         */
+        public function tag($abstracts, $tags);
+        /**
+         * Resolve all of the bindings for a given tag.
+         *
+         * @param  array  $tag
+         * @return array
+         */
+        public function tagged($tag);
+        /**
+         * Register a binding with the container.
+         *
+         * @param  string|array  $abstract
+         * @param  Closure|string|null  $concrete
+         * @param  bool  $shared
+         * @return void
+         */
+        public function bind($abstract, $concrete = null, $shared = false);
+        /**
+         * Register a binding if it hasn't already been registered.
+         *
+         * @param  string  $abstract
+         * @param  Closure|string|null  $concrete
+         * @param  bool  $shared
+         * @return void
+         */
+        public function bindIf($abstract, $concrete = null, $shared = false);
+        /**
+         * Register a shared binding in the container.
+         *
+         * @param  string  $abstract
+         * @param  Closure|string|null  $concrete
+         * @return void
+         */
+        public function singleton($abstract, $concrete = null);
+        /**
+         * "Extend" an abstract type in the container.
+         *
+         * @param  string    $abstract
+         * @param  Closure  $closure
+         * @return void
+         *
+         * @throws \InvalidArgumentException
+         */
+        public function extend($abstract, \Closure $closure);
+        /**
+         * Register an existing instance as shared in the container.
+         *
+         * @param  string  $abstract
+         * @param  mixed   $instance
+         * @return void
+         */
+        public function instance($abstract, $instance);
+        /**
+         * Define a contextual binding.
+         *
+         * @param  string  $concrete
+         * @return ContextualBindingBuilder
+         */
+        public function when($concrete);
+        /**
+         * Resolve the given type from the container.
+         *
+         * @param  string  $abstract
+         * @param  array   $parameters
+         * @return mixed
+         */
+        public function make($abstract, $parameters = array());
+        /**
+         * Call the given Closure / class@method and inject its dependencies.
+         *
+         * @param  callable|string  $callback
+         * @param  array  $parameters
+         * @param  string|null  $defaultMethod
+         * @return mixed
+         */
+        public function call($callback, array $parameters = array(), $defaultMethod = null);
+        /**
+         * Determine if the given abstract type has been resolved.
+         *
+         * @param  string $abstract
+         * @return bool
+         */
+        public function resolved($abstract);
+        /**
+         * Register a new resolving callback.
+         *
+         * @param  string    $abstract
+         * @param  Closure  $callback
+         * @return void
+         */
+        public function resolving($abstract, \Closure $callback = null);
+        /**
+         * Register a new after resolving callback.
+         *
+         * @param  string    $abstract
+         * @param  Closure  $callback
+         * @return void
+         */
+        public function afterResolving($abstract, \Closure $callback = null);
+    }
+    class Container implements \ArrayAccess, \FluentForm\Framework\Foundation\ContainerContract
+    {
+        /**
+         * The current globally available container (if any).
+         *
+         * @var static
+         */
+        protected static $instance;
+        /**
+         * An array of the types that have been resolved.
+         *
+         * @var array
+         */
+        protected $resolved = [];
+        /**
+         * The container's bindings.
+         *
+         * @var array
+         */
+        protected $bindings = [];
+        /**
+         * The container's shared instances.
+         *
+         * @var array
+         */
+        protected $instances = [];
+        /**
+         * The registered type aliases.
+         *
+         * @var array
+         */
+        protected $aliases = [];
+        /**
+         * The extension closures for services.
+         *
+         * @var array
+         */
+        protected $extenders = [];
+        /**
+         * All of the registered tags.
+         *
+         * @var array
+         */
+        protected $tags = [];
+        /**
+         * The stack of concretions being current built.
+         *
+         * @var array
+         */
+        protected $buildStack = [];
+        /**
+         * The contextual binding map.
+         *
+         * @var array
+         */
+        public $contextual = [];
+        /**
+         * All of the registered rebound callbacks.
+         *
+         * @var array
+         */
+        protected $reboundCallbacks = [];
+        /**
+         * All of the global resolving callbacks.
+         *
+         * @var array
+         */
+        protected $globalResolvingCallbacks = [];
+        /**
+         * All of the global after resolving callbacks.
+         *
+         * @var array
+         */
+        protected $globalAfterResolvingCallbacks = [];
+        /**
+         * All of the after resolving callbacks by class type.
+         *
+         * @var array
+         */
+        protected $resolvingCallbacks = [];
+        /**
+         * All of the after resolving callbacks by class type.
+         *
+         * @var array
+         */
+        protected $afterResolvingCallbacks = [];
+        /**
+         * Define a contextual binding.
+         *
+         * @param  string  $concrete
+         * @return FluentForm\Framework\Foundation\ContextualBindingBuilder
+         */
+        public function when($concrete)
+        {
+        }
+        /**
+         * Determine if a given string is resolvable.
+         *
+         * @param  string  $abstract
+         * @return bool
+         */
+        protected function resolvable($abstract)
+        {
+        }
+        /**
+         * Determine if the given abstract type has been bound.
+         *
+         * @param  string  $abstract
+         * @return bool
+         */
+        public function bound($abstract)
+        {
+        }
+        /**
+         * Determine if the given abstract type has been resolved.
+         *
+         * @param  string  $abstract
+         * @return bool
+         */
+        public function resolved($abstract)
+        {
+        }
+        /**
+         * Determine if a given string is an alias.
+         *
+         * @param  string  $name
+         * @return bool
+         */
+        public function isAlias($name)
+        {
+        }
+        /**
+         * Register a binding with the container.
+         *
+         * @param  string|array  $abstract
+         * @param  Closure|string|null  $concrete
+         * @param  bool  $shared
+         * @return void
+         */
+        public function bind($abstract, $concrete = null, $shared = false)
+        {
+        }
+        /**
+         * Get the Closure to be used when building a type.
+         *
+         * @param  string  $abstract
+         * @param  string  $concrete
+         * @return Closure
+         */
+        protected function getClosure($abstract, $concrete)
+        {
+        }
+        /**
+         * Add a contextual binding to the container.
+         *
+         * @param  string  $concrete
+         * @param  string  $abstract
+         * @param  Closure|string  $implementation
+         */
+        public function addContextualBinding($concrete, $abstract, $implementation)
+        {
+        }
+        /**
+         * Register a binding if it hasn't already been registered.
+         *
+         * @param  string  $abstract
+         * @param  Closure|string|null  $concrete
+         * @param  bool  $shared
+         * @return void
+         */
+        public function bindIf($abstract, $concrete = null, $shared = false)
+        {
+        }
+        /**
+         * Register a shared binding in the container.
+         *
+         * @param  string  $abstract
+         * @param  Closure|string|null  $concrete
+         * @return void
+         */
+        public function singleton($abstract, $concrete = null)
+        {
+        }
+        /**
+         * Wrap a Closure such that it is shared.
+         *
+         * @param  Closure  $closure
+         * @return Closure
+         */
+        public function share(\Closure $closure)
+        {
+        }
+        /**
+         * Bind a shared Closure into the container.
+         *
+         * @param  string    $abstract
+         * @param  Closure  $closure
+         * @return void
+         */
+        public function bindShared($abstract, \Closure $closure)
+        {
+        }
+        /**
+         * "Extend" an abstract type in the container.
+         *
+         * @param  string    $abstract
+         * @param  Closure  $closure
+         * @return void
+         *
+         * @throws \InvalidArgumentException
+         */
+        public function extend($abstract, \Closure $closure)
+        {
+        }
+        /**
+         * Register an existing instance as shared in the container.
+         *
+         * @param  string  $abstract
+         * @param  mixed   $instance
+         * @return void
+         */
+        public function instance($abstract, $instance)
+        {
+        }
+        /**
+         * Assign a set of tags to a given binding.
+         *
+         * @param  array|string  $abstracts
+         * @param  array|mixed   ...$tags
+         * @return void
+         */
+        public function tag($abstracts, $tags)
+        {
+        }
+        /**
+         * Resolve all of the bindings for a given tag.
+         *
+         * @param  string  $tag
+         * @return array
+         */
+        public function tagged($tag)
+        {
+        }
+        /**
+         * Alias a type to a different name.
+         *
+         * @param  string  $abstract
+         * @param  string  $alias
+         * @return void
+         */
+        public function alias($abstract, $alias)
+        {
+        }
+        /**
+         * Extract the type and alias from a given definition.
+         *
+         * @param  array  $definition
+         * @return array
+         */
+        protected function extractAlias(array $definition)
+        {
+        }
+        /**
+         * Bind a new callback to an abstract's rebind event.
+         *
+         * @param  string    $abstract
+         * @param  Closure  $callback
+         * @return mixed
+         */
+        public function rebinding($abstract, \Closure $callback)
+        {
+        }
+        /**
+         * Refresh an instance on the given target and method.
+         *
+         * @param  string  $abstract
+         * @param  mixed   $target
+         * @param  string  $method
+         * @return mixed
+         */
+        public function refresh($abstract, $target, $method)
+        {
+        }
+        /**
+         * Fire the "rebound" callbacks for the given abstract type.
+         *
+         * @param  string  $abstract
+         * @return void
+         */
+        protected function rebound($abstract)
+        {
+        }
+        /**
+         * Get the rebound callbacks for a given type.
+         *
+         * @param  string  $abstract
+         * @return array
+         */
+        protected function getReboundCallbacks($abstract)
+        {
+        }
+        /**
+         * Wrap the given closure such that its dependencies will be injected when executed.
+         *
+         * @param  Closure  $callback
+         * @param  array  $parameters
+         * @return Closure
+         */
+        public function wrap(\Closure $callback, array $parameters = [])
+        {
+        }
+        /**
+         * Call the given Closure / class@method and inject its dependencies.
+         *
+         * @param  callable|string  $callback
+         * @param  array  $parameters
+         * @param  string|null  $defaultMethod
+         * @return mixed
+         */
+        public function call($callback, array $parameters = [], $defaultMethod = null)
+        {
+        }
+        /**
+         * Determine if the given string is in Class@method syntax.
+         *
+         * @param  mixed  $callback
+         * @return bool
+         */
+        protected function isCallableWithAtSign($callback)
+        {
+        }
+        /**
+         * Get all dependencies for a given method.
+         *
+         * @param  callable|string  $callback
+         * @param  array  $parameters
+         * @return array
+         */
+        protected function getMethodDependencies($callback, $parameters = [])
+        {
+        }
+        /**
+         * Get the proper reflection instance for the given callback.
+         *
+         * @param  callable|string  $callback
+         * @return ReflectionFunctionAbstract
+         */
+        protected function getCallReflector($callback)
+        {
+        }
+        /**
+         * Get the dependency for the given call parameter.
+         *
+         * @param  ReflectionParameter  $parameter
+         * @param  array  $parameters
+         * @param  array  $dependencies
+         * @return mixed
+         */
+        protected function addDependencyForCallParameter(\ReflectionParameter $parameter, array &$parameters, &$dependencies)
+        {
+        }
+        /**
+         * Get the parameter type for the given parameter.
+         *
+         * @return object ReflectionClass|ReflectionNamedType
+         */
+        protected function getParameterType($parameter)
+        {
+        }
+        /**
+         * Get the parameter name for the given parameter.
+         *
+         * @return string
+         */
+        protected function getParameterName($parameter)
+        {
+        }
+        /**
+         * Call a string reference to a class using Class@method syntax.
+         *
+         * @param  string  $target
+         * @param  array  $parameters
+         * @param  string|null  $defaultMethod
+         * @return mixed
+         */
+        protected function callClass($target, array $parameters = [], $defaultMethod = null)
+        {
+        }
+        /**
+         * Resolve the given type from the container.
+         *
+         * @param  string  $abstract
+         * @param  array   $parameters
+         * @return mixed
+         */
+        public function make($abstract, $parameters = [])
+        {
+        }
+        /**
+         * Get the concrete type for a given abstract.
+         *
+         * @param  string  $abstract
+         * @return mixed   $concrete
+         */
+        protected function getConcrete($abstract)
+        {
+        }
+        /**
+         * Get the contextual concrete binding for the given abstract.
+         *
+         * @param  string  $abstract
+         * @return string
+         */
+        protected function getContextualConcrete($abstract)
+        {
+        }
+        /**
+         * Determine if the given abstract has a leading slash.
+         *
+         * @param  string  $abstract
+         * @return bool
+         */
+        protected function missingLeadingSlash($abstract)
+        {
+        }
+        /**
+         * Get the extender callbacks for a given type.
+         *
+         * @param  string  $abstract
+         * @return array
+         */
+        protected function getExtenders($abstract)
+        {
+        }
+        /**
+         * Instantiate a concrete instance of the given type.
+         *
+         * @param  string  $concrete
+         * @param  array   $parameters
+         * @return mixed
+         *
+         * @throws BindingResolutionException
+         */
+        public function build($concrete, $parameters = [])
+        {
+        }
+        /**
+         * Resolve all of the dependencies from the ReflectionParameters.
+         *
+         * @param  array  $parameters
+         * @param  array  $primitives
+         * @return array
+         */
+        protected function getDependencies($parameters, array $primitives = [])
+        {
+        }
+        /**
+         * Resolve a non-class hinted dependency.
+         *
+         * @param  ReflectionParameter  $parameter
+         * @return mixed
+         *
+         * @throws BindingResolutionException
+         */
+        protected function resolveNonClass(\ReflectionParameter $parameter)
+        {
+        }
+        /**
+         * Resolve a class based dependency from the container.
+         *
+         * @param  ReflectionParameter  $parameter
+         * @return mixed
+         *
+         * @throws BindingResolutionException
+         */
+        protected function resolveClass(\ReflectionParameter $parameter)
+        {
+        }
+        /**
+         * If extra parameters are passed by numeric ID, rekey them by argument name.
+         *
+         * @param  array  $dependencies
+         * @param  array  $parameters
+         * @return array
+         */
+        protected function keyParametersByArgument(array $dependencies, array $parameters)
+        {
+        }
+        /**
+         * Register a new resolving callback.
+         *
+         * @param  string    $abstract
+         * @param  Closure  $callback
+         * @return void
+         */
+        public function resolving($abstract, \Closure $callback = null)
+        {
+        }
+        /**
+         * Register a new after resolving callback for all types.
+         *
+         * @param  string   $abstract
+         * @param  Closure $callback
+         * @return void
+         */
+        public function afterResolving($abstract, \Closure $callback = null)
+        {
+        }
+        /**
+         * Register a new resolving callback by type of its first argument.
+         *
+         * @param  Closure  $callback
+         * @return void
+         */
+        protected function resolvingCallback(\Closure $callback)
+        {
+        }
+        /**
+         * Register a new after resolving callback by type of its first argument.
+         *
+         * @param  Closure  $callback
+         * @return void
+         */
+        protected function afterResolvingCallback(\Closure $callback)
+        {
+        }
+        /**
+         * Get the type hint for this closure's first argument.
+         *
+         * @param  Closure  $callback
+         * @return mixed
+         */
+        protected function getFunctionHint(\Closure $callback)
+        {
+        }
+        /**
+         * Fire all of the resolving callbacks.
+         *
+         * @param  string  $abstract
+         * @param  mixed   $object
+         * @return void
+         */
+        protected function fireResolvingCallbacks($abstract, $object)
+        {
+        }
+        /**
+         * Get all callbacks for a given type.
+         *
+         * @param  string  $abstract
+         * @param  object  $object
+         * @param  array   $callbacksPerType
+         *
+         * @return array
+         */
+        protected function getCallbacksForType($abstract, $object, array $callbacksPerType)
+        {
+        }
+        /**
+         * Fire an array of callbacks with an object.
+         *
+         * @param  mixed  $object
+         * @param  array  $callbacks
+         */
+        protected function fireCallbackArray($object, array $callbacks)
+        {
+        }
+        /**
+         * Determine if a given type is shared.
+         *
+         * @param  string  $abstract
+         * @return bool
+         */
+        public function isShared($abstract)
+        {
+        }
+        /**
+         * Determine if the given concrete is buildable.
+         *
+         * @param  mixed   $concrete
+         * @param  string  $abstract
+         * @return bool
+         */
+        protected function isBuildable($concrete, $abstract)
+        {
+        }
+        /**
+         * Get the alias for an abstract if available.
+         *
+         * @param  string  $abstract
+         * @return string
+         */
+        protected function getAlias($abstract)
+        {
+        }
+        /**
+         * Get the container's bindings.
+         *
+         * @return array
+         */
+        public function getBindings()
+        {
+        }
+        /**
+         * Drop all of the stale instances and aliases.
+         *
+         * @param  string  $abstract
+         * @return void
+         */
+        protected function dropStaleInstances($abstract)
+        {
+        }
+        /**
+         * Remove a resolved instance from the instance cache.
+         *
+         * @param  string  $abstract
+         * @return void
+         */
+        public function forgetInstance($abstract)
+        {
+        }
+        /**
+         * Clear all of the instances from the container.
+         *
+         * @return void
+         */
+        public function forgetInstances()
+        {
+        }
+        /**
+         * Flush the container of all bindings and resolved instances.
+         *
+         * @return void
+         */
+        public function flush()
+        {
+        }
+        /**
+         * Set the globally available instance of the container.
+         *
+         * @return static
+         */
+        public static function getInstance()
+        {
+        }
+        /**
+         * Set the shared instance of the container.
+         *
+         * @param  FluentForm\Framework\Foundation\Container  $container
+         * @return void
+         */
+        public static function setInstance(\FluentForm\Framework\Foundation\ContainerContract $container)
+        {
+        }
+        /**
+         * Determine if a given offset exists.
+         *
+         * @param  string  $key
+         * @return bool
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetExists($key)
+        {
+        }
+        /**
+         * Get the value at a given offset.
+         *
+         * @param  string  $key
+         * @return mixed
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetGet($key)
+        {
+        }
+        /**
+         * Set the value at a given offset.
+         *
+         * @param  string  $key
+         * @param  mixed   $value
+         * @return void
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetSet($key, $value)
+        {
+        }
+        /**
+         * Unset the value at a given offset.
+         *
+         * @param  string  $key
+         * @return void
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetUnset($key)
+        {
+        }
+        /**
+         * Dynamically access container services.
+         *
+         * @param  string  $key
+         * @return mixed
+         */
+        public function __get($key)
+        {
+        }
+        /**
+         * Dynamically set container services.
+         *
+         * @param  string  $key
+         * @param  mixed   $value
+         * @return void
+         */
+        public function __set($key, $value)
+        {
+        }
+    }
+    trait FoundationTrait
+    {
+        public function env()
+        {
+        }
+        public function hook($prefix, $hook)
+        {
+        }
+        public function parseRestHandler($handler)
+        {
+        }
+        public function parsePolicyHandler($handler)
+        {
+        }
+        public function addAction($action, $handler, $priority = 10, $numOfArgs = 1)
+        {
+        }
+        public function addCustomAction($action, $handler, $priority = 10, $numOfArgs = 1)
+        {
+        }
+        public function doAction()
+        {
+        }
+        public function doCustomAction()
+        {
+        }
+        public function addFilter($action, $handler, $priority = 10, $numOfArgs = 1)
+        {
+        }
+        public function addCustomFilter($action, $handler, $priority = 10, $numOfArgs = 1)
+        {
+        }
+        public function applyFilters()
+        {
+        }
+        public function applyCustomFilters()
+        {
+        }
+        public function addShortcode($action, $handler)
+        {
+        }
+        public function doShortcode($content, $ignore_html = false)
+        {
+        }
+        public function parseHookHandler($handler)
+        {
+        }
+        public function hasNamespace($handler)
+        {
+        }
+        public function getControllerNamespace($handler)
+        {
+        }
+        public function makeInstance($class)
+        {
+        }
+        private function addAjaxAction($tag, $handler, $priority, $scope)
+        {
+        }
+        public function addAdminAjaxAction($tag, $handler, $priority = 10)
+        {
+        }
+        public function addPublicAjaxAction($tag, $handler, $priority = 10)
+        {
+        }
+        public function url($path = '')
+        {
+        }
+        public function publicUrl($path = '')
+        {
+        }
+    }
+    trait AsyncRequestTrait
+    {
+        protected $asyncActions = [];
+        protected $launchableActions = [];
+        public function addAsyncAction($action, $handler)
+        {
+        }
+        public function doAsyncAction($action, $data = [])
+        {
+        }
+        protected function registerAsyncActions()
+        {
+        }
+        protected function hasAsyncActions()
+        {
+        }
+        protected function registerAdminPostAction($slug)
+        {
+        }
+        public function callback()
+        {
+        }
+        public function launchPostRequest()
+        {
+        }
+        protected function getData()
+        {
+        }
+        protected function getCookie()
+        {
+        }
+        protected function hasLaunchableActions()
+        {
+        }
+        protected function createNonce()
+        {
+        }
+        protected function verifyNonce()
+        {
+        }
+        protected function getMainAction()
+        {
+        }
+    }
+    trait CronTaskSchedulerTrait
+    {
+        public function addCronTask($hook, $recurrence, $args = [], $wp_error = false)
+        {
+        }
+        public function removeCronTask($hook)
+        {
+        }
+    }
+    class Application extends \FluentForm\Framework\Foundation\Container
+    {
+        use \FluentForm\Framework\Foundation\FoundationTrait;
+        use \FluentForm\Framework\Foundation\AsyncRequestTrait;
+        use \FluentForm\Framework\Foundation\CronTaskSchedulerTrait;
+        protected $file = null;
+        protected $baseUrl = null;
+        protected $basePath = null;
+        protected $handlerNamespace = null;
+        protected $controllerNamespace = null;
+        protected $permissionNamespace = null;
+        public function __construct($file = null)
+        {
+        }
+        protected function init($file)
+        {
+        }
+        protected function pluginFilePath($file)
+        {
+        }
+        protected function setAppLevelNamespace()
+        {
+        }
+        protected function getComposer($section = null)
+        {
+        }
+        protected function bootstrapApplication()
+        {
+        }
+        protected function bindAppInstance()
+        {
+        }
+        protected function bindPathsAndUrls()
+        {
+        }
+        protected function bindUrls()
+        {
+        }
+        protected function basePaths()
+        {
+        }
+        protected function loadConfigIfExists()
+        {
+        }
+        protected function registerTextdomain()
+        {
+        }
+        protected function textDomainPath()
+        {
+        }
+        protected function bindCoreComponents()
+        {
+        }
+        protected function requireCommonFiles($app)
+        {
+        }
+        protected function addRestApiInitAction($app)
+        {
+        }
+        protected function registerRestRoutes($router)
+        {
+        }
+        protected function requireRouteFile($router)
+        {
+        }
+    }
+    class BindingResolutionException extends \Exception
+    {
+    }
+    class ComponentBinder
+    {
+        protected $app = null;
+        protected $bindables = ['Request', 'Response', 'Validator', 'View', 'Events', 'DataBase', 'Router', 'Paginator'];
+        public function __construct($app)
+        {
+        }
+        public function bindComponents()
+        {
+        }
+        protected function registerResolvingEvent($app)
+        {
+        }
+        protected function bindRequest()
+        {
+        }
+        protected function bindResponse()
+        {
+        }
+        protected function bindValidator()
+        {
+        }
+        protected function bindView()
+        {
+        }
+        protected function bindEvents()
+        {
+        }
+        protected function bindDataBase()
+        {
+        }
+        protected function bindRouter()
+        {
+        }
+        protected function bindPaginator()
+        {
+        }
+        protected function extendBindings($app)
+        {
+        }
+        protected function loadGlobalFunctions($app)
+        {
+        }
+    }
+    class Config
+    {
+        protected $data = null;
+        public function __construct($data)
+        {
+        }
+        public function all()
+        {
+        }
+        public function get($key = null, $default = null)
+        {
+        }
+        public function set($key, $value)
+        {
+        }
+    }
+    interface ContextualBindingBuilderContract
+    {
+        /**
+         * Define the abstract target that depends on the context.
+         *
+         * @param  string  $abstract
+         * @return $this
+         */
+        public function needs($abstract);
+        /**
+         * Define the implementation for the contextual binding.
+         *
+         * @param  Closure|string  $implementation
+         * @return void
+         */
+        public function give($implementation);
+    }
+    class ContextualBindingBuilder implements \FluentForm\Framework\Foundation\ContextualBindingBuilderContract
+    {
+        /**
+         * The underlying container instance.
+         *
+         * @var FluentForm\Framework\Foundation\Container
+         */
+        protected $container;
+        /**
+         * The concrete instance.
+         *
+         * @var string
+         */
+        protected $concrete;
+        /**
+         * Create a new contextual binding builder.
+         *
+         * @param  FluentForm\Framework\Foundation\Container  $container
+         * @param  string  $concrete
+         * @return void
+         */
+        public function __construct(\FluentForm\Framework\Foundation\Container $container, $concrete)
+        {
+        }
+        /**
+         * Define the abstract target that depends on the context.
+         *
+         * @param  string  $abstract
+         * @return $this
+         */
+        public function needs($abstract)
+        {
+        }
+        /**
+         * Define the implementation for the contextual binding.
+         *
+         * @param  Closure|string  $implementation
+         * @return void
+         */
+        public function give($implementation)
+        {
+        }
+    }
+    class Dispatcher
+    {
+        /**
+         * The IoC container instance.
+         *
+         * @var \Illuminate\Container\Container
+         */
+        protected $container;
+        /**
+         * The registered event listeners.
+         *
+         * @var array
+         */
+        protected $listeners = array();
+        /**
+         * The wildcard listeners.
+         *
+         * @var array
+         */
+        protected $wildcards = array();
+        /**
+         * The sorted event listeners.
+         *
+         * @var array
+         */
+        protected $sorted = array();
+        /**
+         * The event firing stack.
+         *
+         * @var array
+         */
+        protected $firing = array();
+        /**
+         * Create a new event dispatcher instance.
+         *
+         * @param  \Illuminate\Container\Container  $container
+         * @return void
+         */
+        public function __construct(\FluentForm\Framework\Foundation\Container $container = null)
+        {
+        }
+        /**
+         * Register an event listener with the dispatcher.
+         *
+         * @param  string|array  $events
+         * @param  mixed   $listener
+         * @param  int     $priority
+         * @return void
+         */
+        public function listen($events, $listener, $priority = 0)
+        {
+        }
+        /**
+         * Setup a wildcard listener callback.
+         *
+         * @param  string  $event
+         * @param  mixed   $listener
+         * @return void
+         */
+        protected function setupWildcardListen($event, $listener)
+        {
+        }
+        /**
+         * Determine if a given event has listeners.
+         *
+         * @param  string  $eventName
+         * @return bool
+         */
+        public function hasListeners($eventName)
+        {
+        }
+        /**
+         * Register a queued event and payload.
+         *
+         * @param  string  $event
+         * @param  array   $payload
+         * @return void
+         */
+        public function queue($event, $payload = array())
+        {
+        }
+        /**
+         * Register an event subscriber with the dispatcher.
+         *
+         * @param  string  $subscriber
+         * @return void
+         */
+        public function subscribe($subscriber)
+        {
+        }
+        /**
+         * Resolve the subscriber instance.
+         *
+         * @param  mixed  $subscriber
+         * @return mixed
+         */
+        protected function resolveSubscriber($subscriber)
+        {
+        }
+        /**
+         * Fire an event until the first non-null response is returned.
+         *
+         * @param  string  $event
+         * @param  array   $payload
+         * @return mixed
+         */
+        public function until($event, $payload = array())
+        {
+        }
+        /**
+         * Flush a set of queued events.
+         *
+         * @param  string  $event
+         * @return void
+         */
+        public function flush($event)
+        {
+        }
+        /**
+         * Get the event that is currently firing.
+         *
+         * @return string
+         */
+        public function firing()
+        {
+        }
+        /**
+         * Fire an event and call the listeners.
+         *
+         * @param  string  $event
+         * @param  mixed   $payload
+         * @param  bool    $halt
+         * @return array|null
+         */
+        public function fire($event, $payload = array(), $halt = false)
+        {
+        }
+        /**
+         * Get all of the listeners for a given event name.
+         *
+         * @param  string  $eventName
+         * @return array
+         */
+        public function getListeners($eventName)
+        {
+        }
+        /**
+         * Get the wildcard listeners for the event.
+         *
+         * @param  string  $eventName
+         * @return array
+         */
+        protected function getWildcardListeners($eventName)
+        {
+        }
+        /**
+         * Sort the listeners for a given event by priority.
+         *
+         * @param  string  $eventName
+         * @return array
+         */
+        protected function sortListeners($eventName)
+        {
+        }
+        /**
+         * Register an event listener with the dispatcher.
+         *
+         * @param  mixed   $listener
+         * @return mixed
+         */
+        public function makeListener($listener)
+        {
+        }
+        /**
+         * Create a class based listener using the IoC container.
+         *
+         * @param  mixed    $listener
+         * @return \Closure
+         */
+        public function createClassListener($listener)
+        {
+        }
+        /**
+         * Remove a set of listeners from the dispatcher.
+         *
+         * @param  string  $event
+         * @return void
+         */
+        public function forget($event)
+        {
+        }
+        /**
+         * Forget all of the queued listeners.
+         *
+         * @return void
+         */
+        public function forgetQueued()
+        {
+        }
+    }
+    class ForbiddenException extends \Exception
+    {
+        // ...
+    }
+    class UnAuthorizedException extends \Exception
+    {
+        // ...
+    }
+}
+namespace FluentForm\Framework\Support {
+    class Arr
+    {
+        use \FluentForm\Framework\Support\MacroableTrait;
+        /**
+         * Determine whether the given value is array accessible.
+         *
+         * @param  mixed  $value
+         * @return bool
+         */
+        public static function accessible($value)
+        {
+        }
+        /**
+         * Add an element to an array using "dot" notation if it doesn't exist.
+         *
+         * @param  array   $array
+         * @param  string  $key
+         * @param  mixed   $value
+         * @return array
+         */
+        public static function add($array, $key, $value)
+        {
+        }
+        /**
+         * Build a new array using a callback.
+         *
+         * @param  array  $array
+         * @param  callable  $callback
+         * @return array
+         *
+         * @deprecated since version 5.2.
+         */
+        public static function build($array, callable $callback)
+        {
+        }
+        /**
+         * Collapse an array of arrays into a single array.
+         *
+         * @param  array  $array
+         * @return array
+         */
+        public static function collapse($array)
+        {
+        }
+        /**
+         * Divide an array into two arrays. One with keys and the other with values.
+         *
+         * @param  array  $array
+         * @return array
+         */
+        public static function divide($array)
+        {
+        }
+        /**
+         * Flatten a multi-dimensional associative array with dots.
+         *
+         * @param  array   $array
+         * @param  string  $prepend
+         * @return array
+         */
+        public static function dot($array, $prepend = '')
+        {
+        }
+        /**
+         * Get all of the given array except for a specified array of items.
+         *
+         * @param  array  $array
+         * @param  array|string  $keys
+         * @return array
+         */
+        public static function except($array, $keys)
+        {
+        }
+        /**
+         * Determine if the given key exists in the provided array.
+         *
+         * @param  \ArrayAccess|array  $array
+         * @param  string|int  $key
+         * @return bool
+         */
+        public static function exists($array, $key)
+        {
+        }
+        /**
+         * Return the first element in an array passing a given truth test.
+         *
+         * @param  array  $array
+         * @param  callable|null  $callback
+         * @param  mixed  $default
+         * @return mixed
+         */
+        public static function first($array, callable $callback = null, $default = null)
+        {
+        }
+        /**
+         * Return the last element in an array passing a given truth test.
+         *
+         * @param  array  $array
+         * @param  callable|null  $callback
+         * @param  mixed  $default
+         * @return mixed
+         */
+        public static function last($array, callable $callback = null, $default = null)
+        {
+        }
+        /**
+         * Flatten a multi-dimensional array into a single level.
+         *
+         * @param  array  $array
+         * @param  int  $depth
+         * @return array
+         */
+        public static function flatten($array, $depth = INF)
+        {
+        }
+        /**
+         * Remove one or many array items from a given array using "dot" notation.
+         *
+         * @param  array  $array
+         * @param  array|string  $keys
+         * @return void
+         */
+        public static function forget(&$array, $keys)
         {
         }
         /**
          * Get an item from an array using "dot" notation.
          *
-         * @param \ArrayAccess|array $array
-         * @param string             $key
-         * @param mixed              $default
-         *
+         * @param  \ArrayAccess|array  $array
+         * @param  string  $key
+         * @param  mixed   $default
          * @return mixed
          */
         public static function get($array, $key, $default = null)
+        {
+        }
+        /**
+         * Check if an item exists in an array using "dot" notation.
+         *
+         * @param  \ArrayAccess|array  $array
+         * @param  string  $key
+         * @return bool
+         */
+        public static function has($array, $key)
+        {
+        }
+        /**
+         * Determines if an array is associative.
+         *
+         * An array is "associative" if it doesn't have sequential numerical keys beginning with zero.
+         *
+         * @param  array  $array
+         * @return bool
+         */
+        public static function isAssoc(array $array)
+        {
+        }
+        /**
+         * Get a subset of the items from the given array.
+         *
+         * @param  array  $array
+         * @param  array|string  $keys
+         * @return array
+         */
+        public static function only($array, $keys)
+        {
+        }
+        /**
+         * Pluck an array of values from an array.
+         *
+         * @param  array  $array
+         * @param  string|array  $value
+         * @param  string|array|null  $key
+         * @return array
+         */
+        public static function pluck($array, $value, $key = null)
+        {
+        }
+        /**
+         * Explode the "value" and "key" arguments passed to "pluck".
+         *
+         * @param  string|array  $value
+         * @param  string|array|null  $key
+         * @return array
+         */
+        protected static function explodePluckParameters($value, $key)
+        {
+        }
+        /**
+         * Push an item onto the beginning of an array.
+         *
+         * @param  array  $array
+         * @param  mixed  $value
+         * @param  mixed  $key
+         * @return array
+         */
+        public static function prepend($array, $value, $key = null)
+        {
+        }
+        /**
+         * Get a value from the array, and remove it.
+         *
+         * @param  array   $array
+         * @param  string  $key
+         * @param  mixed   $default
+         * @return mixed
+         */
+        public static function pull(&$array, $key, $default = null)
         {
         }
         /**
@@ -14890,93 +27843,969 @@ namespace FluentValidator {
          *
          * If no key is given to the method, the entire array will be replaced.
          *
-         * @param array  $array
-         * @param string $key
-         * @param mixed  $value
-         *
+         * @param  array   $array
+         * @param  string  $key
+         * @param  mixed   $value
          * @return array
          */
         public static function set(&$array, $key, $value)
         {
         }
         /**
-         * Get a subset of the items from the given array.
+         * Sort the array using the given callback.
          *
-         * @param array        $array
-         * @param array|string $keys
-         *
+         * @param  array  $array
+         * @param  callable  $callback
          * @return array
          */
-        public static function only($array, $keys)
+        public static function sort($array, callable $callback)
         {
         }
         /**
-         * Get all of the given array except for a specified array of items.
+         * Recursively sort an array by keys and values.
          *
-         * @param array        $array
-         * @param array|string $keys
-         *
+         * @param  array  $array
          * @return array
          */
-        public static function except($array, $keys)
+        public static function sortRecursive($array)
         {
         }
         /**
-         * Remove one or many array items from a given array using "dot" notation.
+         * Filter the array using the given callback.
          *
-         * @param array        $array
-         * @param array|string $keys
-         *
-         * @return void
+         * @param  array  $array
+         * @param  callable  $callback
+         * @return array
          */
-        public static function forget(&$array, $keys)
+        public static function where($array, callable $callback)
         {
         }
-        /**
-         * Determine whether the given value is array accessible.
-         *
-         * @param mixed $value
-         *
-         * @return bool
-         */
-        public static function accessible($value)
-        {
-        }
-        /**
-         * Determine if the given key exists in the provided array.
-         *
-         * @param \ArrayAccess|array $array
-         * @param string|int         $key
-         *
-         * @return bool
-         */
-        public static function exists($array, $key)
-        {
-        }
+    }
+}
+namespace FluentForm\Framework\Helpers {
+    class ArrayHelper extends \FluentForm\Framework\Support\Arr
+    {
         /**
          * Return the default value of the given value.
          *
-         * @param mixed $value
-         *
+         * @param  mixed $value
          * @return mixed
          */
         public static function value($value)
         {
         }
-        /**
-         * Flatten a multi-dimensional associative array with dots.
-         *
-         * @param array  $array
-         * @param string $prepend
-         *
-         * @return array
-         */
-        public static function dot($array, $prepend = '')
+        public static function isTrue($array, $key)
         {
         }
     }
 }
-namespace FluentValidator\Contracts {
+namespace FluentForm\Framework\Http {
+    class Route
+    {
+        protected $app = null;
+        protected $restNamespace = null;
+        protected $uri = null;
+        protected $compiled = null;
+        protected $name = '';
+        protected $meta = [];
+        protected $handler = null;
+        protected $method = null;
+        protected $options = [];
+        protected $wheres = [];
+        protected $policyHandler = null;
+        protected $predefinedNamedRegx = ['int' => '[0-9]+', 'alpha' => '[a-zA-Z]+', 'alpha_num' => '[a-zA-Z0-9]+', 'alpha_num_dash' => '[a-zA-Z0-9-_]+'];
+        public function __construct($app, $restNamespace, $uri, $handler, $method, $name = '')
+        {
+        }
+        public static function create($app, $namespace, $uri, $handler, $method, $name)
+        {
+        }
+        public function name($name)
+        {
+        }
+        public function meta($meta)
+        {
+        }
+        public function getMeta($key = '')
+        {
+        }
+        public function where($identifier, $value = null)
+        {
+        }
+        public function int($identifiers)
+        {
+        }
+        public function alpha($identifiers)
+        {
+        }
+        public function alphaNum($identifiers)
+        {
+        }
+        public function alphaNumDash($identifiers)
+        {
+        }
+        public function withPolicy($handler)
+        {
+        }
+        public function register()
+        {
+        }
+        protected function setOptions()
+        {
+        }
+        protected function getValue($value)
+        {
+        }
+        protected function getPolicyHandler($policyHandler)
+        {
+        }
+        protected function compileRoute($uri)
+        {
+        }
+        public function callback(\WP_REST_Request $request)
+        {
+        }
+        public function permissionCallback(\WP_REST_Request $request)
+        {
+        }
+        protected function setRestRequest($request)
+        {
+        }
+        protected function sendWPError($response)
+        {
+        }
+    }
+    class Router
+    {
+        protected $app = null;
+        protected $name = [];
+        protected $prefix = [];
+        protected $routes = [];
+        protected $routeGroups = [];
+        protected $groupStack = [];
+        protected $policyHandler = null;
+        public function __construct($app)
+        {
+        }
+        public function prefix($prefix)
+        {
+        }
+        public function name($name)
+        {
+        }
+        public function group($attributes = [], \Closure $callback = null)
+        {
+        }
+        public function withPolicy($handler)
+        {
+        }
+        public function get($uri, $handler)
+        {
+        }
+        public function post($uri, $handler)
+        {
+        }
+        public function put($uri, $handler)
+        {
+        }
+        public function patch($uri, $handler)
+        {
+        }
+        public function delete($uri, $handler)
+        {
+        }
+        public function any($uri, $handler)
+        {
+        }
+        protected function newRoute($uri, $handler, $method)
+        {
+        }
+        protected function getRestNamespace()
+        {
+        }
+        protected function buildUriWithPrefix($uri)
+        {
+        }
+        public function registerRoutes()
+        {
+        }
+        public function getRoutes()
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Support {
+    interface Htmlable
+    {
+        /**
+         * Get content as a string of HTML.
+         *
+         * @return string
+         */
+        public function toHtml();
+    }
+}
+namespace FluentForm\Framework\Pagination {
+    abstract class AbstractPaginator implements \FluentForm\Framework\Support\Htmlable
+    {
+        /**
+         * All of the items being paginated.
+         *
+         * @var \FluentForm\Framework\Support\Collection
+         */
+        protected $items;
+        /**
+         * The number of items to be shown per page.
+         *
+         * @var int
+         */
+        protected $perPage;
+        /**
+         * The current page being "viewed".
+         *
+         * @var int
+         */
+        protected $currentPage;
+        /**
+         * The base path to assign to all URLs.
+         *
+         * @var string
+         */
+        protected $path = '/';
+        /**
+         * The query parameters to add to all URLs.
+         *
+         * @var array
+         */
+        protected $query = [];
+        /**
+         * The URL fragment to add to all URLs.
+         *
+         * @var string|null
+         */
+        protected $fragment = null;
+        /**
+         * The query string variable used to store the page.
+         *
+         * @var string
+         */
+        protected $pageName = 'page';
+        /**
+         * The current page resolver callback.
+         *
+         * @var \Closure
+         */
+        protected static $currentPathResolver;
+        /**
+         * The current page resolver callback.
+         *
+         * @var \Closure
+         */
+        protected static $currentPageResolver;
+        /**
+         * The default presenter resolver.
+         *
+         * @var \Closure
+         */
+        protected static $presenterResolver;
+        /**
+         * Determine if the given value is a valid page number.
+         *
+         * @param  int  $page
+         * @return bool
+         */
+        protected function isValidPageNumber($page)
+        {
+        }
+        /**
+         * Create a range of pagination URLs.
+         *
+         * @param  int  $start
+         * @param  int  $end
+         * @return string
+         */
+        public function getUrlRange($start, $end)
+        {
+        }
+        /**
+         * Get a URL for a given page number.
+         *
+         * @param  int  $page
+         * @return string
+         */
+        public function url($page)
+        {
+        }
+        /**
+         * Get the URL for the previous page.
+         *
+         * @return string|null
+         */
+        public function previousPageUrl()
+        {
+        }
+        /**
+         * Get / set the URL fragment to be appended to URLs.
+         *
+         * @param  string|null  $fragment
+         * @return $this|string|null
+         */
+        public function fragment($fragment = null)
+        {
+        }
+        /**
+         * Add a set of query string values to the paginator.
+         *
+         * @param  array|string  $key
+         * @param  string|null  $value
+         * @return $this
+         */
+        public function appends($key, $value = null)
+        {
+        }
+        /**
+         * Add an array of query string values.
+         *
+         * @param  array  $keys
+         * @return $this
+         */
+        protected function appendArray(array $keys)
+        {
+        }
+        /**
+         * Add a query string value to the paginator.
+         *
+         * @param  string  $key
+         * @param  string  $value
+         * @return $this
+         */
+        public function addQuery($key, $value)
+        {
+        }
+        /**
+         * Build the full fragment portion of a URL.
+         *
+         * @return string
+         */
+        protected function buildFragment()
+        {
+        }
+        /**
+         * Get the slice of items being paginated.
+         *
+         * @return array
+         */
+        public function items()
+        {
+        }
+        /**
+         * Get the number of the first item in the slice.
+         *
+         * @return int
+         */
+        public function firstItem()
+        {
+        }
+        /**
+         * Get the number of the last item in the slice.
+         *
+         * @return int
+         */
+        public function lastItem()
+        {
+        }
+        /**
+         * Get the number of items shown per page.
+         *
+         * @return int
+         */
+        public function perPage()
+        {
+        }
+        /**
+         * Get the current page.
+         *
+         * @return int
+         */
+        public function currentPage()
+        {
+        }
+        /**
+         * Determine if there are enough items to split into multiple pages.
+         *
+         * @return bool
+         */
+        public function hasPages()
+        {
+        }
+        /**
+         * Resolve the current request path or return the default value.
+         *
+         * @param  string  $default
+         * @return string
+         */
+        public static function resolveCurrentPath($default = '/')
+        {
+        }
+        /**
+         * Set the current request path resolver callback.
+         *
+         * @param  \Closure  $resolver
+         * @return void
+         */
+        public static function currentPathResolver(\Closure $resolver)
+        {
+        }
+        /**
+         * Resolve the current page or return the default value.
+         *
+         * @param  string  $pageName
+         * @param  int  $default
+         * @return int
+         */
+        public static function resolveCurrentPage($pageName = 'page', $default = 1)
+        {
+        }
+        /**
+         * Set the current page resolver callback.
+         *
+         * @param  \Closure  $resolver
+         * @return void
+         */
+        public static function currentPageResolver(\Closure $resolver)
+        {
+        }
+        /**
+         * Set the default Presenter resolver.
+         *
+         * @param  \Closure  $resolver
+         * @return void
+         */
+        public static function presenter(\Closure $resolver)
+        {
+        }
+        /**
+         * Get the query string variable used to store the page.
+         *
+         * @return string
+         */
+        public function getPageName()
+        {
+        }
+        /**
+         * Set the query string variable used to store the page.
+         *
+         * @param  string  $name
+         * @return $this
+         */
+        public function setPageName($name)
+        {
+        }
+        /**
+         * Set the base path to assign to all URLs.
+         *
+         * @param  string  $path
+         * @return $this
+         */
+        public function setPath($path)
+        {
+        }
+        /**
+         * Get an iterator for the items.
+         *
+         * @return \ArrayIterator
+         */
+        #[\ReturnTypeWillChange]
+        public function getIterator()
+        {
+        }
+        /**
+         * Determine if the list of items is empty or not.
+         *
+         * @return bool
+         */
+        public function isEmpty()
+        {
+        }
+        /**
+         * Get the number of items for the current page.
+         *
+         * @return int
+         */
+        #[\ReturnTypeWillChange]
+        public function count()
+        {
+        }
+        /**
+         * Get the paginator's underlying collection.
+         *
+         * @return \FluentForm\Framework\Support\Collection
+         */
+        public function getCollection()
+        {
+        }
+        /**
+         * Set the paginator's underlying collection.
+         *
+         * @param  \FluentForm\Framework\Support\Collection  $collection
+         * @return $this
+         */
+        public function setCollection(\FluentForm\Framework\Support\Collection $collection)
+        {
+        }
+        /**
+         * Determine if the given item exists.
+         *
+         * @param  mixed  $key
+         * @return bool
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetExists($key)
+        {
+        }
+        /**
+         * Get the item at the given offset.
+         *
+         * @param  mixed  $key
+         * @return mixed
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetGet($key)
+        {
+        }
+        /**
+         * Set the item at the given offset.
+         *
+         * @param  mixed  $key
+         * @param  mixed  $value
+         * @return void
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetSet($key, $value)
+        {
+        }
+        /**
+         * Unset the item at the given key.
+         *
+         * @param  mixed  $key
+         * @return void
+         */
+        #[\ReturnTypeWillChange]
+        public function offsetUnset($key)
+        {
+        }
+        /**
+         * Render the contents of the paginator to HTML.
+         *
+         * @return string
+         */
+        public function toHtml()
+        {
+        }
+        /**
+         * Make dynamic calls into the collection.
+         *
+         * @param  string  $method
+         * @param  array  $parameters
+         * @return mixed
+         */
+        public function __call($method, $parameters)
+        {
+        }
+        /**
+         * Render the contents of the paginator when casting to string.
+         *
+         * @return string
+         */
+        public function __toString()
+        {
+        }
+    }
+    interface PaginatorInterface
+    {
+        /**
+         * Get the URL for a given page.
+         *
+         * @param  int  $page
+         * @return string
+         */
+        public function url($page);
+        /**
+         * Add a set of query string values to the paginator.
+         *
+         * @param  array|string  $key
+         * @param  string|null  $value
+         * @return $this
+         */
+        public function appends($key, $value = null);
+        /**
+         * Get / set the URL fragment to be appended to URLs.
+         *
+         * @param  string|null  $fragment
+         * @return $this|string
+         */
+        public function fragment($fragment = null);
+        /**
+         * The the URL for the next page, or null.
+         *
+         * @return string|null
+         */
+        public function nextPageUrl();
+        /**
+         * Get the URL for the previous page, or null.
+         *
+         * @return string|null
+         */
+        public function previousPageUrl();
+        /**
+         * Get all of the items being paginated.
+         *
+         * @return array
+         */
+        public function items();
+        /**
+         * Get the "index" of the first item being paginated.
+         *
+         * @return int
+         */
+        public function firstItem();
+        /**
+         * Get the "index" of the last item being paginated.
+         *
+         * @return int
+         */
+        public function lastItem();
+        /**
+         * Determine how many items are being shown per page.
+         *
+         * @return int
+         */
+        public function perPage();
+        /**
+         * Determine the current page being paginated.
+         *
+         * @return int
+         */
+        public function currentPage();
+        /**
+         * Determine if there are enough items to split into multiple pages.
+         *
+         * @return bool
+         */
+        public function hasPages();
+        /**
+         * Determine if there is more items in the data store.
+         *
+         * @return bool
+         */
+        public function hasMorePages();
+        /**
+         * Determine if the list of items is empty or not.
+         *
+         * @return bool
+         */
+        public function isEmpty();
+        /**
+         * Render the paginator using a given Presenter.
+         *
+         * @param  \FluentForm\Framework\Pagination\Presenter|null  $presenter
+         * @return string
+         */
+        public function render(\FluentForm\Framework\Pagination\Presenter $presenter = null);
+    }
+    interface LengthAwarePaginatorInterface extends \FluentForm\Framework\Pagination\PaginatorInterface
+    {
+        /**
+         * Create a range of pagination URLs.
+         *
+         * @param  int  $start
+         * @param  int  $end
+         * @return array
+         */
+        public function getUrlRange($start, $end);
+        /**
+         * Determine the total number of items in the data store.
+         *
+         * @return int
+         */
+        public function total();
+        /**
+         * Get the page number of the last available page.
+         *
+         * @return int
+         */
+        public function lastPage();
+    }
+    class LengthAwarePaginator extends \FluentForm\Framework\Pagination\AbstractPaginator implements \FluentForm\Framework\Support\ArrayableInterface, \ArrayAccess, \Countable, \IteratorAggregate, \JsonSerializable, \FluentForm\Framework\Support\JsonableInterface, \FluentForm\Framework\Pagination\LengthAwarePaginatorInterface
+    {
+        /**
+         * The total number of items before slicing.
+         *
+         * @var int
+         */
+        protected $total;
+        /**
+         * The last available page.
+         *
+         * @var int
+         */
+        protected $lastPage;
+        /**
+         * Create a new paginator instance.
+         *
+         * @param  mixed  $items
+         * @param  int  $total
+         * @param  int  $perPage
+         * @param  int|null  $currentPage
+         * @param  array  $options (path, query, fragment, pageName)
+         * @return void
+         */
+        public function __construct($items, $total, $perPage, $currentPage = null, array $options = [])
+        {
+        }
+        /**
+         * Get the current page for the request.
+         *
+         * @param  int  $currentPage
+         * @param  int  $lastPage
+         * @return int
+         */
+        protected function setCurrentPage($currentPage, $lastPage)
+        {
+        }
+        /**
+         * Get the URL for the next page.
+         *
+         * @return string|null
+         */
+        public function nextPageUrl()
+        {
+        }
+        /**
+         * Determine if there are more items in the data source.
+         *
+         * @return bool
+         */
+        public function hasMorePages()
+        {
+        }
+        /**
+         * Get the total number of items being paginated.
+         *
+         * @return int
+         */
+        public function total()
+        {
+        }
+        /**
+         * Get the last page.
+         *
+         * @return int
+         */
+        public function lastPage()
+        {
+        }
+        /**
+         * Render the paginator using the given presenter.
+         *
+         * @param  \FluentForm\Framework\Pagination\Presenter|null  $presenter
+         * @return string
+         */
+        public function links(\FluentForm\Framework\Pagination\Presenter $presenter = null)
+        {
+        }
+        /**
+         * Render the paginator using the given presenter.
+         *
+         * @param  \FluentForm\Framework\Pagination\Presenter|null  $presenter
+         * @return string
+         */
+        public function render(\FluentForm\Framework\Pagination\Presenter $presenter = null)
+        {
+        }
+        /**
+         * Get the instance as an array.
+         *
+         * @return array
+         */
+        public function toArray()
+        {
+        }
+        /**
+         * Convert the object into something JSON serializable.
+         *
+         * @return array
+         */
+        #[\ReturnTypeWillChange]
+        public function jsonSerialize()
+        {
+        }
+        /**
+         * Convert the object to its JSON representation.
+         *
+         * @param  int  $options
+         * @return string
+         */
+        public function toJson($options = 0)
+        {
+        }
+    }
+    class Paginator extends \FluentForm\Framework\Pagination\AbstractPaginator implements \FluentForm\Framework\Support\ArrayableInterface, \ArrayAccess, \Countable, \IteratorAggregate, \JsonSerializable, \FluentForm\Framework\Support\JsonableInterface, \FluentForm\Framework\Pagination\PaginatorInterface
+    {
+        /**
+         * Determine if there are more items in the data source.
+         *
+         * @return bool
+         */
+        protected $hasMore;
+        /**
+         * Create a new paginator instance.
+         *
+         * @param  mixed  $items
+         * @param  int  $perPage
+         * @param  int|null  $currentPage
+         * @param  array  $options (path, query, fragment, pageName)
+         * @return void
+         */
+        public function __construct($items, $perPage, $currentPage = null, array $options = [])
+        {
+        }
+        /**
+         * Get the current page for the request.
+         *
+         * @param  int  $currentPage
+         * @return int
+         */
+        protected function setCurrentPage($currentPage)
+        {
+        }
+        /**
+         * Check for more pages. The last item will be sliced off.
+         *
+         * @return void
+         */
+        protected function checkForMorePages()
+        {
+        }
+        /**
+         * Get the URL for the next page.
+         *
+         * @return string|null
+         */
+        public function nextPageUrl()
+        {
+        }
+        /**
+         * Determine if there are more items in the data source.
+         *
+         * @return bool
+         */
+        public function hasMorePages()
+        {
+        }
+        /**
+         * Render the paginator using the given presenter.
+         *
+         * @param  \FluentForm\Framework\Pagination\Presenter|null  $presenter
+         * @return string
+         */
+        public function links(\FluentForm\Framework\Pagination\Presenter $presenter = null)
+        {
+        }
+        /**
+         * Render the paginator using the given presenter.
+         *
+         * @param  \FluentForm\Framework\Pagination\Presenter|null  $presenter
+         * @return string
+         */
+        public function render(\FluentForm\Framework\Pagination\Presenter $presenter = null)
+        {
+        }
+        /**
+         * Get the instance as an array.
+         *
+         * @return array
+         */
+        public function toArray()
+        {
+        }
+        /**
+         * Convert the object into something JSON serializable.
+         *
+         * @return array
+         */
+        #[\ReturnTypeWillChange]
+        public function jsonSerialize()
+        {
+        }
+        /**
+         * Convert the object to its JSON representation.
+         *
+         * @param  int  $options
+         * @return string
+         */
+        public function toJson($options = 0)
+        {
+        }
+    }
+    interface Presenter
+    {
+        /**
+         * Render the given paginator.
+         *
+         * @return string
+         */
+        public function render();
+        /**
+         * Determine if the underlying paginator being presented has pages to show.
+         *
+         * @return bool
+         */
+        public function hasPages();
+    }
+}
+namespace FluentForm\Framework\Request {
+    trait Cleaner
+    {
+        /**
+         * Clean up the request data.
+         *
+         * @param  array $data
+         * @return array
+         */
+        public function clean($data)
+        {
+        }
+        /**
+         * Clean the data in the given array.
+         *
+         * @param  array $data
+         * @return array
+         */
+        protected function cleanArray(array $data)
+        {
+        }
+        /**
+         * Clean the given value.
+         *
+         * @param  mixed $value
+         * @return mixed
+         */
+        protected function cleanValue($value)
+        {
+        }
+        /**
+         * Transform the given value.
+         *
+         * @param  mixed $value
+         * @return mixed
+         */
+        protected function transform($value)
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Validator\Contracts {
     interface File
     {
         /**
@@ -15005,3376 +28834,8 @@ namespace FluentValidator\Contracts {
         public function getClientOriginalExtension();
     }
 }
-namespace FluentValidator {
-    trait MessageBag
-    {
-        /**
-         * The default message bag.
-         *
-         * @var array
-         */
-        protected $bag = ['email' => 'The :attribute must be a valid email address.', 'max' => ['numeric' => 'The :attribute may not be greater than :max.', 'file' => 'The :attribute may not be greater than :max kilobytes.', 'string' => 'The :attribute may not be greater than :max characters.', 'array' => 'The :attribute may not have more than :max items.'], 'mimes' => 'The :attribute must be a file of type: :values.', 'mimetypes' => 'The :attribute must be a file of type: :values.', 'min' => ['numeric' => 'The :attribute must be at least :min.', 'file' => 'The :attribute must be at least :min kilobytes.', 'string' => 'The :attribute must be at least :min characters.', 'array' => 'The :attribute must have at least :min items.'], 'numeric' => 'The :attribute must be a number.', 'required' => 'The :attribute field is required.', 'required_if' => 'The :attribute field is required when :other is :value.', 'same' => 'The :attribute and :other must match.', 'size' => ['numeric' => 'The :attribute must be :size.', 'file' => 'The :attribute must be :size kilobytes.', 'string' => 'The :attribute must be :size characters.', 'array' => 'The :attribute must contain :size items.'], 'url' => 'The :attribute format is invalid.', 'digits' => 'The :attribute must be :digits characters.'];
-        /**
-         * Generate a validation error message.
-         *
-         * @param $attribute
-         * @param $rule
-         * @param $parameters
-         *
-         * @return mixed
-         */
-        protected function generate($attribute, $rule, $parameters)
-        {
-        }
-        /**
-         * Get the replacement text of the error message.
-         *
-         * @param $customMessagesKey
-         * @param $bagAccessor
-         *
-         * @return string
-         */
-        protected function getReplacementText($customMessagesKey, $bagAccessor)
-        {
-        }
-        /**
-         * Make bag accessor key.
-         *
-         * @param $attribute
-         * @param $rule
-         *
-         * @return string
-         */
-        protected function makeBagKey($attribute, $rule)
-        {
-        }
-        /**
-         * Replace all place-holders for the required rule.
-         *
-         * @param $attribute
-         * @param $parameters
-         *
-         * @return string
-         */
-        protected function replaceRequired($attribute, $parameters)
-        {
-        }
-        /**
-         * Replace all place-holders for the required if rule.
-         *
-         * @param $attribute
-         * @param $parameters
-         *
-         * @return string
-         */
-        protected function replaceRequiredIf($attribute, $parameters)
-        {
-        }
-        /**
-         * Replace all place-holders for the email rule.
-         *
-         * @param $attribute
-         * @param $parameters
-         *
-         * @return string
-         */
-        protected function replaceEmail($attribute, $parameters)
-        {
-        }
-        /**
-         * Replace all place-holders for the size rule.
-         *
-         * @param $attribute
-         * @param $parameters
-         *
-         * @return string
-         */
-        protected function replaceSize($attribute, $parameters)
-        {
-        }
-        /**
-         * Replace all place-holders for the min rule.
-         *
-         * @param $attribute
-         * @param $parameters
-         *
-         * @return string
-         */
-        protected function replaceMin($attribute, $parameters)
-        {
-        }
-        /**
-         * Replace all place-holders for the max rule.
-         *
-         * @param $attribute
-         * @param $parameters
-         *
-         * @return string
-         */
-        protected function replaceMax($attribute, $parameters)
-        {
-        }
-        /**
-         * Replace all place-holders for the min rule.
-         *
-         * @param $attribute
-         * @param $parameters
-         *
-         * @return string
-         */
-        protected function replaceSame($attribute, $parameters)
-        {
-        }
-        /**
-         * Replace all place-holders for the url rule.
-         *
-         * @param $attribute
-         * @param $parameters
-         *
-         * @return string
-         */
-        protected function replaceUrl($attribute, $parameters)
-        {
-        }
-        /**
-         * Replace all place-holders for the numeric rule.
-         *
-         * @param $attribute
-         * @param $parameters
-         *
-         * @return string
-         */
-        protected function replaceNumeric($attribute, $parameters)
-        {
-        }
-        /**
-         * Replace all place-holders for the mimes rule.
-         *
-         * @param $attribute
-         * @param $parameters
-         *
-         * @return string
-         */
-        protected function replaceMimes($attribute, $parameters)
-        {
-        }
-        /**
-         * Replace all place-holders for the digits rule.
-         *
-         * @param $attribute
-         * @param $parameters
-         *
-         * @return string
-         */
-        protected function replaceDigits($attribute, $parameters)
-        {
-        }
-    }
-    trait ValidatesAttributes
-    {
-        /**
-         * Require a certain number of parameters to be present.
-         *
-         * @param int    $count
-         * @param array  $parameters
-         * @param string $rule
-         *
-         * @return void
-         *
-         * @throws \InvalidArgumentException
-         */
-        protected function requireParameterCount($count, $parameters, $rule)
-        {
-        }
-        /**
-         * Get the size of an attribute.
-         *
-         * @param string $attribute
-         * @param mixed  $value
-         *
-         * @return mixed
-         */
-        protected function getSize($attribute, $value)
-        {
-        }
-        /**
-         * Deduce the value type of an attribute.
-         *
-         * @param $value
-         *
-         * @return string
-         */
-        protected function deduceType($value)
-        {
-        }
-        /**
-         * Convert the given values to boolean if they are string "true" / "false".
-         *
-         * @param array $values
-         *
-         * @return array
-         */
-        protected function convertValuesToBoolean($values)
-        {
-        }
-        /**
-         * Validate that a required attribute exists.
-         *
-         * @param string $attribute
-         * @param mixed  $value
-         *
-         * @return bool
-         */
-        protected function validateRequired($attribute, $value)
-        {
-        }
-        /**
-         * Validate that an attribute exists when another attribute has a given value.
-         *
-         * @param string $attribute
-         * @param mixed  $value
-         * @param mixed  $parameters
-         *
-         * @return bool
-         */
-        protected function validateRequiredIf($attribute, $value, $parameters)
-        {
-        }
-        /**
-         * Validate that an attribute is a valid e-mail address.
-         *
-         * @param string $attribute
-         * @param mixed  $value
-         *
-         * @return bool
-         */
-        protected function validateEmail($attribute, $value)
-        {
-        }
-        /**
-         * Validate the size of an attribute.
-         *
-         * @param string $attribute
-         * @param mixed  $value
-         * @param array  $parameters
-         *
-         * @return bool
-         */
-        protected function validateSize($attribute, $value, $parameters)
-        {
-        }
-        /**
-         * Validate the size of an attribute is greater than a minimum value.
-         *
-         * @param string $attribute
-         * @param mixed  $value
-         * @param array  $parameters
-         *
-         * @return bool
-         */
-        protected function validateMin($attribute, $value, $parameters)
-        {
-        }
-        /**
-         * Validate the size of an attribute is less than a maximum value.
-         *
-         * @param string $attribute
-         * @param mixed  $value
-         * @param array  $parameters
-         *
-         * @return bool
-         */
-        protected function validateMax($attribute, $value, $parameters)
-        {
-        }
-        /**
-         * Validate that two attributes match.
-         *
-         * @param string $attribute
-         * @param mixed  $value
-         * @param array  $parameters
-         *
-         * @return bool
-         */
-        protected function validateSame($attribute, $value, $parameters)
-        {
-        }
-        /**
-         * Validate that an attribute is a valid URL.
-         *
-         * @param string $attribute
-         * @param mixed  $value
-         *
-         * @return bool
-         */
-        protected function validateUrl($attribute, $value)
-        {
-        }
-        /**
-         * Validate that an attribute is numeric.
-         *
-         * @param string $attribute
-         * @param mixed  $value
-         *
-         * @return bool
-         */
-        protected function validateNumeric($attribute, $value)
-        {
-        }
-        /**
-         * Validate the guessed extension of a file upload is in a set of file extensions.
-         *
-         * @param string $attribute
-         * @param mixed  $value
-         * @param array  $parameters
-         *
-         * @return bool
-         */
-        protected function validateMimes($attribute, $value, $parameters)
-        {
-        }
-        /**
-         * Check that the given value is a valid file instance.
-         *
-         * @param mixed $value
-         *
-         * @return bool
-         */
-        public function isValidFileInstance($value)
-        {
-        }
-        /**
-         * Check if PHP uploads are explicitly allowed.
-         *
-         * @param mixed $value
-         * @param array $parameters
-         *
-         * @return bool
-         */
-        protected function shouldBlockPhpUpload($value, $parameters)
-        {
-        }
-        /**
-         * Validate that an attribute exists even if not filled.
-         *
-         * @param string $attribute
-         * @param mixed  $value
-         *
-         * @return bool
-         */
-        protected function validatePresent($attribute, $value)
-        {
-        }
-        /**
-         * Validate that an attribute has a given number of digits.
-         *
-         * @param string $attribute
-         * @param mixed  $value
-         * @param array  $parameters
-         *
-         * @return bool
-         */
-        public function validateDigits($attribute, $value, $parameters)
-        {
-        }
-    }
-    class ValidationData
-    {
-        public static function initializeAndGatherData($attribute, $masterData)
-        {
-        }
-        /**
-         * Gather a copy of the attribute data filled with any missing attributes.
-         *
-         * @param string $attribute
-         * @param array  $masterData
-         *
-         * @return array
-         */
-        protected static function initializeAttributeOnData($attribute, $masterData)
-        {
-        }
-        /**
-         * Get all of the exact attribute values for a given wildcard attribute.
-         *
-         * @param array  $masterData
-         * @param array  $data
-         * @param string $attribute
-         *
-         * @return array
-         */
-        protected static function extractValuesForWildcards($masterData, $data, $attribute)
-        {
-        }
-        /**
-         * Extract data based on the given dot-notated path.
-         *
-         * Used to extract a sub-section of the data for faster iteration.
-         *
-         * @param string $attribute
-         * @param array  $masterData
-         *
-         * @return array
-         */
-        public static function extractDataFromPath($attribute, $masterData)
-        {
-        }
-        /**
-         * Get the explicit part of the attribute name.
-         *
-         * E.g. 'foo.bar.*.baz' -> 'foo.bar'
-         *
-         * Allows us to not spin through all of the flattened data for some operations.
-         *
-         * @param string $attribute
-         *
-         * @return string
-         */
-        public static function getLeadingExplicitAttributePath($attribute)
-        {
-        }
-        /**
-         * Set an item on an array or object using dot notation.
-         *
-         * @param mixed        $target
-         * @param string|array $key
-         * @param mixed        $value
-         * @param bool         $overwrite
-         *
-         * @return mixed
-         */
-        public function data_set(&$target, $key, $value, $overwrite = true)
-        {
-        }
-    }
-    class ValidationRuleParser
-    {
-        /**
-         * The data being validated.
-         *
-         * @var array
-         */
-        public $data;
-        /**
-         * Create a new validation rule parser.
-         *
-         * @param array $data
-         *
-         * @return void
-         */
-        public function __construct(array $data)
-        {
-        }
-        /**
-         * Parse the human-friendly rules into a full rules array for the validator.
-         *
-         * @param $rules
-         *
-         * @return array
-         */
-        public function explode($rules)
-        {
-        }
-        /**
-         * Explode the rules into an array of explicit rules.
-         *
-         * @param array $rules
-         *
-         * @return array
-         */
-        protected function explodeRules($rules)
-        {
-        }
-        /**
-         * Explode the explicit rule into an array if necessary.
-         *
-         * @param mixed $rule
-         *
-         * @return array
-         */
-        protected function explodeExplicitRule($rule)
-        {
-        }
-        /**
-         * Define a set of rules that apply to each element in an array attribute.
-         *
-         * @param array        $results
-         * @param string       $attribute
-         * @param string|array $rules
-         *
-         * @return array
-         */
-        protected function explodeWildcardRules($results, $attribute, $rules)
-        {
-        }
-        /**
-         * Merge additional rules into a given attribute(s).
-         *
-         * @param array        $results
-         * @param string|array $attribute
-         * @param string|array $rules
-         *
-         * @return array
-         */
-        public function mergeRules($results, $attribute, $rules = [])
-        {
-        }
-        /**
-         * Merge additional rules into a given attribute.
-         *
-         * @param array        $results
-         * @param string       $attribute
-         * @param string|array $rules
-         *
-         * @return array
-         */
-        protected function mergeRulesForAttribute($results, $attribute, $rules)
-        {
-        }
-        /**
-         * Extract the rule name and parameters from a rule.
-         *
-         * @param $rule
-         *
-         * @return array
-         */
-        public static function parse($rule)
-        {
-        }
-    }
-    class Validator
-    {
-        use \FluentValidator\ValidatesAttributes;
-        use \FluentValidator\MessageBag;
-        /**
-         * The data under validation.
-         *
-         * @var array
-         */
-        protected $data;
-        /**
-         * The rules to be applied to the data.
-         *
-         * @var array
-         */
-        protected $rules = [];
-        /**
-         * All of the error messages.
-         *
-         * @var array
-         */
-        protected $messages;
-        /**
-         * All of the user provided messages.
-         *
-         * @var array
-         */
-        protected $customMessages = [];
-        /**
-         * The validation rules that imply the field is required.
-         *
-         * @var array
-         */
-        protected $implicitRules = ['Required', 'Filled', 'RequiredWith', 'RequiredWithAll', 'RequiredWithout', 'RequiredWithoutAll', 'RequiredIf', 'RequiredUnless', 'Accepted', 'Present'];
-        /**
-         * Create a new Validator instance.
-         *
-         * @param array $data
-         * @param array $rules
-         * @param array $messages
-         *
-         * @return void
-         */
-        public function __construct(array $data = [], array $rules = [], array $messages = [])
-        {
-        }
-        /**
-         * Create a new Validator instance.
-         *
-         * @param array $data
-         * @param array $rules
-         * @param array $messages
-         *
-         * @return \FluentValidator\Validator
-         */
-        public static function make(array $data = [], array $rules = [], array $messages = [])
-        {
-        }
-        /**
-         * Set the validation rules.
-         *
-         * @param array $rules
-         *
-         * @return $this
-         */
-        protected function setRules(array $rules = [])
-        {
-        }
-        /**
-         * Validate the data against the provided rules.
-         *
-         * @return $this
-         */
-        public function validate()
-        {
-        }
-        /**
-         * Validate each of the attribute of the data.
-         *
-         * @param $attribute
-         * @param $rule
-         *
-         * @return void
-         */
-        protected function validateAttribute($attribute, $rule)
-        {
-        }
-        /**
-         * Access the data by attribute name.
-         *
-         * @param $attribute
-         *
-         * @return mixed
-         */
-        protected function getValue($attribute)
-        {
-        }
-        /**
-         * Add error message upon validation failed of an attribute.
-         *
-         * @param $attribute
-         * @param $rule
-         * @param $parameters
-         *
-         * @return void
-         */
-        protected function addFailure($attribute, $rule, $parameters)
-        {
-        }
-        /**
-         * Get all of the validation error messages.
-         *
-         * @return array
-         */
-        public function errors()
-        {
-        }
-        /**
-         * Determine if the data passes the validation rules.
-         *
-         * @return bool
-         */
-        public function passes()
-        {
-        }
-        /**
-         * Determine if the data fails the validation rules.
-         *
-         * @return bool
-         */
-        public function fails()
-        {
-        }
-        /**
-         * Add conditions to a given field based on a Closure.
-         *
-         * @param string|array $attribute
-         * @param string|array $rules
-         * @param callable     $callback
-         *
-         * @return $this
-         */
-        public function sometimes($attribute, $rules, callable $callback)
-        {
-        }
-        /**
-         * Determine if the attribute has a required rule.
-         *
-         * @param $attribute
-         *
-         * @return bool
-         */
-        public function hasRequired($attribute)
-        {
-        }
-        /**
-         * Determine if the attribute should be validated.
-         *
-         * @param $method
-         * @param $attribute
-         * @param $value
-         *
-         * @return bool
-         */
-        public function shouldValidate($method, $rule, $attribute, $value)
-        {
-        }
-        /**
-         * Determines if this object has this method.
-         *
-         * @param $method
-         *
-         * @return bool
-         */
-        public function hasMethod($method)
-        {
-        }
-        /**
-         * Determine if a given rule implies the attribute is required.
-         *
-         * @param string $rule
-         *
-         * @return bool
-         */
-        protected function isImplicit($rule)
-        {
-        }
-        /**
-         * Determine if the field is present, or the rule implies required.
-         *
-         * @param string $rule
-         * @param string $attribute
-         * @param mixed  $value
-         *
-         * @return bool
-         */
-        protected function presentOrRuleIsImplicit($rule, $attribute, $value)
-        {
-        }
-    }
-}
-namespace Viocon {
-    /**
-     * This class gives the ability to access non-static methods statically
-     *
-     * Class AliasFacade
-     *
-     * @package Viocon
-     */
-    class AliasFacade
-    {
-        /**
-         * @var Container
-         */
-        protected static $vioconInstance;
-        /**
-         * @param $method
-         * @param $args
-         *
-         * @return mixed
-         */
-        public static function __callStatic($method, $args)
-        {
-        }
-        /**
-         * @param Container $instance
-         */
-        public static function setVioconInstance(\Viocon\Container $instance)
-        {
-        }
-        /**
-         * @return \Viocon\Container $instance
-         */
-        public static function getVioconInstance()
-        {
-        }
-    }
-    class Container
-    {
-        /**
-         * @var array
-         */
-        public $registry = array();
-        /**
-         * Singleton instances
-         *
-         * @var array
-         */
-        public $singletons = array();
-        public function __construct($alias = null)
-        {
-        }
-        /**
-         * Register an object with a key
-         *
-         * @param  string $key
-         * @param  mixed  $object
-         * @param  bool   $singleton
-         *
-         * @return void
-         */
-        public function set($key, $object, $singleton = false)
-        {
-        }
-        /**
-         * If we have a registry for the given key
-         *
-         * @param  string $key
-         *
-         * @return bool
-         */
-        public function has($key)
-        {
-        }
-        /**
-         * Register as singleton.
-         *
-         * @param  string $key
-         * @param  mixed  $object
-         *
-         * @return void
-         */
-        public function singleton($key, $object)
-        {
-        }
-        /**
-         * Register or replace an instance as a singleton.
-         * Useful for replacing with Mocked instance
-         *
-         * @param  string $key
-         * @param  mixed  $instance
-         *
-         * @return void
-         */
-        public function setInstance($key, $instance)
-        {
-        }
-        /**
-         * Build from the given key.
-         * If there is a class registered with Container::set() then it's instance
-         * will be returned. If a closure is registered, a closure's return value
-         * will be returned. If nothing is registered then it will try to build an
-         * instance with new $key(...).
-         *
-         * $parameters will be passed to closure or class constructor.
-         *
-         *
-         * @param  string $key
-         * @param  array  $parameters
-         *
-         * @return mixed
-         */
-        public function build($key, $parameters = array())
-        {
-        }
-        /**
-         * Instantiate an instance of the given type.
-         *
-         * @param  string $key
-         * @param  array  $parameters
-         *
-         * @throws \Exception
-         * @return mixed
-         */
-        protected function instanciate($key, $parameters = null)
-        {
-        }
-    }
-    class VioconException extends \Exception
-    {
-    }
-}
-namespace WpFluent {
-    /**
-     * This class gives the ability to access non-static methods statically
-     *
-     * Class AliasFacade
-     *
-     * @package WpFluent
-     */
-    class AliasFacade
-    {
-        /**
-         * @var QueryBuilderHandler
-         */
-        protected static $queryBuilderInstance;
-        /**
-         * @param $method
-         * @param $args
-         *
-         * @return mixed
-         */
-        public static function __callStatic($method, $args)
-        {
-        }
-        /**
-         * @param QueryBuilderHandler $queryBuilderInstance
-         */
-        public static function setQueryBuilderInstance($queryBuilderInstance)
-        {
-        }
-    }
-    class Connection
-    {
-        /**
-         * @var Container
-         */
-        protected $container;
-        /**
-         * @var string
-         */
-        protected $adapter;
-        /**
-         * @var array
-         */
-        protected $adapterConfig;
-        /**
-         * @var \wpdb $wpdb
-         */
-        protected $dbInstance;
-        /**
-         * @var \wpdb $wpdb
-         */
-        protected $wpdb;
-        /**
-         * @var Connection
-         */
-        protected static $storedConnection;
-        /**
-         * @var EventHandler
-         */
-        protected $eventHandler;
-        /**
-         * @param                $wpdb
-         * @param array          $adapterConfig
-         * @param null|string    $alias
-         * @param null|Container $container
-         */
-        public function __construct($wpdb, array $config = array(), $alias = null, \Viocon\Container $container = null)
-        {
-        }
-        /**
-         * Create an easily accessible query builder alias
-         *
-         * @param $alias
-         */
-        public function createAlias($alias)
-        {
-        }
-        /**
-         * Returns an instance of Query Builder
-         */
-        public function getQueryBuilder()
-        {
-        }
-        /**
-         * Create the connection adapter
-         */
-        protected function connect()
-        {
-        }
-        /**
-         * @param $db
-         *
-         * @return $this
-         */
-        public function setDbInstance($db)
-        {
-        }
-        /**
-         * @return \wpdb
-         */
-        public function getDbInstance()
-        {
-        }
-        /**
-         * @param $adapter
-         *
-         * @return $this
-         */
-        public function setAdapter($adapter = 'mysql')
-        {
-        }
-        /**
-         * @return string
-         */
-        public function getAdapter()
-        {
-        }
-        /**
-         * @param array $adapterConfig
-         *
-         * @return $this
-         */
-        public function setAdapterConfig(array $adapterConfig)
-        {
-        }
-        /**
-         * @return array
-         */
-        public function getAdapterConfig()
-        {
-        }
-        /**
-         * @return Container
-         */
-        public function getContainer()
-        {
-        }
-        /**
-         * @return EventHandler
-         */
-        public function getEventHandler()
-        {
-        }
-        /**
-         * @return Connection
-         */
-        public static function getStoredConnection()
-        {
-        }
-    }
-    class EventHandler
-    {
-        /**
-         * @var array
-         */
-        protected $events = array();
-        /**
-         * @var array
-         */
-        protected $firedEvents = array();
-        /**
-         * @return array
-         */
-        public function getEvents()
-        {
-        }
-        /**
-         * @param $event
-         * @param $table
-         *
-         * @return callable|null
-         */
-        public function getEvent($event, $table = ':any')
-        {
-        }
-        /**
-         * @param          $event
-         * @param string   $table
-         * @param callable $action
-         *
-         * @return void
-         */
-        public function registerEvent($event, $table, \Closure $action)
-        {
-        }
-        /**
-         * @param          $event
-         * @param string   $table
-         *
-         * @return void
-         */
-        public function removeEvent($event, $table = ':any')
-        {
-        }
-        /**
-         * @param QueryBuilderHandler $queryBuilder
-         * @param                     $event
-         * @return mixed
-         */
-        public function fireEvents($queryBuilder, $event)
-        {
-        }
-    }
-    class Exception extends \Exception
-    {
-    }
-}
-namespace WpFluent\QueryBuilder\Adapters {
-    abstract class BaseAdapter
-    {
-        /**
-         * @var \WpFluent\Connection
-         */
-        protected $connection;
-        /**
-         * @var \Viocon\Container
-         */
-        protected $container;
-        public function __construct(\WpFluent\Connection $connection)
-        {
-        }
-        /**
-         * Build select query string and bindings
-         *
-         * @param $statements
-         *
-         * @throws Exception
-         * @return array
-         */
-        public function select($statements)
-        {
-        }
-        /**
-         * Build just criteria part of the query
-         *
-         * @param      $statements
-         * @param bool $bindValues
-         *
-         * @return array
-         */
-        public function criteriaOnly($statements, $bindValues = true)
-        {
-        }
-        /**
-         * Build a generic insert/ignore/replace query
-         *
-         * @param       $statements
-         * @param array $data
-         *
-         * @return array
-         * @throws Exception
-         */
-        private function doInsert($statements, array $data, $type)
-        {
-        }
-        /**
-         * Build Insert query
-         *
-         * @param       $statements
-         * @param array $data
-         *
-         * @return array
-         * @throws Exception
-         */
-        public function insert($statements, array $data)
-        {
-        }
-        /**
-         * Build Insert Ignore query
-         *
-         * @param       $statements
-         * @param array $data
-         *
-         * @return array
-         * @throws Exception
-         */
-        public function insertIgnore($statements, array $data)
-        {
-        }
-        /**
-         * Build Insert Ignore query
-         *
-         * @param       $statements
-         * @param array $data
-         *
-         * @return array
-         * @throws Exception
-         */
-        public function replace($statements, array $data)
-        {
-        }
-        /**
-         * Build fields assignment part of SET ... or ON DUBLICATE KEY UPDATE ... statements
-         *
-         * @param array $data
-         *
-         * @return array
-         */
-        private function getUpdateStatement($data)
-        {
-        }
-        /**
-         * Build update query
-         *
-         * @param       $statements
-         * @param array $data
-         *
-         * @return array
-         * @throws Exception
-         */
-        public function update($statements, array $data)
-        {
-        }
-        /**
-         * Build delete query
-         *
-         * @param $statements
-         *
-         * @return array
-         * @throws Exception
-         */
-        public function delete($statements)
-        {
-        }
-        /**
-         * Array concatenating method, like implode.
-         * But it does wrap sanitizer and trims last glue
-         *
-         * @param array $pieces
-         * @param       $glue
-         * @param bool  $wrapSanitizer
-         *
-         * @return string
-         */
-        protected function arrayStr(array $pieces, $glue, $wrapSanitizer = true)
-        {
-        }
-        /**
-         * Join different part of queries with a space.
-         *
-         * @param array $pieces
-         *
-         * @return string
-         */
-        protected function concatenateQuery(array $pieces)
-        {
-        }
-        /**
-         * Build generic criteria string and bindings from statements, like "a = b and c = ?"
-         *
-         * @param      $statements
-         * @param bool $bindValues
-         *
-         * @return array
-         */
-        protected function buildCriteria($statements, $bindValues = true)
-        {
-        }
-        /**
-         * Wrap values with adapter's sanitizer like, '`'
-         *
-         * @param $value
-         *
-         * @return string
-         */
-        public function wrapSanitizer($value)
-        {
-        }
-        /**
-         * Build criteria string and binding with various types added, like WHERE and Having
-         *
-         * @param      $statements
-         * @param      $key
-         * @param      $type
-         * @param bool $bindValues
-         *
-         * @return array
-         */
-        protected function buildCriteriaWithType($statements, $key, $type, $bindValues = true)
-        {
-        }
-        /**
-         * Build join string
-         *
-         * @param $statements
-         *
-         * @return array|string
-         */
-        protected function buildJoin($statements)
-        {
-        }
-    }
-    class Mysql extends \WpFluent\QueryBuilder\Adapters\BaseAdapter
-    {
-        /**
-         * @var string
-         */
-        protected $sanitizer = '`';
-    }
-}
-namespace WpFluent\QueryBuilder {
-    class QueryBuilderHandler
-    {
-        /**
-         * @var \Viocon\Container
-         */
-        protected $container;
-        /**
-         * @var Connection
-         */
-        protected $connection;
-        /**
-         * @var array
-         */
-        protected $statements = array();
-        /**
-         * @var \wpdb
-         */
-        protected $db;
-        /**
-         * @var null|string
-         */
-        protected $dbStatement = null;
-        /**
-         * @var null|string
-         */
-        protected $tablePrefix = null;
-        /**
-         * @var \WpFluent\QueryBuilder\Adapters\BaseAdapter
-         */
-        protected $adapterInstance;
-        /**
-         * The PDO fetch parameters to use
-         *
-         * @var array
-         */
-        protected $fetchParameters = array(\PDO::FETCH_OBJ);
-        /**
-         * @param null|\WpFluent\Connection $connection
-         *
-         * @throws \WpFluent\Exception
-         */
-        public function __construct(\WpFluent\Connection $connection = null)
-        {
-        }
-        /**
-         * Set the fetch mode
-         *
-         * @param $mode
-         * @return $this
-         */
-        public function setFetchMode($mode)
-        {
-        }
-        /**
-         * Fetch query results as object of specified type
-         *
-         * @param $className
-         * @param array $constructorArgs
-         * @return QueryBuilderHandler
-         */
-        public function asObject($className, $constructorArgs = array())
-        {
-        }
-        /**
-         * @param null|\WpFluent\Connection $connection
-         *
-         * @return static
-         */
-        public function newQuery(\WpFluent\Connection $connection = null)
-        {
-        }
-        /**
-         * @param       $sql
-         * @param array $bindings
-         *
-         * @return $this
-         */
-        public function query($sql, $bindings = array())
-        {
-        }
-        /**
-         * @param $rawSql
-         *
-         * @return float execution time
-         */
-        public function statement($rawSql)
-        {
-        }
-        /**
-         * Get all rows
-         *
-         * @return array|object|null
-         * @throws \WpFluent\Exception
-         */
-        public function get()
-        {
-        }
-        /**
-         * Get first row
-         *
-         * @return \stdClass|null
-         */
-        public function first()
-        {
-        }
-        /**
-         * @param        $value
-         * @param string $fieldName
-         *
-         * @return null|\stdClass
-         */
-        public function findAll($fieldName, $value)
-        {
-        }
-        /**
-         * @param        $value
-         * @param string $fieldName
-         *
-         * @return null|\stdClass
-         */
-        public function find($value, $fieldName = 'id')
-        {
-        }
-        /**
-         * Get count of rows
-         *
-         * @return int
-         */
-        public function count()
-        {
-        }
-        /**
-         * @param $type
-         *
-         * @return int
-         */
-        protected function aggregate($type)
-        {
-        }
-        /**
-         * @param string $type
-         * @param array  $dataToBePassed
-         *
-         * @return mixed
-         * @throws Exception
-         */
-        public function getQuery($type = 'select', $dataToBePassed = array())
-        {
-        }
-        /**
-         * @param QueryBuilderHandler $queryBuilder
-         * @param null                $alias
-         *
-         * @return Raw
-         */
-        public function subQuery(\WpFluent\QueryBuilder\QueryBuilderHandler $queryBuilder, $alias = null)
-        {
-        }
-        /**
-         * @param $data
-         *
-         * @return array|string
-         * @throws \WpFluent\Exception
-         */
-        private function doInsert($data, $type)
-        {
-        }
-        /**
-         * @param $data
-         *
-         * @return array|string
-         */
-        public function insert($data)
-        {
-        }
-        /**
-         * @param $data
-         *
-         * @return array|string
-         */
-        public function insertIgnore($data)
-        {
-        }
-        /**
-         * @param $data
-         *
-         * @return array|string
-         */
-        public function replace($data)
-        {
-        }
-        /**
-         * @param $data
-         *
-         * @throws \WpFluent\Exception
-         */
-        public function update($data)
-        {
-        }
-        /**
-         * @param $data
-         *
-         * @return array|string
-         */
-        public function updateOrInsert($data)
-        {
-        }
-        /**
-         * @param $data
-         *
-         * @return $this
-         */
-        public function onDuplicateKeyUpdate($data)
-        {
-        }
-        /**
-         * @return mixed
-         * @throws \WpFluent\Exception
-         */
-        public function delete()
-        {
-        }
-        /**
-         * @param string|array $tables Single table or multiple tables
-         *                             as an array or as multiple parameters
-         *
-         * @return static
-         */
-        public function table($tables)
-        {
-        }
-        /**
-         * @param $tables
-         *
-         * @return $this
-         */
-        public function from($tables)
-        {
-        }
-        /**
-         * @param $fields
-         *
-         * @return $this
-         */
-        public function select($fields)
-        {
-        }
-        /**
-         * @param $fields
-         *
-         * @return $this
-         */
-        public function selectDistinct($fields)
-        {
-        }
-        /**
-         * @param $field
-         *
-         * @return $this
-         */
-        public function groupBy($field)
-        {
-        }
-        /**
-         * @param        $fields
-         * @param string $defaultDirection
-         *
-         * @return $this
-         */
-        public function orderBy($fields, $defaultDirection = 'ASC')
-        {
-        }
-        /**
-         * @param $limit
-         *
-         * @return $this
-         */
-        public function limit($limit)
-        {
-        }
-        /**
-         * @param $offset
-         *
-         * @return $this
-         */
-        public function offset($offset)
-        {
-        }
-        /**
-         * @param        $key
-         * @param        $operator
-         * @param        $value
-         * @param string $joiner
-         *
-         * @return $this
-         */
-        public function having($key, $operator = null, $value = null, $joiner = 'AND')
-        {
-        }
-        /**
-         * @param        $key
-         * @param        $operator
-         * @param        $value
-         *
-         * @return $this
-         */
-        public function orHaving($key, $operator, $value)
-        {
-        }
-        /**
-         * @param $key
-         * @param $operator
-         * @param $value
-         *
-         * @return $this
-         */
-        public function where($key, $operator = null, $value = null)
-        {
-        }
-        /**
-         * @param $key
-         * @param $operator
-         * @param $value
-         *
-         * @return $this
-         */
-        public function orWhere($key, $operator = null, $value = null)
-        {
-        }
-        /**
-         * @param $key
-         * @param $operator
-         * @param $value
-         *
-         * @return $this
-         */
-        public function whereNot($key, $operator = null, $value = null)
-        {
-        }
-        /**
-         * @param $key
-         * @param $operator
-         * @param $value
-         *
-         * @return $this
-         */
-        public function orWhereNot($key, $operator = null, $value = null)
-        {
-        }
-        /**
-         * @param       $key
-         * @param array $values
-         *
-         * @return $this
-         */
-        public function whereIn($key, $values)
-        {
-        }
-        /**
-         * @param       $key
-         * @param array $values
-         *
-         * @return $this
-         */
-        public function whereNotIn($key, $values)
-        {
-        }
-        /**
-         * @param       $key
-         * @param array $values
-         *
-         * @return $this
-         */
-        public function orWhereIn($key, $values)
-        {
-        }
-        /**
-         * @param       $key
-         * @param array $values
-         *
-         * @return $this
-         */
-        public function orWhereNotIn($key, $values)
-        {
-        }
-        /**
-         * @param $key
-         * @param $valueFrom
-         * @param $valueTo
-         *
-         * @return $this
-         */
-        public function whereBetween($key, $valueFrom, $valueTo)
-        {
-        }
-        /**
-         * @param $key
-         * @param $valueFrom
-         * @param $valueTo
-         *
-         * @return $this
-         */
-        public function orWhereBetween($key, $valueFrom, $valueTo)
-        {
-        }
-        /**
-         * @param $key
-         * @return QueryBuilderHandler
-         */
-        public function whereNull($key)
-        {
-        }
-        /**
-         * @param $key
-         * @return QueryBuilderHandler
-         */
-        public function whereNotNull($key)
-        {
-        }
-        /**
-         * @param $key
-         * @return QueryBuilderHandler
-         */
-        public function orWhereNull($key)
-        {
-        }
-        /**
-         * @param $key
-         * @return QueryBuilderHandler
-         */
-        public function orWhereNotNull($key)
-        {
-        }
-        protected function whereNullHandler($key, $prefix = '', $operator = '')
-        {
-        }
-        /**
-         * @param        $table
-         * @param        $key
-         * @param        $operator
-         * @param        $value
-         * @param string $type
-         *
-         * @return $this
-         */
-        public function join($table, $key, $operator = null, $value = null, $type = 'inner')
-        {
-        }
-        /**
-         * Runs a transaction
-         *
-         * @param $callback
-         *
-         * @return $this
-         */
-        public function transaction(\Closure $callback)
-        {
-        }
-        /**
-         * @param      $table
-         * @param      $key
-         * @param null $operator
-         * @param null $value
-         *
-         * @return $this
-         */
-        public function leftJoin($table, $key, $operator = null, $value = null)
-        {
-        }
-        /**
-         * @param      $table
-         * @param      $key
-         * @param null $operator
-         * @param null $value
-         *
-         * @return $this
-         */
-        public function rightJoin($table, $key, $operator = null, $value = null)
-        {
-        }
-        /**
-         * @param      $table
-         * @param      $key
-         * @param null $operator
-         * @param null $value
-         *
-         * @return $this
-         */
-        public function innerJoin($table, $key, $operator = null, $value = null)
-        {
-        }
-        /**
-         * Add a raw query
-         *
-         * @param $value
-         * @param $bindings
-         *
-         * @return mixed
-         */
-        public function raw($value, $bindings = array())
-        {
-        }
-        /**
-         * Return db instance
-         *
-         * @return \wpdb
-         */
-        public function db()
-        {
-        }
-        /**
-         * @param Connection $connection
-         *
-         * @return $this
-         */
-        public function setConnection(\WpFluent\Connection $connection)
-        {
-        }
-        /**
-         * @return Connection
-         */
-        public function getConnection()
-        {
-        }
-        /**
-         * @param        $key
-         * @param        $operator
-         * @param        $value
-         * @param string $joiner
-         *
-         * @return $this
-         */
-        protected function whereHandler($key, $operator = null, $value = null, $joiner = 'AND')
-        {
-        }
-        /**
-         * Add table prefix (if given) on given string.
-         *
-         * @param      $values
-         * @param bool $tableFieldMix If we have mixes of field and table names with a "."
-         *
-         * @return array|mixed
-         */
-        public function addTablePrefix($values, $tableFieldMix = true)
-        {
-        }
-        /**
-         * @param $key
-         * @param $value
-         */
-        protected function addStatement($key, $value)
-        {
-        }
-        /**
-         * @param $event
-         * @param $table
-         *
-         * @return callable|null
-         */
-        public function getEvent($event, $table = ':any')
-        {
-        }
-        /**
-         * @param          $event
-         * @param string   $table
-         * @param callable $action
-         *
-         * @return void
-         */
-        public function registerEvent($event, $table, \Closure $action)
-        {
-        }
-        /**
-         * @param          $event
-         * @param string   $table
-         *
-         * @return void
-         */
-        public function removeEvent($event, $table = ':any')
-        {
-        }
-        /**
-         * @param      $event
-         * @return mixed
-         */
-        public function fireEvents($event)
-        {
-        }
-        /**
-         * @return array
-         */
-        public function getStatements()
-        {
-        }
-        /**
-         * Get the paginated rows.
-         *
-         * @param null $perPage
-         * @param array $columns
-         *
-         * @return array
-         */
-        public function paginate($perPage = null, $columns = array('*'))
-        {
-        }
-        /**
-         * Apply the callback's query changes if the given "value" is true.
-         *
-         * @param mixed $value
-         * @param callable $callback
-         * @param callable $default
-         * @return mixed
-         */
-        public function when($value, $callback, $default = null)
-        {
-        }
-    }
-    class JoinBuilder extends \WpFluent\QueryBuilder\QueryBuilderHandler
-    {
-        /**
-         * @param $key
-         * @param $operator
-         * @param $value
-         *
-         * @return $this
-         */
-        public function on($key, $operator, $value)
-        {
-        }
-        /**
-         * @param $key
-         * @param $operator
-         * @param $value
-         *
-         * @return $this
-         */
-        public function orOn($key, $operator, $value)
-        {
-        }
-        /**
-         * @param        $key
-         * @param null   $operator
-         * @param null   $value
-         * @param string $joiner
-         *
-         * @return $this
-         */
-        protected function joinHandler($key, $operator = null, $value = null, $joiner = 'AND')
-        {
-        }
-    }
-    class NestedCriteria extends \WpFluent\QueryBuilder\QueryBuilderHandler
-    {
-        /**
-         * @param        $key
-         * @param null   $operator
-         * @param null   $value
-         * @param string $joiner
-         *
-         * @return $this
-         */
-        protected function whereHandler($key, $operator = null, $value = null, $joiner = 'AND')
-        {
-        }
-    }
-    class QueryObject
-    {
-        /**
-         * @var string
-         */
-        protected $sql;
-        /**
-         * @var \wpdb
-         */
-        protected $db;
-        /**
-         * @var array
-         */
-        protected $bindings = array();
-        public function __construct($sql, array $bindings)
-        {
-        }
-        /**
-         * @return string
-         */
-        public function getSql()
-        {
-        }
-        /**
-         * @return array
-         */
-        public function getBindings()
-        {
-        }
-        /**
-         * Get the raw/bound sql
-         *
-         * @return string
-         */
-        public function getRawSql()
-        {
-        }
-        /**
-         * Replaces any parameter placeholders in a query with the value of that
-         * parameter. Useful for debugging. Assumes anonymous parameters from
-         * $params are are in the same order as specified in $query
-         *
-         * Reference: http://stackoverflow.com/a/1376838/656489
-         *
-         * @param string $query  The sql query with parameter placeholders
-         * @param array  $params The array of substitution parameters
-         *
-         * @return string The interpolated query
-         */
-        protected function interpolateQuery($query, $params)
-        {
-        }
-        private function getPlaceHolder($value)
-        {
-        }
-    }
-    class Raw
-    {
-        /**
-         * @var string
-         */
-        protected $value;
-        /**
-         * @var array
-         */
-        protected $bindings;
-        public function __construct($value, $bindings = array())
-        {
-        }
-        public function getBindings()
-        {
-        }
-        /**
-         * @return string
-         */
-        public function __toString()
-        {
-        }
-    }
-    class Transaction extends \WpFluent\QueryBuilder\QueryBuilderHandler
-    {
-        /**
-         * Commit the database changes
-         */
-        public function commit()
-        {
-        }
-        /**
-         * Rollback the database changes
-         */
-        public function rollback()
-        {
-        }
-    }
-    class TransactionHaltException extends \Exception
-    {
-    }
-}
-namespace FluentForm\Framework\Config {
-    class Config implements \ArrayAccess
-    {
-        /**
-         * All array items from all files from /config directory
-         * @var array
-         */
-        protected $repository = array();
-        /**
-         * Initiate the instance
-         * @param array $repository
-         */
-        public function __construct($repository = array())
-        {
-        }
-        /**
-         * Determine if the given configuration value exists.
-         *
-         * @param  string  $key
-         * @return bool
-         */
-        public function has($key)
-        {
-        }
-        /**
-         * Get all of the configuration items for the application.
-         *
-         * @return array
-         */
-        public function all()
-        {
-        }
-        /**
-         * Get the specified configuration value.
-         *
-         * @param  array|string  $key
-         * @param  mixed   $default
-         * @return mixed
-         */
-        public function get($key = null, $default = null)
-        {
-        }
-        /**
-         * Set a given configuration value.
-         *
-         * @param  array|string  $key
-         * @param  mixed   $value
-         * @return void
-         */
-        public function set($key, $value)
-        {
-        }
-        /**
-         * Dynamic Getter
-         * @param  string $key
-         * @return mixed
-         */
-        public function __get($key = null)
-        {
-        }
-        /**
-         * Dynamic Setter
-         * @param  string $key
-         * @param  mixed $key
-         * @return void
-         */
-        public function __set($key, $value)
-        {
-        }
-        /**
-         * Determine if the given item exists.
-         *
-         * @param  string  $key
-         * @return bool
-         */
-        #[\ReturnTypeWillChange]
-        public function offsetExists($key)
-        {
-        }
-        /**
-         * Get an item.
-         *
-         * @param  string  $key
-         * @return mixed
-         */
-        #[\ReturnTypeWillChange]
-        public function offsetGet($key)
-        {
-        }
-        /**
-         * Set an item.
-         *
-         * @param  string  $key
-         * @param  mixed  $value
-         * @return void
-         */
-        #[\ReturnTypeWillChange]
-        public function offsetSet($key, $value)
-        {
-        }
-        /**
-         * Unset an item.
-         *
-         * @param  string  $key
-         * @return void
-         */
-        #[\ReturnTypeWillChange]
-        public function offsetUnset($key)
-        {
-        }
-    }
-    class ConfigProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        /**
-         * The provider booting method to boot this provider
-         * @return void
-         */
-        public function booting()
-        {
-        }
-        /**
-         * The provider booted method to be called after booting
-         * @return void
-         */
-        public function booted()
-        {
-        }
-        /**
-         * Loads all configuration files from config directory
-         * @return void
-         */
-        public function loadConfig()
-        {
-        }
-        /**
-         * Get nested directory names joined by a "."
-         * @param  string $file [A config file]
-         * @param  string $configPath
-         * @return string
-         */
-        protected function getDirectory($file, $configPath)
-        {
-        }
-    }
-}
-namespace FluentForm\Framework\Exception {
-    class ExceptionHandler
-    {
-        const APPEND_TO_LOG_FILE = 3;
-        /**
-         * framework\App\Application
-         * @var Object
-         */
-        protected $app = null;
-        public function __construct($app)
-        {
-        }
-        public function registerHandlers()
-        {
-        }
-        public function handleError($severity, $message, $file = '', $line = 0)
-        {
-        }
-        public function handleException($e)
-        {
-        }
-        public function handleShutdown()
-        {
-        }
-        public function report($e)
-        {
-        }
-        public function render($e)
-        {
-        }
-        protected function isFatal($type)
-        {
-        }
-    }
-    class UnResolveableEntityException extends \Exception
-    {
-        // ...
-    }
-}
-namespace FluentForm\Framework\Foundation {
-    abstract class AppFacade
-    {
-        /**
-         * $instance Application
-         * @var \FluentForm\Framework\Foundation\Application
-         */
-        static $instance = null;
-        /**
-         * Sets the app instance from Application
-         * @param \FluentForm\Framework\Foundation\Application $instance
-         */
-        public static function setApplication($instance)
-        {
-        }
-        /**
-         * Get the app instance stored earlier during the bootstrap
-         * @param \FluentForm\Framework\Foundation\Application $instance
-         */
-        public static function getApplication()
-        {
-        }
-        /**
-         * Resolve the aliased class dynamically
-         * @param  string $method
-         * @param  string $params
-         * @return mixed
-         */
-        public static function __callStatic($method, $params)
-        {
-        }
-    }
-    class AppProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        /**
-         * The provider booting method to boot this provider
-         * @return void
-         */
-        public function booting()
-        {
-        }
-        /**
-         * The provider booted method to be called after booting
-         * @return void
-         */
-        public function booted()
-        {
-        }
-    }
-    class Container implements \ArrayAccess
-    {
-        /**
-         * $container The service container
-         * @var array
-         */
-        protected static $container = array('facades' => array(), 'aliases' => array(), 'resolved' => array(), 'bindings' => array(), 'singletons' => array());
-        /**
-         * Bind an instance into service container
-         * @param string $key identifier
-         * @param mixed $concrete
-         * @param string $facade [optional facade]
-         * @param string $alias [optional alias]
-         * @return void
-         */
-        public function bind($key, $concrete = null, $facade = null, $alias = null, $shared = false)
-        {
-        }
-        /**
-         * Bind a singleton instance into service container
-         * @param string $key identifier
-         * @param mixed $concrete
-         * @param string $facade [optional facade]
-         * @param string $alias [optional alias]
-         * @return void
-         */
-        public function bindSingleton($key, $concrete = null, $facade = null, $alias = null)
-        {
-        }
-        /**
-         * Bind a singleton instance into service container
-         * @param string $key identifier
-         * @param mixed $concrete
-         * @param string $facade [optional facade]
-         * @param string $alias [optional alias]
-         * @return void
-         */
-        public function bindInstance($key, $concrete, $facade = null, $alias = null)
-        {
-        }
-        /**
-         * Register a facade for a registered instance
-         * @param string $key
-         * @param string $facade
-         * @return string
-         */
-        public function facade($key, $facade)
-        {
-        }
-        /**
-         * Register an alias for a registered instance
-         * @param string $key
-         * @param string $alias
-         * @return string
-         */
-        public function alias($key, $aliases)
-        {
-        }
-        /**
-         * Resolve an instance from container
-         * @param string $key
-         * @return mixed
-         * @throws \FluentForm\Framework\Exception\UnResolveableEntityException
-         */
-        public function make($key = null, array $params = [])
-        {
-        }
-        /**
-         * Resolve an item from the container
-         * @param mixed $value
-         * @return mixed
-         */
-        protected function resolve($value, $params = [])
-        {
-        }
-        /**
-         * Build a concrete class with all dependencies
-         * @param string $value FQN class name
-         * @return mixed resolved instance
-         */
-        protected function build($value, $params = [])
-        {
-        }
-        /**
-         * Resolve all dependencies of a single class
-         * @param array $dependencies Constructor Parameters
-         * @return array An array of all the resolved dependencies of one class
-         */
-        protected function resolveDependencies(array $dependencies)
-        {
-        }
-        /**
-         * Resolves a single class instance
-         * @param ReflectionParameter $parameter
-         * @return mixed
-         * @throws Exception
-         */
-        protected function resolveClass(\ReflectionParameter $parameter)
-        {
-        }
-        /**
-         * Get the parameter type for the given parameter.
-         *
-         * @return object ReflectionClass|ReflectionNamedType
-         */
-        protected function getParameterType($parameter)
-        {
-        }
-        /**
-         * Get the alias for a key if available.
-         * @param string $key
-         * @return string
-         */
-        public function getAlias($key)
-        {
-        }
-        /**
-         * Check if a given class/interface exists
-         * @param string $key
-         * @return bool
-         */
-        protected function classExists($key)
-        {
-        }
-        /**
-         * Check if an item exists at a given offset
-         * @param string $offset
-         * @return bool
-         */
-        public function bound($offset)
-        {
-        }
-        /**
-         * Check if an item exists at a given offset
-         * @param string $offset
-         * @return bool
-         */
-        public function has($offset)
-        {
-        }
-        /**
-         * Check if an item exists at a given offset
-         * @param string $offset
-         * @return bool
-         */
-        #[\ReturnTypeWillChange]
-        public function offsetExists($offset)
-        {
-        }
-        /**
-         * Get the value from given offset
-         * @param string $offset
-         * @param mixed $value
-         * @return void
-         */
-        #[\ReturnTypeWillChange]
-        public function offsetGet($offset)
-        {
-        }
-        /**
-         * Set the value at a given offset
-         * @param string $offset
-         * @param mixed $value
-         * @return void
-         */
-        #[\ReturnTypeWillChange]
-        public function offsetSet($offset, $value)
-        {
-        }
-        /**
-         * Unset the value at a given offset
-         * @param string $offset
-         * @return void
-         */
-        #[\ReturnTypeWillChange]
-        public function offsetUnset($offset)
-        {
-        }
-        /**
-         * Determine whether a shared entity is resolved.
-         * @param string $key
-         * @return bool
-         */
-        public function resolved($key)
-        {
-        }
-        /**
-         * Get one or all resolved instance(s)
-         * @param string $key
-         * @return mixed
-         */
-        public function getResolved($key = null)
-        {
-        }
-        /**
-         * Clear one or all resolved instance(s)
-         * @param string $key
-         * @return void
-         */
-        public function clearResolved($key = null)
-        {
-        }
-        /**
-         * Get one or all binding(s)
-         * @param string $key
-         * @return void
-         */
-        public function getBindings($key = null)
-        {
-        }
-        /**
-         * Clear one or all binding(s)
-         * @param string $key
-         * @return void
-         */
-        public function clearBindings($key = null)
-        {
-        }
-        /**
-         * Get one or all singletons(s)
-         * @param string $key
-         * @return void
-         */
-        public function getSingletons($key = null)
-        {
-        }
-        /**
-         * Clear one or all singletons(s)
-         * @param string $key
-         * @return void
-         */
-        public function clearSingletons($key = null)
-        {
-        }
-    }
-    trait PathsAndUrlsTrait
-    {
-        /**
-         * Get plugin's main file path
-         * @return string [plugin file path]
-         */
-        public function baseFile()
-        {
-        }
-        /**
-         * Get plugin's root path
-         * @param  string $path
-         * @return string
-         */
-        public function path($path = '')
-        {
-        }
-        /**
-         * Get plugin's /app path
-         * @param  string $path
-         * @return string
-         */
-        public function appPath($path = '')
-        {
-        }
-        /**
-         * Get plugin's /config path
-         * @param  string $path
-         * @return string
-         */
-        public function configPath($path = '')
-        {
-        }
-        /**
-         * Get plugin's /framework path
-         * @param  string $path
-         * @return string
-         */
-        public function frameworkPath($path = '')
-        {
-        }
-        /**
-         * Get plugin's /resources path
-         * @param  string $path
-         * @return string
-         */
-        public function resourcePath($path = '')
-        {
-        }
-        /**
-         * Get plugin's /resources/languages path
-         * @param  string $path
-         * @return string
-         */
-        public function languagePath($path = '')
-        {
-        }
-        /**
-         * Get plugin's /storage path
-         * @param  string $path
-         * @return string
-         */
-        public function storagePath($path = '')
-        {
-        }
-        /**
-         * Get plugin's /resources/views path
-         * @param  string $path
-         * @return string
-         */
-        public function viewPath($path = '')
-        {
-        }
-        /**
-         * Get plugin's /resources/assets path
-         * @param  string $path
-         * @return string
-         */
-        public function assetPath($path = '')
-        {
-        }
-        /**
-         * Get plugin's /public path
-         * @param  string $path
-         * @return string
-         */
-        public function publicPath($path = '')
-        {
-        }
-        /**
-         * Get plugin's root url
-         * @param  string $url
-         * @return string
-         */
-        public function url($url = '')
-        {
-        }
-        /**
-         * Get plugin's /public url
-         * @param  string $url
-         * @return string
-         */
-        public function publicUrl($url = '')
-        {
-        }
-        /**
-         * Get plugin's /resources url
-         * @param  string $url
-         * @return string
-         */
-        public function resourceUrl($url = '')
-        {
-        }
-        /**
-         * Get plugin's /resources/assets url
-         * @param  string $url
-         * @return string
-         */
-        public function assetUrl($url = '')
-        {
-        }
-    }
-    trait SetGetAttributesTrait
-    {
-        /**
-         * Dynamic getter for application
-         * @param string $key
-         * @return mixed
-         */
-        public function __get($key)
-        {
-        }
-        /**
-         * Dynamic setter for application
-         * @param string $key
-         * @param mixed $value
-         */
-        public function __set($key, $value)
-        {
-        }
-        /**
-         * Getter for retrieving plugin's base file path
-         * @return string
-         */
-        public function getBaseFile()
-        {
-        }
-        /**
-         * Get application's main config
-         * @return array
-         */
-        public function getAppConfig()
-        {
-        }
-        /**
-         * Get application's providers
-         * @param  string $type [core|plugin]
-         * @return array
-         */
-        public function getProviders($type = null)
-        {
-        }
-        /**
-         * Get plugin name
-         * @return string
-         */
-        public function getName()
-        {
-        }
-        /**
-         * Get plugin slug
-         * @return string
-         */
-        public function getSlug()
-        {
-        }
-        /**
-         * Get plugin version
-         * @return string
-         */
-        public function getVersion()
-        {
-        }
-        /**
-         * Get plugin root namespace
-         * @return string
-         */
-        public function getNamespace()
-        {
-        }
-        /**
-         * Get plugin text domain
-         * @return string
-         */
-        public function getTextDomain()
-        {
-        }
-        /**
-         * Get application evironment
-         * @return string
-         */
-        public function getEnv()
-        {
-        }
-    }
-    trait FacadeLoaderTrait
-    {
-        /**
-         * Register facade/alias loader
-         * @return void
-         */
-        protected function registerAppFacadeLoader()
-        {
-        }
-        /**
-         * Facad/Alias loader
-         * @param  [type] $class [description]
-         * @return [type]        [description]
-         */
-        protected function aliasLoader($class)
-        {
-        }
-        /**
-         * Retrieve facade file content
-         * @param  string $alias
-         * @param  string $key
-         * @return string
-         */
-        protected function getFileData($alias, $key)
-        {
-        }
-    }
-    trait HelpersTrait
-    {
-        /**
-         * $hookReference Current action reference
-         * @var null
-         */
-        protected $hookReference = null;
-        /**
-         * Load a file using include_once
-         * @return boolean
-         */
-        public function load($file)
-        {
-        }
-        /**
-         * Checks if the user is on wp-admin area (visiting backend)
-         * (It doesn't check whether user is authenticated ro not)
-         * @return boolean
-         */
-        public function isUserOnAdminArea()
-        {
-        }
-        /**
-         * Application's callbacks parser
-         * @param  mixed $args
-         * @return mixed
-         */
-        public function parseHandler($args)
-        {
-        }
-        /**
-         * Make a unique key/hook with the application slug prefix
-         * @param  string $tag
-         * @param  string $prefix [optional prefix instead of app slug]
-         * @return string
-         */
-        public function makeKey($tag, $prefix = null)
-        {
-        }
-        /**
-         * Add/Register an ajax action
-         * @param string $tag [action name]
-         * @param mixed $handler
-         * @param integer $priority [optional]
-         * @param string $scope [specify the scope of the ajax action|internal use]
-         * @return Framework\Foundation\HookReference
-         */
-        private function addAjaxAction($tag, $handler, $priority, $scope)
-        {
-        }
-        /**
-         * Add an ajax action for authenticated user
-         * @param string $tag [action name]
-         * @param mixed $handler
-         * @param integer $priority [optional]
-         * @return mixed [a reference to the handler to remove the action later]
-         */
-        public function addAdminAjaxAction($tag, $handler, $priority = 10)
-        {
-        }
-        /**
-         * Add an ajax action for unauthenticated user
-         * @param string $tag [action name]
-         * @param mixed $handler
-         * @param integer $priority [optional]
-         * @return mixed [a reference to the handler to remove the action later]
-         */
-        public function addPublicAjaxAction($tag, $handler, $priority = 10)
-        {
-        }
-        /**
-         * Remove/Unregister a registered ajax action
-         * @param string $tag [action name]
-         * @param mixed $handler [previously stored reference when added the action]
-         * @param integer $priority [optional]
-         * @param string $scope [specify the scope of the ajax action|internal use]
-         * @return mixed [a reference to the handler to remove the action later]
-         */
-        private function removeAjaxAction($tag, $handler, $priority, $scope)
-        {
-        }
-        /**
-         * Remove an ajax action for authenticated user
-         * @param string $tag [action name]
-         * @param mixed $handler [previously stored reference when added the action]
-         * @param integer $priority [optional]
-         * @return bool [true on success or false on failure]
-         */
-        public function removeAdminAjaxAction($tag, $handler, $priority = 10)
-        {
-        }
-        /**
-         * Remove an ajax action for unauthenticated user
-         * @param string $tag [action name]
-         * @param mixed $handler [previously stored reference when added the action]
-         * @param integer $priority [optional]
-         * @return bool [true on success or false on failure]
-         */
-        public function removePublicAjaxAction($tag, $handler, $priority = 10)
-        {
-        }
-        /**
-         * Add WordPress Filter
-         * @param  string $tag
-         * @param  mixed $handler
-         * @param  integer $priority
-         * @param  integer $acceptedArgs
-         * @return Framework\Foundation\HookReference
-         */
-        public function addFilter($tag, $handler, $priority = 10, $acceptedArgs = 1)
-        {
-        }
-        /**
-         * Remove WordPress Filter.
-         * @param  string $tag
-         * @param  mixed  $handler
-         * @param  integer $priority
-         * @return true
-         */
-        public function removeFilter($tag, $handler, $priority = 10)
-        {
-        }
-        /**
-         * Remove WordPress' All Filters.
-         * @param  string $tag
-         * @param  boolean $priority
-         * @return bool
-         */
-        public function removeFilters($tag, $priority = false)
-        {
-        }
-        /**
-         * Apply WordPress Filter.
-         * @return mixed [filtered content]
-         */
-        public function applyFilters()
-        {
-        }
-        /**
-         * Add WordPress Action
-         * @param  string $tag
-         * @param  mixed $handler
-         * @param  integer $priority
-         * @param  integer $acceptedArgs
-         * @return Framework\Foundation\HookReference
-         */
-        public function addAction($tag, $handler, $priority = 10, $acceptedArgs = 1)
-        {
-        }
-        /**
-         * Remove WordPress' Action.
-         * @param  string $tag
-         * @param  boolean $priority
-         * @return bool
-         */
-        public function removeAction($tag, $handler, $priority = 10)
-        {
-        }
-        /**
-         * Remove WordPress' All Actions.
-         * @param  string $tag
-         * @param  boolean $priority
-         * @return bool
-         */
-        public function removeActions($tag, $priority = false)
-        {
-        }
-        /**
-         * Do WordPress Action.
-         * @return void
-         */
-        public function doAction()
-        {
-        }
-        /**
-         * Add WordPress Short Code.
-         * @param string $tag
-         * @param mixed $handler
-         */
-        public function addShortCode($tag, $handler)
-        {
-        }
-        /**
-         * Remove WordPress Short Code.
-         * @param string $content
-         * @param bool $ignoreHtml
-         */
-        public function removeShortCode($tag)
-        {
-        }
-        /**
-         * Do WordPress Short Code.
-         * @param string $content
-         * @param bool $ignoreHtml
-         */
-        public function doShortCode($tag, $atts, $content = null, $ignoreHtml = false)
-        {
-        }
-        /**
-         * Format the short content (make shortcode content string)
-         * @param  string $tag
-         * @param  array $atts
-         * @param  string $content
-         * @return string
-         */
-        public function formatShortCode($tag, $atts, $content = null)
-        {
-        }
-        /**
-         * Store a reference of last action handler
-         * @param reference $ref (Reference of registered function/handler)
-         * @param string $tag
-         * @return $this
-         */
-        public function setHookReference($ref, $tag)
-        {
-        }
-        /**
-         * Save the hook's handler reference
-         * @param  string $key
-         * @return reference
-         */
-        public function saveReference($key = null)
-        {
-        }
-        /**
-         * Register any callback/middleware to run before ajax callback
-         * @param  string $actionName
-         * @param  mixed $fn (WordPress permission name/closure)
-         * @return $this
-         */
-        public function before($action, $fn)
-        {
-        }
-    }
-    class Application extends \FluentForm\Framework\Foundation\Container
-    {
-        use \FluentForm\Framework\Foundation\PathsAndUrlsTrait, \FluentForm\Framework\Foundation\SetGetAttributesTrait, \FluentForm\Framework\Foundation\FacadeLoaderTrait, \FluentForm\Framework\Foundation\HelpersTrait;
-        /**
-         * Framework Version
-         */
-        const VERSION = '1.0.0';
-        /**
-         * $baseFile root plugin file path
-         * @var string
-         */
-        protected $baseFile = null;
-        /**
-         * The app config (/config/app.php)
-         * @var array
-         */
-        protected $appConfig = null;
-        /**
-         * Callbacks for framework's booted event
-         * @var array
-         */
-        protected $booted = array();
-        /**
-         * Callbacks for framework's ready event
-         * @var array
-         */
-        protected $ready = array();
-        /**
-         * Get application version
-         * @return string
-         */
-        public function version()
-        {
-        }
-        /**
-         * Static interface to initiate the application
-         * @param string $baseFile (root plugin file path)
-         * @param array $appConfig (/config/app.php)
-         * @return $this
-         */
-        public static function run($baseFile, $appConfig)
-        {
-        }
-        /**
-         * Init the application
-         * @param string $baseFile (root plugin file path)
-         * @param array $appConfig (/config/app.php)
-         */
-        public function __construct($baseFile, $appConfig)
-        {
-        }
-        /**
-         * Bootup the application
-         * @param string $baseFile (root plugin file path)
-         * @param array $appConfig (/config/app.php)
-         * @return void
-         */
-        protected function bootstrapApplication()
-        {
-        }
-        /**
-         * Register application base bindings
-         * @return  void
-         */
-        protected function setAppBaseBindings()
-        {
-        }
-        /**
-         * Bind application instance
-         * @return  void
-         */
-        protected function bindAppInstance()
-        {
-        }
-        /**
-         * Set Application paths
-         * @return void
-         */
-        protected function registerAppPaths()
-        {
-        }
-        /**
-         * Set Application urls
-         * @return void
-         */
-        protected function registerAppUrls()
-        {
-        }
-        /**
-         * Set Application Exception Handler
-         * @return void
-         */
-        protected function setExceptionHandler()
-        {
-        }
-        /**
-         * load languages path for i18n pot files
-         * @return bool
-         */
-        protected function loadApplicationTextDomain()
-        {
-        }
-        /**
-         * Bootstrap all service providers
-         * @return void
-         */
-        protected function bootStrapApplicationProviders()
-        {
-        }
-        /**
-         * Boot application with providers
-         * @param  array $providers
-         * @return void
-         */
-        public function bootstrapWith(array $providers)
-        {
-        }
-        /**
-         * Get engine/core providers
-         * @return array
-         */
-        public function getEngineProviders()
-        {
-        }
-        /**
-         * Get plugin providers (Common)
-         * @return array
-         */
-        public function getCommonProviders()
-        {
-        }
-        /**
-         * Get plugin providers (Backend|Frontend)
-         * @return array
-         */
-        public function getPluginProviders()
-        {
-        }
-        /**
-         * Register booted events
-         * @param  mixed $callback
-         * @return void
-         */
-        public function booted($callback)
-        {
-        }
-        /**
-         * Register ready events
-         * @param  mixed $callback
-         * @return void
-         */
-        public function ready($callback)
-        {
-        }
-        /**
-         * Fire application event's handlers
-         * @param  array  $callbacks
-         * @return void
-         */
-        public function fireCallbacks(array $callbacks)
-        {
-        }
-    }
-    class Bootstrap
-    {
-        /**
-         * The main plugin file path
-         * @var strring
-         */
-        protected static $file = null;
-        /**
-         * The base dir path of the plugin
-         * @var strring
-         */
-        protected static $basePath = null;
-        /**
-         * The app config (/config/app.php)
-         * @var strring
-         */
-        protected static $config = array();
-        /**
-         * Conveniently start the framework
-         * @param  string $file
-         * @return $
-         */
-        public static function run($file)
-        {
-        }
-        /**
-         * Initialize the framework
-         * @param  string $file [the main plugin file path]
-         * @return void
-         */
-        public static function init($file)
-        {
-        }
-        /**
-         * Register activation/deactivation hooks
-         * @return void
-         */
-        public static function registerHooks()
-        {
-        }
-        /**
-         * Register activation hook
-         * @return bool
-         */
-        public static function registerActivationHook()
-        {
-        }
-        public static function registerDeactivationHook()
-        {
-        }
-        /**
-         * Validate and activate the plugin
-         * @return void
-         */
-        public static function activate($netowrkwide = false)
-        {
-        }
-        public static function deactivate()
-        {
-        }
-        /**
-         * Validate the plugin by checking all rquired files/settings
-         * @return void
-         */
-        public static function validatePlugin()
-        {
-        }
-        /**
-         * Register the autoloader
-         * @return void
-         */
-        public static function registerAutoLoader()
-        {
-        }
-        /**
-         * Framework's custom autoloader
-         * @param  string $class
-         * @return mixed
-         */
-        public static function loader($class)
-        {
-        }
-        /**
-         * Register "init" hook to run the plugin
-         * @return void
-         */
-        public static function registerApplication()
-        {
-        }
-    }
-    class HookReference
-    {
-        /**
-         * $ref reference for any hook
-         * @var null
-         */
-        private $ref = null;
-        /**
-         * construct the instance
-         * @param Application $app
-         * @param reference $ref
-         * @param string $key
-         */
-        public function __construct(\FluentForm\Framework\Foundation\Application $app, $ref, $key = null)
-        {
-        }
-        /**
-         * Save the hook's handler reference
-         * @param  string $key
-         * @return reference
-         */
-        public function saveReference($key = null)
-        {
-        }
-        /**
-         * Get the reference
-         * @return reference
-         */
-        public function reference()
-        {
-        }
-    }
-}
-namespace FluentForm\Framework\Helpers {
-    class ArrayHelper
-    {
-        /**
-         * Taken from Illuminate\Support\Arr (Laravel Framework)
-         */
-        /**
-         * Check if an item or items exist in an array using "dot" notation.
-         *
-         * @param  \ArrayAccess|array  $array
-         * @param  string|array  $keys
-         * @return bool
-         */
-        public static function has($array, $keys)
-        {
-        }
-        /**
-         * Get an item from an array using "dot" notation.
-         *
-         * @param  \ArrayAccess|array  $array
-         * @param  string  $key
-         * @param  mixed   $default
-         * @return mixed
-         */
-        public static function get($array, $key, $default = null)
-        {
-        }
-        /**
-         * Set an array item to a given value using "dot" notation.
-         *
-         * If no key is given to the method, the entire array will be replaced.
-         *
-         * @param  array   $array
-         * @param  string  $key
-         * @param  mixed   $value
-         * @return array
-         */
-        public static function set(&$array, $key, $value)
-        {
-        }
-        /**
-         * Get a subset of the items from the given array.
-         *
-         * @param  array  $array
-         * @param  array|string  $keys
-         * @return array
-         */
-        public static function only($array, $keys)
-        {
-        }
-        /**
-         * Get all of the given array except for a specified array of items.
-         *
-         * @param  array  $array
-         * @param  array|string  $keys
-         * @return array
-         */
-        public static function except($array, $keys)
-        {
-        }
-        /**
-         * Remove one or many array items from a given array using "dot" notation.
-         *
-         * @param  array  $array
-         * @param  array|string  $keys
-         * @return void
-         */
-        public static function forget(&$array, $keys)
-        {
-        }
-        /**
-         * Determine whether the given value is array accessible.
-         *
-         * @param  mixed  $value
-         * @return bool
-         */
-        public static function accessible($value)
-        {
-        }
-        /**
-         * Determine if the given key exists in the provided array.
-         *
-         * @param  \ArrayAccess|array  $array
-         * @param  string|int  $key
-         * @return bool
-         */
-        public static function exists($array, $key)
-        {
-        }
-        /**
-         * Return the default value of the given value.
-         *
-         * @param  mixed  $value
-         * @return mixed
-         */
-        public static function value($value)
-        {
-        }
-        /**
-         * Flatten a multi-dimensional associative array with dots.
-         *
-         * @param array $array
-         * @param string $prepend
-         *
-         * @return array
-         */
-        public static function dot($array, $prepend = '')
-        {
-        }
-        public static function isTrue($array, $key)
-        {
-        }
-    }
-}
 namespace FluentForm\Framework\Request {
-    class File extends \SplFileInfo implements \FluentValidator\Contracts\File
+    class File extends \SplFileInfo implements \FluentForm\Framework\Validator\Contracts\File
     {
         /**
          * A map of mime types and their default extensions.
@@ -18384,7 +28845,7 @@ namespace FluentForm\Framework\Request {
          *
          * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
          */
-        protected $defaultExtensions = ['application/andrew-inset' => 'ez', 'application/applixware' => 'aw', 'application/atom+xml' => 'atom', 'application/atomcat+xml' => 'atomcat', 'application/atomsvc+xml' => 'atomsvc', 'application/ccxml+xml' => 'ccxml', 'application/cdmi-capability' => 'cdmia', 'application/cdmi-container' => 'cdmic', 'application/cdmi-domain' => 'cdmid', 'application/cdmi-object' => 'cdmio', 'application/cdmi-queue' => 'cdmiq', 'application/cu-seeme' => 'cu', 'application/davmount+xml' => 'davmount', 'application/docbook+xml' => 'dbk', 'application/dssc+der' => 'dssc', 'application/dssc+xml' => 'xdssc', 'application/ecmascript' => 'ecma', 'application/emma+xml' => 'emma', 'application/epub+zip' => 'epub', 'application/exi' => 'exi', 'application/font-tdpfr' => 'pfr', 'application/gml+xml' => 'gml', 'application/gpx+xml' => 'gpx', 'application/gxf' => 'gxf', 'application/hyperstudio' => 'stk', 'application/inkml+xml' => 'ink', 'application/ipfix' => 'ipfix', 'application/java-archive' => 'jar', 'application/java-serialized-object' => 'ser', 'application/java-vm' => 'class', 'application/javascript' => 'js', 'application/json' => 'json', 'application/jsonml+json' => 'jsonml', 'application/lost+xml' => 'lostxml', 'application/mac-binhex40' => 'hqx', 'application/mac-compactpro' => 'cpt', 'application/mads+xml' => 'mads', 'application/marc' => 'mrc', 'application/marcxml+xml' => 'mrcx', 'application/mathematica' => 'ma', 'application/mathml+xml' => 'mathml', 'application/mbox' => 'mbox', 'application/mediaservercontrol+xml' => 'mscml', 'application/metalink+xml' => 'metalink', 'application/metalink4+xml' => 'meta4', 'application/mets+xml' => 'mets', 'application/mods+xml' => 'mods', 'application/mp21' => 'm21', 'application/mp4' => 'mp4s', 'application/msword' => 'doc', 'application/mxf' => 'mxf', 'application/octet-stream' => 'bin', 'application/oda' => 'oda', 'application/oebps-package+xml' => 'opf', 'application/ogg' => 'ogx', 'application/omdoc+xml' => 'omdoc', 'application/onenote' => 'onetoc', 'application/oxps' => 'oxps', 'application/patch-ops-error+xml' => 'xer', 'application/pdf' => 'pdf', 'application/pgp-encrypted' => 'pgp', 'application/pgp-signature' => 'asc', 'application/pics-rules' => 'prf', 'application/pkcs10' => 'p10', 'application/pkcs7-mime' => 'p7m', 'application/pkcs7-signature' => 'p7s', 'application/pkcs8' => 'p8', 'application/pkix-attr-cert' => 'ac', 'application/pkix-cert' => 'cer', 'application/pkix-crl' => 'crl', 'application/pkix-pkipath' => 'pkipath', 'application/pkixcmp' => 'pki', 'application/pls+xml' => 'pls', 'application/postscript' => 'ai', 'application/prs.cww' => 'cww', 'application/pskc+xml' => 'pskcxml', 'application/rdf+xml' => 'rdf', 'application/reginfo+xml' => 'rif', 'application/relax-ng-compact-syntax' => 'rnc', 'application/resource-lists+xml' => 'rl', 'application/resource-lists-diff+xml' => 'rld', 'application/rls-services+xml' => 'rs', 'application/rpki-ghostbusters' => 'gbr', 'application/rpki-manifest' => 'mft', 'application/rpki-roa' => 'roa', 'application/rsd+xml' => 'rsd', 'application/rss+xml' => 'rss', 'application/rtf' => 'rtf', 'application/sbml+xml' => 'sbml', 'application/scvp-cv-request' => 'scq', 'application/scvp-cv-response' => 'scs', 'application/scvp-vp-request' => 'spq', 'application/scvp-vp-response' => 'spp', 'application/sdp' => 'sdp', 'application/set-payment-initiation' => 'setpay', 'application/set-registration-initiation' => 'setreg', 'application/shf+xml' => 'shf', 'application/smil+xml' => 'smi', 'application/sparql-query' => 'rq', 'application/sparql-results+xml' => 'srx', 'application/srgs' => 'gram', 'application/srgs+xml' => 'grxml', 'application/sru+xml' => 'sru', 'application/ssdl+xml' => 'ssdl', 'application/ssml+xml' => 'ssml', 'application/tei+xml' => 'tei', 'application/thraud+xml' => 'tfi', 'application/timestamped-data' => 'tsd', 'application/vnd.3gpp.pic-bw-large' => 'plb', 'application/vnd.3gpp.pic-bw-small' => 'psb', 'application/vnd.3gpp.pic-bw-var' => 'pvb', 'application/vnd.3gpp2.tcap' => 'tcap', 'application/vnd.3m.post-it-notes' => 'pwn', 'application/vnd.accpac.simply.aso' => 'aso', 'application/vnd.accpac.simply.imp' => 'imp', 'application/vnd.acucobol' => 'acu', 'application/vnd.acucorp' => 'atc', 'application/vnd.adobe.air-application-installer-package+zip' => 'air', 'application/vnd.adobe.formscentral.fcdt' => 'fcdt', 'application/vnd.adobe.fxp' => 'fxp', 'application/vnd.adobe.xdp+xml' => 'xdp', 'application/vnd.adobe.xfdf' => 'xfdf', 'application/vnd.ahead.space' => 'ahead', 'application/vnd.airzip.filesecure.azf' => 'azf', 'application/vnd.airzip.filesecure.azs' => 'azs', 'application/vnd.amazon.ebook' => 'azw', 'application/vnd.americandynamics.acc' => 'acc', 'application/vnd.amiga.ami' => 'ami', 'application/vnd.android.package-archive' => 'apk', 'application/vnd.anser-web-certificate-issue-initiation' => 'cii', 'application/vnd.anser-web-funds-transfer-initiation' => 'fti', 'application/vnd.antix.game-component' => 'atx', 'application/vnd.apple.installer+xml' => 'mpkg', 'application/vnd.apple.mpegurl' => 'm3u8', 'application/vnd.aristanetworks.swi' => 'swi', 'application/vnd.astraea-software.iota' => 'iota', 'application/vnd.audiograph' => 'aep', 'application/vnd.blueice.multipass' => 'mpm', 'application/vnd.bmi' => 'bmi', 'application/vnd.businessobjects' => 'rep', 'application/vnd.chemdraw+xml' => 'cdxml', 'application/vnd.chipnuts.karaoke-mmd' => 'mmd', 'application/vnd.cinderella' => 'cdy', 'application/vnd.claymore' => 'cla', 'application/vnd.cloanto.rp9' => 'rp9', 'application/vnd.clonk.c4group' => 'c4g', 'application/vnd.cluetrust.cartomobile-config' => 'c11amc', 'application/vnd.cluetrust.cartomobile-config-pkg' => 'c11amz', 'application/vnd.commonspace' => 'csp', 'application/vnd.contact.cmsg' => 'cdbcmsg', 'application/vnd.cosmocaller' => 'cmc', 'application/vnd.crick.clicker' => 'clkx', 'application/vnd.crick.clicker.keyboard' => 'clkk', 'application/vnd.crick.clicker.palette' => 'clkp', 'application/vnd.crick.clicker.template' => 'clkt', 'application/vnd.crick.clicker.wordbank' => 'clkw', 'application/vnd.criticaltools.wbs+xml' => 'wbs', 'application/vnd.ctc-posml' => 'pml', 'application/vnd.cups-ppd' => 'ppd', 'application/vnd.curl.car' => 'car', 'application/vnd.curl.pcurl' => 'pcurl', 'application/vnd.dart' => 'dart', 'application/vnd.data-vision.rdz' => 'rdz', 'application/vnd.dece.data' => 'uvf', 'application/vnd.dece.ttml+xml' => 'uvt', 'application/vnd.dece.unspecified' => 'uvx', 'application/vnd.dece.zip' => 'uvz', 'application/vnd.denovo.fcselayout-link' => 'fe_launch', 'application/vnd.dna' => 'dna', 'application/vnd.dolby.mlp' => 'mlp', 'application/vnd.dpgraph' => 'dpg', 'application/vnd.dreamfactory' => 'dfac', 'application/vnd.ds-keypoint' => 'kpxx', 'application/vnd.dvb.ait' => 'ait', 'application/vnd.dvb.service' => 'svc', 'application/vnd.dynageo' => 'geo', 'application/vnd.ecowin.chart' => 'mag', 'application/vnd.enliven' => 'nml', 'application/vnd.epson.esf' => 'esf', 'application/vnd.epson.msf' => 'msf', 'application/vnd.epson.quickanime' => 'qam', 'application/vnd.epson.salt' => 'slt', 'application/vnd.epson.ssf' => 'ssf', 'application/vnd.eszigno3+xml' => 'es3', 'application/vnd.ezpix-album' => 'ez2', 'application/vnd.ezpix-package' => 'ez3', 'application/vnd.fdf' => 'fdf', 'application/vnd.fdsn.mseed' => 'mseed', 'application/vnd.fdsn.seed' => 'seed', 'application/vnd.flographit' => 'gph', 'application/vnd.fluxtime.clip' => 'ftc', 'application/vnd.framemaker' => 'fm', 'application/vnd.frogans.fnc' => 'fnc', 'application/vnd.frogans.ltf' => 'ltf', 'application/vnd.fsc.weblaunch' => 'fsc', 'application/vnd.fujitsu.oasys' => 'oas', 'application/vnd.fujitsu.oasys2' => 'oa2', 'application/vnd.fujitsu.oasys3' => 'oa3', 'application/vnd.fujitsu.oasysgp' => 'fg5', 'application/vnd.fujitsu.oasysprs' => 'bh2', 'application/vnd.fujixerox.ddd' => 'ddd', 'application/vnd.fujixerox.docuworks' => 'xdw', 'application/vnd.fujixerox.docuworks.binder' => 'xbd', 'application/vnd.fuzzysheet' => 'fzs', 'application/vnd.genomatix.tuxedo' => 'txd', 'application/vnd.geogebra.file' => 'ggb', 'application/vnd.geogebra.tool' => 'ggt', 'application/vnd.geometry-explorer' => 'gex', 'application/vnd.geonext' => 'gxt', 'application/vnd.geoplan' => 'g2w', 'application/vnd.geospace' => 'g3w', 'application/vnd.gmx' => 'gmx', 'application/vnd.google-earth.kml+xml' => 'kml', 'application/vnd.google-earth.kmz' => 'kmz', 'application/vnd.grafeq' => 'gqf', 'application/vnd.groove-account' => 'gac', 'application/vnd.groove-help' => 'ghf', 'application/vnd.groove-identity-message' => 'gim', 'application/vnd.groove-injector' => 'grv', 'application/vnd.groove-tool-message' => 'gtm', 'application/vnd.groove-tool-template' => 'tpl', 'application/vnd.groove-vcard' => 'vcg', 'application/vnd.hal+xml' => 'hal', 'application/vnd.handheld-entertainment+xml' => 'zmm', 'application/vnd.hbci' => 'hbci', 'application/vnd.hhe.lesson-player' => 'les', 'application/vnd.hp-hpgl' => 'hpgl', 'application/vnd.hp-hpid' => 'hpid', 'application/vnd.hp-hps' => 'hps', 'application/vnd.hp-jlyt' => 'jlt', 'application/vnd.hp-pcl' => 'pcl', 'application/vnd.hp-pclxl' => 'pclxl', 'application/vnd.hydrostatix.sof-data' => 'sfd-hdstx', 'application/vnd.ibm.minipay' => 'mpy', 'application/vnd.ibm.modcap' => 'afp', 'application/vnd.ibm.rights-management' => 'irm', 'application/vnd.ibm.secure-container' => 'sc', 'application/vnd.iccprofile' => 'icc', 'application/vnd.igloader' => 'igl', 'application/vnd.immervision-ivp' => 'ivp', 'application/vnd.immervision-ivu' => 'ivu', 'application/vnd.insors.igm' => 'igm', 'application/vnd.intercon.formnet' => 'xpw', 'application/vnd.intergeo' => 'i2g', 'application/vnd.intu.qbo' => 'qbo', 'application/vnd.intu.qfx' => 'qfx', 'application/vnd.ipunplugged.rcprofile' => 'rcprofile', 'application/vnd.irepository.package+xml' => 'irp', 'application/vnd.is-xpr' => 'xpr', 'application/vnd.isac.fcs' => 'fcs', 'application/vnd.jam' => 'jam', 'application/vnd.jcp.javame.midlet-rms' => 'rms', 'application/vnd.jisp' => 'jisp', 'application/vnd.joost.joda-archive' => 'joda', 'application/vnd.kahootz' => 'ktz', 'application/vnd.kde.karbon' => 'karbon', 'application/vnd.kde.kchart' => 'chrt', 'application/vnd.kde.kformula' => 'kfo', 'application/vnd.kde.kivio' => 'flw', 'application/vnd.kde.kontour' => 'kon', 'application/vnd.kde.kpresenter' => 'kpr', 'application/vnd.kde.kspread' => 'ksp', 'application/vnd.kde.kword' => 'kwd', 'application/vnd.kenameaapp' => 'htke', 'application/vnd.kidspiration' => 'kia', 'application/vnd.kinar' => 'kne', 'application/vnd.koan' => 'skp', 'application/vnd.kodak-descriptor' => 'sse', 'application/vnd.las.las+xml' => 'lasxml', 'application/vnd.llamagraphics.life-balance.desktop' => 'lbd', 'application/vnd.llamagraphics.life-balance.exchange+xml' => 'lbe', 'application/vnd.lotus-1-2-3' => '123', 'application/vnd.lotus-approach' => 'apr', 'application/vnd.lotus-freelance' => 'pre', 'application/vnd.lotus-notes' => 'nsf', 'application/vnd.lotus-organizer' => 'org', 'application/vnd.lotus-screencam' => 'scm', 'application/vnd.lotus-wordpro' => 'lwp', 'application/vnd.macports.portpkg' => 'portpkg', 'application/vnd.mcd' => 'mcd', 'application/vnd.medcalcdata' => 'mc1', 'application/vnd.mediastation.cdkey' => 'cdkey', 'application/vnd.mfer' => 'mwf', 'application/vnd.mfmp' => 'mfm', 'application/vnd.micrografx.flo' => 'flo', 'application/vnd.micrografx.igx' => 'igx', 'application/vnd.mif' => 'mif', 'application/vnd.mobius.daf' => 'daf', 'application/vnd.mobius.dis' => 'dis', 'application/vnd.mobius.mbk' => 'mbk', 'application/vnd.mobius.mqy' => 'mqy', 'application/vnd.mobius.msl' => 'msl', 'application/vnd.mobius.plc' => 'plc', 'application/vnd.mobius.txf' => 'txf', 'application/vnd.mophun.application' => 'mpn', 'application/vnd.mophun.certificate' => 'mpc', 'application/vnd.mozilla.xul+xml' => 'xul', 'application/vnd.ms-artgalry' => 'cil', 'application/vnd.ms-cab-compressed' => 'cab', 'application/vnd.ms-excel' => 'xls', 'application/vnd.ms-excel.addin.macroenabled.12' => 'xlam', 'application/vnd.ms-excel.sheet.binary.macroenabled.12' => 'xlsb', 'application/vnd.ms-excel.sheet.macroenabled.12' => 'xlsm', 'application/vnd.ms-excel.template.macroenabled.12' => 'xltm', 'application/vnd.ms-fontobject' => 'eot', 'application/vnd.ms-htmlhelp' => 'chm', 'application/vnd.ms-ims' => 'ims', 'application/vnd.ms-lrm' => 'lrm', 'application/vnd.ms-officetheme' => 'thmx', 'application/vnd.ms-pki.seccat' => 'cat', 'application/vnd.ms-pki.stl' => 'stl', 'application/vnd.ms-powerpoint' => 'ppt', 'application/vnd.ms-powerpoint.addin.macroenabled.12' => 'ppam', 'application/vnd.ms-powerpoint.presentation.macroenabled.12' => 'pptm', 'application/vnd.ms-powerpoint.slide.macroenabled.12' => 'sldm', 'application/vnd.ms-powerpoint.slideshow.macroenabled.12' => 'ppsm', 'application/vnd.ms-powerpoint.template.macroenabled.12' => 'potm', 'application/vnd.ms-project' => 'mpp', 'application/vnd.ms-word.document.macroenabled.12' => 'docm', 'application/vnd.ms-word.template.macroenabled.12' => 'dotm', 'application/vnd.ms-works' => 'wps', 'application/vnd.ms-wpl' => 'wpl', 'application/vnd.ms-xpsdocument' => 'xps', 'application/vnd.mseq' => 'mseq', 'application/vnd.musician' => 'mus', 'application/vnd.muvee.style' => 'msty', 'application/vnd.mynfc' => 'taglet', 'application/vnd.neurolanguage.nlu' => 'nlu', 'application/vnd.nitf' => 'ntf', 'application/vnd.noblenet-directory' => 'nnd', 'application/vnd.noblenet-sealer' => 'nns', 'application/vnd.noblenet-web' => 'nnw', 'application/vnd.nokia.n-gage.data' => 'ngdat', 'application/vnd.nokia.n-gage.symbian.install' => 'n-gage', 'application/vnd.nokia.radio-preset' => 'rpst', 'application/vnd.nokia.radio-presets' => 'rpss', 'application/vnd.novadigm.edm' => 'edm', 'application/vnd.novadigm.edx' => 'edx', 'application/vnd.novadigm.ext' => 'ext', 'application/vnd.oasis.opendocument.chart' => 'odc', 'application/vnd.oasis.opendocument.chart-template' => 'otc', 'application/vnd.oasis.opendocument.database' => 'odb', 'application/vnd.oasis.opendocument.formula' => 'odf', 'application/vnd.oasis.opendocument.formula-template' => 'odft', 'application/vnd.oasis.opendocument.graphics' => 'odg', 'application/vnd.oasis.opendocument.graphics-template' => 'otg', 'application/vnd.oasis.opendocument.image' => 'odi', 'application/vnd.oasis.opendocument.image-template' => 'oti', 'application/vnd.oasis.opendocument.presentation' => 'odp', 'application/vnd.oasis.opendocument.presentation-template' => 'otp', 'application/vnd.oasis.opendocument.spreadsheet' => 'ods', 'application/vnd.oasis.opendocument.spreadsheet-template' => 'ots', 'application/vnd.oasis.opendocument.text' => 'odt', 'application/vnd.oasis.opendocument.text-master' => 'odm', 'application/vnd.oasis.opendocument.text-template' => 'ott', 'application/vnd.oasis.opendocument.text-web' => 'oth', 'application/vnd.olpc-sugar' => 'xo', 'application/vnd.oma.dd2+xml' => 'dd2', 'application/vnd.openofficeorg.extension' => 'oxt', 'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'pptx', 'application/vnd.openxmlformats-officedocument.presentationml.slide' => 'sldx', 'application/vnd.openxmlformats-officedocument.presentationml.slideshow' => 'ppsx', 'application/vnd.openxmlformats-officedocument.presentationml.template' => 'potx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.template' => 'xltx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.template' => 'dotx', 'application/vnd.osgeo.mapguide.package' => 'mgp', 'application/vnd.osgi.dp' => 'dp', 'application/vnd.osgi.subsystem' => 'esa', 'application/vnd.palm' => 'pdb', 'application/vnd.pawaafile' => 'paw', 'application/vnd.pg.format' => 'str', 'application/vnd.pg.osasli' => 'ei6', 'application/vnd.picsel' => 'efif', 'application/vnd.pmi.widget' => 'wg', 'application/vnd.pocketlearn' => 'plf', 'application/vnd.powerbuilder6' => 'pbd', 'application/vnd.previewsystems.box' => 'box', 'application/vnd.proteus.magazine' => 'mgz', 'application/vnd.publishare-delta-tree' => 'qps', 'application/vnd.pvi.ptid1' => 'ptid', 'application/vnd.quark.quarkxpress' => 'qxd', 'application/vnd.realvnc.bed' => 'bed', 'application/vnd.recordare.musicxml' => 'mxl', 'application/vnd.recordare.musicxml+xml' => 'musicxml', 'application/vnd.rig.cryptonote' => 'cryptonote', 'application/vnd.rim.cod' => 'cod', 'application/vnd.rn-realmedia' => 'rm', 'application/vnd.rn-realmedia-vbr' => 'rmvb', 'application/vnd.route66.link66+xml' => 'link66', 'application/vnd.sailingtracker.track' => 'st', 'application/vnd.seemail' => 'see', 'application/vnd.sema' => 'sema', 'application/vnd.semd' => 'semd', 'application/vnd.semf' => 'semf', 'application/vnd.shana.informed.formdata' => 'ifm', 'application/vnd.shana.informed.formtemplate' => 'itp', 'application/vnd.shana.informed.interchange' => 'iif', 'application/vnd.shana.informed.package' => 'ipk', 'application/vnd.simtech-mindmapper' => 'twd', 'application/vnd.smaf' => 'mmf', 'application/vnd.smart.teacher' => 'teacher', 'application/vnd.solent.sdkm+xml' => 'sdkm', 'application/vnd.spotfire.dxp' => 'dxp', 'application/vnd.spotfire.sfs' => 'sfs', 'application/vnd.stardivision.calc' => 'sdc', 'application/vnd.stardivision.draw' => 'sda', 'application/vnd.stardivision.impress' => 'sdd', 'application/vnd.stardivision.math' => 'smf', 'application/vnd.stardivision.writer' => 'sdw', 'application/vnd.stardivision.writer-global' => 'sgl', 'application/vnd.stepmania.package' => 'smzip', 'application/vnd.stepmania.stepchart' => 'sm', 'application/vnd.sun.xml.calc' => 'sxc', 'application/vnd.sun.xml.calc.template' => 'stc', 'application/vnd.sun.xml.draw' => 'sxd', 'application/vnd.sun.xml.draw.template' => 'std', 'application/vnd.sun.xml.impress' => 'sxi', 'application/vnd.sun.xml.impress.template' => 'sti', 'application/vnd.sun.xml.math' => 'sxm', 'application/vnd.sun.xml.writer' => 'sxw', 'application/vnd.sun.xml.writer.global' => 'sxg', 'application/vnd.sun.xml.writer.template' => 'stw', 'application/vnd.sus-calendar' => 'sus', 'application/vnd.svd' => 'svd', 'application/vnd.symbian.install' => 'sis', 'application/vnd.syncml+xml' => 'xsm', 'application/vnd.syncml.dm+wbxml' => 'bdm', 'application/vnd.syncml.dm+xml' => 'xdm', 'application/vnd.tao.intent-module-archive' => 'tao', 'application/vnd.tcpdump.pcap' => 'pcap', 'application/vnd.tmobile-livetv' => 'tmo', 'application/vnd.trid.tpt' => 'tpt', 'application/vnd.triscape.mxs' => 'mxs', 'application/vnd.trueapp' => 'tra', 'application/vnd.ufdl' => 'ufd', 'application/vnd.uiq.theme' => 'utz', 'application/vnd.umajin' => 'umj', 'application/vnd.unity' => 'unityweb', 'application/vnd.uoml+xml' => 'uoml', 'application/vnd.vcx' => 'vcx', 'application/vnd.visio' => 'vsd', 'application/vnd.visionary' => 'vis', 'application/vnd.vsf' => 'vsf', 'application/vnd.wap.wbxml' => 'wbxml', 'application/vnd.wap.wmlc' => 'wmlc', 'application/vnd.wap.wmlscriptc' => 'wmlsc', 'application/vnd.webturbo' => 'wtb', 'application/vnd.wolfram.player' => 'nbp', 'application/vnd.wordperfect' => 'wpd', 'application/vnd.wqd' => 'wqd', 'application/vnd.wt.stf' => 'stf', 'application/vnd.xara' => 'xar', 'application/vnd.xfdl' => 'xfdl', 'application/vnd.yamaha.hv-dic' => 'hvd', 'application/vnd.yamaha.hv-script' => 'hvs', 'application/vnd.yamaha.hv-voice' => 'hvp', 'application/vnd.yamaha.openscoreformat' => 'osf', 'application/vnd.yamaha.openscoreformat.osfpvg+xml' => 'osfpvg', 'application/vnd.yamaha.smaf-audio' => 'saf', 'application/vnd.yamaha.smaf-phrase' => 'spf', 'application/vnd.yellowriver-custom-menu' => 'cmp', 'application/vnd.zul' => 'zir', 'application/vnd.zzazz.deck+xml' => 'zaz', 'application/voicexml+xml' => 'vxml', 'application/widget' => 'wgt', 'application/winhlp' => 'hlp', 'application/wsdl+xml' => 'wsdl', 'application/wspolicy+xml' => 'wspolicy', 'application/x-7z-compressed' => '7z', 'application/x-abiword' => 'abw', 'application/x-ace-compressed' => 'ace', 'application/x-apple-diskimage' => 'dmg', 'application/x-authorware-bin' => 'aab', 'application/x-authorware-map' => 'aam', 'application/x-authorware-seg' => 'aas', 'application/x-bcpio' => 'bcpio', 'application/x-bittorrent' => 'torrent', 'application/x-blorb' => 'blb', 'application/x-bzip' => 'bz', 'application/x-bzip2' => 'bz2', 'application/x-cbr' => 'cbr', 'application/x-cdlink' => 'vcd', 'application/x-cfs-compressed' => 'cfs', 'application/x-chat' => 'chat', 'application/x-chess-pgn' => 'pgn', 'application/x-conference' => 'nsc', 'application/x-cpio' => 'cpio', 'application/x-csh' => 'csh', 'application/x-debian-package' => 'deb', 'application/x-dgc-compressed' => 'dgc', 'application/x-director' => 'dir', 'application/x-doom' => 'wad', 'application/x-dtbncx+xml' => 'ncx', 'application/x-dtbook+xml' => 'dtb', 'application/x-dtbresource+xml' => 'res', 'application/x-dvi' => 'dvi', 'application/x-envoy' => 'evy', 'application/x-eva' => 'eva', 'application/x-font-bdf' => 'bdf', 'application/x-font-ghostscript' => 'gsf', 'application/x-font-linux-psf' => 'psf', 'application/x-font-otf' => 'otf', 'application/x-font-pcf' => 'pcf', 'application/x-font-snf' => 'snf', 'application/x-font-ttf' => 'ttf', 'application/x-font-type1' => 'pfa', 'application/x-font-woff' => 'woff', 'application/x-freearc' => 'arc', 'application/x-futuresplash' => 'spl', 'application/x-gca-compressed' => 'gca', 'application/x-glulx' => 'ulx', 'application/x-gnumeric' => 'gnumeric', 'application/x-gramps-xml' => 'gramps', 'application/x-gtar' => 'gtar', 'application/x-hdf' => 'hdf', 'application/x-install-instructions' => 'install', 'application/x-iso9660-image' => 'iso', 'application/x-java-jnlp-file' => 'jnlp', 'application/x-latex' => 'latex', 'application/x-lzh-compressed' => 'lzh', 'application/x-mie' => 'mie', 'application/x-mobipocket-ebook' => 'prc', 'application/x-ms-application' => 'application', 'application/x-ms-shortcut' => 'lnk', 'application/x-ms-wmd' => 'wmd', 'application/x-ms-wmz' => 'wmz', 'application/x-ms-xbap' => 'xbap', 'application/x-msaccess' => 'mdb', 'application/x-msbinder' => 'obd', 'application/x-mscardfile' => 'crd', 'application/x-msclip' => 'clp', 'application/x-msdownload' => 'exe', 'application/x-msmediaview' => 'mvb', 'application/x-msmetafile' => 'wmf', 'application/x-msmoney' => 'mny', 'application/x-mspublisher' => 'pub', 'application/x-msschedule' => 'scd', 'application/x-msterminal' => 'trm', 'application/x-mswrite' => 'wri', 'application/x-netcdf' => 'nc', 'application/x-nzb' => 'nzb', 'application/x-pkcs12' => 'p12', 'application/x-pkcs7-certificates' => 'p7b', 'application/x-pkcs7-certreqresp' => 'p7r', 'application/x-rar-compressed' => 'rar', 'application/x-rar' => 'rar', 'application/x-research-info-systems' => 'ris', 'application/x-sh' => 'sh', 'application/x-shar' => 'shar', 'application/x-shockwave-flash' => 'swf', 'application/x-silverlight-app' => 'xap', 'application/x-sql' => 'sql', 'application/x-stuffit' => 'sit', 'application/x-stuffitx' => 'sitx', 'application/x-subrip' => 'srt', 'application/x-sv4cpio' => 'sv4cpio', 'application/x-sv4crc' => 'sv4crc', 'application/x-t3vm-image' => 't3', 'application/x-tads' => 'gam', 'application/x-tar' => 'tar', 'application/x-tcl' => 'tcl', 'application/x-tex' => 'tex', 'application/x-tex-tfm' => 'tfm', 'application/x-texinfo' => 'texinfo', 'application/x-tgif' => 'obj', 'application/x-ustar' => 'ustar', 'application/x-wais-source' => 'src', 'application/x-x509-ca-cert' => 'der', 'application/x-xfig' => 'fig', 'application/x-xliff+xml' => 'xlf', 'application/x-xpinstall' => 'xpi', 'application/x-xz' => 'xz', 'application/x-zmachine' => 'z1', 'application/xaml+xml' => 'xaml', 'application/xcap-diff+xml' => 'xdf', 'application/xenc+xml' => 'xenc', 'application/xhtml+xml' => 'xhtml', 'application/xml' => 'xml', 'application/xml-dtd' => 'dtd', 'application/xop+xml' => 'xop', 'application/xproc+xml' => 'xpl', 'application/xslt+xml' => 'xslt', 'application/xspf+xml' => 'xspf', 'application/xv+xml' => 'mxml', 'application/yang' => 'yang', 'application/yin+xml' => 'yin', 'application/zip' => 'zip', 'audio/adpcm' => 'adp', 'audio/basic' => 'au', 'audio/midi' => 'mid', 'audio/mp4' => 'mp4a', 'audio/mpeg' => 'mp3', 'audio/ogg' => 'oga', 'audio/s3m' => 's3m', 'audio/silk' => 'sil', 'audio/vnd.dece.audio' => 'uva', 'audio/vnd.digital-winds' => 'eol', 'audio/vnd.dra' => 'dra', 'audio/vnd.dts' => 'dts', 'audio/vnd.dts.hd' => 'dtshd', 'audio/vnd.lucent.voice' => 'lvp', 'audio/vnd.ms-playready.media.pya' => 'pya', 'audio/vnd.nuera.ecelp4800' => 'ecelp4800', 'audio/vnd.nuera.ecelp7470' => 'ecelp7470', 'audio/vnd.nuera.ecelp9600' => 'ecelp9600', 'audio/vnd.rip' => 'rip', 'audio/webm' => 'weba', 'audio/x-aac' => 'aac', 'audio/x-aiff' => 'aif', 'audio/x-caf' => 'caf', 'audio/x-flac' => 'flac', 'audio/x-matroska' => 'mka', 'audio/x-mpegurl' => 'm3u', 'audio/x-ms-wax' => 'wax', 'audio/x-ms-wma' => 'wma', 'audio/x-pn-realaudio' => 'ram', 'audio/x-pn-realaudio-plugin' => 'rmp', 'audio/x-wav' => 'wav', 'audio/wav' => 'wav', 'audio/xm' => 'xm', 'chemical/x-cdx' => 'cdx', 'chemical/x-cif' => 'cif', 'chemical/x-cmdf' => 'cmdf', 'chemical/x-cml' => 'cml', 'chemical/x-csml' => 'csml', 'chemical/x-xyz' => 'xyz', 'image/bmp' => 'bmp', 'image/x-ms-bmp' => 'bmp', 'image/cgm' => 'cgm', 'image/g3fax' => 'g3', 'image/gif' => 'gif', 'image/ief' => 'ief', 'image/jpeg' => 'jpeg', 'image/pjpeg' => 'jpeg', 'image/ktx' => 'ktx', 'image/png' => 'png', 'image/prs.btif' => 'btif', 'image/sgi' => 'sgi', 'image/svg+xml' => 'svg', 'image/tiff' => 'tiff', 'image/vnd.adobe.photoshop' => 'psd', 'image/vnd.dece.graphic' => 'uvi', 'image/vnd.dvb.subtitle' => 'sub', 'image/vnd.djvu' => 'djvu', 'image/vnd.dwg' => 'dwg', 'image/vnd.dxf' => 'dxf', 'image/vnd.fastbidsheet' => 'fbs', 'image/vnd.fpx' => 'fpx', 'image/vnd.fst' => 'fst', 'image/vnd.fujixerox.edmics-mmr' => 'mmr', 'image/vnd.fujixerox.edmics-rlc' => 'rlc', 'image/vnd.ms-modi' => 'mdi', 'image/vnd.ms-photo' => 'wdp', 'image/vnd.net-fpx' => 'npx', 'image/vnd.wap.wbmp' => 'wbmp', 'image/vnd.xiff' => 'xif', 'image/webp' => 'webp', 'image/x-3ds' => '3ds', 'image/x-cmu-raster' => 'ras', 'image/x-cmx' => 'cmx', 'image/x-freehand' => 'fh', 'image/x-icon' => 'ico', 'image/x-mrsid-image' => 'sid', 'image/x-pcx' => 'pcx', 'image/x-pict' => 'pic', 'image/x-portable-anymap' => 'pnm', 'image/x-portable-bitmap' => 'pbm', 'image/x-portable-graymap' => 'pgm', 'image/x-portable-pixmap' => 'ppm', 'image/x-rgb' => 'rgb', 'image/x-tga' => 'tga', 'image/x-xbitmap' => 'xbm', 'image/x-xpixmap' => 'xpm', 'image/x-xwindowdump' => 'xwd', 'message/rfc822' => 'eml', 'model/iges' => 'igs', 'model/mesh' => 'msh', 'model/vnd.collada+xml' => 'dae', 'model/vnd.dwf' => 'dwf', 'model/vnd.gdl' => 'gdl', 'model/vnd.gtw' => 'gtw', 'model/vnd.mts' => 'mts', 'model/vnd.vtu' => 'vtu', 'model/vrml' => 'wrl', 'model/x3d+binary' => 'x3db', 'model/x3d+vrml' => 'x3dv', 'model/x3d+xml' => 'x3d', 'text/cache-manifest' => 'appcache', 'text/calendar' => 'ics', 'text/css' => 'css', 'text/csv' => 'csv', 'text/html' => 'html', 'text/n3' => 'n3', 'text/plain' => 'txt', 'text/prs.lines.tag' => 'dsc', 'text/richtext' => 'rtx', 'text/rtf' => 'rtf', 'text/sgml' => 'sgml', 'text/tab-separated-values' => 'tsv', 'text/troff' => 't', 'text/turtle' => 'ttl', 'text/uri-list' => 'uri', 'text/vcard' => 'vcard', 'text/vnd.curl' => 'curl', 'text/vnd.curl.dcurl' => 'dcurl', 'text/vnd.curl.scurl' => 'scurl', 'text/vnd.curl.mcurl' => 'mcurl', 'text/vnd.dvb.subtitle' => 'sub', 'text/vnd.fly' => 'fly', 'text/vnd.fmi.flexstor' => 'flx', 'text/vnd.graphviz' => 'gv', 'text/vnd.in3d.3dml' => '3dml', 'text/vnd.in3d.spot' => 'spot', 'text/vnd.sun.j2me.app-descriptor' => 'jad', 'text/vnd.wap.wml' => 'wml', 'text/vnd.wap.wmlscript' => 'wmls', 'text/vtt' => 'vtt', 'text/x-asm' => 's', 'text/x-c' => 'c', 'text/x-fortran' => 'f', 'text/x-pascal' => 'p', 'text/x-java-source' => 'java', 'text/x-opml' => 'opml', 'text/x-nfo' => 'nfo', 'text/x-setext' => 'etx', 'text/x-sfv' => 'sfv', 'text/x-uuencode' => 'uu', 'text/x-vcalendar' => 'vcs', 'text/x-vcard' => 'vcf', 'video/3gpp' => '3gp', 'video/3gpp2' => '3g2', 'video/h261' => 'h261', 'video/h263' => 'h263', 'video/h264' => 'h264', 'video/jpeg' => 'jpgv', 'video/jpm' => 'jpm', 'video/mj2' => 'mj2', 'video/mp4' => 'mp4', 'video/mpeg' => 'mpeg', 'video/ogg' => 'ogv', 'video/quicktime' => 'qt', 'video/vnd.dece.hd' => 'uvh', 'video/vnd.dece.mobile' => 'uvm', 'video/vnd.dece.pd' => 'uvp', 'video/vnd.dece.sd' => 'uvs', 'video/vnd.dece.video' => 'uvv', 'video/vnd.dvb.file' => 'dvb', 'video/vnd.fvt' => 'fvt', 'video/vnd.mpegurl' => 'mxu', 'video/vnd.ms-playready.media.pyv' => 'pyv', 'video/vnd.uvvu.mp4' => 'uvu', 'video/vnd.vivo' => 'viv', 'video/webm' => 'webm', 'video/x-f4v' => 'f4v', 'video/x-fli' => 'fli', 'video/x-flv' => 'flv', 'video/x-m4v' => 'm4v', 'video/x-matroska' => 'mkv', 'video/x-mng' => 'mng', 'video/x-ms-asf' => 'asf', 'video/x-ms-vob' => 'vob', 'video/x-ms-wm' => 'wm', 'video/x-ms-wmv' => 'wmv', 'video/x-ms-wmx' => 'wmx', 'video/x-ms-wvx' => 'wvx', 'video/x-msvideo' => 'avi', 'video/avi' => 'avi', 'video/x-sgi-movie' => 'movie', 'video/x-smv' => 'smv', 'x-conference/x-cooltalk' => 'ice'];
+        protected $defaultExtensions = ['application/andrew-inset' => 'ez', 'application/applixware' => 'aw', 'application/atom+xml' => 'atom', 'application/atomcat+xml' => 'atomcat', 'application/atomsvc+xml' => 'atomsvc', 'application/ccxml+xml' => 'ccxml', 'application/cdmi-capability' => 'cdmia', 'application/cdmi-container' => 'cdmic', 'application/cdmi-domain' => 'cdmid', 'application/cdmi-object' => 'cdmio', 'application/cdmi-queue' => 'cdmiq', 'application/cu-seeme' => 'cu', 'application/davmount+xml' => 'davmount', 'application/docbook+xml' => 'dbk', 'application/dssc+der' => 'dssc', 'application/dssc+xml' => 'xdssc', 'application/ecmascript' => 'ecma', 'application/emma+xml' => 'emma', 'application/epub+zip' => 'epub', 'application/exi' => 'exi', 'application/font-tdpfr' => 'pfr', 'application/gml+xml' => 'gml', 'application/gpx+xml' => 'gpx', 'application/gxf' => 'gxf', 'application/hyperstudio' => 'stk', 'application/inkml+xml' => 'ink', 'application/ipfix' => 'ipfix', 'application/java-archive' => 'jar', 'application/java-serialized-object' => 'ser', 'application/java-vm' => 'class', 'application/javascript' => 'js', 'application/json' => 'json', 'application/jsonml+json' => 'jsonml', 'application/lost+xml' => 'lostxml', 'application/mac-binhex40' => 'hqx', 'application/mac-compactpro' => 'cpt', 'application/mads+xml' => 'mads', 'application/marc' => 'mrc', 'application/marcxml+xml' => 'mrcx', 'application/mathematica' => 'ma', 'application/mathml+xml' => 'mathml', 'application/mbox' => 'mbox', 'application/mediaservercontrol+xml' => 'mscml', 'application/metalink+xml' => 'metalink', 'application/metalink4+xml' => 'meta4', 'application/mets+xml' => 'mets', 'application/mods+xml' => 'mods', 'application/mp21' => 'm21', 'application/mp4' => 'mp4s', 'application/msword' => 'doc', 'application/mxf' => 'mxf', 'application/octet-stream' => 'bin', 'application/oda' => 'oda', 'application/oebps-package+xml' => 'opf', 'application/ogg' => 'ogx', 'application/omdoc+xml' => 'omdoc', 'application/onenote' => 'onetoc', 'application/oxps' => 'oxps', 'application/patch-ops-error+xml' => 'xer', 'application/pdf' => 'pdf', 'application/pgp-encrypted' => 'pgp', 'application/pgp-signature' => 'asc', 'application/pics-rules' => 'prf', 'application/pkcs10' => 'p10', 'application/pkcs7-mime' => 'p7m', 'application/pkcs7-signature' => 'p7s', 'application/pkcs8' => 'p8', 'application/pkix-attr-cert' => 'ac', 'application/pkix-cert' => 'cer', 'application/pkix-crl' => 'crl', 'application/pkix-pkipath' => 'pkipath', 'application/pkixcmp' => 'pki', 'application/pls+xml' => 'pls', 'application/postscript' => 'ai', 'application/prs.cww' => 'cww', 'application/pskc+xml' => 'pskcxml', 'application/rdf+xml' => 'rdf', 'application/reginfo+xml' => 'rif', 'application/relax-ng-compact-syntax' => 'rnc', 'application/resource-lists+xml' => 'rl', 'application/resource-lists-diff+xml' => 'rld', 'application/rls-services+xml' => 'rs', 'application/rpki-ghostbusters' => 'gbr', 'application/rpki-manifest' => 'mft', 'application/rpki-roa' => 'roa', 'application/rsd+xml' => 'rsd', 'application/rss+xml' => 'rss', 'application/rtf' => 'rtf', 'application/sbml+xml' => 'sbml', 'application/scvp-cv-request' => 'scq', 'application/scvp-cv-response' => 'scs', 'application/scvp-vp-request' => 'spq', 'application/scvp-vp-response' => 'spp', 'application/sdp' => 'sdp', 'application/set-payment-initiation' => 'setpay', 'application/set-registration-initiation' => 'setreg', 'application/shf+xml' => 'shf', 'application/smil+xml' => 'smi', 'application/sparql-query' => 'rq', 'application/sparql-results+xml' => 'srx', 'application/srgs' => 'gram', 'application/srgs+xml' => 'grxml', 'application/sru+xml' => 'sru', 'application/ssdl+xml' => 'ssdl', 'application/ssml+xml' => 'ssml', 'application/tei+xml' => 'tei', 'application/thraud+xml' => 'tfi', 'application/timestamped-data' => 'tsd', 'application/vnd.3gpp.pic-bw-large' => 'plb', 'application/vnd.3gpp.pic-bw-small' => 'psb', 'application/vnd.3gpp.pic-bw-var' => 'pvb', 'application/vnd.3gpp2.tcap' => 'tcap', 'application/vnd.3m.post-it-notes' => 'pwn', 'application/vnd.accpac.simply.aso' => 'aso', 'application/vnd.accpac.simply.imp' => 'imp', 'application/vnd.acucobol' => 'acu', 'application/vnd.acucorp' => 'atc', 'application/vnd.adobe.air-application-installer-package+zip' => 'air', 'application/vnd.adobe.formscentral.fcdt' => 'fcdt', 'application/vnd.adobe.fxp' => 'fxp', 'application/vnd.adobe.xdp+xml' => 'xdp', 'application/vnd.adobe.xfdf' => 'xfdf', 'application/vnd.ahead.space' => 'ahead', 'application/vnd.airzip.filesecure.azf' => 'azf', 'application/vnd.airzip.filesecure.azs' => 'azs', 'application/vnd.amazon.ebook' => 'azw', 'application/vnd.americandynamics.acc' => 'acc', 'application/vnd.amiga.ami' => 'ami', 'application/vnd.android.package-archive' => 'apk', 'application/vnd.anser-web-certificate-issue-initiation' => 'cii', 'application/vnd.anser-web-funds-transfer-initiation' => 'fti', 'application/vnd.antix.game-component' => 'atx', 'application/vnd.apple.installer+xml' => 'mpkg', 'application/vnd.apple.mpegurl' => 'm3u8', 'application/vnd.aristanetworks.swi' => 'swi', 'application/vnd.astraea-software.iota' => 'iota', 'application/vnd.audiograph' => 'aep', 'application/vnd.blueice.multipass' => 'mpm', 'application/vnd.bmi' => 'bmi', 'application/vnd.businessobjects' => 'rep', 'application/vnd.chemdraw+xml' => 'cdxml', 'application/vnd.chipnuts.karaoke-mmd' => 'mmd', 'application/vnd.cinderella' => 'cdy', 'application/vnd.claymore' => 'cla', 'application/vnd.cloanto.rp9' => 'rp9', 'application/vnd.clonk.c4group' => 'c4g', 'application/vnd.cluetrust.cartomobile-config' => 'c11amc', 'application/vnd.cluetrust.cartomobile-config-pkg' => 'c11amz', 'application/vnd.commonspace' => 'csp', 'application/vnd.contact.cmsg' => 'cdbcmsg', 'application/vnd.cosmocaller' => 'cmc', 'application/vnd.crick.clicker' => 'clkx', 'application/vnd.crick.clicker.keyboard' => 'clkk', 'application/vnd.crick.clicker.palette' => 'clkp', 'application/vnd.crick.clicker.template' => 'clkt', 'application/vnd.crick.clicker.wordbank' => 'clkw', 'application/vnd.criticaltools.wbs+xml' => 'wbs', 'application/vnd.ctc-posml' => 'pml', 'application/vnd.cups-ppd' => 'ppd', 'application/vnd.curl.car' => 'car', 'application/vnd.curl.pcurl' => 'pcurl', 'application/vnd.dart' => 'dart', 'application/vnd.data-vision.rdz' => 'rdz', 'application/vnd.dece.data' => 'uvf', 'application/vnd.dece.ttml+xml' => 'uvt', 'application/vnd.dece.unspecified' => 'uvx', 'application/vnd.dece.zip' => 'uvz', 'application/vnd.denovo.fcselayout-link' => 'fe_launch', 'application/vnd.dna' => 'dna', 'application/vnd.dolby.mlp' => 'mlp', 'application/vnd.dpgraph' => 'dpg', 'application/vnd.dreamfactory' => 'dfac', 'application/vnd.ds-keypoint' => 'kpxx', 'application/vnd.dvb.ait' => 'ait', 'application/vnd.dvb.service' => 'svc', 'application/vnd.dynageo' => 'geo', 'application/vnd.ecowin.chart' => 'mag', 'application/vnd.enliven' => 'nml', 'application/vnd.epson.esf' => 'esf', 'application/vnd.epson.msf' => 'msf', 'application/vnd.epson.quickanime' => 'qam', 'application/vnd.epson.salt' => 'slt', 'application/vnd.epson.ssf' => 'ssf', 'application/vnd.eszigno3+xml' => 'es3', 'application/vnd.ezpix-album' => 'ez2', 'application/vnd.ezpix-package' => 'ez3', 'application/vnd.fdf' => 'fdf', 'application/vnd.fdsn.mseed' => 'mseed', 'application/vnd.fdsn.seed' => 'seed', 'application/vnd.flographit' => 'gph', 'application/vnd.fluxtime.clip' => 'ftc', 'application/vnd.framemaker' => 'fm', 'application/vnd.frogans.fnc' => 'fnc', 'application/vnd.frogans.ltf' => 'ltf', 'application/vnd.fsc.weblaunch' => 'fsc', 'application/vnd.fujitsu.oasys' => 'oas', 'application/vnd.fujitsu.oasys2' => 'oa2', 'application/vnd.fujitsu.oasys3' => 'oa3', 'application/vnd.fujitsu.oasysgp' => 'fg5', 'application/vnd.fujitsu.oasysprs' => 'bh2', 'application/vnd.fujixerox.ddd' => 'ddd', 'application/vnd.fujixerox.docuworks' => 'xdw', 'application/vnd.fujixerox.docuworks.binder' => 'xbd', 'application/vnd.fuzzysheet' => 'fzs', 'application/vnd.genomatix.tuxedo' => 'txd', 'application/vnd.geogebra.file' => 'ggb', 'application/vnd.geogebra.tool' => 'ggt', 'application/vnd.geometry-explorer' => 'gex', 'application/vnd.geonext' => 'gxt', 'application/vnd.geoplan' => 'g2w', 'application/vnd.geospace' => 'g3w', 'application/vnd.gmx' => 'gmx', 'application/vnd.google-earth.kml+xml' => 'kml', 'application/vnd.google-earth.kmz' => 'kmz', 'application/vnd.grafeq' => 'gqf', 'application/vnd.groove-account' => 'gac', 'application/vnd.groove-help' => 'ghf', 'application/vnd.groove-identity-message' => 'gim', 'application/vnd.groove-injector' => 'grv', 'application/vnd.groove-tool-message' => 'gtm', 'application/vnd.groove-tool-template' => 'tpl', 'application/vnd.groove-vcard' => 'vcg', 'application/vnd.hal+xml' => 'hal', 'application/vnd.handheld-entertainment+xml' => 'zmm', 'application/vnd.hbci' => 'hbci', 'application/vnd.hhe.lesson-player' => 'les', 'application/vnd.hp-hpgl' => 'hpgl', 'application/vnd.hp-hpid' => 'hpid', 'application/vnd.hp-hps' => 'hps', 'application/vnd.hp-jlyt' => 'jlt', 'application/vnd.hp-pcl' => 'pcl', 'application/vnd.hp-pclxl' => 'pclxl', 'application/vnd.hydrostatix.sof-data' => 'sfd-hdstx', 'application/vnd.ibm.minipay' => 'mpy', 'application/vnd.ibm.modcap' => 'afp', 'application/vnd.ibm.rights-management' => 'irm', 'application/vnd.ibm.secure-container' => 'sc', 'application/vnd.iccprofile' => 'icc', 'application/vnd.igloader' => 'igl', 'application/vnd.immervision-ivp' => 'ivp', 'application/vnd.immervision-ivu' => 'ivu', 'application/vnd.insors.igm' => 'igm', 'application/vnd.intercon.formnet' => 'xpw', 'application/vnd.intergeo' => 'i2g', 'application/vnd.intu.qbo' => 'qbo', 'application/vnd.intu.qfx' => 'qfx', 'application/vnd.ipunplugged.rcprofile' => 'rcprofile', 'application/vnd.irepository.package+xml' => 'irp', 'application/vnd.is-xpr' => 'xpr', 'application/vnd.isac.fcs' => 'fcs', 'application/vnd.jam' => 'jam', 'application/vnd.jcp.javame.midlet-rms' => 'rms', 'application/vnd.jisp' => 'jisp', 'application/vnd.joost.joda-archive' => 'joda', 'application/vnd.kahootz' => 'ktz', 'application/vnd.kde.karbon' => 'karbon', 'application/vnd.kde.kchart' => 'chrt', 'application/vnd.kde.kformula' => 'kfo', 'application/vnd.kde.kivio' => 'flw', 'application/vnd.kde.kontour' => 'kon', 'application/vnd.kde.kpresenter' => 'kpr', 'application/vnd.kde.kspread' => 'ksp', 'application/vnd.kde.kword' => 'kwd', 'application/vnd.kenameaapp' => 'htke', 'application/vnd.kidspiration' => 'kia', 'application/vnd.kinar' => 'kne', 'application/vnd.koan' => 'skp', 'application/vnd.kodak-descriptor' => 'sse', 'application/vnd.las.las+xml' => 'lasxml', 'application/vnd.llamagraphics.life-balance.desktop' => 'lbd', 'application/vnd.llamagraphics.life-balance.exchange+xml' => 'lbe', 'application/vnd.lotus-1-2-3' => '123', 'application/vnd.lotus-approach' => 'apr', 'application/vnd.lotus-freelance' => 'pre', 'application/vnd.lotus-notes' => 'nsf', 'application/vnd.lotus-organizer' => 'org', 'application/vnd.lotus-screencam' => 'scm', 'application/vnd.lotus-wordpro' => 'lwp', 'application/vnd.macports.portpkg' => 'portpkg', 'application/vnd.mcd' => 'mcd', 'application/vnd.medcalcdata' => 'mc1', 'application/vnd.mediastation.cdkey' => 'cdkey', 'application/vnd.mfer' => 'mwf', 'application/vnd.mfmp' => 'mfm', 'application/vnd.micrografx.flo' => 'flo', 'application/vnd.micrografx.igx' => 'igx', 'application/vnd.mif' => 'mif', 'application/vnd.mobius.daf' => 'daf', 'application/vnd.mobius.dis' => 'dis', 'application/vnd.mobius.mbk' => 'mbk', 'application/vnd.mobius.mqy' => 'mqy', 'application/vnd.mobius.msl' => 'msl', 'application/vnd.mobius.plc' => 'plc', 'application/vnd.mobius.txf' => 'txf', 'application/vnd.mophun.application' => 'mpn', 'application/vnd.mophun.certificate' => 'mpc', 'application/vnd.mozilla.xul+xml' => 'xul', 'application/vnd.ms-artgalry' => 'cil', 'application/vnd.ms-cab-compressed' => 'cab', 'application/vnd.ms-excel' => 'xls', 'application/vnd.ms-excel.addin.macroenabled.12' => 'xlam', 'application/vnd.ms-excel.sheet.binary.macroenabled.12' => 'xlsb', 'application/vnd.ms-excel.sheet.macroenabled.12' => 'xlsm', 'application/vnd.ms-excel.template.macroenabled.12' => 'xltm', 'application/vnd.ms-fontobject' => 'eot', 'application/vnd.ms-htmlhelp' => 'chm', 'application/vnd.ms-ims' => 'ims', 'application/vnd.ms-lrm' => 'lrm', 'application/vnd.ms-officetheme' => 'thmx', 'application/vnd.ms-pki.seccat' => 'cat', 'application/vnd.ms-pki.stl' => 'stl', 'application/vnd.ms-powerpoint' => 'ppt', 'application/vnd.ms-powerpoint.addin.macroenabled.12' => 'ppam', 'application/vnd.ms-powerpoint.presentation.macroenabled.12' => 'pptm', 'application/vnd.ms-powerpoint.slide.macroenabled.12' => 'sldm', 'application/vnd.ms-powerpoint.slideshow.macroenabled.12' => 'ppsm', 'application/vnd.ms-powerpoint.template.macroenabled.12' => 'potm', 'application/vnd.ms-project' => 'mpp', 'application/vnd.ms-word.document.macroenabled.12' => 'docm', 'application/vnd.ms-word.template.macroenabled.12' => 'dotm', 'application/vnd.ms-works' => 'wps', 'application/vnd.ms-wpl' => 'wpl', 'application/vnd.ms-xpsdocument' => 'xps', 'application/vnd.mseq' => 'mseq', 'application/vnd.musician' => 'mus', 'application/vnd.muvee.style' => 'msty', 'application/vnd.mynfc' => 'taglet', 'application/vnd.neurolanguage.nlu' => 'nlu', 'application/vnd.nitf' => 'ntf', 'application/vnd.noblenet-directory' => 'nnd', 'application/vnd.noblenet-sealer' => 'nns', 'application/vnd.noblenet-web' => 'nnw', 'application/vnd.nokia.n-gage.data' => 'ngdat', 'application/vnd.nokia.n-gage.symbian.install' => 'n-gage', 'application/vnd.nokia.radio-preset' => 'rpst', 'application/vnd.nokia.radio-presets' => 'rpss', 'application/vnd.novadigm.edm' => 'edm', 'application/vnd.novadigm.edx' => 'edx', 'application/vnd.novadigm.ext' => 'ext', 'application/vnd.oasis.opendocument.chart' => 'odc', 'application/vnd.oasis.opendocument.chart-template' => 'otc', 'application/vnd.oasis.opendocument.database' => 'odb', 'application/vnd.oasis.opendocument.formula' => 'odf', 'application/vnd.oasis.opendocument.formula-template' => 'odft', 'application/vnd.oasis.opendocument.graphics' => 'odg', 'application/vnd.oasis.opendocument.graphics-template' => 'otg', 'application/vnd.oasis.opendocument.image' => 'odi', 'application/vnd.oasis.opendocument.image-template' => 'oti', 'application/vnd.oasis.opendocument.presentation' => 'odp', 'application/vnd.oasis.opendocument.presentation-template' => 'otp', 'application/vnd.oasis.opendocument.spreadsheet' => 'ods', 'application/vnd.oasis.opendocument.spreadsheet-template' => 'ots', 'application/vnd.oasis.opendocument.text' => 'odt', 'application/vnd.oasis.opendocument.text-master' => 'odm', 'application/vnd.oasis.opendocument.text-template' => 'ott', 'application/vnd.oasis.opendocument.text-web' => 'oth', 'application/vnd.olpc-sugar' => 'xo', 'application/vnd.oma.dd2+xml' => 'dd2', 'application/vnd.openofficeorg.extension' => 'oxt', 'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'pptx', 'application/vnd.openxmlformats-officedocument.presentationml.slide' => 'sldx', 'application/vnd.openxmlformats-officedocument.presentationml.slideshow' => 'ppsx', 'application/vnd.openxmlformats-officedocument.presentationml.template' => 'potx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.template' => 'xltx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.template' => 'dotx', 'application/vnd.osgeo.mapguide.package' => 'mgp', 'application/vnd.osgi.dp' => 'dp', 'application/vnd.osgi.subsystem' => 'esa', 'application/vnd.palm' => 'pdb', 'application/vnd.pawaafile' => 'paw', 'application/vnd.pg.format' => 'str', 'application/vnd.pg.osasli' => 'ei6', 'application/vnd.picsel' => 'efif', 'application/vnd.pmi.widget' => 'wg', 'application/vnd.pocketlearn' => 'plf', 'application/vnd.powerbuilder6' => 'pbd', 'application/vnd.previewsystems.box' => 'box', 'application/vnd.proteus.magazine' => 'mgz', 'application/vnd.publishare-delta-tree' => 'qps', 'application/vnd.pvi.ptid1' => 'ptid', 'application/vnd.quark.quarkxpress' => 'qxd', 'application/vnd.realvnc.bed' => 'bed', 'application/vnd.recordare.musicxml' => 'mxl', 'application/vnd.recordare.musicxml+xml' => 'musicxml', 'application/vnd.rig.cryptonote' => 'cryptonote', 'application/vnd.rim.cod' => 'cod', 'application/vnd.rn-realmedia' => 'rm', 'application/vnd.rn-realmedia-vbr' => 'rmvb', 'application/vnd.route66.link66+xml' => 'link66', 'application/vnd.sailingtracker.track' => 'st', 'application/vnd.seemail' => 'see', 'application/vnd.sema' => 'sema', 'application/vnd.semd' => 'semd', 'application/vnd.semf' => 'semf', 'application/vnd.shana.informed.formdata' => 'ifm', 'application/vnd.shana.informed.formtemplate' => 'itp', 'application/vnd.shana.informed.interchange' => 'iif', 'application/vnd.shana.informed.package' => 'ipk', 'application/vnd.simtech-mindmapper' => 'twd', 'application/vnd.smaf' => 'mmf', 'application/vnd.smart.teacher' => 'teacher', 'application/vnd.solent.sdkm+xml' => 'sdkm', 'application/vnd.spotfire.dxp' => 'dxp', 'application/vnd.spotfire.sfs' => 'sfs', 'application/vnd.stardivision.calc' => 'sdc', 'application/vnd.stardivision.draw' => 'sda', 'application/vnd.stardivision.impress' => 'sdd', 'application/vnd.stardivision.math' => 'smf', 'application/vnd.stardivision.writer' => 'sdw', 'application/vnd.stardivision.writer-global' => 'sgl', 'application/vnd.stepmania.package' => 'smzip', 'application/vnd.stepmania.stepchart' => 'sm', 'application/vnd.sun.xml.calc' => 'sxc', 'application/vnd.sun.xml.calc.template' => 'stc', 'application/vnd.sun.xml.draw' => 'sxd', 'application/vnd.sun.xml.draw.template' => 'std', 'application/vnd.sun.xml.impress' => 'sxi', 'application/vnd.sun.xml.impress.template' => 'sti', 'application/vnd.sun.xml.math' => 'sxm', 'application/vnd.sun.xml.writer' => 'sxw', 'application/vnd.sun.xml.writer.global' => 'sxg', 'application/vnd.sun.xml.writer.template' => 'stw', 'application/vnd.sus-calendar' => 'sus', 'application/vnd.svd' => 'svd', 'application/vnd.symbian.install' => 'sis', 'application/vnd.syncml+xml' => 'xsm', 'application/vnd.syncml.dm+wbxml' => 'bdm', 'application/vnd.syncml.dm+xml' => 'xdm', 'application/vnd.tao.intent-module-archive' => 'tao', 'application/vnd.tcpdump.pcap' => 'pcap', 'application/vnd.tmobile-livetv' => 'tmo', 'application/vnd.trid.tpt' => 'tpt', 'application/vnd.triscape.mxs' => 'mxs', 'application/vnd.trueapp' => 'tra', 'application/vnd.ufdl' => 'ufd', 'application/vnd.uiq.theme' => 'utz', 'application/vnd.umajin' => 'umj', 'application/vnd.unity' => 'unityweb', 'application/vnd.uoml+xml' => 'uoml', 'application/vnd.vcx' => 'vcx', 'application/vnd.visio' => 'vsd', 'application/vnd.visionary' => 'vis', 'application/vnd.vsf' => 'vsf', 'application/vnd.wap.wbxml' => 'wbxml', 'application/vnd.wap.wmlc' => 'wmlc', 'application/vnd.wap.wmlscriptc' => 'wmlsc', 'application/vnd.webturbo' => 'wtb', 'application/vnd.wolfram.player' => 'nbp', 'application/vnd.wordperfect' => 'wpd', 'application/vnd.wqd' => 'wqd', 'application/vnd.wt.stf' => 'stf', 'application/vnd.xara' => 'xar', 'application/vnd.xfdl' => 'xfdl', 'application/vnd.yamaha.hv-dic' => 'hvd', 'application/vnd.yamaha.hv-script' => 'hvs', 'application/vnd.yamaha.hv-voice' => 'hvp', 'application/vnd.yamaha.openscoreformat' => 'osf', 'application/vnd.yamaha.openscoreformat.osfpvg+xml' => 'osfpvg', 'application/vnd.yamaha.smaf-audio' => 'saf', 'application/vnd.yamaha.smaf-phrase' => 'spf', 'application/vnd.yellowriver-custom-menu' => 'cmp', 'application/vnd.zul' => 'zir', 'application/vnd.zzazz.deck+xml' => 'zaz', 'application/voicexml+xml' => 'vxml', 'application/widget' => 'wgt', 'application/winhlp' => 'hlp', 'application/wsdl+xml' => 'wsdl', 'application/wspolicy+xml' => 'wspolicy', 'application/x-7z-compressed' => '7z', 'application/x-abiword' => 'abw', 'application/x-ace-compressed' => 'ace', 'application/x-apple-diskimage' => 'dmg', 'application/x-authorware-bin' => 'aab', 'application/x-authorware-map' => 'aam', 'application/x-authorware-seg' => 'aas', 'application/x-bcpio' => 'bcpio', 'application/x-bittorrent' => 'torrent', 'application/x-blorb' => 'blb', 'application/x-bzip' => 'bz', 'application/x-bzip2' => 'bz2', 'application/x-cbr' => 'cbr', 'application/x-cdlink' => 'vcd', 'application/x-cfs-compressed' => 'cfs', 'application/x-chat' => 'chat', 'application/x-chess-pgn' => 'pgn', 'application/x-conference' => 'nsc', 'application/x-cpio' => 'cpio', 'application/x-csh' => 'csh', 'application/x-debian-package' => 'deb', 'application/x-dgc-compressed' => 'dgc', 'application/x-director' => 'dir', 'application/x-doom' => 'wad', 'application/x-dtbncx+xml' => 'ncx', 'application/x-dtbook+xml' => 'dtb', 'application/x-dtbresource+xml' => 'res', 'application/x-dvi' => 'dvi', 'application/x-envoy' => 'evy', 'application/x-eva' => 'eva', 'application/x-font-bdf' => 'bdf', 'application/x-font-ghostscript' => 'gsf', 'application/x-font-linux-psf' => 'psf', 'application/x-font-otf' => 'otf', 'application/x-font-pcf' => 'pcf', 'application/x-font-snf' => 'snf', 'application/x-font-ttf' => 'ttf', 'application/x-font-type1' => 'pfa', 'application/x-font-woff' => 'woff', 'application/x-freearc' => 'arc', 'application/x-futuresplash' => 'spl', 'application/x-gca-compressed' => 'gca', 'application/x-glulx' => 'ulx', 'application/x-gnumeric' => 'gnumeric', 'application/x-gramps-xml' => 'gramps', 'application/x-gtar' => 'gtar', 'application/x-hdf' => 'hdf', 'application/x-install-instructions' => 'install', 'application/x-iso9660-image' => 'iso', 'application/x-java-jnlp-file' => 'jnlp', 'application/x-latex' => 'latex', 'application/x-lzh-compressed' => 'lzh', 'application/x-mie' => 'mie', 'application/x-mobipocket-ebook' => 'prc', 'application/x-ms-application' => 'application', 'application/x-ms-shortcut' => 'lnk', 'application/x-ms-wmd' => 'wmd', 'application/x-ms-wmz' => 'wmz', 'application/x-ms-xbap' => 'xbap', 'application/x-msaccess' => 'mdb', 'application/x-msbinder' => 'obd', 'application/x-mscardfile' => 'crd', 'application/x-msclip' => 'clp', 'application/x-msdownload' => 'exe', 'application/x-msmediaview' => 'mvb', 'application/x-msmetafile' => 'wmf', 'application/x-msmoney' => 'mny', 'application/x-mspublisher' => 'pub', 'application/x-msschedule' => 'scd', 'application/x-msterminal' => 'trm', 'application/x-mswrite' => 'wri', 'application/x-netcdf' => 'nc', 'application/x-nzb' => 'nzb', 'application/x-pkcs12' => 'p12', 'application/x-pkcs7-certificates' => 'p7b', 'application/x-pkcs7-certreqresp' => 'p7r', 'application/x-rar-compressed' => 'rar', 'application/x-rar' => 'rar', 'application/x-research-info-systems' => 'ris', 'application/x-sh' => 'sh', 'application/x-shar' => 'shar', 'application/x-shockwave-flash' => 'swf', 'application/x-silverlight-app' => 'xap', 'application/x-sql' => 'sql', 'application/x-stuffit' => 'sit', 'application/x-stuffitx' => 'sitx', 'application/x-subrip' => 'srt', 'application/x-sv4cpio' => 'sv4cpio', 'application/x-sv4crc' => 'sv4crc', 'application/x-t3vm-image' => 't3', 'application/x-tads' => 'gam', 'application/x-tar' => 'tar', 'application/x-tcl' => 'tcl', 'application/x-tex' => 'tex', 'application/x-tex-tfm' => 'tfm', 'application/x-texinfo' => 'texinfo', 'application/x-tgif' => 'obj', 'application/x-ustar' => 'ustar', 'application/x-wais-source' => 'src', 'application/x-x509-ca-cert' => 'der', 'application/x-xfig' => 'fig', 'application/x-xliff+xml' => 'xlf', 'application/x-xpinstall' => 'xpi', 'application/x-xz' => 'xz', 'application/x-zmachine' => 'z1', 'application/xaml+xml' => 'xaml', 'application/xcap-diff+xml' => 'xdf', 'application/xenc+xml' => 'xenc', 'application/xhtml+xml' => 'xhtml', 'application/xml' => 'xml', 'application/xml-dtd' => 'dtd', 'application/xop+xml' => 'xop', 'application/xproc+xml' => 'xpl', 'application/xslt+xml' => 'xslt', 'application/xspf+xml' => 'xspf', 'application/xv+xml' => 'mxml', 'application/yang' => 'yang', 'application/yin+xml' => 'yin', 'application/zip' => 'zip', 'audio/adpcm' => 'adp', 'audio/basic' => 'au', 'audio/midi' => 'mid', 'audio/mp4' => 'mp4a', 'audio/mpeg' => 'mpga', 'audio/ogg' => 'oga', 'audio/s3m' => 's3m', 'audio/silk' => 'sil', 'audio/vnd.dece.audio' => 'uva', 'audio/vnd.digital-winds' => 'eol', 'audio/vnd.dra' => 'dra', 'audio/vnd.dts' => 'dts', 'audio/vnd.dts.hd' => 'dtshd', 'audio/vnd.lucent.voice' => 'lvp', 'audio/vnd.ms-playready.media.pya' => 'pya', 'audio/vnd.nuera.ecelp4800' => 'ecelp4800', 'audio/vnd.nuera.ecelp7470' => 'ecelp7470', 'audio/vnd.nuera.ecelp9600' => 'ecelp9600', 'audio/vnd.rip' => 'rip', 'audio/webm' => 'weba', 'audio/x-aac' => 'aac', 'audio/x-aiff' => 'aif', 'audio/x-caf' => 'caf', 'audio/x-flac' => 'flac', 'audio/x-matroska' => 'mka', 'audio/x-mpegurl' => 'm3u', 'audio/x-ms-wax' => 'wax', 'audio/x-ms-wma' => 'wma', 'audio/x-pn-realaudio' => 'ram', 'audio/x-pn-realaudio-plugin' => 'rmp', 'audio/x-wav' => 'wav', 'audio/xm' => 'xm', 'chemical/x-cdx' => 'cdx', 'chemical/x-cif' => 'cif', 'chemical/x-cmdf' => 'cmdf', 'chemical/x-cml' => 'cml', 'chemical/x-csml' => 'csml', 'chemical/x-xyz' => 'xyz', 'image/bmp' => 'bmp', 'image/x-ms-bmp' => 'bmp', 'image/cgm' => 'cgm', 'image/g3fax' => 'g3', 'image/gif' => 'gif', 'image/ief' => 'ief', 'image/jpeg' => 'jpeg', 'image/pjpeg' => 'jpeg', 'image/ktx' => 'ktx', 'image/png' => 'png', 'image/prs.btif' => 'btif', 'image/sgi' => 'sgi', 'image/svg+xml' => 'svg', 'image/tiff' => 'tiff', 'image/vnd.adobe.photoshop' => 'psd', 'image/vnd.dece.graphic' => 'uvi', 'image/vnd.dvb.subtitle' => 'sub', 'image/vnd.djvu' => 'djvu', 'image/vnd.dwg' => 'dwg', 'image/vnd.dxf' => 'dxf', 'image/vnd.fastbidsheet' => 'fbs', 'image/vnd.fpx' => 'fpx', 'image/vnd.fst' => 'fst', 'image/vnd.fujixerox.edmics-mmr' => 'mmr', 'image/vnd.fujixerox.edmics-rlc' => 'rlc', 'image/vnd.ms-modi' => 'mdi', 'image/vnd.ms-photo' => 'wdp', 'image/vnd.net-fpx' => 'npx', 'image/vnd.wap.wbmp' => 'wbmp', 'image/vnd.xiff' => 'xif', 'image/webp' => 'webp', 'image/x-3ds' => '3ds', 'image/x-cmu-raster' => 'ras', 'image/x-cmx' => 'cmx', 'image/x-freehand' => 'fh', 'image/x-icon' => 'ico', 'image/x-mrsid-image' => 'sid', 'image/x-pcx' => 'pcx', 'image/x-pict' => 'pic', 'image/x-portable-anymap' => 'pnm', 'image/x-portable-bitmap' => 'pbm', 'image/x-portable-graymap' => 'pgm', 'image/x-portable-pixmap' => 'ppm', 'image/x-rgb' => 'rgb', 'image/x-tga' => 'tga', 'image/x-xbitmap' => 'xbm', 'image/x-xpixmap' => 'xpm', 'image/x-xwindowdump' => 'xwd', 'message/rfc822' => 'eml', 'model/iges' => 'igs', 'model/mesh' => 'msh', 'model/vnd.collada+xml' => 'dae', 'model/vnd.dwf' => 'dwf', 'model/vnd.gdl' => 'gdl', 'model/vnd.gtw' => 'gtw', 'model/vnd.mts' => 'mts', 'model/vnd.vtu' => 'vtu', 'model/vrml' => 'wrl', 'model/x3d+binary' => 'x3db', 'model/x3d+vrml' => 'x3dv', 'model/x3d+xml' => 'x3d', 'text/cache-manifest' => 'appcache', 'text/calendar' => 'ics', 'text/css' => 'css', 'text/csv' => 'csv', 'text/html' => 'html', 'text/n3' => 'n3', 'text/plain' => 'txt', 'text/prs.lines.tag' => 'dsc', 'text/richtext' => 'rtx', 'text/rtf' => 'rtf', 'text/sgml' => 'sgml', 'text/tab-separated-values' => 'tsv', 'text/troff' => 't', 'text/turtle' => 'ttl', 'text/uri-list' => 'uri', 'text/vcard' => 'vcard', 'text/vnd.curl' => 'curl', 'text/vnd.curl.dcurl' => 'dcurl', 'text/vnd.curl.scurl' => 'scurl', 'text/vnd.curl.mcurl' => 'mcurl', 'text/vnd.dvb.subtitle' => 'sub', 'text/vnd.fly' => 'fly', 'text/vnd.fmi.flexstor' => 'flx', 'text/vnd.graphviz' => 'gv', 'text/vnd.in3d.3dml' => '3dml', 'text/vnd.in3d.spot' => 'spot', 'text/vnd.sun.j2me.app-descriptor' => 'jad', 'text/vnd.wap.wml' => 'wml', 'text/vnd.wap.wmlscript' => 'wmls', 'text/vtt' => 'vtt', 'text/x-asm' => 's', 'text/x-c' => 'c', 'text/x-fortran' => 'f', 'text/x-pascal' => 'p', 'text/x-java-source' => 'java', 'text/x-opml' => 'opml', 'text/x-nfo' => 'nfo', 'text/x-setext' => 'etx', 'text/x-sfv' => 'sfv', 'text/x-uuencode' => 'uu', 'text/x-vcalendar' => 'vcs', 'text/x-vcard' => 'vcf', 'video/3gpp' => '3gp', 'video/3gpp2' => '3g2', 'video/h261' => 'h261', 'video/h263' => 'h263', 'video/h264' => 'h264', 'video/jpeg' => 'jpgv', 'video/jpm' => 'jpm', 'video/mj2' => 'mj2', 'video/mp4' => 'mp4', 'video/mpeg' => 'mpeg', 'video/ogg' => 'ogv', 'video/quicktime' => 'qt', 'video/vnd.dece.hd' => 'uvh', 'video/vnd.dece.mobile' => 'uvm', 'video/vnd.dece.pd' => 'uvp', 'video/vnd.dece.sd' => 'uvs', 'video/vnd.dece.video' => 'uvv', 'video/vnd.dvb.file' => 'dvb', 'video/vnd.fvt' => 'fvt', 'video/vnd.mpegurl' => 'mxu', 'video/vnd.ms-playready.media.pyv' => 'pyv', 'video/vnd.uvvu.mp4' => 'uvu', 'video/vnd.vivo' => 'viv', 'video/webm' => 'webm', 'video/x-f4v' => 'f4v', 'video/x-fli' => 'fli', 'video/x-flv' => 'flv', 'video/x-m4v' => 'm4v', 'video/x-matroska' => 'mkv', 'video/x-mng' => 'mng', 'video/x-ms-asf' => 'asf', 'video/x-ms-vob' => 'vob', 'video/x-ms-wm' => 'wm', 'video/x-ms-wmv' => 'wmv', 'video/x-ms-wmx' => 'wmx', 'video/x-ms-wvx' => 'wvx', 'video/x-msvideo' => 'avi', 'video/x-sgi-movie' => 'movie', 'video/x-smv' => 'smv', 'x-conference/x-cooltalk' => 'ice'];
         /**
          * Original file name.
          *
@@ -18538,33 +28999,31 @@ namespace FluentForm\Framework\Request {
         protected function fixPhpFilesArray($data)
         {
         }
+        /**
+         * Retrieve a file from the request.
+         *
+         * @param  string|null  $key
+         * @param  mixed  $default
+         * @return \FluentForm\Framework\Request\File|array|null
+         */
+        public function file($key = null, $default = null)
+        {
+        }
     }
     class Request
     {
-        /**
-         * Handles HTTP files.
-         */
-        use \FluentForm\Framework\Request\FileHandler;
+        use \FluentForm\Framework\Request\FileHandler, \FluentForm\Framework\Request\Cleaner;
         protected $app = null;
-        protected $headers = [];
-        protected $server = [];
-        protected $cookie = [];
-        protected $json = [];
-        protected $get = [];
-        protected $post = [];
-        protected $files = [];
-        protected $request = [];
-        public function __construct($app, $get, $post, $files)
-        {
-        }
-        /**
-         * Clean up the slashes from GET/POST added by WP
-         * using "wp_magic_quotes" function in load.php.
-         *
-         * @param  array $data
-         * @return array
-         */
-        public function clean($data)
+        protected $headers = array();
+        protected $server = array();
+        protected $cookie = array();
+        protected $json = array();
+        protected $get = array();
+        protected $post = array();
+        protected $files = array();
+        protected $request = array();
+        protected $wpRestRequest = false;
+        public function __construct(\FluentForm\Framework\Foundation\Application $app, $get, $post, $files)
         {
         }
         /**
@@ -18592,6 +29051,9 @@ namespace FluentForm\Framework\Request {
         public function get($key = null, $default = null)
         {
         }
+        public function getSafe($key = null, $callback = null, $default = null)
+        {
+        }
         /**
          * Get the files from the request.
          *
@@ -18606,13 +29068,20 @@ namespace FluentForm\Framework\Request {
         public function post($key = null, $default = null)
         {
         }
-        public function only($args)
+        public function only($keys)
         {
         }
         public function except($args)
         {
         }
         public function merge(array $data = [])
+        {
+        }
+        /**
+         * Get all inputs
+         * @return array $this->request
+         */
+        protected function inputs()
         {
         }
         /**
@@ -18637,17 +29106,1492 @@ namespace FluentForm\Framework\Request {
         public function setHeaders()
         {
         }
-    }
-    class RequestProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        public function booting()
+        public function method()
         {
         }
         /**
-         * The provider booting method to boot this provider
+         * Get the URL (no query string) for the request.
+         *
+         * @return string
+         */
+        public function url()
+        {
+        }
+        /**
+         * Validate the request.
+         *
+         * @param  string $key
+         * @return mixed
+         */
+        public function validate(array $rules, array $messages = [])
+        {
+        }
+        /**
+         * Get an input element from the request.
+         *
+         * @param  string $key
+         * @return mixed
+         */
+        public function __get($key)
+        {
+        }
+        /**
+         * Dynamyc method calls (specially for WP_rest_request)
+         * @param  string $method
+         * @param  array $params
+         * @return mixed
+         */
+        public function __call($method, $params)
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Response {
+    class Response
+    {
+        protected $app = null;
+        public function __construct($app)
+        {
+        }
+        public function json($data = null, $code = 200)
+        {
+        }
+        public function send($data = null, $code = 200)
+        {
+        }
+        public function sendSuccess($data = null, $code = 200)
+        {
+        }
+        public function sendError($data = null, $code = 423)
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Support {
+    class Helper
+    {
+        /**
+         * Create a collection from the given value.
+         *
+         * @param  mixed  $value
+         * @return \FluentForm\Framework\Support\Collection
+         */
+        public static function collect($value = null)
+        {
+        }
+        /**
+         * Fill in data where it's missing.
+         *
+         * @param  mixed  $target
+         * @param  string|array  $key
+         * @param  mixed  $value
+         * @return mixed
+         */
+        function dataFill(&$target, $key, $value)
+        {
+        }
+        /**
+         * Get an item from an array or object using "dot" notation.
+         *
+         * @param  mixed  $target
+         * @param  string|array|int|null  $key
+         * @param  mixed  $default
+         * @return mixed
+         */
+        public static function dataGet($target, $key, $default = null)
+        {
+        }
+        /**
+         * Set an item on an array or object using dot notation.
+         *
+         * @param  mixed  $target
+         * @param  string|array  $key
+         * @param  mixed  $value
+         * @param  bool  $overwrite
+         * @return mixed
+         */
+        public static function dataSet(&$target, $key, $value, $overwrite = true)
+        {
+        }
+        /**
+         * Get the first element of an array. Useful for method chaining.
+         *
+         * @param  array  $array
+         * @return mixed
+         */
+        public static function head($array)
+        {
+        }
+        /**
+         * Get the last element from an array.
+         *
+         * @param  array  $array
+         * @return mixed
+         */
+        public static function last($array)
+        {
+        }
+        /**
+         * Return the default value of the given value.
+         *
+         * @param  mixed  $value
+         * @return mixed
+         */
+        public static function value($value, ...$args)
+        {
+        }
+    }
+    class Pluralizer
+    {
+        /**
+         * Plural word form rules.
+         *
+         * @var array
+         */
+        public static $plural = array('/(quiz)$/i' => "\$1zes", '/^(ox)$/i' => "\$1en", '/([m|l])ouse$/i' => "\$1ice", '/(matr|vert|ind)ix$|ex$/i' => "\$1ices", '/(stoma|epo|monar|matriar|patriar|oligar|eunu)ch$/i' => "\$1chs", '/(x|ch|ss|sh)$/i' => "\$1es", '/([^aeiouy]|qu)y$/i' => "\$1ies", '/(hive)$/i' => "\$1s", '/(?:([^f])fe|([lr])f)$/i' => "\$1\$2ves", '/(shea|lea|loa|thie)f$/i' => "\$1ves", '/sis$/i' => "ses", '/([ti])um$/i' => "\$1a", '/(torped|embarg|tomat|potat|ech|her|vet)o$/i' => "\$1oes", '/(bu)s$/i' => "\$1ses", '/(alias)$/i' => "\$1es", '/(fung)us$/i' => "\$1i", '/(ax|test)is$/i' => "\$1es", '/(us)$/i' => "\$1es", '/s$/i' => "s", '/$/' => "s");
+        /**
+         * Singular word form rules.
+         *
+         * @var array
+         */
+        public static $singular = array('/(quiz)zes$/i' => "\$1", '/(matr)ices$/i' => "\$1ix", '/(vert|vort|ind)ices$/i' => "\$1ex", '/^(ox)en$/i' => "\$1", '/(alias)es$/i' => "\$1", '/(octop|vir|fung)i$/i' => "\$1us", '/(cris|ax|test)es$/i' => "\$1is", '/(shoe)s$/i' => "\$1", '/(o)es$/i' => "\$1", '/(bus)es$/i' => "\$1", '/([m|l])ice$/i' => "\$1ouse", '/(x|ch|ss|sh)es$/i' => "\$1", '/(m)ovies$/i' => "\$1ovie", '/(s)eries$/i' => "\$1eries", '/([^aeiouy]|qu)ies$/i' => "\$1y", '/([lr])ves$/i' => "\$1f", '/(tive)s$/i' => "\$1", '/(hive)s$/i' => "\$1", '/(li|wi|kni)ves$/i' => "\$1fe", '/(shea|loa|lea|thie)ves$/i' => "\$1f", '/(^analy)ses$/i' => "\$1sis", '/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i' => "\$1\$2sis", '/([ti])a$/i' => "\$1um", '/(n)ews$/i' => "\$1ews", '/(h|bl)ouses$/i' => "\$1ouse", '/(corpse)s$/i' => "\$1", '/(gallows|headquarters)$/i' => "\$1", '/(us)es$/i' => "\$1", '/(us|ss)$/i' => "\$1", '/s$/i' => "");
+        /**
+         * Irregular word forms.
+         *
+         * @var array
+         */
+        public static $irregular = array('child' => 'children', 'corpus' => 'corpora', 'criterion' => 'criteria', 'foot' => 'feet', 'freshman' => 'freshmen', 'goose' => 'geese', 'genus' => 'genera', 'human' => 'humans', 'man' => 'men', 'move' => 'moves', 'nucleus' => 'nuclei', 'ovum' => 'ova', 'person' => 'people', 'phenomenon' => 'phenomena', 'radius' => 'radii', 'sex' => 'sexes', 'stimulus' => 'stimuli', 'syllabus' => 'syllabi', 'tax' => 'taxes', 'tech' => 'techs', 'tooth' => 'teeth', 'viscus' => 'viscera');
+        /**
+         * Uncountable word forms.
+         *
+         * @var array
+         */
+        public static $uncountable = array('audio', 'bison', 'chassis', 'compensation', 'coreopsis', 'data', 'deer', 'education', 'equipment', 'fish', 'gold', 'information', 'money', 'moose', 'offspring', 'plankton', 'police', 'rice', 'series', 'sheep', 'species', 'swine', 'traffic');
+        /**
+         * The cached copies of the plural inflections.
+         *
+         * @var array
+         */
+        protected static $pluralCache = array();
+        /**
+         * The cached copies of the singular inflections.
+         *
+         * @var array
+         */
+        protected static $singularCache = array();
+        /**
+         * Get the singular form of the given word.
+         *
+         * @param  string  $value
+         * @return string
+         */
+        public static function singular($value)
+        {
+        }
+        /**
+         * Get the plural form of the given word.
+         *
+         * @param  string  $value
+         * @param  int     $count
+         * @return string
+         */
+        public static function plural($value, $count = 2)
+        {
+        }
+        /**
+         * Perform auto inflection on an English word.
+         *
+         * @param  string  $value
+         * @param  array   $source
+         * @param  array   $irregular
+         * @return string
+         */
+        protected static function inflect($value, $source, $irregular)
+        {
+        }
+        /**
+         * Determine if the given value is uncountable.
+         *
+         * @param  string  $value
+         * @return bool
+         */
+        protected static function uncountable($value)
+        {
+        }
+        /**
+         * Attempt to match the case on two strings.
+         *
+         * @param  string  $value
+         * @param  string  $comparison
+         * @return string
+         */
+        protected static function matchCase($value, $comparison)
+        {
+        }
+    }
+    class Sanitizer
+    {
+        public static function sanitizeEmail($arg)
+        {
+        }
+        public static function sanitizeFileName($arg)
+        {
+        }
+        public static function sanitizeHtmlClass($arg)
+        {
+        }
+        public static function sanitizeKey($arg)
+        {
+        }
+        public static function sanitizeMeta($arg)
+        {
+        }
+        public static function sanitizeMimeType($arg)
+        {
+        }
+        public static function sanitizeOption($arg)
+        {
+        }
+        public static function sanitizeSqlOrderby($arg)
+        {
+        }
+        public static function sanitizeTextField($arg)
+        {
+        }
+        public static function sanitizeTitle($arg)
+        {
+        }
+        public static function sanitizeTitleForQuery($arg)
+        {
+        }
+        public static function sanitizeTitleWithDashes($arg)
+        {
+        }
+        public static function sanitizeUser($arg)
+        {
+        }
+        public static function wpFilterPostKses($arg)
+        {
+        }
+        public static function wpFilterNohtmlKses($arg)
+        {
+        }
+        public static function escAttr($arg)
+        {
+        }
+        public static function escHtml($arg)
+        {
+        }
+        public static function escJs($arg)
+        {
+        }
+        public static function escTextarea($arg)
+        {
+        }
+        public static function escUrl($arg)
+        {
+        }
+        public static function escUrlRaw($arg)
+        {
+        }
+        public static function escXml($arg)
+        {
+        }
+        public static function kses($arg)
+        {
+        }
+        public static function ksesPost($arg)
+        {
+        }
+        public static function ksesData($arg)
+        {
+        }
+        public static function escHtml__($arg)
+        {
+        }
+        public static function escAttr__($arg)
+        {
+        }
+        public static function escHtmlE($arg)
+        {
+        }
+        public static function escAttrE($arg)
+        {
+        }
+        public static function escHtmlX($arg)
+        {
+        }
+        public static function escAttrX($arg)
+        {
+        }
+        public static function sanitize(array $data = [], array $rules = [])
+        {
+        }
+    }
+    class Str
+    {
+        use \FluentForm\Framework\Support\MacroableTrait;
+        /**
+         * The cache of snake-cased words.
+         *
+         * @var array
+         */
+        protected static $snakeCache = [];
+        /**
+         * The cache of camel-cased words.
+         *
+         * @var array
+         */
+        protected static $camelCache = [];
+        /**
+         * The cache of studly-cased words.
+         *
+         * @var array
+         */
+        protected static $studlyCache = [];
+        /**
+         * Transliterate a UTF-8 value to ASCII.
+         *
+         * @param  string  $value
+         * @return string
+         */
+        public static function ascii($value)
+        {
+        }
+        /**
+         * Convert a value to camel case.
+         *
+         * @param  string  $value
+         * @return string
+         */
+        public static function camel($value)
+        {
+        }
+        /**
+         * Determine if a given string contains a given substring.
+         *
+         * @param  string  $haystack
+         * @param  string|array  $needles
+         * @return bool
+         */
+        public static function contains($haystack, $needles)
+        {
+        }
+        /**
+         * Determine if a given string ends with a given substring.
+         *
+         * @param  string  $haystack
+         * @param  string|array  $needles
+         * @return bool
+         */
+        public static function endsWith($haystack, $needles)
+        {
+        }
+        /**
+         * Cap a string with a single instance of a given value.
+         *
+         * @param  string  $value
+         * @param  string  $cap
+         * @return string
+         */
+        public static function finish($value, $cap)
+        {
+        }
+        /**
+         * Determine if a given string matches a given pattern.
+         *
+         * @param  string  $pattern
+         * @param  string  $value
+         * @return bool
+         */
+        public static function is($pattern, $value)
+        {
+        }
+        /**
+         * Return the length of the given string.
+         *
+         * @param  string  $value
+         * @return int
+         */
+        public static function length($value)
+        {
+        }
+        /**
+         * Limit the number of characters in a string.
+         *
+         * @param  string  $value
+         * @param  int     $limit
+         * @param  string  $end
+         * @return string
+         */
+        public static function limit($value, $limit = 100, $end = '...')
+        {
+        }
+        /**
+         * Convert the given string to lower-case.
+         *
+         * @param  string  $value
+         * @return string
+         */
+        public static function lower($value)
+        {
+        }
+        /**
+         * Limit the number of words in a string.
+         *
+         * @param  string  $value
+         * @param  int     $words
+         * @param  string  $end
+         * @return string
+         */
+        public static function words($value, $words = 100, $end = '...')
+        {
+        }
+        /**
+         * Parse a Class@method style callback into class and method.
+         *
+         * @param  string  $callback
+         * @param  string  $default
+         * @return array
+         */
+        public static function parseCallback($callback, $default)
+        {
+        }
+        /**
+         * Get the plural form of an English word.
+         *
+         * @param  string  $value
+         * @param  int     $count
+         * @return string
+         */
+        public static function plural($value, $count = 2)
+        {
+        }
+        /**
+         * Generate a more truly "random" alpha-numeric string.
+         *
+         * @param  int  $length
+         * @return string
+         */
+        public static function random($length = 16)
+        {
+        }
+        /**
+         * Generate a more truly "random" bytes.
+         *
+         * @param  int  $length
+         * @return string
+         *
+         * @deprecated since version 5.2. Use random_bytes instead.
+         */
+        public static function randomBytes($length = 16)
+        {
+        }
+        /**
+         * Generate a "random" alpha-numeric string.
+         *
+         * Should not be considered sufficient for cryptography, etc.
+         *
+         * @param  int  $length
+         * @return string
+         */
+        public static function quickRandom($length = 16)
+        {
+        }
+        /**
+         * Compares two strings using a constant-time algorithm.
+         *
+         * Note: This method will leak length information.
+         *
+         * Note: Adapted from Symfony\Component\Security\Core\Util\StringUtils.
+         *
+         * @param  string  $knownString
+         * @param  string  $userInput
+         * @return bool
+         *
+         * @deprecated since version 5.2. Use hash_equals instead.
+         */
+        public static function equals($knownString, $userInput)
+        {
+        }
+        /**
+         * Replace the first occurrence of a given value in the string.
+         *
+         * @param  string  $search
+         * @param  string  $replace
+         * @param  string  $subject
+         * @return string
+         */
+        public static function replaceFirst($search, $replace, $subject)
+        {
+        }
+        /**
+         * Replace the last occurrence of a given value in the string.
+         *
+         * @param  string  $search
+         * @param  string  $replace
+         * @param  string  $subject
+         * @return string
+         */
+        public static function replaceLast($search, $replace, $subject)
+        {
+        }
+        /**
+         * Convert the given string to upper-case.
+         *
+         * @param  string  $value
+         * @return string
+         */
+        public static function upper($value)
+        {
+        }
+        /**
+         * Convert the given string to title case.
+         *
+         * @param  string  $value
+         * @return string
+         */
+        public static function title($value)
+        {
+        }
+        /**
+         * Get the singular form of an English word.
+         *
+         * @param  string  $value
+         * @return string
+         */
+        public static function singular($value)
+        {
+        }
+        /**
+         * Generate a URL friendly "slug" from a given string.
+         *
+         * @param  string  $title
+         * @param  string  $separator
+         * @return string
+         */
+        public static function slug($title, $separator = '-')
+        {
+        }
+        /**
+         * Convert a string to snake case.
+         *
+         * @param  string  $value
+         * @param  string  $delimiter
+         * @return string
+         */
+        public static function snake($value, $delimiter = '_')
+        {
+        }
+        /**
+         * Determine if a given string starts with a given substring.
+         *
+         * @param  string  $haystack
+         * @param  string|array  $needles
+         * @return bool
+         */
+        public static function startsWith($haystack, $needles)
+        {
+        }
+        /**
+         * Convert a value to studly caps case.
+         *
+         * @param  string  $value
+         * @return string
+         */
+        public static function studly($value)
+        {
+        }
+        /**
+         * Returns the portion of string specified by the start and length parameters.
+         *
+         * @param  string  $string
+         * @param  int  $start
+         * @param  int|null  $length
+         * @return string
+         */
+        public static function substr($string, $start, $length = null)
+        {
+        }
+        /**
+         * Make a string's first character uppercase.
+         *
+         * @param  string  $string
+         * @return string
+         */
+        public static function ucfirst($string)
+        {
+        }
+        /**
+         * An alternative for mb_strpos function to overcome some issues in some servers.
+         *
+         * @param  $haystack string
+         * @param  $needle string
+         * @param  $offset int optional
+         * @param  $encoding string optional
+         * @return string mixed
+         */
+        public static function mb_strpos($haystack, $needle, $offset = 0, $encoding = '')
+        {
+        }
+        /**
+         * Returns the replacements for the ascii method.
+         *
+         * Note: Adapted from Stringy\Stringy.
+         *
+         * @see https://github.com/danielstjules/Stringy/blob/2.3.1/LICENSE.txt
+         *
+         * @return array
+         */
+        protected static function charsArray()
+        {
+        }
+    }
+}
+namespace FluentForm\Framework\Validator {
+    trait MessageBag
+    {
+        /**
+         * The default message bag.
+         *
+         * @var array
+         */
+        protected $bag = ['alpha' => 'The :attribute must contain only alphabetic characters.', 'alphanum' => 'The :attribute must contain only alphanumeric characters.', 'alphadash' => 'The :attribute must contain only alphanumeric and _- characters.', 'email' => 'The :attribute must be a valid email address.', 'max' => ['numeric' => 'The :attribute may not be greater than :max.', 'file' => 'The :attribute may not be greater than :max kilobytes.', 'string' => 'The :attribute may not be greater than :max characters.', 'array' => 'The :attribute may not have more than :max items.'], 'mimes' => 'The :attribute must be a file of type: :values.', 'mimetypes' => 'The :attribute must be a file of type: :values.', 'min' => ['numeric' => 'The :attribute must be at least :min.', 'file' => 'The :attribute must be at least :min kilobytes.', 'string' => 'The :attribute must be at least :min characters.', 'array' => 'The :attribute must have at least :min items.'], 'numeric' => 'The :attribute must be a number.', 'required' => 'The :attribute field is required.', 'required_if' => 'The :attribute field is required when :other is :value.', 'same' => 'The :attribute and :other must match.', 'size' => ['numeric' => 'The :attribute must be :size.', 'file' => 'The :attribute must be :size kilobytes.', 'string' => 'The :attribute must be :size characters.', 'array' => 'The :attribute must contain :size items.'], 'url' => 'The :attribute format is invalid.', 'unique' => 'The :attribute attribute is already taken and must be unique.', 'digits' => 'The :attribute must be :digits characters.'];
+        /**
+         * Generate a validation error message.
+         *
+         * @param $attribute
+         * @param $rule
+         * @param $parameters
+         *
+         * @return mixed
+         */
+        protected function generate($attribute, $rule, $parameters)
+        {
+        }
+        /**
+         * Get the replacement text of the error message.
+         *
+         * @param $customMessagesKey
+         * @param $bagAccessor
+         *
+         * @return string
+         */
+        protected function getReplacementText($customMessagesKey, $bagAccessor)
+        {
+        }
+        /**
+         * Make bag accessor key.
+         *
+         * @param $attribute
+         * @param $rule
+         *
+         * @return string
+         */
+        protected function makeBagKey($attribute, $rule)
+        {
+        }
+        /**
+         * Replace all place-holders for the alpha rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceAlpha($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the alphanum rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceAlphanum($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the alphadash rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceAlphadash($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the required rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceRequired($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the required if rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceRequiredIf($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the email rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceEmail($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the size rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceSize($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the min rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceMin($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the max rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceMax($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the min rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceSame($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the url rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceUrl($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the numeric rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceNumeric($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the mimes rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceMimes($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the mimetypes rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceMimetypes($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the unique rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceUnique($attribute, $parameters)
+        {
+        }
+        /**
+         * Replace all place-holders for the digits rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceDigits($attribute, $parameters)
+        {
+        }
+    }
+    trait ValidatesAttributes
+    {
+        /**
+         * Require a certain number of parameters to be present.
+         *
+         * @param int $count
+         * @param array $parameters
+         * @param string $rule
+         *
+         * @return void
+         *
+         * @throws \InvalidArgumentException
+         */
+        protected function requireParameterCount($count, $parameters, $rule)
+        {
+        }
+        /**
+         * Get the size of an attribute.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         *
+         * @return mixed
+         */
+        protected function getSize($attribute, $value)
+        {
+        }
+        /**
+         * Deduce the value type of an attribute.
+         *
+         * @param $value
+         *
+         * @return string
+         */
+        protected function deduceType($value)
+        {
+        }
+        /**
+         * Convert the given values to boolean if they are string "true" / "false".
+         *
+         * @param array $values
+         *
+         * @return array
+         */
+        protected function convertValuesToBoolean($values)
+        {
+        }
+        /**
+         * Validate that a required attribute exists.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         *
+         * @return bool
+         */
+        protected function validateRequired($attribute, $value)
+        {
+        }
+        /**
+         * Validate that an attribute exists when another attribute has a given value.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         * @param mixed $parameters
+         *
+         * @return bool
+         */
+        protected function validateRequiredIf($attribute, $value, $parameters)
+        {
+        }
+        /**
+         * Validate that an attribute is a valid e-mail address.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         *
+         * @return bool
+         */
+        protected function validateEmail($attribute, $value)
+        {
+        }
+        /**
+         * Validate the size of an attribute.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         * @param array $parameters
+         *
+         * @return bool
+         */
+        protected function validateSize($attribute, $value, $parameters)
+        {
+        }
+        /**
+         * Validate the size of an attribute is greater than a minimum value.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         * @param array $parameters
+         *
+         * @return bool
+         */
+        protected function validateMin($attribute, $value, $parameters)
+        {
+        }
+        /**
+         * Validate the size of an attribute is less than a maximum value.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         * @param array $parameters
+         *
+         * @return bool
+         */
+        protected function validateMax($attribute, $value, $parameters)
+        {
+        }
+        /**
+         * Validate that two attributes match.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         * @param array $parameters
+         *
+         * @return bool
+         */
+        protected function validateSame($attribute, $value, $parameters)
+        {
+        }
+        /**
+         * Validate that an attribute is a valid URL.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         *
+         * @return bool
+         */
+        protected function validateUrl($attribute, $value)
+        {
+        }
+        /**
+         * Validate that an attribute is numeric.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         *
+         * @return bool
+         */
+        protected function validateNumeric($attribute, $value)
+        {
+        }
+        /**
+         * Validate that an attribute is alphabetic.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         *
+         * @return bool
+         */
+        protected function validateAlpha($attribute, $value)
+        {
+        }
+        /**
+         * Validate that an attribute is alphanum.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         *
+         * @return bool
+         */
+        protected function validateAlphanum($attribute, $value)
+        {
+        }
+        /**
+         * Validate that an attribute is alphanum and -_.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         *
+         * @return bool
+         */
+        protected function validateAlphadash($attribute, $value)
+        {
+        }
+        /**
+         * Validate the guessed extension of a file upload is in a set of file extensions.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         * @param array $parameters
+         *
+         * @return bool
+         */
+        protected function validateMimes($attribute, $value, $parameters)
+        {
+        }
+        /**
+         * Validate the MIME type of a file upload attribute is in a set of MIME types.
+         *
+         * @param  string $attribute
+         * @param  mixed  $value
+         * @param  array  $parameters
+         * @return bool
+         */
+        protected function validateMimetypes($attribute, $value, $parameters)
+        {
+        }
+        /**
+         * Check that the given value is a valid file instance.
+         *
+         * @param mixed $value
+         *
+         * @return bool
+         */
+        public function isValidFileInstance($value)
+        {
+        }
+        /**
+         * Check if PHP uploads are explicitly allowed.
+         *
+         * @param mixed $value
+         * @param array $parameters
+         *
+         * @return bool
+         */
+        protected function shouldBlockPhpUpload($value, $parameters)
+        {
+        }
+        /**
+         * Validate that an attribute exists even if not filled.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         *
+         * @return bool
+         */
+        protected function validatePresent($attribute, $value)
+        {
+        }
+        /**
+         * Validate that an attribute is unique in a given table
+         *
+         * @param string $attribute
+         * @param mixed $value
+         * @param array $parameters
+         *
+         * @return bool
+         */
+        protected function validateUnique($attribute, $value, $parameters)
+        {
+        }
+        /**
+         * Validate that an attribute has a given number of digits.
+         *
+         * @param string $attribute
+         * @param mixed $value
+         * @param array $parameters
+         * 
+         * @return bool
+         */
+        public function validateDigits($attribute, $value, $parameters)
+        {
+        }
+    }
+    class ValidationData
+    {
+        public static function initializeAndGatherData($attribute, $masterData)
+        {
+        }
+        /**
+         * Gather a copy of the attribute data filled with any missing attributes.
+         *
+         * @param string $attribute
+         * @param array $masterData
+         *
+         * @return array
+         */
+        protected static function initializeAttributeOnData($attribute, $masterData)
+        {
+        }
+        /**
+         * Get all of the exact attribute values for a given wildcard attribute.
+         *
+         * @param array $masterData
+         * @param array $data
+         * @param string $attribute
+         *
+         * @return array
+         */
+        protected static function extractValuesForWildcards($masterData, $data, $attribute)
+        {
+        }
+        /**
+         * Extract data based on the given dot-notated path.
+         *
+         * Used to extract a sub-section of the data for faster iteration.
+         *
+         * @param string $attribute
+         * @param array $masterData
+         *
+         * @return array
+         */
+        public static function extractDataFromPath($attribute, $masterData)
+        {
+        }
+        /**
+         * Get the explicit part of the attribute name.
+         *
+         * E.g. 'foo.bar.*.baz' -> 'foo.bar'
+         *
+         * Allows us to not spin through all of the flattened data for some operations.
+         *
+         * @param string $attribute
+         *
+         * @return string
+         */
+        public static function getLeadingExplicitAttributePath($attribute)
+        {
+        }
+    }
+    class ValidationException extends \Exception
+    {
+        private $errors;
+        public function __construct($message = '', $code = 0, \Exception $previous = null, $errors = [])
+        {
+        }
+        public function errors()
+        {
+        }
+    }
+    class ValidationRuleParser
+    {
+        /**
+         * The data being validated.
+         *
+         * @var array
+         */
+        public $data;
+        /**
+         * Create a new validation rule parser.
+         *
+         * @param array $data
+         *
          * @return void
          */
-        public function booted()
+        public function __construct(array $data)
+        {
+        }
+        /**
+         * Parse the human-friendly rules into a full rules array for the validator.
+         *
+         * @param $rules
+         *
+         * @return array
+         */
+        public function explode($rules)
+        {
+        }
+        /**
+         * Explode the rules into an array of explicit rules.
+         *
+         * @param array $rules
+         *
+         * @return array
+         */
+        protected function explodeRules($rules)
+        {
+        }
+        /**
+         * Explode the explicit rule into an array if necessary.
+         *
+         * @param mixed $rule
+         *
+         * @return array
+         */
+        protected function explodeExplicitRule($rule)
+        {
+        }
+        /**
+         * Define a set of rules that apply to each element in an array attribute.
+         *
+         * @param array $results
+         * @param string $attribute
+         * @param string|array $rules
+         *
+         * @return array
+         */
+        protected function explodeWildcardRules($results, $attribute, $rules)
+        {
+        }
+        /**
+         * Merge additional rules into a given attribute(s).
+         *
+         * @param array $results
+         * @param string|array $attribute
+         * @param string|array $rules
+         *
+         * @return array
+         */
+        public function mergeRules($results, $attribute, $rules = [])
+        {
+        }
+        /**
+         * Merge additional rules into a given attribute.
+         *
+         * @param array $results
+         * @param string $attribute
+         * @param string|array $rules
+         *
+         * @return array
+         */
+        protected function mergeRulesForAttribute($results, $attribute, $rules)
+        {
+        }
+        /**
+         * Extract the rule name and parameters from a rule.
+         *
+         * @param $rule
+         *
+         * @return array
+         */
+        public static function parse($rule)
+        {
+        }
+    }
+    class Validator
+    {
+        use \FluentForm\Framework\Validator\ValidatesAttributes, \FluentForm\Framework\Validator\MessageBag;
+        /**
+         * The data under validation.
+         *
+         * @var array
+         */
+        protected $data;
+        /**
+         * The rules to be applied to the data.
+         *
+         * @var array
+         */
+        protected $rules = [];
+        /**
+         * All of the error messages.
+         *
+         * @var array
+         */
+        protected $messages;
+        /**
+         * All of the user provided messages.
+         *
+         * @var array
+         */
+        protected $customMessages = [];
+        /**
+         * The validation rules that imply the field is required.
+         *
+         * @var array
+         */
+        protected $implicitRules = ['Required', 'Filled', 'RequiredWith', 'RequiredWithAll', 'RequiredWithout', 'RequiredWithoutAll', 'RequiredIf', 'RequiredUnless', 'Accepted', 'Present'];
+        /**
+         * Create a new Validator instance.
+         *
+         * @param array $data
+         * @param array $rules
+         * @param array $messages
+         *
+         * @return void
+         */
+        public function __construct(array $data = [], array $rules = [], array $messages = [])
+        {
+        }
+        /**
+         * Create a new Validator instance.
+         *
+         * @param array $data
+         * @param array $rules
+         * @param array $messages
+         *
+         * @return \FluentForm\Framework\Validator\Validator
+         */
+        public function make(array $data = [], array $rules = [], array $messages = [])
+        {
+        }
+        protected function init(array $data = [], array $rules = [], array $messages = [])
+        {
+        }
+        /**
+         * Set the validation rules.
+         *
+         * @param array $rules
+         *
+         * @return $this
+         */
+        protected function setRules(array $rules = [])
+        {
+        }
+        /**
+         * Validate the data against the provided rules.
+         *
+         * @return $this
+         */
+        public function validate()
+        {
+        }
+        /**
+         * Validate each of the attribute of the data.
+         *
+         * @param $attribute
+         * @param $rule
+         *
+         * @return void
+         */
+        protected function validateAttribute($attribute, $rule)
+        {
+        }
+        /**
+         * Access the data by attribute name.
+         *
+         * @param $attribute
+         *
+         * @return mixed
+         */
+        protected function getValue($attribute)
+        {
+        }
+        /**
+         * Add error message upon validation failed of an attribute.
+         *
+         * @param $attribute
+         * @param $rule
+         * @param $parameters
+         *
+         * @return void
+         */
+        protected function addFailure($attribute, $rule, $parameters)
+        {
+        }
+        /**
+         * Get all of the validation error messages.
+         *
+         * @return array
+         */
+        public function errors()
+        {
+        }
+        /**
+         * Determine if the data passes the validation rules.
+         *
+         * @return bool
+         */
+        public function passes()
+        {
+        }
+        /**
+         * Determine if the data fails the validation rules.
+         *
+         * @return bool
+         */
+        public function fails()
+        {
+        }
+        /**
+         * Add conditions to a given field based on a Closure.
+         *
+         * @param string|array $attribute
+         * @param string|array $rules
+         * @param callable $callback
+         *
+         * @return $this
+         */
+        public function sometimes($attribute, $rules, callable $callback)
+        {
+        }
+        /**
+         * Determine if the attribute has a required rule.
+         *
+         * @param $attribute
+         *
+         * @return bool
+         */
+        public function hasRequired($attribute)
+        {
+        }
+        /**
+         * Determine if the attribute should be validated.
+         *
+         * @param $method
+         * @param $attribute
+         * @param $value
+         *
+         * @return bool
+         */
+        public function shouldValidate($method, $rule, $attribute, $value)
+        {
+        }
+        /**
+         * Determines if this object has this method.
+         *
+         * @param $method
+         *
+         * @return bool
+         */
+        public function hasMethod($method)
+        {
+        }
+        /**
+         * Determine if a given rule implies the attribute is required.
+         *
+         * @param string $rule
+         *
+         * @return bool
+         */
+        protected function isImplicit($rule)
+        {
+        }
+        /**
+         * Determine if the field is present, or the rule implies required.
+         *
+         * @param string $rule
+         * @param string $attribute
+         * @param mixed $value
+         *
+         * @return bool
+         */
+        protected function presentOrRuleIsImplicit($rule, $attribute, $value)
         {
         }
     }
@@ -18655,52 +30599,11 @@ namespace FluentForm\Framework\Request {
 namespace FluentForm\Framework\View {
     class View
     {
-        /**
-         * The Application (Framework)
-         * @var \FluentForm\Framework\Foundation\Application
-         */
         protected $app;
-        /**
-         * Resolved path of view
-         * @var string
-         */
         protected $path;
-        /**
-         * Passed data for the view
-         * @var array
-         */
         protected $data = [];
-        /**
-         * Shared data for the view
-         * @var array
-         */
         protected static $sharedData = [];
-        /**
-         * Registered composer callbacks for the view
-         * @var array
-         */
-        protected static $composerCallbacks = [];
-        /**
-         * Make an instance of the the class
-         * @param \FluentForm\Framework\Foundation\Application $app
-         */
         public function __construct($app)
-        {
-        }
-        /**
-         * Add aditional view path mapped by a namespace
-         * 
-         * This will allow a developer to add additional view location from any
-         * service provider (basically in booted method), so instead of loading
-         * the view from resources/views directory, one can instruct the framework
-         * to load a view from a different place registerd using following method:
-         * add a namespaced path: $this->app->addNamespace('Public', path('public'));
-         * once it is registered, then one can use: View::make('Public::view_name');
-         * 
-         * @param string $namespace
-         * @param string $path
-         */
-        public function addNamespace($namespace, $path)
         {
         }
         /**
@@ -18717,7 +30620,7 @@ namespace FluentForm\Framework\View {
          * @param  string $path
          * @param  array  $data
          * @return string [generated html]
-         * @throws InvalidArgumentException
+         * @throws Exception
          */
         public function make($path, $data = [])
         {
@@ -18740,13 +30643,6 @@ namespace FluentForm\Framework\View {
         {
         }
         /**
-         * Call registered composer callbacks for this view
-         * @return void
-         */
-        protected function callComposerCallbacks()
-        {
-        }
-        /**
          * Gether shared & view data
          * @return array
          */
@@ -18760,15 +30656,6 @@ namespace FluentForm\Framework\View {
          * @return void
          */
         public function share($key, $value)
-        {
-        }
-        /**
-         * Register view composer calbacks for specific view
-         * @param  string $viewName
-         * @param  \closure $callback
-         * @return void
-         */
-        public function composer($viewName, $callback)
         {
         }
         /**
@@ -18796,60 +30683,41 @@ namespace FluentForm\Framework\View {
         {
         }
     }
-    class ViewProvider extends \FluentForm\Framework\Foundation\Provider
-    {
-        /**
-         * The provider booting method to boot this provider
-         * @return void
-         */
-        public function booting()
-        {
-        }
-    }
-}
-namespace FluentForm {
-    class AdminNotice extends \FluentForm\Framework\Foundation\AppFacade
-    {
-        static $key = 'adminNotice';
-    }
-    class App extends \FluentForm\Framework\Foundation\AppFacade
-    {
-        static $key = 'app';
-    }
-    class Config extends \FluentForm\Framework\Foundation\AppFacade
-    {
-        static $key = 'config';
-    }
-    class Request extends \FluentForm\Framework\Foundation\AppFacade
-    {
-        static $key = 'request';
-    }
-    class View extends \FluentForm\Framework\Foundation\AppFacade
-    {
-        static $key = 'view';
-    }
 }
 namespace {
-    function wpFluentForm($key = \null)
+    function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
     {
     }
-    function wpFluentFormAddComponent(\FluentForm\App\Modules\Component\BaseComponent $component)
-    {
-    }
-    function dd()
+    function fluentform_after_submission_api_response_failed($form, $entryId, $data, $feed, $res, $msg = '')
     {
     }
     /**
-     * Get the path to a versioned Mix file.
+     * Get fluentform instance or other core modules
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
+    function wpFluentForm($key = \null)
+    {
+    }
+    /**
+     * Generate URL for static assets
      *
      * @param string $path
-     * @param string $manifestDirectory
      *
      * @return string
-     *
-     * @throws \Exception
      */
-    function fluentformMix($path, $manifestDirectory = '')
+    function fluentFormMix($path = '')
+    {
+    }
+    /**
+     * @return \FluentForm\Framework\Database\Query\Builder|\FluentForm\Framework\Database\Query\WPDBConnection
+     */
+    function wpFluent()
+    {
+    }
+    function wpFluentFormAddComponent(\FluentForm\App\Modules\Component\BaseComponent $component)
     {
     }
     /**
@@ -18857,7 +30725,7 @@ namespace {
      *
      * @param $input
      *
-     * @return string $input
+     * @return mixed $input
      */
     function fluentFormSanitizer($input, $attribute = \null, $fields = [])
     {
@@ -18941,7 +30809,7 @@ namespace {
      *
      * @return array $input
      */
-    function fluentform_backend_sanitizer($array, $sanitizeMap = [])
+    function fluentform_backend_sanitizer($inputs, $sanitizeMap = [])
     {
     }
     /**
@@ -18955,19 +30823,19 @@ namespace {
     function fluentformCanUnfilteredHTML()
     {
     }
-    function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
-    {
-    }
-    function fluentform_after_submission_api_response_failed($form, $entryId, $data, $feed, $res, $msg = '')
+    function fluentformLoadFile($path)
     {
     }
     function fluentValidator($data = [], $rules = [], $messages = [])
     {
     }
-    /**
-     * @return \WpFluent\QueryBuilder\QueryBuilderHandler
-     */
-    function wpFluent()
+    function fluentformGetPages()
+    {
+    }
+    function fluentform_eql()
+    {
+    }
+    function fluentform_gql()
     {
     }
 }
