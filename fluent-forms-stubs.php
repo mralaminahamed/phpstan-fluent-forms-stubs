@@ -18793,7 +18793,13 @@ namespace {
     function fluentform_options_sanitize($options)
     {
     }
-    function fluentform_sanitize_html($html)
+    function fluentform_sanitize_html($html, $isSaving = \true)
+    {
+    }
+    function fluentform_kses($html)
+    {
+    }
+    function fluentform_kses_js($content)
     {
     }
     /**
