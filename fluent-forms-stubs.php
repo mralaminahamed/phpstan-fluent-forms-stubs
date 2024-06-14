@@ -415,6 +415,16 @@ namespace FluentForm\App\Helpers {
         public static function getWhiteListedFields($formId)
         {
         }
+        /**
+         * Shortcode parse on validation message
+         * @param string $message
+         * @param object $form
+         * @param string $fieldName
+         * @return string
+         */
+        public static function shortCodeParseOnValidationMessage($message, $form, $fieldName)
+        {
+        }
     }
     class IntegrationManagerHelper
     {
@@ -1072,6 +1082,9 @@ namespace FluentForm\App\Http\Policies {
     }
     class GlobalSettingsPolicy extends \FluentForm\Framework\Foundation\Policy
     {
+        public function verifyRequest(\FluentForm\Framework\Request\Request $request)
+        {
+        }
         public function index()
         {
         }
@@ -1108,6 +1121,9 @@ namespace FluentForm\App\Http\Policies {
     }
     class RoleManagerPolicy extends \FluentForm\Framework\Foundation\Policy
     {
+        public function verifyRequest(\FluentForm\Framework\Request\Request $request)
+        {
+        }
         public function index()
         {
         }
@@ -5731,6 +5747,9 @@ namespace FluentForm\App\Modules\Registerer {
         public static function getPaymentsI18n()
         {
         }
+        protected static function getSettingsCommonI18n()
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules\Renderer\GlobalSettings {
@@ -7891,6 +7910,15 @@ namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
         {
         }
         private static function hasSaveAndResume($form)
+        {
+        }
+        /**
+         * @param array $field
+         * @param object $form
+         * @param string $fieldName
+         * @return array
+         */
+        private static function resolveValidationsRules($field, $form, $fieldName = '')
         {
         }
         private static function getSaveAndResumeData($form)
