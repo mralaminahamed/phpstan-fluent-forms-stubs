@@ -363,7 +363,16 @@ namespace FluentForm\App\Modules\Entries {
         public function getResponses()
         {
         }
-        public function getResponse($entryId, $operator = null, $currentSerialNo = null)
+        public function getResponse($entryId)
+        {
+        }
+        public function getNextResponse($entryId)
+        {
+        }
+        public function getPrevResponse($entryId)
+        {
+        }
+        protected function getNextPrevEntryQuery()
         {
         }
         public function groupCount($form_id)
@@ -372,9 +381,15 @@ namespace FluentForm\App\Modules\Entries {
     }
     class Entries extends \FluentForm\App\Modules\Entries\EntryQuery
     {
+        /**
+         * The form response model.
+         *
+         * @var \WpFluent\QueryBuilder\QueryBuilderHandler $responseMetaModel
+         */
         protected $responseMetaModel;
         /**
          * Entries constructor.
+         *
          * @throws \Exception
          */
         public function __construct()
@@ -895,9 +910,9 @@ namespace FluentForm\App\Modules\Form\Settings\Validator {
         /**
          * Add conditional validations to the validator.
          *
-         * @param \FluentValidator\Validator $validator
+         * @param FluentValidator $validator
          *
-         * @return \FluentValidator\Validator
+         * @return FluentValidator
          */
         public static function conditionalValidations(\FluentValidator\Validator $validator)
         {
@@ -926,9 +941,9 @@ namespace FluentForm\App\Modules\Form\Settings\Validator {
         /**
          * Add conditional validations to the validator.
          *
-         * @param \FluentValidator\Validator $validator
+         * @param FluentValidator $validator
          *
-         * @return \FluentValidator\Validator
+         * @return FluentValidator
          */
         public static function conditionalValidations(\FluentValidator\Validator $validator)
         {
@@ -957,9 +972,9 @@ namespace FluentForm\App\Modules\Form\Settings\Validator {
         /**
          * Add conditional validations to the validator.
          *
-         * @param \FluentValidator\Validator $validator
+         * @param FluentValidator $validator
          *
-         * @return \FluentValidator\Validator
+         * @return FluentValidator
          */
         public static function conditionalValidations(\FluentValidator\Validator $validator)
         {
@@ -3347,17 +3362,17 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         protected $app = null;
         /**
          * Biuld the instance of this class
-         * @param FluentForm\Framework\Foundation\Application $app
-         * @return  $this
+         * @param  FluentForm\Framework\Foundation\Application $app
+         * @return $this
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $app)
         {
         }
         /**
          * Send the email notification
-         * @param  array $notification [Notification settings from form meta]
-         * @param  array $submittedData [User submitted form data]
-         * @param  StdClass $form [The form object from database]
+         * @param  array    $notification  [Notification settings from form meta]
+         * @param  array    $submittedData [User submitted form data]
+         * @param  StdClass $form          [The form object from database]
          * @return bool
          */
         public function notify($notification, $submittedData, $form)
