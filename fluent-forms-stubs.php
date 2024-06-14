@@ -272,6 +272,9 @@ namespace FluentForm\App\Helpers {
         public static function getShortCodeIds($content, $tag = 'fluentform', $selector = 'id')
         {
         }
+        public static function getFormsIdsFromBlocks($content)
+        {
+        }
         public static function isTabIndexEnabled()
         {
         }
