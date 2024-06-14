@@ -360,6 +360,9 @@ namespace FluentForm\App\Helpers {
         public static function getLogInitiator($action, $type = 'log')
         {
         }
+        public static function isAutoloadCaptchaEnabled()
+        {
+        }
     }
     class IntegrationManagerHelper
     {
