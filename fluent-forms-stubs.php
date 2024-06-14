@@ -639,6 +639,14 @@ namespace FluentForm\App\Modules\Form {
         private function prepareInsertData($formId)
         {
         }
+        /**
+         * Handle file upload
+         *
+         * @return \Exception
+         */
+        public function onFileUpload()
+        {
+        }
     }
     class Inputs
     {
