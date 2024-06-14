@@ -1411,6 +1411,24 @@ namespace FluentForm\App\Modules\Form {
         public function getAllForms()
         {
         }
+        /**
+         * Map pdf feed ID to replace with duplicated PDF feed ID when duplicating form
+         * @param array $extras
+         * @param array $newFormId
+         * @return array
+         */
+        private function getPdfFeedMap($extras, $newFormId)
+        {
+        }
+        /**
+         * Map notification data with PDF feed map
+         * @param array $extras
+         * @param array $pdfFeedMap
+         * @return array
+         */
+        private function notificationWithPdfMap($extras, $pdfFeedMap)
+        {
+        }
     }
     class FormDataParser
     {
@@ -1430,10 +1448,10 @@ namespace FluentForm\App\Modules\Form {
         public static function formatValue($value)
         {
         }
-        public static function formatFileValues($values, $isHtml)
+        public static function formatFileValues($values, $isHtml, $form_id = null)
         {
         }
-        public static function formatImageValues($values, $isHtml)
+        public static function formatImageValues($values, $isHtml, $form_id = null)
         {
         }
         public static function formatRepeatFieldValue($value, $field, $form_id)
@@ -1589,6 +1607,12 @@ namespace FluentForm\App\Modules\Form {
         {
         }
         /**
+         * Validate hCaptcha.
+         */
+        private function validateHCaptcha()
+        {
+        }
+        /**
          * Validate form data based on the form restrictions settings.
          *
          * @param $fields
@@ -1623,6 +1647,13 @@ namespace FluentForm\App\Modules\Form {
          * @return array
          */
         protected function delegateValidations($rules, $messages, $search = [], $replace = [])
+        {
+        }
+        /**
+         * Prevents malicious attacks when the submission
+         * count exceeds in an allowed interval.
+         */
+        public function preventMaliciousAttacks()
         {
         }
     }
@@ -2033,6 +2064,22 @@ namespace FluentForm\App\Modules\Form {
         }
     }
 }
+namespace FluentForm\App\Modules\HCaptcha {
+    class HCaptcha
+    {
+        /**
+         * Verify hCaptcha response.
+         *
+         * @param string $token response from the user.
+         * @param null $secret provided or already stored secret key.
+         *
+         * @return bool
+         */
+        public static function validate($token, $secret = null)
+        {
+        }
+    }
+}
 namespace FluentForm\App\Modules\Logger {
     class DataLogger
     {
@@ -2280,6 +2327,9 @@ namespace FluentForm\App\Modules\Settings {
         {
         }
         public function storeReCaptcha()
+        {
+        }
+        public function storeHCaptcha()
         {
         }
         public function storeSaveGlobalLayoutSettings()
@@ -2618,6 +2668,15 @@ namespace FluentForm\App\Providers {
          * @return void
          */
         public function booting()
+        {
+        }
+    }
+    class MigratorProvider extends \FluentForm\Framework\Foundation\Provider
+    {
+        public function booting()
+        {
+        }
+        public function booted()
         {
         }
     }
@@ -4688,6 +4747,14 @@ namespace FluentForm\App\Services\FluentConversational\Classes {
         private function enqueueScripts()
         {
         }
+        /**
+         * Get the payment configuration of this form.
+         * 
+         * @param $form
+         */
+        private function getPaymentConfig($form)
+        {
+        }
     }
 }
 namespace FluentForm\App\Services\FormBuilder {
@@ -4888,6 +4955,18 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         {
         }
     }
+    class Hcaptcha extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
+    {
+        /**
+         * Compile and echo the html element
+         * @param  array $data [element data]
+         * @param  stdClass $form [Form Object]
+         * @return viod
+         */
+        public function compile($data, $form)
+        {
+        }
+    }
     class Select extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
     {
         /**
@@ -4972,7 +5051,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
          * @param array $data
          * @return array
          */
-        protected function loadCountries($data)
+        public function loadCountries($data)
         {
         }
         /**
@@ -4983,7 +5062,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         protected function buildOptions($options, $defaultValues = [])
         {
         }
-        protected function getSelectedCountries($keys = [])
+        public function getSelectedCountries($keys = [])
         {
         }
     }
@@ -5996,18 +6075,454 @@ namespace FluentForm\App\Services\Integrations\Slack {
     }
 }
 namespace FluentForm\App\Services\Migrator {
+    class Bootstrap
+    {
+        protected $importer;
+        public function boot()
+        {
+        }
+        public function availableMigrations()
+        {
+        }
+        public function setImporterType()
+        {
+        }
+        public function getMigratorData()
+        {
+        }
+        public function importForms()
+        {
+        }
+        public function importEntries()
+        {
+        }
+        public function hasOtherForms()
+        {
+        }
+        public function getFormsByKey()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Migrator\Classes {
     abstract class BaseMigrator
     {
+        public $key;
+        public $title;
+        public $shortcode;
+        public $submitBtn;
+        public $unSupportFields = [];
+        public function import_forms($selectedForms = [])
+        {
+        }
+        protected abstract function getForms();
+        protected abstract function getFields($form);
+        protected abstract function getFormName($form);
+        protected abstract function getFormMetas($form);
+        public function getFluentClassicField($field, $args = [])
+        {
+        }
+        public static function defaultFieldConfig($args)
+        {
+        }
+        public function getSubmitBttn($args)
+        {
+        }
+        protected abstract function getFormId($form);
+        /**
+         * @param $metas
+         * @param $formId
+         */
+        protected function updateMetas($metas, $formId)
+        {
+        }
+        /**
+         * @param array $form
+         * @param array $insertedForms
+         * @param $formItem
+         * @param array $refs
+         * @return array
+         */
+        public function insertForm($form, $insertedForms, $formItem)
+        {
+        }
+        protected function getFileTypes($field, $arg)
+        {
+        }
+        public function isAlreadyImported($formItem)
+        {
+        }
+        public function updateForm($formId, $formFields, $insertedForms)
+        {
+        }
+        public function insertEntries($fluentFormId, $importFormId)
+        {
+        }
+        private function resetEntries($formId)
+        {
+        }
     }
-    class CalderaMigrator extends \FluentForm\App\Services\Migrator\BaseMigrator
+    class CalderaMigrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
     {
+        public function __construct()
+        {
+        }
+        /**
+         * @return bool
+         */
         public function exist()
         {
         }
+        /**
+         * @return array
+         */
         public function getForms()
         {
         }
+        public function getForm($id)
+        {
+        }
+        public function getFormsFormatted()
+        {
+        }
+        /**
+         * @param $form
+         * @return array
+         */
         public function getFields($form)
+        {
+        }
+        private function formatFieldData($field, $form)
+        {
+        }
+        private function getLabelPlacement($field)
+        {
+        }
+        // Function to convert shortcodes in numeric field calculations (todo)
+        private function convertFormulas($calculationField, $form)
+        {
+        }
+        /**
+         * @param $field
+         * @return int
+         */
+        private function getFileSize($field)
+        {
+        }
+        /**
+         * @return array
+         */
+        public function fieldPrefix()
+        {
+        }
+        /**
+         * @return array
+         */
+        public function fieldTypes()
+        {
+        }
+        /**
+         * @param $options
+         * @return array
+         */
+        public function getOptions($options)
+        {
+        }
+        /**
+         * @param $form
+         * @param $fluentFields
+         * @return array
+         */
+        private function getContainer($form, $fluentFields)
+        {
+        }
+        /**
+         * @param null $array
+         * @param int $depth
+         * @return array
+         */
+        public static function arrayFlat($array = null, $depth = 1)
+        {
+        }
+        /**
+         * @return array
+         */
+        private function getStepWrapper()
+        {
+        }
+        /**
+         * @param $form
+         * @return array default parsed form metas
+         * @throws \Exception
+         */
+        public function getFormMetas($form)
+        {
+        }
+        /**
+         * @param $form
+         * @return mixed
+         */
+        protected function getFormId($form)
+        {
+        }
+        /**
+         * @param $form
+         * @return mixed
+         */
+        protected function getFormName($form)
+        {
+        }
+        public function getEntries($formId)
+        {
+        }
+        /**
+         * Map Field key with its name to insert entry with input name
+         *
+         * @param array|null $form
+         * @return array|mixed
+         */
+        public function getFieldsNameMap(?array $form)
+        {
+        }
+    }
+    class GravityFormsMigrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
+    {
+        public function __construct()
+        {
+        }
+        public function exist()
+        {
+        }
+        /**
+         * @param $form
+         * @return array
+         */
+        public function getFields($form)
+        {
+        }
+        private function formatFieldData(array $field)
+        {
+        }
+        private function getInputName($field)
+        {
+        }
+        private function getLabelPlacement($field)
+        {
+        }
+        /**
+         * @param $field
+         * @return filesize in MB
+         */
+        private function getFileSize($field)
+        {
+        }
+        /**
+         * @return array
+         */
+        public function fieldTypes()
+        {
+        }
+        /**
+         * @param array $field
+         * @return array[]
+         */
+        private function getAddressArgs(array $field)
+        {
+        }
+        /**
+         * @param $options
+         * @return array
+         */
+        public function getOptions($options = [])
+        {
+        }
+        /**
+         * @param $repeaterFields
+         * @param $label
+         * @return array
+         */
+        protected function getRepeaterFields($repeaterFields, $label)
+        {
+        }
+        private function getContainer($fields, $fluentFields)
+        {
+        }
+        protected static function getLayout($fields, $id = '')
+        {
+        }
+        public static function getInputIdsFromLayoutGrp($id, $array)
+        {
+        }
+        /**
+         * @param null $array
+         * @param int $depth
+         * @return array
+         */
+        public static function arrayFlat($array = null, $depth = 1)
+        {
+        }
+        /**
+         * @return array
+         */
+        private function getStepWrapper()
+        {
+        }
+        /**
+         * @param $form
+         * @return array default parsed form metas
+         * @throws \Exception
+         */
+        public function getFormMetas($form)
+        {
+        }
+        public function getFormsFormatted()
+        {
+        }
+        protected function getForms()
+        {
+        }
+        protected function getForm($id)
+        {
+        }
+        protected function getFormName($form)
+        {
+        }
+        /**
+         * @param $form
+         * @return mixed
+         */
+        protected function getFormId($form)
+        {
+        }
+    }
+    class NinjaFormsMigrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
+    {
+        public function __construct()
+        {
+        }
+        /**
+         * Check if form type exists
+         * @return bool
+         */
+        public function exist()
+        {
+        }
+        /**
+         * Get array of all forms
+         * @return array Forms with fields
+         */
+        public function getForms()
+        {
+        }
+        public function getForm($id)
+        {
+        }
+        public function getFormsFormatted()
+        {
+        }
+        /**
+         *
+         * Get formatted fields form array
+         * @param array $form
+         * @return array fluentform data formatted for database
+         */
+        public function getFields($form)
+        {
+        }
+        /**
+         * Format each field with proper data
+         * @param $field
+         * @return array required arguments for single field
+         */
+        protected function formatFieldData($field)
+        {
+        }
+        /**
+         * Get field type in fluentforms type
+         * @return array
+         */
+        public function fieldTypes()
+        {
+        }
+        /**
+         * Get formatted options for select,radio etc type fields
+         * @param $options
+         * @param bool $hasImage
+         * @return array (options list and selected option)
+         */
+        public function getOptions($options, $hasImage = false)
+        {
+        }
+        /**
+         * Get Form Metas
+         * @param $form
+         * @return array
+         */
+        public function getFormMetas($form)
+        {
+        }
+        /**
+         * Update recaptcha key if already not has
+         */
+        protected function addRecaptcha()
+        {
+        }
+        /**
+         * Get notification data for metas
+         * @param $actionData
+         * @return array
+         */
+        private function getNotificationData($actionData)
+        {
+        }
+        /**
+         * Convert Ninja Forms merge Tags to Fluent forms dynamic shortcodes.
+         * @param $msg
+         * @return string
+         */
+        private function dynamicShortcodeConverter($msg)
+        {
+        }
+        /**
+         * Get shortcode in fluentforms format
+         * @return array
+         */
+        protected function dynamicShortcodes()
+        {
+        }
+        /**
+         * Get form settings
+         * @param $form
+         * @return array $formSettings
+         */
+        protected function getFormSettings($form)
+        {
+        }
+        /**
+         * @param $form
+         * @return mixed
+         */
+        protected function getFormId($form)
+        {
+        }
+        /**
+         * @param $form
+         * @return mixed
+         */
+        protected function getFormName($form)
+        {
+        }
+        public function getEntries($formId)
+        {
+        }
+        public function getFieldKeyMaps($form)
+        {
+        }
+        /**
+         * @param array $values
+         * @return array
+         */
+        public function formatEntries(array $values)
         {
         }
     }
@@ -6353,6 +6868,14 @@ namespace FluentForm\App\Services\Parser {
          * @return array
          */
         public function getInputsByElementTypes($types, $with = ['element'])
+        {
+        }
+        /**
+         * Get Address Fields
+         *
+         * @return array
+         */
+        public function getAddressFields($with = ['admin_label', 'attributes'])
         {
         }
     }
