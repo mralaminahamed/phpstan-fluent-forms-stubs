@@ -1270,6 +1270,25 @@ namespace FluentForm\App\Modules\Form {
         {
         }
     }
+    class HonetPot
+    {
+        private $app;
+        public function __construct(\FluentForm\Framework\Foundation\Application $application)
+        {
+        }
+        public function renderHoneyPot($form)
+        {
+        }
+        public function verify($insertData, $requestData, $formId)
+        {
+        }
+        public function isEnabled($formId = false)
+        {
+        }
+        private function getFieldName($formId)
+        {
+        }
+    }
     class Inputs
     {
         /**
@@ -4191,6 +4210,9 @@ namespace FluentForm\App\Services\FormBuilder {
         public static function getFormShortCodes($form)
         {
         }
+        public static function getSubmissionShortcodes()
+        {
+        }
         public static function getShortCodes($form)
         {
         }
@@ -4476,7 +4498,7 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static $entry = null;
         protected static $browser = null;
         protected static $formFields = null;
-        protected static $store = ['inputs' => null, 'user' => null, 'post' => null, 'other' => null];
+        protected static $store = ['inputs' => null, 'user' => null, 'post' => null, 'other' => null, 'submission' => null];
         public static function parse($parsable, $entryId, $data = null, $form = null)
         {
         }
@@ -4508,6 +4530,9 @@ namespace FluentForm\App\Services\FormBuilder {
         {
         }
         protected static function getWPData($key)
+        {
+        }
+        protected static function getSubmissionData($key)
         {
         }
         protected static function getOtherData($key)
