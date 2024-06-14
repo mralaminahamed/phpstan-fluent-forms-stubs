@@ -108,6 +108,8 @@ namespace FluentForm\App\Helpers {
     {
         static $tabIndex = 0;
         static $formInstance = 0;
+        static $loadedForms = [];
+        static $tabIndexStatus = 'na';
         /**
          * Sanitize form inputs recursively.
          *
@@ -168,6 +170,18 @@ namespace FluentForm\App\Helpers {
         {
         }
         public static function isFluentAdminPage()
+        {
+        }
+        public static function getShortCodeIds($content, $tag = 'fluentform', $selector = 'id')
+        {
+        }
+        public static function isTabIndexEnabled()
+        {
+        }
+        public static function isMultiStepForm($formId)
+        {
+        }
+        public static function hasFormElement($formId, $elementName)
         {
         }
     }
@@ -308,7 +322,7 @@ namespace FluentForm\App\Modules {
         public function updateAddOnsStatus()
         {
         }
-        private function getPremiumAddOns()
+        public function getPremiumAddOns()
         {
         }
     }
@@ -602,6 +616,9 @@ namespace FluentForm\App\Modules\Component {
         public function registerScripts()
         {
         }
+        protected function maybeLoadFluentFormStyles()
+        {
+        }
         /**
          * Get all the available components
          *
@@ -646,6 +663,9 @@ namespace FluentForm\App\Modules\Component {
         public function addFluentFormShortCode()
         {
         }
+        public function renderForm($atts)
+        {
+        }
         /**
          * Process the output HTML to generate the default values.
          *
@@ -683,7 +703,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Check if limit is set on form submits and it's valid yet
          *
-         * @param  array $restrictions
+         * @param array $restrictions
          *
          * @return bool
          */
@@ -693,7 +713,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Check if form has scheduled date and open for submission
          *
-         * @param  array $restrictions
+         * @param array $restrictions
          *
          * @return bool
          */
@@ -703,7 +723,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * * Check if form requires loged in user and user is logged in
          *
-         * @param  array $restrictions
+         * @param array $restrictions
          *
          * @return bool
          */
@@ -987,6 +1007,9 @@ namespace FluentForm\App\Modules\Form {
         public function record($formId)
         {
         }
+        public function resetFormAnalytics()
+        {
+        }
         /**
          * Save form view analytics data
          * @return void
@@ -1108,7 +1131,10 @@ namespace FluentForm\App\Modules\Form {
         private function validate()
         {
         }
-        private function getAdminPermalink($route, $formId)
+        private function getAdminPermalink($route, $form)
+        {
+        }
+        private function getSettingsUrl($form)
         {
         }
         public function getAllForms()
@@ -1170,6 +1196,10 @@ namespace FluentForm\App\Modules\Form {
     class FormFieldsParser
     {
         protected static $forms = [];
+        protected static $formsWith = [];
+        public static function maybeResetForm($form, $with)
+        {
+        }
         public static function getFields($form, $asArray = false)
         {
         }
@@ -1423,13 +1453,13 @@ namespace FluentForm\App\Modules\Form\Settings {
     }
     class FormCssJs
     {
-        public function addCssJs($form)
+        public function addCssJs($formId)
         {
         }
-        public function addCss($form, $css)
+        public function addCss($formId, $css, $cssId = 'fluentform_custom_css')
         {
         }
-        public function addJs($form, $customJS)
+        public function addJs($formId, $customJS)
         {
         }
         /**
@@ -1481,6 +1511,12 @@ namespace FluentForm\App\Modules\Form\Settings {
          * @return void
          */
         public function index()
+        {
+        }
+        protected function joinFluentformsTable($query)
+        {
+        }
+        protected function getPostFields()
         {
         }
         /**
@@ -1642,6 +1678,9 @@ namespace FluentForm\App\Modules\Logger {
     {
         public $app;
         public function __construct(\FluentForm\Framework\Foundation\Application $app)
+        {
+        }
+        public function getLogFilters()
         {
         }
         public function log($data)
@@ -3925,9 +3964,9 @@ namespace FluentForm\App\Services\FormBuilder {
     abstract class BaseFieldManager extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
     {
         protected $key = '';
-        protected $position = 'advanced';
         protected $title = '';
         protected $tags = [];
+        protected $position = 'advanced';
         public function __construct($key, $title, $tags = [], $position = 'advanced')
         {
         }
@@ -4195,7 +4234,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
          * @param  array $options
          * @return string/html [compiled options]
          */
-        protected function buildOptions($options, $defaultValues)
+        protected function buildOptions($data, $defaultValues)
         {
         }
     }
@@ -4483,6 +4522,14 @@ namespace FluentForm\App\Services\FormBuilder {
         protected function extractConditionalLogic($item)
         {
         }
+        /**
+         * Build attributes for any html element
+         * @param  array  $attributes
+         * @return string [Compiled key='value' attributes]
+         */
+        protected function buildAttributes($attributes, $form = null)
+        {
+        }
     }
     class GroupSetterProxy
     {
@@ -4555,14 +4602,6 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         {
         }
         /**
-         * Delete attached files from tmp directory
-         * @param  array $attachments
-         * @return void
-         */
-        protected function emptyTmp($attachments)
-        {
-        }
-        /**
          * @param $formId
          * @todo: Implement Caching mechanism so we don't have to parse these things for every request
          * @return array
@@ -4574,6 +4613,9 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         {
         }
         private function getFooterText($form, $notification)
+        {
+        }
+        private function getHeaders($notification)
         {
         }
     }
@@ -5083,6 +5125,13 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         public function subscribe($feed, $formData, $entry, $form)
         {
         }
+        /**
+         * Get a specific MailChimp list member.
+         *
+         */
+        public function getMemberByEmail($list_id, $email_address)
+        {
+        }
     }
     class MailChimpIntegration extends \FluentForm\App\Services\Integrations\IntegrationManager
     {
@@ -5121,6 +5170,15 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         {
         }
         public function getMergeFields($list, $listId, $formId)
+        {
+        }
+        public function fetchInterestGroups()
+        {
+        }
+        private function getInterestCategories($listId)
+        {
+        }
+        private function getInterestSubCategories($listId, $categoryId)
         {
         }
         /*
@@ -5265,6 +5323,14 @@ namespace FluentForm\App\Services\Parser {
         {
         }
         /**
+         * Set the label of the form field.
+         *
+         * @return $this
+         */
+        protected function setLabel()
+        {
+        }
+        /**
          * Set the admin label of the form field.
          *
          * @return $this
@@ -5278,6 +5344,17 @@ namespace FluentForm\App\Services\Parser {
          * @return $this
          */
         protected function setOptions()
+        {
+        }
+        /**
+         * Set the advanced options of the form field.
+         *
+         * @return $this
+         */
+        protected function setAdvancedOptions()
+        {
+        }
+        protected function setSettings()
         {
         }
         /**
