@@ -15525,10 +15525,10 @@ namespace FluentForm\Framework\Foundation {
         protected static $container = array('facades' => array(), 'aliases' => array(), 'resolved' => array(), 'bindings' => array(), 'singletons' => array());
         /**
          * Bind an instance into service container
-         * @param  string $key identifier
-         * @param  mixed $concrete
-         * @param  string $facade [optional facade]
-         * @param  string $alias [optional alias]
+         * @param string $key identifier
+         * @param mixed $concrete
+         * @param string $facade [optional facade]
+         * @param string $alias [optional alias]
          * @return void
          */
         public function bind($key, $concrete = null, $facade = null, $alias = null, $shared = false)
@@ -15536,10 +15536,10 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Bind a singleton instance into service container
-         * @param  string $key identifier
-         * @param  mixed $concrete
-         * @param  string $facade [optional facade]
-         * @param  string $alias [optional alias]
+         * @param string $key identifier
+         * @param mixed $concrete
+         * @param string $facade [optional facade]
+         * @param string $alias [optional alias]
          * @return void
          */
         public function bindSingleton($key, $concrete = null, $facade = null, $alias = null)
@@ -15547,10 +15547,10 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Bind a singleton instance into service container
-         * @param  string $key identifier
-         * @param  mixed $concrete
-         * @param  string $facade [optional facade]
-         * @param  string $alias [optional alias]
+         * @param string $key identifier
+         * @param mixed $concrete
+         * @param string $facade [optional facade]
+         * @param string $alias [optional alias]
          * @return void
          */
         public function bindInstance($key, $concrete, $facade = null, $alias = null)
@@ -15558,8 +15558,8 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Register a facade for a registered instance
-         * @param  string $key
-         * @param  string $facade
+         * @param string $key
+         * @param string $facade
          * @return string
          */
         public function facade($key, $facade)
@@ -15567,8 +15567,8 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Register an alias for a registered instance
-         * @param  string $key
-         * @param  string $alias
+         * @param string $key
+         * @param string $alias
          * @return string
          */
         public function alias($key, $aliases)
@@ -15576,7 +15576,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Resolve an instance from container
-         * @param  string $key
+         * @param string $key
          * @return mixed
          * @throws \FluentForm\Framework\Exception\UnResolveableEntityException
          */
@@ -15585,7 +15585,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Resolve an item from the container
-         * @param  mixed $value
+         * @param mixed $value
          * @return mixed
          */
         protected function resolve($value, $params = [])
@@ -15601,7 +15601,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Resolve all dependencies of a single class
-         * @param  array $dependencies Constructor Parameters
+         * @param array $dependencies Constructor Parameters
          * @return array An array of all the resolved dependencies of one class
          */
         protected function resolveDependencies(array $dependencies)
@@ -15609,7 +15609,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Resolves a single class instance
-         * @param  ReflectionParameter $parameter
+         * @param ReflectionParameter $parameter
          * @return mixed
          * @throws Exception
          */
@@ -15626,7 +15626,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Get the alias for a key if available.
-         * @param  string  $key
+         * @param string $key
          * @return string
          */
         public function getAlias($key)
@@ -15634,7 +15634,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Check if a given class/interface exists
-         * @param  string $key
+         * @param string $key
          * @return bool
          */
         protected function classExists($key)
@@ -15642,7 +15642,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Check if an item exists at a given offset
-         * @param  string  $offset
+         * @param string $offset
          * @return bool
          */
         public function bound($offset)
@@ -15650,7 +15650,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Check if an item exists at a given offset
-         * @param  string  $offset
+         * @param string $offset
          * @return bool
          */
         public function has($offset)
@@ -15658,7 +15658,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Check if an item exists at a given offset
-         * @param  string  $offset
+         * @param string $offset
          * @return bool
          */
         public function offsetExists($offset)
@@ -15666,8 +15666,8 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Get the value from given offset
-         * @param  string  $offset
-         * @param  mixed   $value
+         * @param string $offset
+         * @param mixed $value
          * @return void
          */
         public function offsetGet($offset)
@@ -15675,8 +15675,8 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Set the value at a given offset
-         * @param  string  $offset
-         * @param  mixed   $value
+         * @param string $offset
+         * @param mixed $value
          * @return void
          */
         public function offsetSet($offset, $value)
@@ -15684,7 +15684,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Unset the value at a given offset
-         * @param  string  $offset
+         * @param string $offset
          * @return void
          */
         public function offsetUnset($offset)
@@ -15692,7 +15692,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Determine whether a shared entity is resolved.
-         * @param  string $key
+         * @param string $key
          * @return bool
          */
         public function resolved($key)
@@ -15700,7 +15700,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Get one or all resolved instance(s)
-         * @param  string $key
+         * @param string $key
          * @return mixed
          */
         public function getResolved($key = null)
@@ -15708,7 +15708,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Clear one or all resolved instance(s)
-         * @param  string $key
+         * @param string $key
          * @return void
          */
         public function clearResolved($key = null)
@@ -15716,7 +15716,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Get one or all binding(s)
-         * @param  string $key
+         * @param string $key
          * @return void
          */
         public function getBindings($key = null)
@@ -15724,7 +15724,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Clear one or all binding(s)
-         * @param  string $key
+         * @param string $key
          * @return void
          */
         public function clearBindings($key = null)
@@ -15732,7 +15732,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Get one or all singletons(s)
-         * @param  string $key
+         * @param string $key
          * @return void
          */
         public function getSingletons($key = null)
@@ -15740,7 +15740,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Clear one or all singletons(s)
-         * @param  string $key
+         * @param string $key
          * @return void
          */
         public function clearSingletons($key = null)
