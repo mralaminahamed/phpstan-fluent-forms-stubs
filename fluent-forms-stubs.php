@@ -1503,6 +1503,7 @@ namespace FluentForm\App\Modules\Form {
         protected $metas = [];
         protected $formType = 'form';
         protected $hasPayment = 0;
+        protected $model;
         /**
          * Form constructor.
          *
