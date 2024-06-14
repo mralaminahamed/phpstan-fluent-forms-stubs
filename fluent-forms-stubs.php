@@ -399,6 +399,9 @@ namespace FluentForm\App\Helpers {
         public static function sanitizeForCSV($content)
         {
         }
+        public static function sanitizeOrderValue($orderType = '')
+        {
+        }
         public static function getForm($id)
         {
         }
@@ -406,7 +409,7 @@ namespace FluentForm\App\Helpers {
         {
         }
         // make tabular-grid value markdown format
-        public static function getTabularGridMarkdownValue($girdData, $field, $rowJoiner = '<br />', $colJoiner = ', ')
+        public static function getTabularGridFormatValue($girdData, $field, $rowJoiner = '<br />', $colJoiner = ', ', $type = '')
         {
         }
         public static function getInputNameFromShortCode($value)
@@ -1633,6 +1636,12 @@ namespace FluentForm\App\Modules\Form {
         private function notificationWithPdfMap($extras, $pdfFeedMap)
         {
         }
+        public function findFormLocations()
+        {
+        }
+        public static function getShortCodeIds($content)
+        {
+        }
     }
     class FormDataParser
     {
@@ -2406,6 +2415,18 @@ namespace FluentForm\App\Modules\ReCaptcha {
     }
 }
 namespace FluentForm\App\Modules\Registerer {
+    class AdminBar
+    {
+        public function register()
+        {
+        }
+        public function addMenuBar($wpAdminBar)
+        {
+        }
+        private function getMenuItems()
+        {
+        }
+    }
     class Menu
     {
         /**
@@ -5197,6 +5218,9 @@ namespace FluentForm\App\Services\FluentConversational\Classes {
         private function getPaymentConfig($form)
         {
         }
+        protected function getAsteriskPlacement($formId)
+        {
+        }
     }
 }
 namespace FluentForm\App\Services\FormBuilder {
@@ -6752,6 +6776,8 @@ namespace FluentForm\App\Services\Migrator {
 namespace FluentForm\App\Services\Migrator\Classes {
     abstract class BaseMigrator
     {
+        /** Constants used for default entry migrations max limit */
+        const DEFAULT_ENTRY_MIGRATION_MAX_LIMIT = 1000;
         public $key;
         public $title;
         public $shortcode;
@@ -6764,6 +6790,8 @@ namespace FluentForm\App\Services\Migrator\Classes {
         protected abstract function getFields($form);
         protected abstract function getFormName($form);
         protected abstract function getFormMetas($form);
+        protected abstract function getFormsFormatted();
+        protected abstract function exist();
         public function getFluentClassicField($field, $args = [])
         {
         }
@@ -6804,6 +6832,14 @@ namespace FluentForm\App\Services\Migrator\Classes {
         {
         }
         private function resetEntries($formId)
+        {
+        }
+        /**
+         * @param array $urls
+         *
+         * @return array
+         */
+        public function migrateFilesAndGetUrls($urls)
         {
         }
     }
@@ -7048,9 +7084,6 @@ namespace FluentForm\App\Services\Migrator\Classes {
         protected function getSubmissionValue($id, $submission)
         {
         }
-        protected function handleFileValue($url)
-        {
-        }
     }
     class NinjaFormsMigrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
     {
@@ -7180,6 +7213,76 @@ namespace FluentForm\App\Services\Migrator\Classes {
          * @return array
          */
         public function formatEntries(array $values)
+        {
+        }
+    }
+    class WpFormsMigrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
+    {
+        public function __construct()
+        {
+        }
+        protected function getForms()
+        {
+        }
+        public function getFields($form)
+        {
+        }
+        public function getSubmitBttn($args)
+        {
+        }
+        protected function getFormName($form)
+        {
+        }
+        protected function getFormMetas($form)
+        {
+        }
+        protected function getFormId($form)
+        {
+        }
+        protected function getForm($id)
+        {
+        }
+        public function getEntries($formId)
+        {
+        }
+        protected function getSubmissionNameValue($nameFields, $submissionField)
+        {
+        }
+        public function getFormsFormatted()
+        {
+        }
+        public function exist()
+        {
+        }
+        protected function formatFieldData($field, $type)
+        {
+        }
+        private function fieldTypeMap()
+        {
+        }
+        private function getConfirmations($form, $defaultValues)
+        {
+        }
+        private function getAdvancedValidation() : array
+        {
+        }
+        private function getNotifications($form)
+        {
+        }
+        public function getOptions($options)
+        {
+        }
+        /**
+         * @return array
+         */
+        private function getStepWrapper()
+        {
+        }
+        /**
+         * @param array $field
+         * @return array[]
+         */
+        private function getAddressArgs($field, $args)
         {
         }
     }
