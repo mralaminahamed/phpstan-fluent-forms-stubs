@@ -139,7 +139,7 @@ namespace FluentForm\App\Helpers {
         public static function isSlackEnabled()
         {
         }
-        public static function getEntryStutuses($form_id = false)
+        public static function getEntryStatuses($form_id = false)
         {
         }
         public static function getReportableInputs()
@@ -692,7 +692,7 @@ namespace FluentForm\App\Modules\Component {
          * @param \stdClass $form
          * @return string
          */
-        private function processOutput($output, $form)
+        public function replaceEditorSmartCodes($output, $form)
         {
         }
         /**
@@ -884,6 +884,12 @@ namespace FluentForm\App\Modules\Entries {
         public function __construct()
         {
         }
+        public function getAllFormEntries()
+        {
+        }
+        public function getEntriesReport()
+        {
+        }
         public function renderEntries($form_id)
         {
         }
@@ -946,16 +952,23 @@ namespace FluentForm\App\Modules\Entries {
     class Export
     {
         /**
+         * @var \FluentForm\Framework\Foundation\Application
+         */
+        protected $app;
+        /**
          * @var \FluentForm\Framework\Request\Request
          */
         protected $request;
-        protected $app;
+        /**
+         * @var String table/data source name
+         */
+        protected $tableName;
         /**
          * Export constructor.
          *
          * @param \FluentForm\Framework\Foundation\Application $application
          */
-        public function __construct(\FluentForm\Framework\Foundation\Application $application)
+        public function __construct(\FluentForm\Framework\Foundation\Application $application, $tableName = 'fluentform_submissions')
         {
         }
         /**
@@ -1093,6 +1106,9 @@ namespace FluentForm\App\Modules\Form {
          * @var array $formFields
          */
         protected $formFields;
+        protected $metas = [];
+        protected $formType = 'form';
+        protected $hasPayment = 0;
         /**
          * Form constructor.
          *
@@ -1128,7 +1144,16 @@ namespace FluentForm\App\Modules\Form {
         public function store()
         {
         }
-        private function getFormsDefaultSettings($formId = false)
+        public function getFormsDefaultSettings($formId = false)
+        {
+        }
+        public function getAdvancedValidationSettings($formId)
+        {
+        }
+        public function getMeta($formId, $metaKey, $isJson = true)
+        {
+        }
+        public function updateMeta($formId, $metaKey, $metaValue)
         {
         }
         /**
@@ -1244,6 +1269,7 @@ namespace FluentForm\App\Modules\Form {
      * @method array getPaymentInputFields(\stdClass $form, $with = [])
      * @method array getAttachmentInputFields(\stdClass $form, $with = [])
      * @method boolean hasRequiredFields(\stdClass $form, array $fields)
+     * @method array getInputsByElementTypes(\stdClass $form, array $elements)
      * @method array|null getField(\stdClass $form, string|array $element, string|array $attribute, array $with = [])
      */
     class FormFieldsParser
@@ -1542,6 +1568,7 @@ namespace FluentForm\App\Modules\Form\Settings {
          * @var \FluentForm\Framework\Request\Request
          */
         private $request;
+        private $app;
         /**
          * @var int form ID.
          */
@@ -1564,6 +1591,12 @@ namespace FluentForm\App\Modules\Form\Settings {
          * @return void
          */
         public function index()
+        {
+        }
+        public function getGeneralSettingsAjax()
+        {
+        }
+        public function saveGeneralSettingsAjax()
         {
         }
         /**
@@ -1796,7 +1829,7 @@ namespace FluentForm\App\Modules {
         /**
          * Set the posts to one
          *
-         * @param  WP_Query $query
+         * @param WP_Query $query
          *
          * @return void
          */
@@ -1855,6 +1888,9 @@ namespace FluentForm\App\Modules\Registerer {
         {
         }
         public function renderFormAdminRoute()
+        {
+        }
+        public function renderAllEntriesAdminRoute()
         {
         }
         private function renderFormInnerPages()
@@ -1982,9 +2018,6 @@ namespace FluentForm\App\Modules\Settings {
         public function store()
         {
         }
-        public function storeFluentformsPdf()
-        {
-        }
         public function storeReCaptcha()
         {
         }
@@ -1992,6 +2025,9 @@ namespace FluentForm\App\Modules\Settings {
         {
         }
         public function storeMailChimpSettings()
+        {
+        }
+        public function storeEmailSummarySettings()
         {
         }
     }
@@ -2027,6 +2063,122 @@ namespace FluentForm\App\Modules\Track {
     }
 }
 namespace FluentForm\App\Modules\Widgets {
+    class ElementorWidget
+    {
+        private $app = null;
+        public function __construct($app)
+        {
+        }
+        public function init_widgets()
+        {
+        }
+        public function enqueueAssets()
+        {
+        }
+        public static function getForms()
+        {
+        }
+    }
+    // Exit if accessed directly
+    class FluentFormWidget extends \Elementor\Widget_Base
+    {
+        public function get_name()
+        {
+        }
+        public function get_title()
+        {
+        }
+        public function get_icon()
+        {
+        }
+        public function get_keywords()
+        {
+        }
+        public function get_categories()
+        {
+        }
+        public function get_style_depends()
+        {
+        }
+        public function get_script_depends()
+        {
+        }
+        protected function _register_controls()
+        {
+        }
+        protected function register_general_controls()
+        {
+        }
+        protected function register_error_controls()
+        {
+        }
+        protected function register_title_description_style_controls()
+        {
+        }
+        protected function register_form_container_style_controls()
+        {
+        }
+        protected function register_label_style_controls()
+        {
+        }
+        protected function register_input_textarea_style_controls()
+        {
+        }
+        protected function register_placeholder_style_controls()
+        {
+        }
+        protected function register_radio_checkbox_style_controls()
+        {
+        }
+        protected function register_section_break_style_controls()
+        {
+        }
+        protected function register_checkbox_grid_style_controls()
+        {
+        }
+        protected function register_address_line_style_controls()
+        {
+        }
+        protected function register_image_upload_style_controls()
+        {
+        }
+        protected function register_pagination_style_controls()
+        {
+        }
+        protected function register_submit_button_style_controls()
+        {
+        }
+        protected function register_success_message_style_controls()
+        {
+        }
+        protected function register_errors_style_controls()
+        {
+        }
+        /**
+         * Render the widget output on the frontend.
+         *
+         * Written in PHP and used to generate the final HTML.
+         *
+         * @since 1.0.0
+         *
+         * @access protected
+         */
+        protected function render()
+        {
+        }
+        /**
+         * Render the widget output in the editor.
+         *
+         * Written as a Backbone JavaScript template and used to generate the live preview.
+         *
+         * @since 1.0.0
+         *
+         * @access protected
+         */
+        protected function _content_template()
+        {
+        }
+    }
     class SidebarWidgets extends \WP_Widget
     {
         function __construct()
@@ -4041,6 +4193,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         protected function getInputHelpMessage($data, $hideClass = '')
         {
         }
+        protected function parseEditorSmartCode($text, $form)
+        {
+        }
     }
 }
 namespace FluentForm\App\Services\FormBuilder {
@@ -4328,8 +4483,8 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
+         * @param array $data [element data]
+         * @param stdClass $form [Form Object]
          * @return viod
          */
         public function compile($data, $form)
@@ -4337,7 +4492,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Load countt list from file
-         * @param  array $data
+         * @param array $data
          * @return array
          */
         protected function loadCountries($data)
@@ -4345,10 +4500,13 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Build options for country list/select
-         * @param  array $options
+         * @param array $options
          * @return string/html [compiled options]
          */
-        protected function buildOptions($options, $defaultValues)
+        protected function buildOptions($options, $defaultValues = [])
+        {
+        }
+        protected function getSelectedCountries($keys = [])
         {
         }
     }
@@ -4481,7 +4639,7 @@ namespace FluentForm\App\Services\FormBuilder {
          * @param  string $value
          * @return mixed
          */
-        private static function parseValue($value)
+        public static function parseValue($value)
         {
         }
         /**
@@ -4734,7 +4892,7 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static $browser = null;
         protected static $formFields = null;
         protected static $store = ['inputs' => null, 'original_inputs' => null, 'user' => null, 'post' => null, 'other' => null, 'submission' => null];
-        public static function parse($parsable, $entryId, $data = null, $form = null)
+        public static function parse($parsable, $entryId, $data = null, $form = null, $isUrl = false)
         {
         }
         protected static function setDependencies($entry, $data, $form)
@@ -4749,10 +4907,10 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static function setForm($form)
         {
         }
-        protected static function parseShortCodeFromArray($parsable)
+        protected static function parseShortCodeFromArray($parsable, $isUrl = false)
         {
         }
-        protected static function parseShortCodeFromString($parsable)
+        protected static function parseShortCodeFromString($parsable, $isUrl = false)
         {
         }
         protected static function getFormData($key)
@@ -4881,6 +5039,9 @@ namespace FluentForm\App\Services\Integrations {
         {
         }
         private function getEntry($id, $form)
+        {
+        }
+        public function cleanUpPassword($entryId, $form)
         {
         }
     }
@@ -5661,6 +5822,13 @@ namespace FluentForm\App\Services\Parser {
         public function getAttachmentInputFields($with = ['element'])
         {
         }
+        /**
+         * Get Any Field Type
+         * @return array
+         */
+        public function getInputsByElementTypes($types, $with = ['element'])
+        {
+        }
     }
     class Validations
     {
@@ -5729,7 +5897,7 @@ namespace FluentForm\App\Services\Parser {
         {
         }
         /**
-         * Determines if the filed is applicable for extracting validations.
+         * Determines if the field is applicable for extracting validations.
          *
          * @param  array   $field
          * @return boolean
@@ -16850,7 +17018,10 @@ namespace {
     function fluentform_mb_strpos($haystack, $needle)
     {
     }
-    function fluentformHandleScheduledTasks()
+    function fluentFormHandleScheduledTasks()
+    {
+    }
+    function fluentFormHandleScheduledEmailReport()
     {
     }
     function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
