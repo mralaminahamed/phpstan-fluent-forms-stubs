@@ -1492,6 +1492,12 @@ namespace FluentForm\App\Modules\Form {
         public function update()
         {
         }
+        private function sanitizeFields($formFields)
+        {
+        }
+        private function sanitizeFieldMaps($fields)
+        {
+        }
         /**
          * Delete a from from database
          * @return void
@@ -2011,6 +2017,13 @@ namespace FluentForm\App\Modules\Form\Settings {
         public function remove()
         {
         }
+        /**
+         * @param $formSettings
+         * @return array
+         */
+        private function sanitizeData($settings, $sanitizerMap)
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules\Form\Settings\Validator {
@@ -2379,6 +2392,9 @@ namespace FluentForm\App\Modules\Registerer {
         {
         }
         private function getAdminI18n()
+        {
+        }
+        private function usedNameAttributes(int $formId)
         {
         }
     }
@@ -5368,7 +5384,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     }
 }
 namespace FluentForm\App\Services\FormBuilder {
-    class EditorShortcode
+    class EditorShortCode
     {
         public static function getGeneralShortCodes()
         {
@@ -5680,7 +5696,26 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         public function register()
         {
         }
+        public function notifyOnSubmitPaymentForm($submissionId, $submissionData, $form)
+        {
+        }
         public function notify($feed, $formData, $entry, $form)
+        {
+        }
+        /**
+         * @param $emailData
+         * @param $formData
+         * @param $entry
+         * @param $form
+         * @return array
+         */
+        private function getAttachments($emailData, $formData, $entry, $form)
+        {
+        }
+        public function getFormData($submissionId)
+        {
+        }
+        public function getEntry($submissionId)
         {
         }
     }
@@ -5848,10 +5883,19 @@ namespace FluentForm\App\Services\Integrations {
         public function checkCondition($parsedValue, $formData, $insertId)
         {
         }
-        private function getEntry($id, $form)
+        public function getEntry($id, $form)
         {
         }
         public function cleanUpPassword($entryId, $form)
+        {
+        }
+        /**
+         * @param $feeds
+         * @param $formData
+         * @param $insertId
+         * @return array
+         */
+        public function getEnabledFeeds($feeds, $formData, $insertId)
         {
         }
     }
@@ -6260,6 +6304,9 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         {
         }
         private function getInterestSubCategories($listId, $categoryId)
+        {
+        }
+        public function sanitizeSettings($integration, $integrationId, $formId)
         {
         }
         /*
@@ -18365,6 +18412,22 @@ namespace {
      * Print internal content (not user input) without escaping.
      */
     function fluentFormPrintUnescapedInternalString($string)
+    {
+    }
+    function fluentform_options_sanitize($options)
+    {
+    }
+    function fluentform_sanitize_html($html)
+    {
+    }
+    /**
+     * Sanitize inputs recursively.
+     *
+     * @param array $input
+     * @param array $sanitizeMap
+     * @return array $input
+     */
+    function fluentform_backend_sanitizer($array, $sanitizeMap = [])
     {
     }
     function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
