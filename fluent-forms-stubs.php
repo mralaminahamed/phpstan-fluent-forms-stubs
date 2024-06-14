@@ -747,6 +747,9 @@ namespace FluentForm\App\Modules\Component {
         private function getDatei18n()
         {
         }
+        protected function maybeHasAdvandedFields($form, $formBuilder)
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules {
@@ -4524,6 +4527,7 @@ namespace FluentForm\App\Services\FormBuilder {
          */
         public $validationRules = array();
         public $tabIndex = 1;
+        public $fieldLists = [];
         /**
          * Construct the form builder instance
          * @param Framework\Foundation\Application $app
@@ -4637,7 +4641,7 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         protected $app = null;
         /**
          * Biuld the instance of this class
-         * @param  FluentForm\Framework\Foundation\Application $app
+         * @param FluentForm\Framework\Foundation\Application $app
          * @return $this
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $app)
@@ -4645,9 +4649,9 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         }
         /**
          * Send the email notification
-         * @param  array $notification [Notification settings from form meta]
-         * @param  array $submittedData [User submitted form data]
-         * @param  \StdClass $form [The form object from database]
+         * @param array $notification [Notification settings from form meta]
+         * @param array $submittedData [User submitted form data]
+         * @param \StdClass $form [The form object from database]
          * @return bool
          */
         public function notify($notification, $submittedData, $form, $entryId = false)
@@ -4655,8 +4659,8 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         }
         /**
          * @param $formId
-         * @todo: Implement Caching mechanism so we don't have to parse these things for every request
          * @return array
+         * @todo: Implement Caching mechanism so we don't have to parse these things for every request
          */
         private function getFormInputsAndLabels($form)
         {
