@@ -4305,7 +4305,7 @@ namespace FluentForm\App\Modules\Component {
         {
         }
         /**
-         * Register filter to check whether the form is renderable
+         * Register filter to check whether the form is renderable or active
          *
          * @return mixed
          */
