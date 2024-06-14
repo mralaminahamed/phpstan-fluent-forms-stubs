@@ -15602,22 +15602,6 @@ namespace FluentForm\Framework\Foundation {
         {
         }
         /**
-         * Get the parameter type for the given parameter.
-         *
-         * @return object ReflectionClass|ReflectionNamedType
-         */
-        protected function getParameterType($parameter)
-        {
-        }
-        /**
-         * Get the parameter name for the given parameter.
-         *
-         * @return string
-         */
-        protected function getParameterName($parameter)
-        {
-        }
-        /**
          * Get the alias for a key if available.
          * @param  string  $key
          * @return string
