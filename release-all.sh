@@ -37,20 +37,28 @@ while IFS= read -r VERSION; do
     # Clean up source/ directory
     git status --ignored --short -- source/ | sed -n -e 's#^!! ##p' | xargs --no-run-if-empty -- rm -rf
 
-    # Get new version
-    wget -q -P source/ "https://downloads.wordpress.org/plugin/fluentform.${VERSION}.zip"
-    unzip -q -d source/ source/fluentform.*.zip
+    # Try downloading and processing the version, handle errors
+    {
+        # Get new version
+        wget -q -P source/ "https://downloads.wordpress.org/plugin/fluentform.${VERSION}.zip"
+        unzip -q -d source/ source/fluentform.${VERSION}.zip
 
-    # Generate stubs
-    echo "Generating stubs ..."
-    ./generate.sh
+        # Generate stubs
+        echo "Generating stubs ..."
+        ./generate.sh
 
-    # Add files
-    git add .
+        # Add files
+        git add .
 
-    # Tag version
-    git commit --all -m "Generate stubs for Fluent Form ${VERSION}"
-    git tag "v${VERSION}"
+        # Tag version
+        git commit --all -m "Generate stubs for Fluent Form ${VERSION}"
+        git tag "v${VERSION}"
+    } || {
+        echo "Failed to process version ${VERSION}. Skipping..."
+    }
+
+    # Clean up downloaded files to prevent conflicts
+    rm -rf source/*
 done < "$OUTPUT_FILE"
 
 echo "All versions processed."
