@@ -18,7 +18,7 @@ namespace FluentForm\App\Api {
         public function entry($entryId, $includeFormats = false)
         {
         }
-        public function report($statuses = [])
+        public function report($statuses = ['read', 'unread', 'unapproved', 'approved', 'declined', 'unconfirmed', 'confirmed'])
         {
         }
     }
@@ -194,9 +194,28 @@ namespace FluentForm\App {
         }
     }
 }
+namespace FluentForm\App\Helpers\Traits {
+    trait GlobalDefaultMessages
+    {
+        private static $globalDefaultMessages = [];
+        public static function getGlobalDefaultMessage($key)
+        {
+        }
+        public static function getAllGlobalDefaultMessages()
+        {
+        }
+        private static function setGlobalDefaultMessages()
+        {
+        }
+        public static function globalDefaultMessageSettingFields()
+        {
+        }
+    }
+}
 namespace FluentForm\App\Helpers {
     class Helper
     {
+        use \FluentForm\App\Helpers\Traits\GlobalDefaultMessages;
         public static $tabIndex = 0;
         public static $formInstance = 0;
         public static $loadedForms = [];
@@ -360,6 +379,9 @@ namespace FluentForm\App\Helpers {
         public static function getLogInitiator($action, $type = 'log')
         {
         }
+        public static function getIpinfo()
+        {
+        }
         public static function isAutoloadCaptchaEnabled()
         {
         }
@@ -370,6 +392,37 @@ namespace FluentForm\App\Helpers {
         {
         }
         public static function isBlockEditor()
+        {
+        }
+        public static function resolveValidationRulesGlobalOption(&$field)
+        {
+        }
+        /**
+         * Validate form input value against database values
+         *
+         * @param $field array Form Field
+         * @param $formData array From Data
+         * @param $form object From
+         * @param $fieldName string optional
+         * @param $inputValue mixed optional
+         *
+         * @return string
+         * Return Error message on fail. Otherwise, return empty string
+         */
+        public static function validateInput($field, $formData, $form, $fieldName = '', $inputValue = [])
+        {
+        }
+        public static function getWhiteListedFields($formId)
+        {
+        }
+        /**
+         * Shortcode parse on validation message
+         * @param string $message
+         * @param object $form
+         * @param string $fieldName
+         * @return string
+         */
+        public static function shortCodeParseOnValidationMessage($message, $form, $fieldName)
         {
         }
     }
@@ -404,6 +457,9 @@ namespace FluentForm\App\Helpers {
         {
         }
         public function getFormattedValue($setting)
+        {
+        }
+        public static function isIntegrationEnabled($key)
         {
         }
     }
@@ -747,6 +803,12 @@ namespace FluentForm\App\Http\Controllers {
         public function storeConversationalDesign(\FluentForm\App\Services\Settings\SettingsService $settingsService, $formId)
         {
         }
+        public function getPreset(\FluentForm\App\Services\Settings\SettingsService $settingsService, $formId)
+        {
+        }
+        public function savePreset(\FluentForm\App\Services\Settings\SettingsService $settingsService)
+        {
+        }
     }
     class GlobalIntegrationController extends \FluentForm\App\Http\Controllers\Controller
     {
@@ -759,10 +821,22 @@ namespace FluentForm\App\Http\Controllers {
         public function index(\FluentForm\App\Services\Integrations\GlobalIntegrationService $globalIntegrationService)
         {
         }
-        public function update()
+        public function updateIntegration()
         {
         }
         public function updateModuleStatus(\FluentForm\App\Services\Integrations\GlobalIntegrationService $globalIntegrationService)
+        {
+        }
+    }
+    class GlobalSearchController extends \FluentForm\App\Http\Controllers\Controller
+    {
+        /**
+         * Get the search links.
+         *
+         * @param  \FluentForm\App\Services\GlobalSearchService $globalSearchService
+         * @return \WP_REST_Response
+         */
+        public function index(\FluentForm\App\Services\GlobalSearchService $globalSearchService)
         {
         }
     }
@@ -1002,12 +1076,18 @@ namespace FluentForm\App\Http\Policies {
         public function updateModuleStatus()
         {
         }
+        public function updateIntegration()
+        {
+        }
         public function ping()
         {
         }
     }
     class GlobalSettingsPolicy extends \FluentForm\Framework\Foundation\Policy
     {
+        public function verifyRequest(\FluentForm\Framework\Request\Request $request)
+        {
+        }
         public function index()
         {
         }
@@ -1044,6 +1124,9 @@ namespace FluentForm\App\Http\Policies {
     }
     class RoleManagerPolicy extends \FluentForm\Framework\Foundation\Policy
     {
+        public function verifyRequest(\FluentForm\Framework\Request\Request $request)
+        {
+        }
         public function index()
         {
         }
@@ -3821,57 +3904,6 @@ namespace FluentForm\App\Modules\Acl {
         {
         }
     }
-    /**
-     * @deprecated deprecated use FluentForm\App\Http\Controllers\RoleManagerController
-     */
-    class Managers
-    {
-        /**
-         * Request object
-         *
-         * @var \FluentForm\Framework\Request\Request $request
-         */
-        protected $request;
-        public function __construct()
-        {
-        }
-        public function get()
-        {
-        }
-        public function store()
-        {
-        }
-        public function remove()
-        {
-        }
-        private function validate()
-        {
-        }
-        private function sendError($data, $code = 423)
-        {
-        }
-        public function dependencyValidate($permissions)
-        {
-        }
-    }
-    /**
-     * @deprecated deprecated use FluentForm\App\Http\Controllers\RoleManagerController
-     */
-    class RoleManager
-    {
-        public function getRoles()
-        {
-        }
-        public function setRoles()
-        {
-        }
-        public function verifyPermissionSet()
-        {
-        }
-        public function currentUserFormFormCapability()
-        {
-        }
-    }
 }
 namespace FluentForm\App\Modules {
     class AddOnModule
@@ -3898,9 +3930,6 @@ namespace FluentForm\App\Modules {
          * Show the add-ons list.
          */
         public function showFluentAddOns()
-        {
-        }
-        public function updateAddOnsStatus()
         {
         }
         public function getPremiumAddOns()
@@ -4379,6 +4408,9 @@ namespace FluentForm\App\Modules\Component {
         public function getNumericInputValue($value, $field)
         {
         }
+        public function registerHelperShortCodes()
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules {
@@ -4523,31 +4555,6 @@ namespace FluentForm\App\Modules\Entries {
         {
         }
         public function changeEntryStatus()
-        {
-        }
-        public function deleteEntry()
-        {
-        }
-        public function deleteEntryById($entryId, $formId = false)
-        {
-        }
-        private function getSubmissionAttachments($submissionId, $form)
-        {
-        }
-        public function favoriteChange()
-        {
-        }
-        public function handleBulkAction()
-        {
-        }
-        /**
-         * @deprecated Use \FluentForm\App\Services\Submission\SubmissionService::recordEntryDetails
-         * @param $entryId
-         * @param $formId
-         * @param $data
-         * @return bool
-         */
-        public function recordEntryDetails($entryId, $formId, $data)
         {
         }
         public function updateEntryDiffs($entryId, $formId, $formData)
@@ -4845,9 +4852,6 @@ namespace FluentForm\App\Modules\Form {
         private function getSettingsUrl($form)
         {
         }
-        public function getAllForms()
-        {
-        }
         /**
          * Map pdf feed ID to replace with duplicated PDF feed ID when duplicating form
          *
@@ -4941,6 +4945,7 @@ namespace FluentForm\App\Modules\Form {
      * @method static boolean    hasRequiredFields(\stdClass $form, array $fields)
      * @method static array      getInputsByElementTypes(\stdClass $form, array $elements, array $with = [])
      * @method static array|null getField(\stdClass $form, string|array $element, string|array $attribute, array $with = [])
+     * @method static array      getEssentialInputs(\stdClass $form, array $inputs, array $with)
      */
     class FormFieldsParser
     {
@@ -5172,41 +5177,6 @@ namespace FluentForm\App\Modules\Form {
         {
         }
     }
-    /* @deprecated  Use FluentForm\App\Services\Form\FormService*/
-    class Predefined extends \FluentForm\App\Modules\Form\Form
-    {
-        /**
-         * all JSON data will be stored here
-         *
-         * @return array
-         */
-        private function getPredefinedForms()
-        {
-        }
-        private function getBlankConversationalForm()
-        {
-        }
-        /**
-         * Fetch simplified information for all predefined forms
-         */
-        public function all()
-        {
-        }
-        /**
-         * Create a predefined form
-         *
-         * @param $name
-         */
-        public function create()
-        {
-        }
-        public function createForm($predefinedForm, $predefinedName = '')
-        {
-        }
-        private function getRandomPhoto()
-        {
-        }
-    }
 }
 namespace FluentForm\App\Modules\Form\Settings {
     class EntryColumnViewSettings
@@ -5244,47 +5214,6 @@ namespace FluentForm\App\Modules\Form\Settings {
         {
         }
     }
-    class ExtraSettings
-    {
-        /**
-         * Request Object
-         *
-         * @var \FluentForm\Framework\Request\Request $request
-         */
-        protected $request;
-        /**
-         * Query Builder Handler Object
-         *
-         * @var \WpFluent\QueryBuilder\QueryBuilderHandler
-         */
-        protected $form_model;
-        /**
-         * Construct the object
-         *
-         * @throws \Exception
-         */
-        public function __construct(\FluentForm\Framework\Foundation\Application $application)
-        {
-        }
-        /**
-         * Get extra settig navigations
-         */
-        public function getExtraSettingNavs()
-        {
-        }
-        /**
-         * Get extra settigs component
-         */
-        public function getExtraSettingsComponent()
-        {
-        }
-        /**
-         * Get trello settigs
-         */
-        public function getTrelloSettingsComponent($component, $formId)
-        {
-        }
-    }
     class FormCssJs
     {
         /**
@@ -5296,7 +5225,10 @@ namespace FluentForm\App\Modules\Form\Settings {
         public function __construct()
         {
         }
-        public function addCssJs($formId)
+        public function addCustomCssJs($formId)
+        {
+        }
+        public function addStylerCSS($formId, $styles = [])
         {
         }
         public function getCss($formId)
@@ -5803,6 +5735,9 @@ namespace FluentForm\App\Modules\Registerer {
         public static function getEditorI18n()
         {
         }
+        public static function getPreviewI18n()
+        {
+        }
         public static function getEntriesI18n()
         {
         }
@@ -5813,6 +5748,9 @@ namespace FluentForm\App\Modules\Registerer {
         {
         }
         public static function getPaymentsI18n()
+        {
+        }
+        protected static function getSettingsCommonI18n()
         {
         }
     }
@@ -5848,60 +5786,6 @@ namespace FluentForm\App\Modules\Renderer\GlobalSettings {
          * @throws \Exception
          */
         public function enqueue()
-        {
-        }
-    }
-}
-namespace FluentForm\App\Modules\Settings {
-    /**
-     * Global Settings
-     *
-     * @package FluentForm\App\Modules\Settings
-     */
-    /**
-     * @deprecated deprecated use FluentForm\App\Http\Controllers\GlobalSettingsController
-     */
-    class Settings
-    {
-        /**
-         * Request Object
-         *
-         * @var \FluentForm\Framework\Request\Request
-         */
-        protected $request;
-        /**
-         * Settings constructor.
-         *
-         * @param \FluentForm\Framework\Request\Request $request
-         */
-        public function __construct(\FluentForm\Framework\Request\Request $request)
-        {
-        }
-        /**
-         * Get a global settings for an specified key.
-         */
-        public function get()
-        {
-        }
-        public function store()
-        {
-        }
-        public function storeReCaptcha()
-        {
-        }
-        public function storeHCaptcha()
-        {
-        }
-        public function storeTurnstile()
-        {
-        }
-        public function storeSaveGlobalLayoutSettings()
-        {
-        }
-        public function storeMailChimpSettings()
-        {
-        }
-        public function storeEmailSummarySettings()
         {
         }
     }
@@ -6040,6 +5924,14 @@ namespace FluentForm\App\Modules\Widgets {
         {
         }
         public function get_icon()
+        {
+        }
+        /**
+         * Elementor version compare to 3.0.0
+         *
+         * @return bool|int true if version is 3.0.0 or above
+         */
+        protected function is_v3_or_above()
         {
         }
         public function get_keywords()
@@ -8028,6 +7920,21 @@ namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
         private static function hasFormula($question)
         {
         }
+        private static function hasSaveAndResume($form)
+        {
+        }
+        /**
+         * @param array $field
+         * @param object $form
+         * @param string $fieldName
+         * @return array
+         */
+        private static function resolveValidationsRules($field, $form, $fieldName = '')
+        {
+        }
+        private static function getSaveAndResumeData($form)
+        {
+        }
     }
 }
 namespace FluentForm\App\Services\FormBuilder\Components {
@@ -8340,6 +8247,9 @@ namespace FluentForm\App\Services\FluentConversational\Classes {
         protected function getAsteriskPlacement($formId)
         {
         }
+        private function getLocalizedForm($form)
+        {
+        }
     }
 }
 namespace FluentForm\App\Services\Form {
@@ -8386,25 +8296,15 @@ namespace FluentForm\App\Services\Form {
     }
     class FormService
     {
-        /**
-         * @var \FluentForm\Framework\Foundation\Application
-         */
+        /** @var \FluentForm\Framework\Foundation\Application */
         protected $app;
-        /**
-         * @var \FluentForm\App\Models\Form|\FluentForm\Framework\Database\Query\Builder
-         */
+        /** @var \FluentForm\App\Models\Form|\FluentForm\Framework\Database\Query\Builder */
         protected $model;
-        /**
-         * @var \FluentForm\App\Services\Form\Updater
-         */
+        /** @var \FluentForm\App\Services\Form\Updater */
         protected $updater;
-        /**
-         * @var \FluentForm\App\Services\Form\Duplicator
-         */
+        /** @var \FluentForm\App\Services\Form\Duplicator */
         protected $duplicator;
-        /**
-         * @var \FluentForm\App\Services\Form\Fields
-         */
+        /** @var \FluentForm\App\Services\Form\Fields */
         protected $fields;
         public function __construct()
         {
@@ -8412,7 +8312,7 @@ namespace FluentForm\App\Services\Form {
         /**
          * Get the paginated forms matching search criteria.
          *
-         * @param  array $attributes
+         * @param array $attributes
          * @return array
          */
         public function get($attributes = [])
@@ -8421,9 +8321,9 @@ namespace FluentForm\App\Services\Form {
         /**
          * Store a form with its associated meta.
          *
-         * @param  array                       $attributes
-         * @throws Exception
+         * @param array $attributes
          * @return \FluentForm\App\Models\Form $form
+         * @throws Exception
          */
         public function store($attributes = [])
         {
@@ -8431,9 +8331,9 @@ namespace FluentForm\App\Services\Form {
         /**
          * Duplicate a form with its associated meta.
          *
-         * @param  array                       $attributes
-         * @throws Exception
+         * @param array $attributes
          * @return \FluentForm\App\Models\Form $form
+         * @throws Exception
          */
         public function duplicate($attributes = [])
         {
@@ -8447,9 +8347,9 @@ namespace FluentForm\App\Services\Form {
         /**
          * Update a form with its relevant fields.
          *
-         * @param  array                       $attributes
-         * @throws Exception
+         * @param array $attributes
          * @return \FluentForm\App\Models\Form $form
+         * @throws Exception
          */
         public function update($attributes = [])
         {
@@ -8457,9 +8357,9 @@ namespace FluentForm\App\Services\Form {
         /**
          * Duplicate a form with its associated meta.
          *
-         * @param  int                         $id
-         * @throws Exception
+         * @param int $id
          * @return \FluentForm\App\Models\Form $form
+         * @throws Exception
          */
         public function convert($id)
         {
@@ -8508,10 +8408,14 @@ namespace FluentForm\App\Services\Form {
         }
         /**
          * @param $fields
+         * @param $formData
          * @return bool
          * @throws ValidationException
          */
         public function validateSubmission(&$fields, &$formData)
+        {
+        }
+        protected function validateInput($field, $formData, $form, $fieldName = '', $inputValue = [])
         {
         }
         /**
@@ -8539,6 +8443,16 @@ namespace FluentForm\App\Services\Form {
          * @throws ValidationException
          */
         private function handleDenyEmptySubmission($settings, &$fields)
+        {
+        }
+        /**
+         * Handle response when form submission is restricted based on ip, country or keywords.
+         *
+         * @param array $settings
+         * @param $fields
+         * @throws ValidationException
+         */
+        protected function handleRestrictedSubmission($settings, &$fields)
         {
         }
         /**
@@ -8589,6 +8503,40 @@ namespace FluentForm\App\Services\Form {
          * @return array
          */
         protected function delegateValidations($rules, $messages, $search = [], $replace = [])
+        {
+        }
+        /**
+         * Get IP info from ipinfo.io
+         *
+         * @throws ValidationException
+         */
+        private function getIpInfo()
+        {
+        }
+        /**
+         * @param $value
+         * @param $providedKeywords
+         * @return bool
+         */
+        public static function containsRestrictedKeywords($value, $providedKeywords)
+        {
+        }
+        private function checkIpRestriction($settings)
+        {
+        }
+        private function checkCountryRestriction($settings, $country)
+        {
+        }
+        private function checkKeyWordRestriction($settings)
+        {
+        }
+        private static function checkKeywordsMatching($inputSubmission, $message, $providedKeywords)
+        {
+        }
+        /**
+         * @throws ValidationException
+         */
+        public static function throwValidationException($message)
         {
         }
     }
@@ -8648,6 +8596,12 @@ namespace FluentForm\App\Services\Form {
         {
         }
         protected function insertSubmission($insertData, $formDataRaw, $formId)
+        {
+        }
+        protected function isSpamAndSkipProcessing($insertData)
+        {
+        }
+        protected function processSpamSubmission($insertData)
         {
         }
     }
@@ -9133,6 +9087,9 @@ namespace FluentForm\App\Services\FormBuilder {
         public static function getFormShortCodes($form)
         {
         }
+        public static function getFormLabelShortCodes($form)
+        {
+        }
         public static function getSubmissionShortcodes($form = false)
         {
         }
@@ -9168,7 +9125,7 @@ namespace FluentForm\App\Services\FormBuilder {
          *
          * @var array
          */
-        private static $handlers = ['ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'http_referer' => 'parseWPProperties', 'wp.admin_email' => 'parseWPProperties', 'wp.site_url' => 'parseWPProperties', 'wp.site_title' => 'parseWPProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties', 'get.param_name' => 'parseQueryParam', 'random_string.param_name' => 'parseRandomString'];
+        private static $handlers = ['ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'http_referer' => 'parseWPProperties', 'wp.admin_email' => 'parseWPProperties', 'wp.site_url' => 'parseWPProperties', 'wp.site_title' => 'parseWPProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties', 'get.param_name' => 'parseRequestParam', 'random_string.param_name' => 'parseRandomString'];
         /**
          * Filter dynamic shortcodes in input value
          *
@@ -9177,6 +9134,17 @@ namespace FluentForm\App\Services\FormBuilder {
          * @return string
          */
         public static function filter($value, $form)
+        {
+        }
+        /**
+         * Parse request query param.
+         *
+         * @param string    $value
+         * @param \stdClass $form
+         *
+         * @return string
+         */
+        public static function parseRequestParam($value)
         {
         }
         /**
@@ -9469,6 +9437,14 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         private function broadCast($data)
         {
         }
+        /**
+         * Get email addresses
+         *
+         * @param array     $notification  [Notification settings from form meta]
+         * @param array     $submittedData [User submitted form data]
+         *
+         * @return string $sendAddresses [Email address or addresses as comma separated string]
+         */
         private function getSendAddresses($notification, $submittedData)
         {
         }
@@ -9533,11 +9509,12 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static $entry = null;
         protected static $browser = null;
         protected static $formFields = null;
+        protected static $provider = null;
         protected static $store = ['inputs' => null, 'original_inputs' => null, 'user' => null, 'post' => null, 'other' => null, 'submission' => null];
         public static function parse($parsable, $entryId, $data = [], $form = null, $isUrl = false, $providerOrIsHTML = false)
         {
         }
-        protected static function setDependencies($entry, $data, $form)
+        protected static function setDependencies($entry, $data, $form, $provider)
         {
         }
         protected static function setEntry($entry)
@@ -9558,6 +9535,9 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static function getFormData($key, $isHtml = false)
         {
         }
+        protected static function getFormLabelData($key)
+        {
+        }
         protected static function getUserData($key)
         {
         }
@@ -9576,6 +9556,9 @@ namespace FluentForm\App\Services\FormBuilder {
         public static function getForm()
         {
         }
+        public static function getProvider()
+        {
+        }
         public static function getEntry()
         {
         }
@@ -9592,6 +9575,14 @@ namespace FluentForm\App\Services\FormBuilder {
         {
         }
         public static function resetData()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services {
+    class GlobalSearchService
+    {
+        public function get()
         {
         }
     }
@@ -9690,48 +9681,6 @@ namespace FluentForm\App\Services\Integrations {
         {
         }
         public function delete($id)
-        {
-        }
-    }
-    /**
-     * @deprecated deprecated use FluentForm\App\Http\Controllers\GlobalIntegrationController;
-     */
-    class GlobalIntegrationManager
-    {
-        /**
-         * Request object
-         *
-         * @var \FluentForm\Framework\Request\Request $request
-         */
-        protected $request;
-        public function __construct(\FluentForm\Framework\Foundation\Application $app)
-        {
-        }
-        public function getGlobalSettingsAjax()
-        {
-        }
-        public function saveGlobalSettingsAjax()
-        {
-        }
-        public function getAllFormIntegrations()
-        {
-        }
-        public function getNotificationFeeds($formId)
-        {
-        }
-        public function updateNotificationStatus()
-        {
-        }
-        public function getIntegrationSettings()
-        {
-        }
-        public function saveIntegrationSettings()
-        {
-        }
-        public function deleteIntegrationFeed()
-        {
-        }
-        public function getIntegrationList()
         {
         }
     }
@@ -10138,7 +10087,7 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         {
         }
     }
-    class MailChimpIntegration extends \FluentForm\App\Services\Integrations\IntegrationManager
+    class MailChimpIntegration extends \FluentForm\App\Http\Controllers\IntegrationManagerController
     {
         /**
          * MailChimp Subscriber that handles & process all the subscribing logics.
@@ -10163,9 +10112,6 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         {
         }
         public function getSettingsFields($settings, $formId)
-        {
-        }
-        public function setFeedAtributes($feed, $formId)
         {
         }
         public function prepareIntegrationFeed($setting, $feed, $formId)
@@ -16678,6 +16624,9 @@ namespace FluentForm\App\Services\Migrator\Classes {
         public function migrateFilesAndGetUrls($urls)
         {
         }
+        protected function getResolveOperator($key)
+        {
+        }
     }
     class CalderaMigrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
     {
@@ -16802,6 +16751,66 @@ namespace FluentForm\App\Services\Migrator\Classes {
         {
         }
     }
+    class ContactForm7Migrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
+    {
+        public function __construct()
+        {
+        }
+        public function exist()
+        {
+        }
+        protected function getForms()
+        {
+        }
+        public function getFields($form)
+        {
+        }
+        public function getSubmitBttn($args)
+        {
+        }
+        private function fieldTypeMap()
+        {
+        }
+        protected function formatFieldData($args, $type)
+        {
+        }
+        protected function getOptions($options, $default)
+        {
+        }
+        protected function getFileTypes($field, $arg)
+        {
+        }
+        protected function getFormName($form)
+        {
+        }
+        protected function getFormMetas($form)
+        {
+        }
+        protected function getFormId($form)
+        {
+        }
+        public function getFormsFormatted()
+        {
+        }
+        private function getNotifications()
+        {
+        }
+        private function getAdvancedValidation()
+        {
+        }
+        private function removeLabelsAndNewLine($formMetaDataArray)
+        {
+        }
+        private function formatFieldArray($formattedArray)
+        {
+        }
+        private function formatAsFluentField($fieldStringArray)
+        {
+        }
+        public function getEntries($formId)
+        {
+        }
+    }
     class GravityFormsMigrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
     {
         public function __construct()
@@ -16890,6 +16899,51 @@ namespace FluentForm\App\Services\Migrator\Classes {
          * @throws \Exception
          */
         public function getFormMetas($form)
+        {
+        }
+        private function getNotifications($form)
+        {
+        }
+        private function getConditionals($notification, $key, $form)
+        {
+        }
+        private function getConfirmations($form, $defaultValues)
+        {
+        }
+        /**
+         * Get form field name in fluentforms format
+         *
+         * @param string $str
+         * @param array $form
+         * @return string
+         */
+        private function getFormFieldName($str, $form)
+        {
+        }
+        /**
+         * Resolve shortcode in fluentforms format
+         *
+         * @param string $message
+         * @param array $form
+         * @return string
+         */
+        private function getResolveShortcodes($message, $form)
+        {
+        }
+        /**
+         * Get bool value depend on shortcode is form inputs or not
+         *
+         * @param string $shortcode
+         * @return boolean
+         */
+        private function isFormField($shortcode)
+        {
+        }
+        /**
+         * Get shortcode in fluentforms format
+         * @return array
+         */
+        private function dynamicShortcodes()
         {
         }
         public function getFormsFormatted()
@@ -17099,10 +17153,68 @@ namespace FluentForm\App\Services\Migrator\Classes {
         private function getConfirmations($form, $defaultValues)
         {
         }
+        private function getConditionals($notification, $form)
+        {
+        }
         private function getAdvancedValidation() : array
         {
         }
         private function getNotifications($form)
+        {
+        }
+        /**
+         * Get webhooks feeds
+         *
+         * @param array $form
+         * @return array
+         */
+        private function getWebhooks($form)
+        {
+        }
+        /**
+         * Get resolved mapping fields
+         *
+         * @param array $fields
+         * @param array $form
+         * @return array
+         */
+        private function getResolveMappingFields($fields, $form)
+        {
+        }
+        /**
+         * Get bool value depend on shortcode is form inputs or not
+         *
+         * @param string $string
+         * @return boolean
+         */
+        private function isFormField($string)
+        {
+        }
+        /**
+         * Get form field name in fluentforms format
+         *
+         * @param string $str
+         * @param array $form
+         * @return array
+         */
+        private function getFormFieldName($str, $form)
+        {
+        }
+        /**
+         * Get shortcode in fluentforms format
+         * @return array
+         */
+        private function dynamicShortcodes()
+        {
+        }
+        /**
+         * Resolve shortcode in fluentforms format
+         *
+         * @param string $message
+         * @param array $form
+         * @return string
+         */
+        private function getResolveShortcode($message, $form)
         {
         }
         public function getOptions($options)
@@ -17192,6 +17304,23 @@ namespace FluentForm\App\Services\Parser {
         {
         }
         /**
+         * The extractor initializer for getting the extracted data.
+         *
+         * @return array
+         */
+        public function extractEssentials($formData)
+        {
+        }
+        /**
+         * The recursive looper method to loop each
+         * of the fields and extract it's data.
+         *
+         * @param array $fields
+         */
+        protected function looperEssential($formData, $fields = [])
+        {
+        }
+        /**
          * Extract the form field.
          *
          * @param  array $field
@@ -17272,6 +17401,9 @@ namespace FluentForm\App\Services\Parser {
         protected function setValidations()
         {
         }
+        protected function handleMaxLengthValidation()
+        {
+        }
         /**
          * Handle the child fields of the custom field.
          *
@@ -17305,6 +17437,12 @@ namespace FluentForm\App\Services\Parser {
          * @var array
          */
         protected $parsed;
+        /**
+         * The parsed essential form fields.
+         *
+         * @var array
+         */
+        protected $essentials;
         /**
          * The parsed validations
          *
@@ -17474,6 +17612,9 @@ namespace FluentForm\App\Services\Parser {
         public function getAddressFields($with = ['admin_label', 'attributes'])
         {
         }
+        public function getEssentialInputs($formData, $with = [])
+        {
+        }
     }
     class Validations
     {
@@ -17542,15 +17683,6 @@ namespace FluentForm\App\Services\Parser {
         {
         }
         /**
-         * Determines if the field is applicable for extracting validations.
-         *
-         * @param  array   $field
-         * @return boolean
-         */
-        protected function isApplicable($field)
-        {
-        }
-        /**
          * Get the field value from the form data.
          *
          * @return mixed
@@ -17614,10 +17746,10 @@ namespace FluentForm\App\Services\Parser {
 namespace FluentForm\App\Services\Report {
     class ReportHelper
     {
-        public static function generateReport($form, $statuses = [])
+        public static function generateReport($form, $statuses = ['read', 'unread'])
         {
         }
-        public static function getInputReport($formId, $fieldNames, $statuses = [])
+        public static function getInputReport($formId, $fieldNames, $statuses = ['read', 'unread', 'unapproved', 'approved', 'declined', 'unconfirmed', 'confirmed'])
         {
         }
         public static function getSubFieldInputReport($formId, $fieldNames, $statuses)
@@ -17697,7 +17829,7 @@ namespace FluentForm\App\Services\Scheduler {
 namespace FluentForm\App\Services\Settings {
     class Customizer
     {
-        public function get($formId)
+        public function get($formId, $metaKeys = ['_custom_form_css', '_custom_form_js'])
         {
         }
         public function store($attributes = [])
@@ -17728,6 +17860,15 @@ namespace FluentForm\App\Services\Settings {
         {
         }
         public function storeConversationalDesign($attributes, $formId)
+        {
+        }
+        public function getPreset($formId)
+        {
+        }
+        /**
+         * @throws \Exception
+         */
+        public function savePreset($attributes)
         {
         }
     }
@@ -25108,7 +25249,7 @@ namespace Composer\Autoload {
     {
         public static $prefixLengthsPsr4 = array('W' => array('WPFluent\\' => 9), 'F' => array('FluentForm\\Framework\\' => 21, 'FluentForm\\App\\' => 15));
         public static $prefixDirsPsr4 = array('WPFluent\\' => array(0 => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent'), 'FluentForm\\Framework\\' => array(0 => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent'), 'FluentForm\\App\\' => array(0 => __DIR__ . '/../..' . '/app'));
-        public static $classMap = array('Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php', 'FluentForm\\App\\Api\\Entry' => __DIR__ . '/../..' . '/app/Api/Entry.php', 'FluentForm\\App\\Api\\Form' => __DIR__ . '/../..' . '/app/Api/Form.php', 'FluentForm\\App\\Api\\FormProperties' => __DIR__ . '/../..' . '/app/Api/FormProperties.php', 'FluentForm\\App\\Api\\Submission' => __DIR__ . '/../..' . '/app/Api/Submission.php', 'FluentForm\\App\\App' => __DIR__ . '/../..' . '/app/App.php', 'FluentForm\\App\\ComposerScript' => __DIR__ . '/../..' . '/app/ComposerScript.php', 'FluentForm\\App\\Helpers\\Helper' => __DIR__ . '/../..' . '/app/Helpers/Helper.php', 'FluentForm\\App\\Helpers\\IntegrationManagerHelper' => __DIR__ . '/../..' . '/app/Helpers/IntegrationManagerHelper.php', 'FluentForm\\App\\Helpers\\Protector' => __DIR__ . '/../..' . '/app/Helpers/Protector.php', 'FluentForm\\App\\Helpers\\Str' => __DIR__ . '/../..' . '/app/Helpers/Str.php', 'FluentForm\\App\\Hooks\\Handlers\\ActivationHandler' => __DIR__ . '/../..' . '/app/Hooks/Handlers/ActivationHandler.php', 'FluentForm\\App\\Hooks\\Handlers\\DeactivationHandler' => __DIR__ . '/../..' . '/app/Hooks/Handlers/DeactivationHandler.php', 'FluentForm\\App\\Hooks\\Handlers\\GlobalNotificationHandler' => __DIR__ . '/../..' . '/app/Hooks/Handlers/GlobalNotificationHandler.php', 'FluentForm\\App\\Http\\Controllers\\AdminNoticeController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminNoticeController.php', 'FluentForm\\App\\Http\\Controllers\\AnalyticsController' => __DIR__ . '/../..' . '/app/Http/Controllers/AnalyticsController.php', 'FluentForm\\App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php', 'FluentForm\\App\\Http\\Controllers\\FormController' => __DIR__ . '/../..' . '/app/Http/Controllers/FormController.php', 'FluentForm\\App\\Http\\Controllers\\FormIntegrationController' => __DIR__ . '/../..' . '/app/Http/Controllers/FormIntegrationController.php', 'FluentForm\\App\\Http\\Controllers\\FormSettingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/FormSettingsController.php', 'FluentForm\\App\\Http\\Controllers\\GlobalIntegrationController' => __DIR__ . '/../..' . '/app/Http/Controllers/GlobalIntegrationController.php', 'FluentForm\\App\\Http\\Controllers\\GlobalSettingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/GlobalSettingsController.php', 'FluentForm\\App\\Http\\Controllers\\IntegrationManagerController' => __DIR__ . '/../..' . '/app/Http/Controllers/IntegrationManagerController.php', 'FluentForm\\App\\Http\\Controllers\\LogController' => __DIR__ . '/../..' . '/app/Http/Controllers/LogController.php', 'FluentForm\\App\\Http\\Controllers\\ManagersController' => __DIR__ . '/../..' . '/app/Http/Controllers/ManagersController.php', 'FluentForm\\App\\Http\\Controllers\\ReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReportController.php', 'FluentForm\\App\\Http\\Controllers\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/RolesController.php', 'FluentForm\\App\\Http\\Controllers\\SubmissionController' => __DIR__ . '/../..' . '/app/Http/Controllers/SubmissionController.php', 'FluentForm\\App\\Http\\Controllers\\SubmissionHandlerController' => __DIR__ . '/../..' . '/app/Http/Controllers/SubmissionHandlerController.php', 'FluentForm\\App\\Http\\Controllers\\SubmissionLogController' => __DIR__ . '/../..' . '/app/Http/Controllers/SubmissionLogController.php', 'FluentForm\\App\\Http\\Controllers\\SubmissionNoteController' => __DIR__ . '/../..' . '/app/Http/Controllers/SubmissionNoteController.php', 'FluentForm\\App\\Http\\Policies\\FormPolicy' => __DIR__ . '/../..' . '/app/Http/Policies/FormPolicy.php', 'FluentForm\\App\\Http\\Policies\\GlobalSettingsPolicy' => __DIR__ . '/../..' . '/app/Http/Policies/GlobalSettingsPolicy.php', 'FluentForm\\App\\Http\\Policies\\PublicPolicy' => __DIR__ . '/../..' . '/app/Http/Policies/PublicPolicy.php', 'FluentForm\\App\\Http\\Policies\\ReportPolicy' => __DIR__ . '/../..' . '/app/Http/Policies/ReportPolicy.php', 'FluentForm\\App\\Http\\Policies\\RoleManagerPolicy' => __DIR__ . '/../..' . '/app/Http/Policies/RoleManagerPolicy.php', 'FluentForm\\App\\Http\\Policies\\SubmissionPolicy' => __DIR__ . '/../..' . '/app/Http/Policies/SubmissionPolicy.php', 'FluentForm\\App\\Http\\Requests\\UserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UserRequest.php', 'FluentForm\\App\\Models\\Entry' => __DIR__ . '/../..' . '/app/Models/Entry.php', 'FluentForm\\App\\Models\\EntryDetails' => __DIR__ . '/../..' . '/app/Models/EntryDetails.php', 'FluentForm\\App\\Models\\EntryMeta' => __DIR__ . '/../..' . '/app/Models/EntryMeta.php', 'FluentForm\\App\\Models\\Form' => __DIR__ . '/../..' . '/app/Models/Form.php', 'FluentForm\\App\\Models\\FormAnalytics' => __DIR__ . '/../..' . '/app/Models/FormAnalytics.php', 'FluentForm\\App\\Models\\FormMeta' => __DIR__ . '/../..' . '/app/Models/FormMeta.php', 'FluentForm\\App\\Models\\Log' => __DIR__ . '/../..' . '/app/Models/Log.php', 'FluentForm\\App\\Models\\Model' => __DIR__ . '/../..' . '/app/Models/Model.php', 'FluentForm\\App\\Models\\Scheduler' => __DIR__ . '/../..' . '/app/Models/Scheduler.php', 'FluentForm\\App\\Models\\Submission' => __DIR__ . '/../..' . '/app/Models/Submission.php', 'FluentForm\\App\\Models\\SubmissionMeta' => __DIR__ . '/../..' . '/app/Models/SubmissionMeta.php', 'FluentForm\\App\\Models\\Traits\\PredefinedForms' => __DIR__ . '/../..' . '/app/Models/Traits/PredefinedForms.php', 'FluentForm\\App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php', 'FluentForm\\App\\Modules\\Acl\\Acl' => __DIR__ . '/../..' . '/app/Modules/Acl/Acl.php', 'FluentForm\\App\\Modules\\Acl\\Managers' => __DIR__ . '/../..' . '/app/Modules/Acl/Managers.php', 'FluentForm\\App\\Modules\\Acl\\RoleManager' => __DIR__ . '/../..' . '/app/Modules/Acl/RoleManager.php', 'FluentForm\\App\\Modules\\AddOnModule' => __DIR__ . '/../..' . '/app/Modules/AddOnModule.php', 'FluentForm\\App\\Modules\\CLI\\Commands' => __DIR__ . '/../..' . '/app/Modules/CLI/Commands.php', 'FluentForm\\App\\Modules\\Component\\BaseComponent' => __DIR__ . '/../..' . '/app/Modules/Component/BaseComponent.php', 'FluentForm\\App\\Modules\\Component\\Component' => __DIR__ . '/../..' . '/app/Modules/Component/Component.php', 'FluentForm\\App\\Modules\\Component\\ComponentInitTrait' => __DIR__ . '/../..' . '/app/Modules/Component/ComponentInitTrait.php', 'FluentForm\\App\\Modules\\DashboardWidgetModule' => __DIR__ . '/../..' . '/app/Modules/DashboardWidgetModule.php', 'FluentForm\\App\\Modules\\DocumentationModule' => __DIR__ . '/../..' . '/app/Modules/DocumentationModule.php', 'FluentForm\\App\\Modules\\EditorButtonModule' => __DIR__ . '/../..' . '/app/Modules/EditorButtonModule.php', 'FluentForm\\App\\Modules\\Entries\\Entries' => __DIR__ . '/../..' . '/app/Modules/Entries/Entries.php', 'FluentForm\\App\\Modules\\Entries\\EntryQuery' => __DIR__ . '/../..' . '/app/Modules/Entries/EntryQuery.php', 'FluentForm\\App\\Modules\\Entries\\Export' => __DIR__ . '/../..' . '/app/Modules/Entries/Export.php', 'FluentForm\\App\\Modules\\Entries\\Report' => __DIR__ . '/../..' . '/app/Modules/Entries/Report.php', 'FluentForm\\App\\Modules\\Form\\AkismetHandler' => __DIR__ . '/../..' . '/app/Modules/Form/AkismetHandler.php', 'FluentForm\\App\\Modules\\Form\\Analytics' => __DIR__ . '/../..' . '/app/Modules/Form/Analytics.php', 'FluentForm\\App\\Modules\\Form\\Form' => __DIR__ . '/../..' . '/app/Modules/Form/Form.php', 'FluentForm\\App\\Modules\\Form\\FormDataParser' => __DIR__ . '/../..' . '/app/Modules/Form/FormDataParser.php', 'FluentForm\\App\\Modules\\Form\\FormFieldsParser' => __DIR__ . '/../..' . '/app/Modules/Form/FormFieldsParser.php', 'FluentForm\\App\\Modules\\Form\\FormHandler' => __DIR__ . '/../..' . '/app/Modules/Form/FormHandler.php', 'FluentForm\\App\\Modules\\Form\\HoneyPot' => __DIR__ . '/../..' . '/app/Modules/Form/HoneyPot.php', 'FluentForm\\App\\Modules\\Form\\Inputs' => __DIR__ . '/../..' . '/app/Modules/Form/Inputs.php', 'FluentForm\\App\\Modules\\Form\\Predefined' => __DIR__ . '/../..' . '/app/Modules/Form/Predefined.php', 'FluentForm\\App\\Modules\\Form\\Settings\\EntryColumnViewSettings' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/EntryColumnViewSettings.php', 'FluentForm\\App\\Modules\\Form\\Settings\\ExtraSettings' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/ExtraSettings.php', 'FluentForm\\App\\Modules\\Form\\Settings\\FormCssJs' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/FormCssJs.php', 'FluentForm\\App\\Modules\\Form\\Settings\\FormSettings' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/FormSettings.php', 'FluentForm\\App\\Modules\\Form\\Settings\\Validator\\Confirmations' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/Validator/Confirmations.php', 'FluentForm\\App\\Modules\\Form\\Settings\\Validator\\MailChimps' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/Validator/MailChimps.php', 'FluentForm\\App\\Modules\\Form\\Settings\\Validator\\Notifications' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/Validator/Notifications.php', 'FluentForm\\App\\Modules\\Form\\Settings\\Validator\\Pdfs' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/Validator/Pdfs.php', 'FluentForm\\App\\Modules\\Form\\Settings\\Validator\\Validator' => __DIR__ . '/../..' . '/app/Modules/Form/Settings/Validator/Validator.php', 'FluentForm\\App\\Modules\\Form\\Transfer' => __DIR__ . '/../..' . '/app/Modules/Form/Transfer.php', 'FluentForm\\App\\Modules\\HCaptcha\\HCaptcha' => __DIR__ . '/../..' . '/app/Modules/HCaptcha/HCaptcha.php', 'FluentForm\\App\\Modules\\Logger\\DataLogger' => __DIR__ . '/../..' . '/app/Modules/Logger/DataLogger.php', 'FluentForm\\App\\Modules\\ProcessExteriorModule' => __DIR__ . '/../..' . '/app/Modules/ProcessExteriorModule.php', 'FluentForm\\App\\Modules\\ReCaptcha\\ReCaptcha' => __DIR__ . '/../..' . '/app/Modules/ReCaptcha/ReCaptcha.php', 'FluentForm\\App\\Modules\\Registerer\\AdminBar' => __DIR__ . '/../..' . '/app/Modules/Registerer/AdminBar.php', 'FluentForm\\App\\Modules\\Registerer\\Menu' => __DIR__ . '/../..' . '/app/Modules/Registerer/Menu.php', 'FluentForm\\App\\Modules\\Registerer\\ReviewQuery' => __DIR__ . '/../..' . '/app/Modules/Registerer/ReviewQuery.php', 'FluentForm\\App\\Modules\\Registerer\\TranslationString' => __DIR__ . '/../..' . '/app/Modules/Registerer/TranslationString.php', 'FluentForm\\App\\Modules\\Renderer\\GlobalSettings\\Settings' => __DIR__ . '/../..' . '/app/Modules/Renderer/GlobalSettings/Settings.php', 'FluentForm\\App\\Modules\\Settings\\Settings' => __DIR__ . '/../..' . '/app/Modules/Settings/Settings.php', 'FluentForm\\App\\Modules\\SubmissionHandler\\SubmissionHandler' => __DIR__ . '/../..' . '/app/Modules/SubmissionHandler/SubmissionHandler.php', 'FluentForm\\App\\Modules\\Track\\SetupModule' => __DIR__ . '/../..' . '/app/Modules/Track/SetupModule.php', 'FluentForm\\App\\Modules\\Track\\TrackModule' => __DIR__ . '/../..' . '/app/Modules/Track/TrackModule.php', 'FluentForm\\App\\Modules\\Transfer\\Transfer' => __DIR__ . '/../..' . '/app/Modules/Transfer/Transfer.php', 'FluentForm\\App\\Modules\\Turnstile\\Turnstile' => __DIR__ . '/../..' . '/app/Modules/Turnstile/Turnstile.php', 'FluentForm\\App\\Modules\\Widgets\\ElementorWidget' => __DIR__ . '/../..' . '/app/Modules/Widgets/ElementorWidget.php', 'FluentForm\\App\\Modules\\Widgets\\FluentFormWidget' => __DIR__ . '/../..' . '/app/Modules/Widgets/FluentFormWidget.php', 'FluentForm\\App\\Modules\\Widgets\\OxyFluentFormWidget' => __DIR__ . '/../..' . '/app/Modules/Widgets/OxyFluentFormWidget.php', 'FluentForm\\App\\Modules\\Widgets\\OxygenEl' => __DIR__ . '/../..' . '/app/Modules/Widgets/OxygenEl.php', 'FluentForm\\App\\Modules\\Widgets\\OxygenWidget' => __DIR__ . '/../..' . '/app/Modules/Widgets/OxygenWidget.php', 'FluentForm\\App\\Modules\\Widgets\\SidebarWidgets' => __DIR__ . '/../..' . '/app/Modules/Widgets/SidebarWidgets.php', 'FluentForm\\App\\Services\\Analytics\\AnalyticsService' => __DIR__ . '/../..' . '/app/Services/Analytics/AnalyticsService.php', 'FluentForm\\App\\Services\\Browser\\Browser' => __DIR__ . '/../..' . '/app/Services/Browser/Browser.php', 'FluentForm\\App\\Services\\ConditionAssesor' => __DIR__ . '/../..' . '/app/Services/ConditionAssesor.php', 'FluentForm\\App\\Services\\Emogrifier\\Emogrifier' => __DIR__ . '/../..' . '/app/Services/Emogrifier/Emogrifier.php', 'FluentForm\\App\\Services\\FluentConversational\\Classes\\Converter\\Converter' => __DIR__ . '/../..' . '/app/Services/FluentConversational/Classes/Converter/Converter.php', 'FluentForm\\App\\Services\\FluentConversational\\Classes\\Elements\\WelcomeScreen' => __DIR__ . '/../..' . '/app/Services/FluentConversational/Classes/Elements/WelcomeScreen.php', 'FluentForm\\App\\Services\\FluentConversational\\Classes\\Fonts' => __DIR__ . '/../..' . '/app/Services/FluentConversational/Classes/Fonts.php', 'FluentForm\\App\\Services\\FluentConversational\\Classes\\Form' => __DIR__ . '/../..' . '/app/Services/FluentConversational/Classes/Form.php', 'FluentForm\\App\\Services\\FormBuilder\\BaseFieldManager' => __DIR__ . '/../..' . '/app/Services/FormBuilder/BaseFieldManager.php', 'FluentForm\\App\\Services\\FormBuilder\\Components' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Address' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Address.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\BaseComponent' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/BaseComponent.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Checkable' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Checkable.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Container' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Container.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\CustomHtml' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/CustomHtml.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\CustomSubmitButton' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/CustomSubmitButton.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\DateTime' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/DateTime.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Hcaptcha' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Hcaptcha.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Name' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Name.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Rating' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Rating.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Recaptcha' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Recaptcha.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\SectionBreak' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/SectionBreak.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Select' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Select.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\SelectCountry' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/SelectCountry.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\SubmitButton' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/SubmitButton.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\TabularGrid' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/TabularGrid.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\TermsAndConditions' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/TermsAndConditions.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Text' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Text.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\TextArea' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/TextArea.php', 'FluentForm\\App\\Services\\FormBuilder\\Components\\Turnstile' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Components/Turnstile.php', 'FluentForm\\App\\Services\\FormBuilder\\EditorShortCode' => __DIR__ . '/../..' . '/app/Services/FormBuilder/EditorShortCode.php', 'FluentForm\\App\\Services\\FormBuilder\\EditorShortcodeParser' => __DIR__ . '/../..' . '/app/Services/FormBuilder/EditorShortcodeParser.php', 'FluentForm\\App\\Services\\FormBuilder\\FormBuilder' => __DIR__ . '/../..' . '/app/Services/FormBuilder/FormBuilder.php', 'FluentForm\\App\\Services\\FormBuilder\\GroupSetterProxy' => __DIR__ . '/../..' . '/app/Services/FormBuilder/GroupSetterProxy.php', 'FluentForm\\App\\Services\\FormBuilder\\NotificationParser' => __DIR__ . '/../..' . '/app/Services/FormBuilder/NotificationParser.php', 'FluentForm\\App\\Services\\FormBuilder\\Notifications\\EmailNotification' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Notifications/EmailNotification.php', 'FluentForm\\App\\Services\\FormBuilder\\Notifications\\EmailNotificationActions' => __DIR__ . '/../..' . '/app/Services/FormBuilder/Notifications/EmailNotificationActions.php', 'FluentForm\\App\\Services\\FormBuilder\\ShortCodeParser' => __DIR__ . '/../..' . '/app/Services/FormBuilder/ShortCodeParser.php', 'FluentForm\\App\\Services\\Form\\Duplicator' => __DIR__ . '/../..' . '/app/Services/Form/Duplicator.php', 'FluentForm\\App\\Services\\Form\\Fields' => __DIR__ . '/../..' . '/app/Services/Form/Fields.php', 'FluentForm\\App\\Services\\Form\\FormService' => __DIR__ . '/../..' . '/app/Services/Form/FormService.php', 'FluentForm\\App\\Services\\Form\\FormValidationService' => __DIR__ . '/../..' . '/app/Services/Form/FormValidationService.php', 'FluentForm\\App\\Services\\Form\\SubmissionHandlerService' => __DIR__ . '/../..' . '/app/Services/Form/SubmissionHandlerService.php', 'FluentForm\\App\\Services\\Form\\Updater' => __DIR__ . '/../..' . '/app/Services/Form/Updater.php', 'FluentForm\\App\\Services\\GlobalSettings\\GlobalSettingsHelper' => __DIR__ . '/../..' . '/app/Services/GlobalSettings/GlobalSettingsHelper.php', 'FluentForm\\App\\Services\\GlobalSettings\\GlobalSettingsService' => __DIR__ . '/../..' . '/app/Services/GlobalSettings/GlobalSettingsService.php', 'FluentForm\\App\\Services\\Integrations\\BaseIntegration' => __DIR__ . '/../..' . '/app/Services/Integrations/BaseIntegration.php', 'FluentForm\\App\\Services\\Integrations\\FormIntegrationService' => __DIR__ . '/../..' . '/app/Services/Integrations/FormIntegrationService.php', 'FluentForm\\App\\Services\\Integrations\\GlobalIntegrationManager' => __DIR__ . '/../..' . '/app/Services/Integrations/GlobalIntegrationManager.php', 'FluentForm\\App\\Services\\Integrations\\GlobalIntegrationService' => __DIR__ . '/../..' . '/app/Services/Integrations/GlobalIntegrationService.php', 'FluentForm\\App\\Services\\Integrations\\GlobalNotificationManager' => __DIR__ . '/../..' . '/app/Services/Integrations/GlobalNotificationManager.php', 'FluentForm\\App\\Services\\Integrations\\GlobalNotificationService' => __DIR__ . '/../..' . '/app/Services/Integrations/GlobalNotificationService.php', 'FluentForm\\App\\Services\\Integrations\\IntegrationManager' => __DIR__ . '/../..' . '/app/Services/Integrations/IntegrationManager.php', 'FluentForm\\App\\Services\\Integrations\\LogResponseTrait' => __DIR__ . '/../..' . '/app/Services/Integrations/LogResponseTrait.php', 'FluentForm\\App\\Services\\Integrations\\MailChimp\\MailChimp' => __DIR__ . '/../..' . '/app/Services/Integrations/MailChimp/MailChimp.php', 'FluentForm\\App\\Services\\Integrations\\MailChimp\\MailChimpIntegration' => __DIR__ . '/../..' . '/app/Services/Integrations/MailChimp/MailChimpIntegration.php', 'FluentForm\\App\\Services\\Integrations\\MailChimp\\MailChimpSubscriber' => __DIR__ . '/../..' . '/app/Services/Integrations/MailChimp/MailChimpSubscriber.php', 'FluentForm\\App\\Services\\Integrations\\Slack\\Slack' => __DIR__ . '/../..' . '/app/Services/Integrations/Slack/Slack.php', 'FluentForm\\App\\Services\\Integrations\\Slack\\SlackNotificationActions' => __DIR__ . '/../..' . '/app/Services/Integrations/Slack/SlackNotificationActions.php', 'FluentForm\\App\\Services\\Logger\\Logger' => __DIR__ . '/../..' . '/app/Services/Logger/Logger.php', 'FluentForm\\App\\Services\\Manager\\ManagerService' => __DIR__ . '/../..' . '/app/Services/Manager/ManagerService.php', 'FluentForm\\App\\Services\\Migrator\\Bootstrap' => __DIR__ . '/../..' . '/app/Services/Migrator/Bootstrap.php', 'FluentForm\\App\\Services\\Migrator\\Classes\\BaseMigrator' => __DIR__ . '/../..' . '/app/Services/Migrator/Classes/BaseMigrator.php', 'FluentForm\\App\\Services\\Migrator\\Classes\\CalderaMigrator' => __DIR__ . '/../..' . '/app/Services/Migrator/Classes/CalderaMigrator.php', 'FluentForm\\App\\Services\\Migrator\\Classes\\GravityFormsMigrator' => __DIR__ . '/../..' . '/app/Services/Migrator/Classes/GravityFormsMigrator.php', 'FluentForm\\App\\Services\\Migrator\\Classes\\NinjaFormsMigrator' => __DIR__ . '/../..' . '/app/Services/Migrator/Classes/NinjaFormsMigrator.php', 'FluentForm\\App\\Services\\Migrator\\Classes\\WpFormsMigrator' => __DIR__ . '/../..' . '/app/Services/Migrator/Classes/WpFormsMigrator.php', 'FluentForm\\App\\Services\\Parser\\Extractor' => __DIR__ . '/../..' . '/app/Services/Parser/Extractor.php', 'FluentForm\\App\\Services\\Parser\\Form' => __DIR__ . '/../..' . '/app/Services/Parser/Form.php', 'FluentForm\\App\\Services\\Parser\\Validations' => __DIR__ . '/../..' . '/app/Services/Parser/Validations.php', 'FluentForm\\App\\Services\\Report\\ReportHelper' => __DIR__ . '/../..' . '/app/Services/Report/ReportHelper.php', 'FluentForm\\App\\Services\\Report\\ReportService' => __DIR__ . '/../..' . '/app/Services/Report/ReportService.php', 'FluentForm\\App\\Services\\Roles\\RolesService' => __DIR__ . '/../..' . '/app/Services/Roles/RolesService.php', 'FluentForm\\App\\Services\\Scheduler\\Scheduler' => __DIR__ . '/../..' . '/app/Services/Scheduler/Scheduler.php', 'FluentForm\\App\\Services\\Settings\\Customizer' => __DIR__ . '/../..' . '/app/Services/Settings/Customizer.php', 'FluentForm\\App\\Services\\Settings\\SettingsService' => __DIR__ . '/../..' . '/app/Services/Settings/SettingsService.php', 'FluentForm\\App\\Services\\Settings\\Validator' => __DIR__ . '/../..' . '/app/Services/Settings/Validator.php', 'FluentForm\\App\\Services\\Settings\\Validator\\Confirmations' => __DIR__ . '/../..' . '/app/Services/Settings/Validator/Confirmations.php', 'FluentForm\\App\\Services\\Settings\\Validator\\MailChimps' => __DIR__ . '/../..' . '/app/Services/Settings/Validator/MailChimps.php', 'FluentForm\\App\\Services\\Settings\\Validator\\Notifications' => __DIR__ . '/../..' . '/app/Services/Settings/Validator/Notifications.php', 'FluentForm\\App\\Services\\Settings\\Validator\\Pdfs' => __DIR__ . '/../..' . '/app/Services/Settings/Validator/Pdfs.php', 'FluentForm\\App\\Services\\Settings\\Validator\\Validate' => __DIR__ . '/../..' . '/app/Services/Settings/Validator/Validate.php', 'FluentForm\\App\\Services\\Submission\\SubmissionService' => __DIR__ . '/../..' . '/app/Services/Submission/SubmissionService.php', 'FluentForm\\App\\Services\\Transfer\\TransferService' => __DIR__ . '/../..' . '/app/Services/Transfer/TransferService.php', 'FluentForm\\App\\Services\\WPAsync\\FluentFormAsyncRequest' => __DIR__ . '/../..' . '/app/Services/WPAsync/FluentFormAsyncRequest.php', 'FluentForm\\Database\\DBMigrator' => __DIR__ . '/../..' . '/database/DBMigrator.php', 'FluentForm\\Database\\Migrations\\FormAnalytics' => __DIR__ . '/../..' . '/database/Migrations/FormAnalytics.php', 'FluentForm\\Database\\Migrations\\FormMeta' => __DIR__ . '/../..' . '/database/Migrations/FormMeta.php', 'FluentForm\\Database\\Migrations\\Forms' => __DIR__ . '/../..' . '/database/Migrations/Forms.php', 'FluentForm\\Database\\Migrations\\Logs' => __DIR__ . '/../..' . '/database/Migrations/Logs.php', 'FluentForm\\Database\\Migrations\\ScheduledActions' => __DIR__ . '/../..' . '/database/Migrations/ScheduledActions.php', 'FluentForm\\Database\\Migrations\\SubmissionDetails' => __DIR__ . '/../..' . '/database/Migrations/SubmissionDetails.php', 'FluentForm\\Database\\Migrations\\SubmissionMeta' => __DIR__ . '/../..' . '/database/Migrations/SubmissionMeta.php', 'FluentForm\\Database\\Migrations\\Submissions' => __DIR__ . '/../..' . '/database/Migrations/Submissions.php', 'FluentForm\\Framework\\Database\\BaseGrammar' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/BaseGrammar.php', 'FluentForm\\Framework\\Database\\ConnectionInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/ConnectionInterface.php', 'FluentForm\\Framework\\Database\\ConnectionResolver' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/ConnectionResolver.php', 'FluentForm\\Framework\\Database\\ConnectionResolverInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/ConnectionResolverInterface.php', 'FluentForm\\Framework\\Database\\Orm\\Builder' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Builder.php', 'FluentForm\\Framework\\Database\\Orm\\Collection' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Collection.php', 'FluentForm\\Framework\\Database\\Orm\\DateTime' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/DateTime.php', 'FluentForm\\Framework\\Database\\Orm\\MassAssignmentException' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/MassAssignmentException.php', 'FluentForm\\Framework\\Database\\Orm\\Model' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Model.php', 'FluentForm\\Framework\\Database\\Orm\\ModelHelperTrait' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/ModelHelperTrait.php', 'FluentForm\\Framework\\Database\\Orm\\ModelNotFoundException' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/ModelNotFoundException.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\BelongsTo' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/BelongsTo.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\BelongsToMany' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/BelongsToMany.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\HasMany' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/HasMany.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\HasManyThrough' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/HasManyThrough.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\HasOne' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/HasOne.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\HasOneOrMany' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/HasOneOrMany.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\MorphMany' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/MorphMany.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\MorphOne' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/MorphOne.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\MorphOneOrMany' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/MorphOneOrMany.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\MorphPivot' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/MorphPivot.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\MorphTo' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/MorphTo.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\MorphToMany' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/MorphToMany.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\Pivot' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/Pivot.php', 'FluentForm\\Framework\\Database\\Orm\\Relations\\Relation' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Relations/Relation.php', 'FluentForm\\Framework\\Database\\Orm\\Scope' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/Scope.php', 'FluentForm\\Framework\\Database\\Orm\\ScopeInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/ScopeInterface.php', 'FluentForm\\Framework\\Database\\Orm\\SoftDeletes' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/SoftDeletes.php', 'FluentForm\\Framework\\Database\\Orm\\SoftDeletingScope' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Orm/SoftDeletingScope.php', 'FluentForm\\Framework\\Database\\QueryException' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/QueryException.php', 'FluentForm\\Framework\\Database\\Query\\Builder' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/Builder.php', 'FluentForm\\Framework\\Database\\Query\\Expression' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/Expression.php', 'FluentForm\\Framework\\Database\\Query\\Grammar' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/Grammar.php', 'FluentForm\\Framework\\Database\\Query\\JoinClause' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/JoinClause.php', 'FluentForm\\Framework\\Database\\Query\\JsonExpression' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/JsonExpression.php', 'FluentForm\\Framework\\Database\\Query\\MySqlGrammar' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/MySqlGrammar.php', 'FluentForm\\Framework\\Database\\Query\\Processor' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/Processor.php', 'FluentForm\\Framework\\Database\\Query\\WPDBConnection' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Database/Query/WPDBConnection.php', 'FluentForm\\Framework\\Foundation\\App' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/App.php', 'FluentForm\\Framework\\Foundation\\Application' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/Application.php', 'FluentForm\\Framework\\Foundation\\AsyncRequestTrait' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/AsyncRequestTrait.php', 'FluentForm\\Framework\\Foundation\\BindingResolutionException' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/BindingResolutionException.php', 'FluentForm\\Framework\\Foundation\\ComponentBinder' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/ComponentBinder.php', 'FluentForm\\Framework\\Foundation\\Config' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/Config.php', 'FluentForm\\Framework\\Foundation\\Container' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/Container.php', 'FluentForm\\Framework\\Foundation\\ContainerContract' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/ContainerContract.php', 'FluentForm\\Framework\\Foundation\\ContextualBindingBuilder' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/ContextualBindingBuilder.php', 'FluentForm\\Framework\\Foundation\\ContextualBindingBuilderContract' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/ContextualBindingBuilderContract.php', 'FluentForm\\Framework\\Foundation\\CronTaskSchedulerTrait' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/CronTaskSchedulerTrait.php', 'FluentForm\\Framework\\Foundation\\Dispatcher' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/Dispatcher.php', 'FluentForm\\Framework\\Foundation\\ForbiddenException' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/ForbiddenException.php', 'FluentForm\\Framework\\Foundation\\FoundationTrait' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/FoundationTrait.php', 'FluentForm\\Framework\\Foundation\\Policy' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/Policy.php', 'FluentForm\\Framework\\Foundation\\RequestGuard' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/RequestGuard.php', 'FluentForm\\Framework\\Foundation\\UnAuthorizedException' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Foundation/UnAuthorizedException.php', 'FluentForm\\Framework\\Helpers\\ArrayHelper' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Helpers/ArrayHelper.php', 'FluentForm\\Framework\\Http\\Controller' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Http/Controller.php', 'FluentForm\\Framework\\Http\\Route' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Http/Route.php', 'FluentForm\\Framework\\Http\\Router' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Http/Router.php', 'FluentForm\\Framework\\Pagination\\AbstractPaginator' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Pagination/AbstractPaginator.php', 'FluentForm\\Framework\\Pagination\\LengthAwarePaginator' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Pagination/LengthAwarePaginator.php', 'FluentForm\\Framework\\Pagination\\LengthAwarePaginatorInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Pagination/LengthAwarePaginatorInterface.php', 'FluentForm\\Framework\\Pagination\\Paginator' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Pagination/Paginator.php', 'FluentForm\\Framework\\Pagination\\PaginatorInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Pagination/PaginatorInterface.php', 'FluentForm\\Framework\\Pagination\\Presenter' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Pagination/Presenter.php', 'FluentForm\\Framework\\Request\\Cleaner' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Request/Cleaner.php', 'FluentForm\\Framework\\Request\\File' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Request/File.php', 'FluentForm\\Framework\\Request\\FileHandler' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Request/FileHandler.php', 'FluentForm\\Framework\\Request\\Request' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Request/Request.php', 'FluentForm\\Framework\\Response\\Response' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Response/Response.php', 'FluentForm\\Framework\\Support\\Arr' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/Arr.php', 'FluentForm\\Framework\\Support\\ArrayableInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/ArrayableInterface.php', 'FluentForm\\Framework\\Support\\Collection' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/Collection.php', 'FluentForm\\Framework\\Support\\Helper' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/Helper.php', 'FluentForm\\Framework\\Support\\Htmlable' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/Htmlable.php', 'FluentForm\\Framework\\Support\\JsonableInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/JsonableInterface.php', 'FluentForm\\Framework\\Support\\MacroableTrait' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/MacroableTrait.php', 'FluentForm\\Framework\\Support\\Pluralizer' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/Pluralizer.php', 'FluentForm\\Framework\\Support\\QueueableCollectionInterface' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/QueueableCollectionInterface.php', 'FluentForm\\Framework\\Support\\QueueableEntity' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/QueueableEntity.php', 'FluentForm\\Framework\\Support\\Sanitizer' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/Sanitizer.php', 'FluentForm\\Framework\\Support\\Str' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/Str.php', 'FluentForm\\Framework\\Support\\UrlRoutable' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Support/UrlRoutable.php', 'FluentForm\\Framework\\Validator\\Contracts\\File' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Validator/Contracts/File.php', 'FluentForm\\Framework\\Validator\\MessageBag' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Validator/MessageBag.php', 'FluentForm\\Framework\\Validator\\ValidatesAttributes' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Validator/ValidatesAttributes.php', 'FluentForm\\Framework\\Validator\\ValidationData' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Validator/ValidationData.php', 'FluentForm\\Framework\\Validator\\ValidationException' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Validator/ValidationException.php', 'FluentForm\\Framework\\Validator\\ValidationRuleParser' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Validator/ValidationRuleParser.php', 'FluentForm\\Framework\\Validator\\Validator' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/Validator/Validator.php', 'FluentForm\\Framework\\View\\View' => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent/View/View.php');
+        public static $classMap = array('Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php', 'FluentForm\\Database\\DBMigrator' => __DIR__ . '/../..' . '/database/DBMigrator.php', 'FluentForm\\Database\\Migrations\\FormAnalytics' => __DIR__ . '/../..' . '/database/Migrations/FormAnalytics.php', 'FluentForm\\Database\\Migrations\\FormMeta' => __DIR__ . '/../..' . '/database/Migrations/FormMeta.php', 'FluentForm\\Database\\Migrations\\Forms' => __DIR__ . '/../..' . '/database/Migrations/Forms.php', 'FluentForm\\Database\\Migrations\\Logs' => __DIR__ . '/../..' . '/database/Migrations/Logs.php', 'FluentForm\\Database\\Migrations\\ScheduledActions' => __DIR__ . '/../..' . '/database/Migrations/ScheduledActions.php', 'FluentForm\\Database\\Migrations\\SubmissionDetails' => __DIR__ . '/../..' . '/database/Migrations/SubmissionDetails.php', 'FluentForm\\Database\\Migrations\\SubmissionMeta' => __DIR__ . '/../..' . '/database/Migrations/SubmissionMeta.php', 'FluentForm\\Database\\Migrations\\Submissions' => __DIR__ . '/../..' . '/database/Migrations/Submissions.php');
         public static function getInitializer(\Composer\Autoload\ClassLoader $loader)
         {
         }
@@ -35206,7 +35347,7 @@ namespace FluentForm\Framework\Request {
          *
          * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
          */
-        protected $defaultExtensions = ['application/andrew-inset' => 'ez', 'application/applixware' => 'aw', 'application/atom+xml' => 'atom', 'application/atomcat+xml' => 'atomcat', 'application/atomsvc+xml' => 'atomsvc', 'application/ccxml+xml' => 'ccxml', 'application/cdmi-capability' => 'cdmia', 'application/cdmi-container' => 'cdmic', 'application/cdmi-domain' => 'cdmid', 'application/cdmi-object' => 'cdmio', 'application/cdmi-queue' => 'cdmiq', 'application/cu-seeme' => 'cu', 'application/davmount+xml' => 'davmount', 'application/docbook+xml' => 'dbk', 'application/dssc+der' => 'dssc', 'application/dssc+xml' => 'xdssc', 'application/ecmascript' => 'ecma', 'application/emma+xml' => 'emma', 'application/epub+zip' => 'epub', 'application/exi' => 'exi', 'application/font-tdpfr' => 'pfr', 'application/gml+xml' => 'gml', 'application/gpx+xml' => 'gpx', 'application/gxf' => 'gxf', 'application/hyperstudio' => 'stk', 'application/inkml+xml' => 'ink', 'application/ipfix' => 'ipfix', 'application/java-archive' => 'jar', 'application/java-serialized-object' => 'ser', 'application/java-vm' => 'class', 'application/javascript' => 'js', 'application/json' => 'json', 'application/jsonml+json' => 'jsonml', 'application/lost+xml' => 'lostxml', 'application/mac-binhex40' => 'hqx', 'application/mac-compactpro' => 'cpt', 'application/mads+xml' => 'mads', 'application/marc' => 'mrc', 'application/marcxml+xml' => 'mrcx', 'application/mathematica' => 'ma', 'application/mathml+xml' => 'mathml', 'application/mbox' => 'mbox', 'application/mediaservercontrol+xml' => 'mscml', 'application/metalink+xml' => 'metalink', 'application/metalink4+xml' => 'meta4', 'application/mets+xml' => 'mets', 'application/mods+xml' => 'mods', 'application/mp21' => 'm21', 'application/mp4' => 'mp4s', 'application/msword' => 'doc', 'application/mxf' => 'mxf', 'application/octet-stream' => 'bin', 'application/oda' => 'oda', 'application/oebps-package+xml' => 'opf', 'application/ogg' => 'ogx', 'application/omdoc+xml' => 'omdoc', 'application/onenote' => 'onetoc', 'application/oxps' => 'oxps', 'application/patch-ops-error+xml' => 'xer', 'application/pdf' => 'pdf', 'application/pgp-encrypted' => 'pgp', 'application/pgp-signature' => 'asc', 'application/pics-rules' => 'prf', 'application/pkcs10' => 'p10', 'application/pkcs7-mime' => 'p7m', 'application/pkcs7-signature' => 'p7s', 'application/pkcs8' => 'p8', 'application/pkix-attr-cert' => 'ac', 'application/pkix-cert' => 'cer', 'application/pkix-crl' => 'crl', 'application/pkix-pkipath' => 'pkipath', 'application/pkixcmp' => 'pki', 'application/pls+xml' => 'pls', 'application/postscript' => 'ai', 'application/prs.cww' => 'cww', 'application/pskc+xml' => 'pskcxml', 'application/rdf+xml' => 'rdf', 'application/reginfo+xml' => 'rif', 'application/relax-ng-compact-syntax' => 'rnc', 'application/resource-lists+xml' => 'rl', 'application/resource-lists-diff+xml' => 'rld', 'application/rls-services+xml' => 'rs', 'application/rpki-ghostbusters' => 'gbr', 'application/rpki-manifest' => 'mft', 'application/rpki-roa' => 'roa', 'application/rsd+xml' => 'rsd', 'application/rss+xml' => 'rss', 'application/rtf' => 'rtf', 'application/sbml+xml' => 'sbml', 'application/scvp-cv-request' => 'scq', 'application/scvp-cv-response' => 'scs', 'application/scvp-vp-request' => 'spq', 'application/scvp-vp-response' => 'spp', 'application/sdp' => 'sdp', 'application/set-payment-initiation' => 'setpay', 'application/set-registration-initiation' => 'setreg', 'application/shf+xml' => 'shf', 'application/smil+xml' => 'smi', 'application/sparql-query' => 'rq', 'application/sparql-results+xml' => 'srx', 'application/srgs' => 'gram', 'application/srgs+xml' => 'grxml', 'application/sru+xml' => 'sru', 'application/ssdl+xml' => 'ssdl', 'application/ssml+xml' => 'ssml', 'application/tei+xml' => 'tei', 'application/thraud+xml' => 'tfi', 'application/timestamped-data' => 'tsd', 'application/vnd.3gpp.pic-bw-large' => 'plb', 'application/vnd.3gpp.pic-bw-small' => 'psb', 'application/vnd.3gpp.pic-bw-var' => 'pvb', 'application/vnd.3gpp2.tcap' => 'tcap', 'application/vnd.3m.post-it-notes' => 'pwn', 'application/vnd.accpac.simply.aso' => 'aso', 'application/vnd.accpac.simply.imp' => 'imp', 'application/vnd.acucobol' => 'acu', 'application/vnd.acucorp' => 'atc', 'application/vnd.adobe.air-application-installer-package+zip' => 'air', 'application/vnd.adobe.formscentral.fcdt' => 'fcdt', 'application/vnd.adobe.fxp' => 'fxp', 'application/vnd.adobe.xdp+xml' => 'xdp', 'application/vnd.adobe.xfdf' => 'xfdf', 'application/vnd.ahead.space' => 'ahead', 'application/vnd.airzip.filesecure.azf' => 'azf', 'application/vnd.airzip.filesecure.azs' => 'azs', 'application/vnd.amazon.ebook' => 'azw', 'application/vnd.americandynamics.acc' => 'acc', 'application/vnd.amiga.ami' => 'ami', 'application/vnd.android.package-archive' => 'apk', 'application/vnd.anser-web-certificate-issue-initiation' => 'cii', 'application/vnd.anser-web-funds-transfer-initiation' => 'fti', 'application/vnd.antix.game-component' => 'atx', 'application/vnd.apple.installer+xml' => 'mpkg', 'application/vnd.apple.mpegurl' => 'm3u8', 'application/vnd.aristanetworks.swi' => 'swi', 'application/vnd.astraea-software.iota' => 'iota', 'application/vnd.audiograph' => 'aep', 'application/vnd.blueice.multipass' => 'mpm', 'application/vnd.bmi' => 'bmi', 'application/vnd.businessobjects' => 'rep', 'application/vnd.chemdraw+xml' => 'cdxml', 'application/vnd.chipnuts.karaoke-mmd' => 'mmd', 'application/vnd.cinderella' => 'cdy', 'application/vnd.claymore' => 'cla', 'application/vnd.cloanto.rp9' => 'rp9', 'application/vnd.clonk.c4group' => 'c4g', 'application/vnd.cluetrust.cartomobile-config' => 'c11amc', 'application/vnd.cluetrust.cartomobile-config-pkg' => 'c11amz', 'application/vnd.commonspace' => 'csp', 'application/vnd.contact.cmsg' => 'cdbcmsg', 'application/vnd.cosmocaller' => 'cmc', 'application/vnd.crick.clicker' => 'clkx', 'application/vnd.crick.clicker.keyboard' => 'clkk', 'application/vnd.crick.clicker.palette' => 'clkp', 'application/vnd.crick.clicker.template' => 'clkt', 'application/vnd.crick.clicker.wordbank' => 'clkw', 'application/vnd.criticaltools.wbs+xml' => 'wbs', 'application/vnd.ctc-posml' => 'pml', 'application/vnd.cups-ppd' => 'ppd', 'application/vnd.curl.car' => 'car', 'application/vnd.curl.pcurl' => 'pcurl', 'application/vnd.dart' => 'dart', 'application/vnd.data-vision.rdz' => 'rdz', 'application/vnd.dece.data' => 'uvf', 'application/vnd.dece.ttml+xml' => 'uvt', 'application/vnd.dece.unspecified' => 'uvx', 'application/vnd.dece.zip' => 'uvz', 'application/vnd.denovo.fcselayout-link' => 'fe_launch', 'application/vnd.dna' => 'dna', 'application/vnd.dolby.mlp' => 'mlp', 'application/vnd.dpgraph' => 'dpg', 'application/vnd.dreamfactory' => 'dfac', 'application/vnd.ds-keypoint' => 'kpxx', 'application/vnd.dvb.ait' => 'ait', 'application/vnd.dvb.service' => 'svc', 'application/vnd.dynageo' => 'geo', 'application/vnd.ecowin.chart' => 'mag', 'application/vnd.enliven' => 'nml', 'application/vnd.epson.esf' => 'esf', 'application/vnd.epson.msf' => 'msf', 'application/vnd.epson.quickanime' => 'qam', 'application/vnd.epson.salt' => 'slt', 'application/vnd.epson.ssf' => 'ssf', 'application/vnd.eszigno3+xml' => 'es3', 'application/vnd.ezpix-album' => 'ez2', 'application/vnd.ezpix-package' => 'ez3', 'application/vnd.fdf' => 'fdf', 'application/vnd.fdsn.mseed' => 'mseed', 'application/vnd.fdsn.seed' => 'seed', 'application/vnd.flographit' => 'gph', 'application/vnd.fluxtime.clip' => 'ftc', 'application/vnd.framemaker' => 'fm', 'application/vnd.frogans.fnc' => 'fnc', 'application/vnd.frogans.ltf' => 'ltf', 'application/vnd.fsc.weblaunch' => 'fsc', 'application/vnd.fujitsu.oasys' => 'oas', 'application/vnd.fujitsu.oasys2' => 'oa2', 'application/vnd.fujitsu.oasys3' => 'oa3', 'application/vnd.fujitsu.oasysgp' => 'fg5', 'application/vnd.fujitsu.oasysprs' => 'bh2', 'application/vnd.fujixerox.ddd' => 'ddd', 'application/vnd.fujixerox.docuworks' => 'xdw', 'application/vnd.fujixerox.docuworks.binder' => 'xbd', 'application/vnd.fuzzysheet' => 'fzs', 'application/vnd.genomatix.tuxedo' => 'txd', 'application/vnd.geogebra.file' => 'ggb', 'application/vnd.geogebra.tool' => 'ggt', 'application/vnd.geometry-explorer' => 'gex', 'application/vnd.geonext' => 'gxt', 'application/vnd.geoplan' => 'g2w', 'application/vnd.geospace' => 'g3w', 'application/vnd.gmx' => 'gmx', 'application/vnd.google-earth.kml+xml' => 'kml', 'application/vnd.google-earth.kmz' => 'kmz', 'application/vnd.grafeq' => 'gqf', 'application/vnd.groove-account' => 'gac', 'application/vnd.groove-help' => 'ghf', 'application/vnd.groove-identity-message' => 'gim', 'application/vnd.groove-injector' => 'grv', 'application/vnd.groove-tool-message' => 'gtm', 'application/vnd.groove-tool-template' => 'tpl', 'application/vnd.groove-vcard' => 'vcg', 'application/vnd.hal+xml' => 'hal', 'application/vnd.handheld-entertainment+xml' => 'zmm', 'application/vnd.hbci' => 'hbci', 'application/vnd.hhe.lesson-player' => 'les', 'application/vnd.hp-hpgl' => 'hpgl', 'application/vnd.hp-hpid' => 'hpid', 'application/vnd.hp-hps' => 'hps', 'application/vnd.hp-jlyt' => 'jlt', 'application/vnd.hp-pcl' => 'pcl', 'application/vnd.hp-pclxl' => 'pclxl', 'application/vnd.hydrostatix.sof-data' => 'sfd-hdstx', 'application/vnd.ibm.minipay' => 'mpy', 'application/vnd.ibm.modcap' => 'afp', 'application/vnd.ibm.rights-management' => 'irm', 'application/vnd.ibm.secure-container' => 'sc', 'application/vnd.iccprofile' => 'icc', 'application/vnd.igloader' => 'igl', 'application/vnd.immervision-ivp' => 'ivp', 'application/vnd.immervision-ivu' => 'ivu', 'application/vnd.insors.igm' => 'igm', 'application/vnd.intercon.formnet' => 'xpw', 'application/vnd.intergeo' => 'i2g', 'application/vnd.intu.qbo' => 'qbo', 'application/vnd.intu.qfx' => 'qfx', 'application/vnd.ipunplugged.rcprofile' => 'rcprofile', 'application/vnd.irepository.package+xml' => 'irp', 'application/vnd.is-xpr' => 'xpr', 'application/vnd.isac.fcs' => 'fcs', 'application/vnd.jam' => 'jam', 'application/vnd.jcp.javame.midlet-rms' => 'rms', 'application/vnd.jisp' => 'jisp', 'application/vnd.joost.joda-archive' => 'joda', 'application/vnd.kahootz' => 'ktz', 'application/vnd.kde.karbon' => 'karbon', 'application/vnd.kde.kchart' => 'chrt', 'application/vnd.kde.kformula' => 'kfo', 'application/vnd.kde.kivio' => 'flw', 'application/vnd.kde.kontour' => 'kon', 'application/vnd.kde.kpresenter' => 'kpr', 'application/vnd.kde.kspread' => 'ksp', 'application/vnd.kde.kword' => 'kwd', 'application/vnd.kenameaapp' => 'htke', 'application/vnd.kidspiration' => 'kia', 'application/vnd.kinar' => 'kne', 'application/vnd.koan' => 'skp', 'application/vnd.kodak-descriptor' => 'sse', 'application/vnd.las.las+xml' => 'lasxml', 'application/vnd.llamagraphics.life-balance.desktop' => 'lbd', 'application/vnd.llamagraphics.life-balance.exchange+xml' => 'lbe', 'application/vnd.lotus-1-2-3' => '123', 'application/vnd.lotus-approach' => 'apr', 'application/vnd.lotus-freelance' => 'pre', 'application/vnd.lotus-notes' => 'nsf', 'application/vnd.lotus-organizer' => 'org', 'application/vnd.lotus-screencam' => 'scm', 'application/vnd.lotus-wordpro' => 'lwp', 'application/vnd.macports.portpkg' => 'portpkg', 'application/vnd.mcd' => 'mcd', 'application/vnd.medcalcdata' => 'mc1', 'application/vnd.mediastation.cdkey' => 'cdkey', 'application/vnd.mfer' => 'mwf', 'application/vnd.mfmp' => 'mfm', 'application/vnd.micrografx.flo' => 'flo', 'application/vnd.micrografx.igx' => 'igx', 'application/vnd.mif' => 'mif', 'application/vnd.mobius.daf' => 'daf', 'application/vnd.mobius.dis' => 'dis', 'application/vnd.mobius.mbk' => 'mbk', 'application/vnd.mobius.mqy' => 'mqy', 'application/vnd.mobius.msl' => 'msl', 'application/vnd.mobius.plc' => 'plc', 'application/vnd.mobius.txf' => 'txf', 'application/vnd.mophun.application' => 'mpn', 'application/vnd.mophun.certificate' => 'mpc', 'application/vnd.mozilla.xul+xml' => 'xul', 'application/vnd.ms-artgalry' => 'cil', 'application/vnd.ms-cab-compressed' => 'cab', 'application/vnd.ms-excel' => 'xls', 'application/vnd.ms-excel.addin.macroenabled.12' => 'xlam', 'application/vnd.ms-excel.sheet.binary.macroenabled.12' => 'xlsb', 'application/vnd.ms-excel.sheet.macroenabled.12' => 'xlsm', 'application/vnd.ms-excel.template.macroenabled.12' => 'xltm', 'application/vnd.ms-fontobject' => 'eot', 'application/vnd.ms-htmlhelp' => 'chm', 'application/vnd.ms-ims' => 'ims', 'application/vnd.ms-lrm' => 'lrm', 'application/vnd.ms-officetheme' => 'thmx', 'application/vnd.ms-pki.seccat' => 'cat', 'application/vnd.ms-pki.stl' => 'stl', 'application/vnd.ms-powerpoint' => 'ppt', 'application/vnd.ms-powerpoint.addin.macroenabled.12' => 'ppam', 'application/vnd.ms-powerpoint.presentation.macroenabled.12' => 'pptm', 'application/vnd.ms-powerpoint.slide.macroenabled.12' => 'sldm', 'application/vnd.ms-powerpoint.slideshow.macroenabled.12' => 'ppsm', 'application/vnd.ms-powerpoint.template.macroenabled.12' => 'potm', 'application/vnd.ms-project' => 'mpp', 'application/vnd.ms-word.document.macroenabled.12' => 'docm', 'application/vnd.ms-word.template.macroenabled.12' => 'dotm', 'application/vnd.ms-works' => 'wps', 'application/vnd.ms-wpl' => 'wpl', 'application/vnd.ms-xpsdocument' => 'xps', 'application/vnd.mseq' => 'mseq', 'application/vnd.musician' => 'mus', 'application/vnd.muvee.style' => 'msty', 'application/vnd.mynfc' => 'taglet', 'application/vnd.neurolanguage.nlu' => 'nlu', 'application/vnd.nitf' => 'ntf', 'application/vnd.noblenet-directory' => 'nnd', 'application/vnd.noblenet-sealer' => 'nns', 'application/vnd.noblenet-web' => 'nnw', 'application/vnd.nokia.n-gage.data' => 'ngdat', 'application/vnd.nokia.n-gage.symbian.install' => 'n-gage', 'application/vnd.nokia.radio-preset' => 'rpst', 'application/vnd.nokia.radio-presets' => 'rpss', 'application/vnd.novadigm.edm' => 'edm', 'application/vnd.novadigm.edx' => 'edx', 'application/vnd.novadigm.ext' => 'ext', 'application/vnd.oasis.opendocument.chart' => 'odc', 'application/vnd.oasis.opendocument.chart-template' => 'otc', 'application/vnd.oasis.opendocument.database' => 'odb', 'application/vnd.oasis.opendocument.formula' => 'odf', 'application/vnd.oasis.opendocument.formula-template' => 'odft', 'application/vnd.oasis.opendocument.graphics' => 'odg', 'application/vnd.oasis.opendocument.graphics-template' => 'otg', 'application/vnd.oasis.opendocument.image' => 'odi', 'application/vnd.oasis.opendocument.image-template' => 'oti', 'application/vnd.oasis.opendocument.presentation' => 'odp', 'application/vnd.oasis.opendocument.presentation-template' => 'otp', 'application/vnd.oasis.opendocument.spreadsheet' => 'ods', 'application/vnd.oasis.opendocument.spreadsheet-template' => 'ots', 'application/vnd.oasis.opendocument.text' => 'odt', 'application/vnd.oasis.opendocument.text-master' => 'odm', 'application/vnd.oasis.opendocument.text-template' => 'ott', 'application/vnd.oasis.opendocument.text-web' => 'oth', 'application/vnd.olpc-sugar' => 'xo', 'application/vnd.oma.dd2+xml' => 'dd2', 'application/vnd.openofficeorg.extension' => 'oxt', 'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'pptx', 'application/vnd.openxmlformats-officedocument.presentationml.slide' => 'sldx', 'application/vnd.openxmlformats-officedocument.presentationml.slideshow' => 'ppsx', 'application/vnd.openxmlformats-officedocument.presentationml.template' => 'potx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.template' => 'xltx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.template' => 'dotx', 'application/vnd.osgeo.mapguide.package' => 'mgp', 'application/vnd.osgi.dp' => 'dp', 'application/vnd.osgi.subsystem' => 'esa', 'application/vnd.palm' => 'pdb', 'application/vnd.pawaafile' => 'paw', 'application/vnd.pg.format' => 'str', 'application/vnd.pg.osasli' => 'ei6', 'application/vnd.picsel' => 'efif', 'application/vnd.pmi.widget' => 'wg', 'application/vnd.pocketlearn' => 'plf', 'application/vnd.powerbuilder6' => 'pbd', 'application/vnd.previewsystems.box' => 'box', 'application/vnd.proteus.magazine' => 'mgz', 'application/vnd.publishare-delta-tree' => 'qps', 'application/vnd.pvi.ptid1' => 'ptid', 'application/vnd.quark.quarkxpress' => 'qxd', 'application/vnd.realvnc.bed' => 'bed', 'application/vnd.recordare.musicxml' => 'mxl', 'application/vnd.recordare.musicxml+xml' => 'musicxml', 'application/vnd.rig.cryptonote' => 'cryptonote', 'application/vnd.rim.cod' => 'cod', 'application/vnd.rn-realmedia' => 'rm', 'application/vnd.rn-realmedia-vbr' => 'rmvb', 'application/vnd.route66.link66+xml' => 'link66', 'application/vnd.sailingtracker.track' => 'st', 'application/vnd.seemail' => 'see', 'application/vnd.sema' => 'sema', 'application/vnd.semd' => 'semd', 'application/vnd.semf' => 'semf', 'application/vnd.shana.informed.formdata' => 'ifm', 'application/vnd.shana.informed.formtemplate' => 'itp', 'application/vnd.shana.informed.interchange' => 'iif', 'application/vnd.shana.informed.package' => 'ipk', 'application/vnd.simtech-mindmapper' => 'twd', 'application/vnd.smaf' => 'mmf', 'application/vnd.smart.teacher' => 'teacher', 'application/vnd.solent.sdkm+xml' => 'sdkm', 'application/vnd.spotfire.dxp' => 'dxp', 'application/vnd.spotfire.sfs' => 'sfs', 'application/vnd.stardivision.calc' => 'sdc', 'application/vnd.stardivision.draw' => 'sda', 'application/vnd.stardivision.impress' => 'sdd', 'application/vnd.stardivision.math' => 'smf', 'application/vnd.stardivision.writer' => 'sdw', 'application/vnd.stardivision.writer-global' => 'sgl', 'application/vnd.stepmania.package' => 'smzip', 'application/vnd.stepmania.stepchart' => 'sm', 'application/vnd.sun.xml.calc' => 'sxc', 'application/vnd.sun.xml.calc.template' => 'stc', 'application/vnd.sun.xml.draw' => 'sxd', 'application/vnd.sun.xml.draw.template' => 'std', 'application/vnd.sun.xml.impress' => 'sxi', 'application/vnd.sun.xml.impress.template' => 'sti', 'application/vnd.sun.xml.math' => 'sxm', 'application/vnd.sun.xml.writer' => 'sxw', 'application/vnd.sun.xml.writer.global' => 'sxg', 'application/vnd.sun.xml.writer.template' => 'stw', 'application/vnd.sus-calendar' => 'sus', 'application/vnd.svd' => 'svd', 'application/vnd.symbian.install' => 'sis', 'application/vnd.syncml+xml' => 'xsm', 'application/vnd.syncml.dm+wbxml' => 'bdm', 'application/vnd.syncml.dm+xml' => 'xdm', 'application/vnd.tao.intent-module-archive' => 'tao', 'application/vnd.tcpdump.pcap' => 'pcap', 'application/vnd.tmobile-livetv' => 'tmo', 'application/vnd.trid.tpt' => 'tpt', 'application/vnd.triscape.mxs' => 'mxs', 'application/vnd.trueapp' => 'tra', 'application/vnd.ufdl' => 'ufd', 'application/vnd.uiq.theme' => 'utz', 'application/vnd.umajin' => 'umj', 'application/vnd.unity' => 'unityweb', 'application/vnd.uoml+xml' => 'uoml', 'application/vnd.vcx' => 'vcx', 'application/vnd.visio' => 'vsd', 'application/vnd.visionary' => 'vis', 'application/vnd.vsf' => 'vsf', 'application/vnd.wap.wbxml' => 'wbxml', 'application/vnd.wap.wmlc' => 'wmlc', 'application/vnd.wap.wmlscriptc' => 'wmlsc', 'application/vnd.webturbo' => 'wtb', 'application/vnd.wolfram.player' => 'nbp', 'application/vnd.wordperfect' => 'wpd', 'application/vnd.wqd' => 'wqd', 'application/vnd.wt.stf' => 'stf', 'application/vnd.xara' => 'xar', 'application/vnd.xfdl' => 'xfdl', 'application/vnd.yamaha.hv-dic' => 'hvd', 'application/vnd.yamaha.hv-script' => 'hvs', 'application/vnd.yamaha.hv-voice' => 'hvp', 'application/vnd.yamaha.openscoreformat' => 'osf', 'application/vnd.yamaha.openscoreformat.osfpvg+xml' => 'osfpvg', 'application/vnd.yamaha.smaf-audio' => 'saf', 'application/vnd.yamaha.smaf-phrase' => 'spf', 'application/vnd.yellowriver-custom-menu' => 'cmp', 'application/vnd.zul' => 'zir', 'application/vnd.zzazz.deck+xml' => 'zaz', 'application/voicexml+xml' => 'vxml', 'application/widget' => 'wgt', 'application/winhlp' => 'hlp', 'application/wsdl+xml' => 'wsdl', 'application/wspolicy+xml' => 'wspolicy', 'application/x-7z-compressed' => '7z', 'application/x-abiword' => 'abw', 'application/x-ace-compressed' => 'ace', 'application/x-apple-diskimage' => 'dmg', 'application/x-authorware-bin' => 'aab', 'application/x-authorware-map' => 'aam', 'application/x-authorware-seg' => 'aas', 'application/x-bcpio' => 'bcpio', 'application/x-bittorrent' => 'torrent', 'application/x-blorb' => 'blb', 'application/x-bzip' => 'bz', 'application/x-bzip2' => 'bz2', 'application/x-cbr' => 'cbr', 'application/x-cdlink' => 'vcd', 'application/x-cfs-compressed' => 'cfs', 'application/x-chat' => 'chat', 'application/x-chess-pgn' => 'pgn', 'application/x-conference' => 'nsc', 'application/x-cpio' => 'cpio', 'application/x-csh' => 'csh', 'application/x-debian-package' => 'deb', 'application/x-dgc-compressed' => 'dgc', 'application/x-director' => 'dir', 'application/x-doom' => 'wad', 'application/x-dtbncx+xml' => 'ncx', 'application/x-dtbook+xml' => 'dtb', 'application/x-dtbresource+xml' => 'res', 'application/x-dvi' => 'dvi', 'application/x-envoy' => 'evy', 'application/x-eva' => 'eva', 'application/x-font-bdf' => 'bdf', 'application/x-font-ghostscript' => 'gsf', 'application/x-font-linux-psf' => 'psf', 'application/x-font-otf' => 'otf', 'application/x-font-pcf' => 'pcf', 'application/x-font-snf' => 'snf', 'application/x-font-ttf' => 'ttf', 'application/x-font-type1' => 'pfa', 'application/x-font-woff' => 'woff', 'application/x-freearc' => 'arc', 'application/x-futuresplash' => 'spl', 'application/x-gca-compressed' => 'gca', 'application/x-glulx' => 'ulx', 'application/x-gnumeric' => 'gnumeric', 'application/x-gramps-xml' => 'gramps', 'application/x-gtar' => 'gtar', 'application/x-hdf' => 'hdf', 'application/x-install-instructions' => 'install', 'application/x-iso9660-image' => 'iso', 'application/x-java-jnlp-file' => 'jnlp', 'application/x-latex' => 'latex', 'application/x-lzh-compressed' => 'lzh', 'application/x-mie' => 'mie', 'application/x-mobipocket-ebook' => 'prc', 'application/x-ms-application' => 'application', 'application/x-ms-shortcut' => 'lnk', 'application/x-ms-wmd' => 'wmd', 'application/x-ms-wmz' => 'wmz', 'application/x-ms-xbap' => 'xbap', 'application/x-msaccess' => 'mdb', 'application/x-msbinder' => 'obd', 'application/x-mscardfile' => 'crd', 'application/x-msclip' => 'clp', 'application/x-msdownload' => 'exe', 'application/x-msmediaview' => 'mvb', 'application/x-msmetafile' => 'wmf', 'application/x-msmoney' => 'mny', 'application/x-mspublisher' => 'pub', 'application/x-msschedule' => 'scd', 'application/x-msterminal' => 'trm', 'application/x-mswrite' => 'wri', 'application/x-netcdf' => 'nc', 'application/x-nzb' => 'nzb', 'application/x-pkcs12' => 'p12', 'application/x-pkcs7-certificates' => 'p7b', 'application/x-pkcs7-certreqresp' => 'p7r', 'application/x-rar-compressed' => 'rar', 'application/x-rar' => 'rar', 'application/x-research-info-systems' => 'ris', 'application/x-sh' => 'sh', 'application/x-shar' => 'shar', 'application/x-shockwave-flash' => 'swf', 'application/x-silverlight-app' => 'xap', 'application/x-sql' => 'sql', 'application/x-stuffit' => 'sit', 'application/x-stuffitx' => 'sitx', 'application/x-subrip' => 'srt', 'application/x-sv4cpio' => 'sv4cpio', 'application/x-sv4crc' => 'sv4crc', 'application/x-t3vm-image' => 't3', 'application/x-tads' => 'gam', 'application/x-tar' => 'tar', 'application/x-tcl' => 'tcl', 'application/x-tex' => 'tex', 'application/x-tex-tfm' => 'tfm', 'application/x-texinfo' => 'texinfo', 'application/x-tgif' => 'obj', 'application/x-ustar' => 'ustar', 'application/x-wais-source' => 'src', 'application/x-x509-ca-cert' => 'der', 'application/x-xfig' => 'fig', 'application/x-xliff+xml' => 'xlf', 'application/x-xpinstall' => 'xpi', 'application/x-xz' => 'xz', 'application/x-zmachine' => 'z1', 'application/xaml+xml' => 'xaml', 'application/xcap-diff+xml' => 'xdf', 'application/xenc+xml' => 'xenc', 'application/xhtml+xml' => 'xhtml', 'application/xml' => 'xml', 'application/xml-dtd' => 'dtd', 'application/xop+xml' => 'xop', 'application/xproc+xml' => 'xpl', 'application/xslt+xml' => 'xslt', 'application/xspf+xml' => 'xspf', 'application/xv+xml' => 'mxml', 'application/yang' => 'yang', 'application/yin+xml' => 'yin', 'application/zip' => 'zip', 'audio/adpcm' => 'adp', 'audio/basic' => 'au', 'audio/midi' => 'mid', 'audio/mp4' => 'mp4a', 'audio/mpeg' => 'mpga', 'audio/ogg' => 'oga', 'audio/s3m' => 's3m', 'audio/silk' => 'sil', 'audio/vnd.dece.audio' => 'uva', 'audio/vnd.digital-winds' => 'eol', 'audio/vnd.dra' => 'dra', 'audio/vnd.dts' => 'dts', 'audio/vnd.dts.hd' => 'dtshd', 'audio/vnd.lucent.voice' => 'lvp', 'audio/vnd.ms-playready.media.pya' => 'pya', 'audio/vnd.nuera.ecelp4800' => 'ecelp4800', 'audio/vnd.nuera.ecelp7470' => 'ecelp7470', 'audio/vnd.nuera.ecelp9600' => 'ecelp9600', 'audio/vnd.rip' => 'rip', 'audio/webm' => 'weba', 'audio/x-aac' => 'aac', 'audio/x-aiff' => 'aif', 'audio/x-caf' => 'caf', 'audio/x-flac' => 'flac', 'audio/x-matroska' => 'mka', 'audio/x-mpegurl' => 'm3u', 'audio/x-ms-wax' => 'wax', 'audio/x-ms-wma' => 'wma', 'audio/x-pn-realaudio' => 'ram', 'audio/x-pn-realaudio-plugin' => 'rmp', 'audio/x-wav' => 'wav', 'audio/xm' => 'xm', 'chemical/x-cdx' => 'cdx', 'chemical/x-cif' => 'cif', 'chemical/x-cmdf' => 'cmdf', 'chemical/x-cml' => 'cml', 'chemical/x-csml' => 'csml', 'chemical/x-xyz' => 'xyz', 'image/bmp' => 'bmp', 'image/x-ms-bmp' => 'bmp', 'image/cgm' => 'cgm', 'image/g3fax' => 'g3', 'image/gif' => 'gif', 'image/ief' => 'ief', 'image/jpeg' => 'jpeg', 'image/pjpeg' => 'jpeg', 'image/ktx' => 'ktx', 'image/png' => 'png', 'image/prs.btif' => 'btif', 'image/sgi' => 'sgi', 'image/svg+xml' => 'svg', 'image/tiff' => 'tiff', 'image/vnd.adobe.photoshop' => 'psd', 'image/vnd.dece.graphic' => 'uvi', 'image/vnd.dvb.subtitle' => 'sub', 'image/vnd.djvu' => 'djvu', 'image/vnd.dwg' => 'dwg', 'image/vnd.dxf' => 'dxf', 'image/vnd.fastbidsheet' => 'fbs', 'image/vnd.fpx' => 'fpx', 'image/vnd.fst' => 'fst', 'image/vnd.fujixerox.edmics-mmr' => 'mmr', 'image/vnd.fujixerox.edmics-rlc' => 'rlc', 'image/vnd.ms-modi' => 'mdi', 'image/vnd.ms-photo' => 'wdp', 'image/vnd.net-fpx' => 'npx', 'image/vnd.wap.wbmp' => 'wbmp', 'image/vnd.xiff' => 'xif', 'image/webp' => 'webp', 'image/x-3ds' => '3ds', 'image/x-cmu-raster' => 'ras', 'image/x-cmx' => 'cmx', 'image/x-freehand' => 'fh', 'image/x-icon' => 'ico', 'image/x-mrsid-image' => 'sid', 'image/x-pcx' => 'pcx', 'image/x-pict' => 'pic', 'image/x-portable-anymap' => 'pnm', 'image/x-portable-bitmap' => 'pbm', 'image/x-portable-graymap' => 'pgm', 'image/x-portable-pixmap' => 'ppm', 'image/x-rgb' => 'rgb', 'image/x-tga' => 'tga', 'image/x-xbitmap' => 'xbm', 'image/x-xpixmap' => 'xpm', 'image/x-xwindowdump' => 'xwd', 'message/rfc822' => 'eml', 'model/iges' => 'igs', 'model/mesh' => 'msh', 'model/vnd.collada+xml' => 'dae', 'model/vnd.dwf' => 'dwf', 'model/vnd.gdl' => 'gdl', 'model/vnd.gtw' => 'gtw', 'model/vnd.mts' => 'mts', 'model/vnd.vtu' => 'vtu', 'model/vrml' => 'wrl', 'model/x3d+binary' => 'x3db', 'model/x3d+vrml' => 'x3dv', 'model/x3d+xml' => 'x3d', 'text/cache-manifest' => 'appcache', 'text/calendar' => 'ics', 'text/css' => 'css', 'text/csv' => 'csv', 'text/html' => 'html', 'text/n3' => 'n3', 'text/plain' => 'txt', 'text/prs.lines.tag' => 'dsc', 'text/richtext' => 'rtx', 'text/rtf' => 'rtf', 'text/sgml' => 'sgml', 'text/tab-separated-values' => 'tsv', 'text/troff' => 't', 'text/turtle' => 'ttl', 'text/uri-list' => 'uri', 'text/vcard' => 'vcard', 'text/vnd.curl' => 'curl', 'text/vnd.curl.dcurl' => 'dcurl', 'text/vnd.curl.scurl' => 'scurl', 'text/vnd.curl.mcurl' => 'mcurl', 'text/vnd.dvb.subtitle' => 'sub', 'text/vnd.fly' => 'fly', 'text/vnd.fmi.flexstor' => 'flx', 'text/vnd.graphviz' => 'gv', 'text/vnd.in3d.3dml' => '3dml', 'text/vnd.in3d.spot' => 'spot', 'text/vnd.sun.j2me.app-descriptor' => 'jad', 'text/vnd.wap.wml' => 'wml', 'text/vnd.wap.wmlscript' => 'wmls', 'text/vtt' => 'vtt', 'text/x-asm' => 's', 'text/x-c' => 'c', 'text/x-fortran' => 'f', 'text/x-pascal' => 'p', 'text/x-java-source' => 'java', 'text/x-opml' => 'opml', 'text/x-nfo' => 'nfo', 'text/x-setext' => 'etx', 'text/x-sfv' => 'sfv', 'text/x-uuencode' => 'uu', 'text/x-vcalendar' => 'vcs', 'text/x-vcard' => 'vcf', 'video/3gpp' => '3gp', 'video/3gpp2' => '3g2', 'video/h261' => 'h261', 'video/h263' => 'h263', 'video/h264' => 'h264', 'video/jpeg' => 'jpgv', 'video/jpm' => 'jpm', 'video/mj2' => 'mj2', 'video/mp4' => 'mp4', 'video/mpeg' => 'mpeg', 'video/ogg' => 'ogv', 'video/quicktime' => 'qt', 'video/vnd.dece.hd' => 'uvh', 'video/vnd.dece.mobile' => 'uvm', 'video/vnd.dece.pd' => 'uvp', 'video/vnd.dece.sd' => 'uvs', 'video/vnd.dece.video' => 'uvv', 'video/vnd.dvb.file' => 'dvb', 'video/vnd.fvt' => 'fvt', 'video/vnd.mpegurl' => 'mxu', 'video/vnd.ms-playready.media.pyv' => 'pyv', 'video/vnd.uvvu.mp4' => 'uvu', 'video/vnd.vivo' => 'viv', 'video/webm' => 'webm', 'video/x-f4v' => 'f4v', 'video/x-fli' => 'fli', 'video/x-flv' => 'flv', 'video/x-m4v' => 'm4v', 'video/x-matroska' => 'mkv', 'video/x-mng' => 'mng', 'video/x-ms-asf' => 'asf', 'video/x-ms-vob' => 'vob', 'video/x-ms-wm' => 'wm', 'video/x-ms-wmv' => 'wmv', 'video/x-ms-wmx' => 'wmx', 'video/x-ms-wvx' => 'wvx', 'video/x-msvideo' => 'avi', 'video/x-sgi-movie' => 'movie', 'video/x-smv' => 'smv', 'x-conference/x-cooltalk' => 'ice'];
+        protected $defaultExtensions = ['application/andrew-inset' => 'ez', 'application/applixware' => 'aw', 'application/atom+xml' => 'atom', 'application/atomcat+xml' => 'atomcat', 'application/atomsvc+xml' => 'atomsvc', 'application/ccxml+xml' => 'ccxml', 'application/cdmi-capability' => 'cdmia', 'application/cdmi-container' => 'cdmic', 'application/cdmi-domain' => 'cdmid', 'application/cdmi-object' => 'cdmio', 'application/cdmi-queue' => 'cdmiq', 'application/cu-seeme' => 'cu', 'application/davmount+xml' => 'davmount', 'application/docbook+xml' => 'dbk', 'application/dssc+der' => 'dssc', 'application/dssc+xml' => 'xdssc', 'application/ecmascript' => 'ecma', 'application/emma+xml' => 'emma', 'application/epub+zip' => 'epub', 'application/exi' => 'exi', 'application/font-tdpfr' => 'pfr', 'application/gml+xml' => 'gml', 'application/gpx+xml' => 'gpx', 'application/gxf' => 'gxf', 'application/hyperstudio' => 'stk', 'application/inkml+xml' => 'ink', 'application/ipfix' => 'ipfix', 'application/java-archive' => 'jar', 'application/java-serialized-object' => 'ser', 'application/java-vm' => 'class', 'application/javascript' => 'js', 'application/json' => 'json', 'application/jsonml+json' => 'jsonml', 'application/lost+xml' => 'lostxml', 'application/mac-binhex40' => 'hqx', 'application/mac-compactpro' => 'cpt', 'application/mads+xml' => 'mads', 'application/marc' => 'mrc', 'application/marcxml+xml' => 'mrcx', 'application/mathematica' => 'ma', 'application/mathml+xml' => 'mathml', 'application/mbox' => 'mbox', 'application/mediaservercontrol+xml' => 'mscml', 'application/metalink+xml' => 'metalink', 'application/metalink4+xml' => 'meta4', 'application/mets+xml' => 'mets', 'application/mods+xml' => 'mods', 'application/mp21' => 'm21', 'application/mp4' => 'mp4s', 'application/msword' => 'doc', 'application/mxf' => 'mxf', 'application/octet-stream' => 'bin', 'application/oda' => 'oda', 'application/oebps-package+xml' => 'opf', 'application/ogg' => 'ogx', 'application/omdoc+xml' => 'omdoc', 'application/onenote' => 'onetoc', 'application/oxps' => 'oxps', 'application/patch-ops-error+xml' => 'xer', 'application/pdf' => 'pdf', 'application/pgp-encrypted' => 'pgp', 'application/pgp-signature' => 'asc', 'application/pics-rules' => 'prf', 'application/pkcs10' => 'p10', 'application/pkcs7-mime' => 'p7m', 'application/pkcs7-signature' => 'p7s', 'application/pkcs8' => 'p8', 'application/pkix-attr-cert' => 'ac', 'application/pkix-cert' => 'cer', 'application/pkix-crl' => 'crl', 'application/pkix-pkipath' => 'pkipath', 'application/pkixcmp' => 'pki', 'application/pls+xml' => 'pls', 'application/postscript' => 'ai', 'application/prs.cww' => 'cww', 'application/pskc+xml' => 'pskcxml', 'application/rdf+xml' => 'rdf', 'application/reginfo+xml' => 'rif', 'application/relax-ng-compact-syntax' => 'rnc', 'application/resource-lists+xml' => 'rl', 'application/resource-lists-diff+xml' => 'rld', 'application/rls-services+xml' => 'rs', 'application/rpki-ghostbusters' => 'gbr', 'application/rpki-manifest' => 'mft', 'application/rpki-roa' => 'roa', 'application/rsd+xml' => 'rsd', 'application/rss+xml' => 'rss', 'application/rtf' => 'rtf', 'application/sbml+xml' => 'sbml', 'application/scvp-cv-request' => 'scq', 'application/scvp-cv-response' => 'scs', 'application/scvp-vp-request' => 'spq', 'application/scvp-vp-response' => 'spp', 'application/sdp' => 'sdp', 'application/set-payment-initiation' => 'setpay', 'application/set-registration-initiation' => 'setreg', 'application/shf+xml' => 'shf', 'application/smil+xml' => 'smi', 'application/sparql-query' => 'rq', 'application/sparql-results+xml' => 'srx', 'application/srgs' => 'gram', 'application/srgs+xml' => 'grxml', 'application/sru+xml' => 'sru', 'application/ssdl+xml' => 'ssdl', 'application/ssml+xml' => 'ssml', 'application/tei+xml' => 'tei', 'application/thraud+xml' => 'tfi', 'application/timestamped-data' => 'tsd', 'application/vnd.3gpp.pic-bw-large' => 'plb', 'application/vnd.3gpp.pic-bw-small' => 'psb', 'application/vnd.3gpp.pic-bw-var' => 'pvb', 'application/vnd.3gpp2.tcap' => 'tcap', 'application/vnd.3m.post-it-notes' => 'pwn', 'application/vnd.accpac.simply.aso' => 'aso', 'application/vnd.accpac.simply.imp' => 'imp', 'application/vnd.acucobol' => 'acu', 'application/vnd.acucorp' => 'atc', 'application/vnd.adobe.air-application-installer-package+zip' => 'air', 'application/vnd.adobe.formscentral.fcdt' => 'fcdt', 'application/vnd.adobe.fxp' => 'fxp', 'application/vnd.adobe.xdp+xml' => 'xdp', 'application/vnd.adobe.xfdf' => 'xfdf', 'application/vnd.ahead.space' => 'ahead', 'application/vnd.airzip.filesecure.azf' => 'azf', 'application/vnd.airzip.filesecure.azs' => 'azs', 'application/vnd.amazon.ebook' => 'azw', 'application/vnd.americandynamics.acc' => 'acc', 'application/vnd.amiga.ami' => 'ami', 'application/vnd.android.package-archive' => 'apk', 'application/vnd.anser-web-certificate-issue-initiation' => 'cii', 'application/vnd.anser-web-funds-transfer-initiation' => 'fti', 'application/vnd.antix.game-component' => 'atx', 'application/vnd.apple.installer+xml' => 'mpkg', 'application/vnd.apple.mpegurl' => 'm3u8', 'application/vnd.aristanetworks.swi' => 'swi', 'application/vnd.astraea-software.iota' => 'iota', 'application/vnd.audiograph' => 'aep', 'application/vnd.blueice.multipass' => 'mpm', 'application/vnd.bmi' => 'bmi', 'application/vnd.businessobjects' => 'rep', 'application/vnd.chemdraw+xml' => 'cdxml', 'application/vnd.chipnuts.karaoke-mmd' => 'mmd', 'application/vnd.cinderella' => 'cdy', 'application/vnd.claymore' => 'cla', 'application/vnd.cloanto.rp9' => 'rp9', 'application/vnd.clonk.c4group' => 'c4g', 'application/vnd.cluetrust.cartomobile-config' => 'c11amc', 'application/vnd.cluetrust.cartomobile-config-pkg' => 'c11amz', 'application/vnd.commonspace' => 'csp', 'application/vnd.contact.cmsg' => 'cdbcmsg', 'application/vnd.cosmocaller' => 'cmc', 'application/vnd.crick.clicker' => 'clkx', 'application/vnd.crick.clicker.keyboard' => 'clkk', 'application/vnd.crick.clicker.palette' => 'clkp', 'application/vnd.crick.clicker.template' => 'clkt', 'application/vnd.crick.clicker.wordbank' => 'clkw', 'application/vnd.criticaltools.wbs+xml' => 'wbs', 'application/vnd.ctc-posml' => 'pml', 'application/vnd.cups-ppd' => 'ppd', 'application/vnd.curl.car' => 'car', 'application/vnd.curl.pcurl' => 'pcurl', 'application/vnd.dart' => 'dart', 'application/vnd.data-vision.rdz' => 'rdz', 'application/vnd.dece.data' => 'uvf', 'application/vnd.dece.ttml+xml' => 'uvt', 'application/vnd.dece.unspecified' => 'uvx', 'application/vnd.dece.zip' => 'uvz', 'application/vnd.denovo.fcselayout-link' => 'fe_launch', 'application/vnd.dna' => 'dna', 'application/vnd.dolby.mlp' => 'mlp', 'application/vnd.dpgraph' => 'dpg', 'application/vnd.dreamfactory' => 'dfac', 'application/vnd.ds-keypoint' => 'kpxx', 'application/vnd.dvb.ait' => 'ait', 'application/vnd.dvb.service' => 'svc', 'application/vnd.dynageo' => 'geo', 'application/vnd.ecowin.chart' => 'mag', 'application/vnd.enliven' => 'nml', 'application/vnd.epson.esf' => 'esf', 'application/vnd.epson.msf' => 'msf', 'application/vnd.epson.quickanime' => 'qam', 'application/vnd.epson.salt' => 'slt', 'application/vnd.epson.ssf' => 'ssf', 'application/vnd.eszigno3+xml' => 'es3', 'application/vnd.ezpix-album' => 'ez2', 'application/vnd.ezpix-package' => 'ez3', 'application/vnd.fdf' => 'fdf', 'application/vnd.fdsn.mseed' => 'mseed', 'application/vnd.fdsn.seed' => 'seed', 'application/vnd.flographit' => 'gph', 'application/vnd.fluxtime.clip' => 'ftc', 'application/vnd.framemaker' => 'fm', 'application/vnd.frogans.fnc' => 'fnc', 'application/vnd.frogans.ltf' => 'ltf', 'application/vnd.fsc.weblaunch' => 'fsc', 'application/vnd.fujitsu.oasys' => 'oas', 'application/vnd.fujitsu.oasys2' => 'oa2', 'application/vnd.fujitsu.oasys3' => 'oa3', 'application/vnd.fujitsu.oasysgp' => 'fg5', 'application/vnd.fujitsu.oasysprs' => 'bh2', 'application/vnd.fujixerox.ddd' => 'ddd', 'application/vnd.fujixerox.docuworks' => 'xdw', 'application/vnd.fujixerox.docuworks.binder' => 'xbd', 'application/vnd.fuzzysheet' => 'fzs', 'application/vnd.genomatix.tuxedo' => 'txd', 'application/vnd.geogebra.file' => 'ggb', 'application/vnd.geogebra.tool' => 'ggt', 'application/vnd.geometry-explorer' => 'gex', 'application/vnd.geonext' => 'gxt', 'application/vnd.geoplan' => 'g2w', 'application/vnd.geospace' => 'g3w', 'application/vnd.gmx' => 'gmx', 'application/vnd.google-earth.kml+xml' => 'kml', 'application/vnd.google-earth.kmz' => 'kmz', 'application/vnd.grafeq' => 'gqf', 'application/vnd.groove-account' => 'gac', 'application/vnd.groove-help' => 'ghf', 'application/vnd.groove-identity-message' => 'gim', 'application/vnd.groove-injector' => 'grv', 'application/vnd.groove-tool-message' => 'gtm', 'application/vnd.groove-tool-template' => 'tpl', 'application/vnd.groove-vcard' => 'vcg', 'application/vnd.hal+xml' => 'hal', 'application/vnd.handheld-entertainment+xml' => 'zmm', 'application/vnd.hbci' => 'hbci', 'application/vnd.hhe.lesson-player' => 'les', 'application/vnd.hp-hpgl' => 'hpgl', 'application/vnd.hp-hpid' => 'hpid', 'application/vnd.hp-hps' => 'hps', 'application/vnd.hp-jlyt' => 'jlt', 'application/vnd.hp-pcl' => 'pcl', 'application/vnd.hp-pclxl' => 'pclxl', 'application/vnd.hydrostatix.sof-data' => 'sfd-hdstx', 'application/vnd.ibm.minipay' => 'mpy', 'application/vnd.ibm.modcap' => 'afp', 'application/vnd.ibm.rights-management' => 'irm', 'application/vnd.ibm.secure-container' => 'sc', 'application/vnd.iccprofile' => 'icc', 'application/vnd.igloader' => 'igl', 'application/vnd.immervision-ivp' => 'ivp', 'application/vnd.immervision-ivu' => 'ivu', 'application/vnd.insors.igm' => 'igm', 'application/vnd.intercon.formnet' => 'xpw', 'application/vnd.intergeo' => 'i2g', 'application/vnd.intu.qbo' => 'qbo', 'application/vnd.intu.qfx' => 'qfx', 'application/vnd.ipunplugged.rcprofile' => 'rcprofile', 'application/vnd.irepository.package+xml' => 'irp', 'application/vnd.is-xpr' => 'xpr', 'application/vnd.isac.fcs' => 'fcs', 'application/vnd.jam' => 'jam', 'application/vnd.jcp.javame.midlet-rms' => 'rms', 'application/vnd.jisp' => 'jisp', 'application/vnd.joost.joda-archive' => 'joda', 'application/vnd.kahootz' => 'ktz', 'application/vnd.kde.karbon' => 'karbon', 'application/vnd.kde.kchart' => 'chrt', 'application/vnd.kde.kformula' => 'kfo', 'application/vnd.kde.kivio' => 'flw', 'application/vnd.kde.kontour' => 'kon', 'application/vnd.kde.kpresenter' => 'kpr', 'application/vnd.kde.kspread' => 'ksp', 'application/vnd.kde.kword' => 'kwd', 'application/vnd.kenameaapp' => 'htke', 'application/vnd.kidspiration' => 'kia', 'application/vnd.kinar' => 'kne', 'application/vnd.koan' => 'skp', 'application/vnd.kodak-descriptor' => 'sse', 'application/vnd.las.las+xml' => 'lasxml', 'application/vnd.llamagraphics.life-balance.desktop' => 'lbd', 'application/vnd.llamagraphics.life-balance.exchange+xml' => 'lbe', 'application/vnd.lotus-1-2-3' => '123', 'application/vnd.lotus-approach' => 'apr', 'application/vnd.lotus-freelance' => 'pre', 'application/vnd.lotus-notes' => 'nsf', 'application/vnd.lotus-organizer' => 'org', 'application/vnd.lotus-screencam' => 'scm', 'application/vnd.lotus-wordpro' => 'lwp', 'application/vnd.macports.portpkg' => 'portpkg', 'application/vnd.mcd' => 'mcd', 'application/vnd.medcalcdata' => 'mc1', 'application/vnd.mediastation.cdkey' => 'cdkey', 'application/vnd.mfer' => 'mwf', 'application/vnd.mfmp' => 'mfm', 'application/vnd.micrografx.flo' => 'flo', 'application/vnd.micrografx.igx' => 'igx', 'application/vnd.mif' => 'mif', 'application/vnd.mobius.daf' => 'daf', 'application/vnd.mobius.dis' => 'dis', 'application/vnd.mobius.mbk' => 'mbk', 'application/vnd.mobius.mqy' => 'mqy', 'application/vnd.mobius.msl' => 'msl', 'application/vnd.mobius.plc' => 'plc', 'application/vnd.mobius.txf' => 'txf', 'application/vnd.mophun.application' => 'mpn', 'application/vnd.mophun.certificate' => 'mpc', 'application/vnd.mozilla.xul+xml' => 'xul', 'application/vnd.ms-artgalry' => 'cil', 'application/vnd.ms-cab-compressed' => 'cab', 'application/vnd.ms-excel' => 'xls', 'application/vnd.ms-excel.addin.macroenabled.12' => 'xlam', 'application/vnd.ms-excel.sheet.binary.macroenabled.12' => 'xlsb', 'application/vnd.ms-excel.sheet.macroenabled.12' => 'xlsm', 'application/vnd.ms-excel.template.macroenabled.12' => 'xltm', 'application/vnd.ms-fontobject' => 'eot', 'application/vnd.ms-htmlhelp' => 'chm', 'application/vnd.ms-ims' => 'ims', 'application/vnd.ms-lrm' => 'lrm', 'application/vnd.ms-officetheme' => 'thmx', 'application/vnd.ms-pki.seccat' => 'cat', 'application/vnd.ms-pki.stl' => 'stl', 'application/vnd.ms-powerpoint' => 'ppt', 'application/vnd.ms-powerpoint.addin.macroenabled.12' => 'ppam', 'application/vnd.ms-powerpoint.presentation.macroenabled.12' => 'pptm', 'application/vnd.ms-powerpoint.slide.macroenabled.12' => 'sldm', 'application/vnd.ms-powerpoint.slideshow.macroenabled.12' => 'ppsm', 'application/vnd.ms-powerpoint.template.macroenabled.12' => 'potm', 'application/vnd.ms-project' => 'mpp', 'application/vnd.ms-word.document.macroenabled.12' => 'docm', 'application/vnd.ms-word.template.macroenabled.12' => 'dotm', 'application/vnd.ms-works' => 'wps', 'application/vnd.ms-wpl' => 'wpl', 'application/vnd.ms-xpsdocument' => 'xps', 'application/vnd.mseq' => 'mseq', 'application/vnd.musician' => 'mus', 'application/vnd.muvee.style' => 'msty', 'application/vnd.mynfc' => 'taglet', 'application/vnd.neurolanguage.nlu' => 'nlu', 'application/vnd.nitf' => 'ntf', 'application/vnd.noblenet-directory' => 'nnd', 'application/vnd.noblenet-sealer' => 'nns', 'application/vnd.noblenet-web' => 'nnw', 'application/vnd.nokia.n-gage.data' => 'ngdat', 'application/vnd.nokia.n-gage.symbian.install' => 'n-gage', 'application/vnd.nokia.radio-preset' => 'rpst', 'application/vnd.nokia.radio-presets' => 'rpss', 'application/vnd.novadigm.edm' => 'edm', 'application/vnd.novadigm.edx' => 'edx', 'application/vnd.novadigm.ext' => 'ext', 'application/vnd.oasis.opendocument.chart' => 'odc', 'application/vnd.oasis.opendocument.chart-template' => 'otc', 'application/vnd.oasis.opendocument.database' => 'odb', 'application/vnd.oasis.opendocument.formula' => 'odf', 'application/vnd.oasis.opendocument.formula-template' => 'odft', 'application/vnd.oasis.opendocument.graphics' => 'odg', 'application/vnd.oasis.opendocument.graphics-template' => 'otg', 'application/vnd.oasis.opendocument.image' => 'odi', 'application/vnd.oasis.opendocument.image-template' => 'oti', 'application/vnd.oasis.opendocument.presentation' => 'odp', 'application/vnd.oasis.opendocument.presentation-template' => 'otp', 'application/vnd.oasis.opendocument.spreadsheet' => 'ods', 'application/vnd.oasis.opendocument.spreadsheet-template' => 'ots', 'application/vnd.oasis.opendocument.text' => 'odt', 'application/vnd.oasis.opendocument.text-master' => 'odm', 'application/vnd.oasis.opendocument.text-template' => 'ott', 'application/vnd.oasis.opendocument.text-web' => 'oth', 'application/vnd.olpc-sugar' => 'xo', 'application/vnd.oma.dd2+xml' => 'dd2', 'application/vnd.openofficeorg.extension' => 'oxt', 'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'pptx', 'application/vnd.openxmlformats-officedocument.presentationml.slide' => 'sldx', 'application/vnd.openxmlformats-officedocument.presentationml.slideshow' => 'ppsx', 'application/vnd.openxmlformats-officedocument.presentationml.template' => 'potx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.template' => 'xltx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.template' => 'dotx', 'application/vnd.osgeo.mapguide.package' => 'mgp', 'application/vnd.osgi.dp' => 'dp', 'application/vnd.osgi.subsystem' => 'esa', 'application/vnd.palm' => 'pdb', 'application/vnd.pawaafile' => 'paw', 'application/vnd.pg.format' => 'str', 'application/vnd.pg.osasli' => 'ei6', 'application/vnd.picsel' => 'efif', 'application/vnd.pmi.widget' => 'wg', 'application/vnd.pocketlearn' => 'plf', 'application/vnd.powerbuilder6' => 'pbd', 'application/vnd.previewsystems.box' => 'box', 'application/vnd.proteus.magazine' => 'mgz', 'application/vnd.publishare-delta-tree' => 'qps', 'application/vnd.pvi.ptid1' => 'ptid', 'application/vnd.quark.quarkxpress' => 'qxd', 'application/vnd.realvnc.bed' => 'bed', 'application/vnd.recordare.musicxml' => 'mxl', 'application/vnd.recordare.musicxml+xml' => 'musicxml', 'application/vnd.rig.cryptonote' => 'cryptonote', 'application/vnd.rim.cod' => 'cod', 'application/vnd.rn-realmedia' => 'rm', 'application/vnd.rn-realmedia-vbr' => 'rmvb', 'application/vnd.route66.link66+xml' => 'link66', 'application/vnd.sailingtracker.track' => 'st', 'application/vnd.seemail' => 'see', 'application/vnd.sema' => 'sema', 'application/vnd.semd' => 'semd', 'application/vnd.semf' => 'semf', 'application/vnd.shana.informed.formdata' => 'ifm', 'application/vnd.shana.informed.formtemplate' => 'itp', 'application/vnd.shana.informed.interchange' => 'iif', 'application/vnd.shana.informed.package' => 'ipk', 'application/vnd.simtech-mindmapper' => 'twd', 'application/vnd.smaf' => 'mmf', 'application/vnd.smart.teacher' => 'teacher', 'application/vnd.solent.sdkm+xml' => 'sdkm', 'application/vnd.spotfire.dxp' => 'dxp', 'application/vnd.spotfire.sfs' => 'sfs', 'application/vnd.stardivision.calc' => 'sdc', 'application/vnd.stardivision.draw' => 'sda', 'application/vnd.stardivision.impress' => 'sdd', 'application/vnd.stardivision.math' => 'smf', 'application/vnd.stardivision.writer' => 'sdw', 'application/vnd.stardivision.writer-global' => 'sgl', 'application/vnd.stepmania.package' => 'smzip', 'application/vnd.stepmania.stepchart' => 'sm', 'application/vnd.sun.xml.calc' => 'sxc', 'application/vnd.sun.xml.calc.template' => 'stc', 'application/vnd.sun.xml.draw' => 'sxd', 'application/vnd.sun.xml.draw.template' => 'std', 'application/vnd.sun.xml.impress' => 'sxi', 'application/vnd.sun.xml.impress.template' => 'sti', 'application/vnd.sun.xml.math' => 'sxm', 'application/vnd.sun.xml.writer' => 'sxw', 'application/vnd.sun.xml.writer.global' => 'sxg', 'application/vnd.sun.xml.writer.template' => 'stw', 'application/vnd.sus-calendar' => 'sus', 'application/vnd.svd' => 'svd', 'application/vnd.symbian.install' => 'sis', 'application/vnd.syncml+xml' => 'xsm', 'application/vnd.syncml.dm+wbxml' => 'bdm', 'application/vnd.syncml.dm+xml' => 'xdm', 'application/vnd.tao.intent-module-archive' => 'tao', 'application/vnd.tcpdump.pcap' => 'pcap', 'application/vnd.tmobile-livetv' => 'tmo', 'application/vnd.trid.tpt' => 'tpt', 'application/vnd.triscape.mxs' => 'mxs', 'application/vnd.trueapp' => 'tra', 'application/vnd.ufdl' => 'ufd', 'application/vnd.uiq.theme' => 'utz', 'application/vnd.umajin' => 'umj', 'application/vnd.unity' => 'unityweb', 'application/vnd.uoml+xml' => 'uoml', 'application/vnd.vcx' => 'vcx', 'application/vnd.visio' => 'vsd', 'application/vnd.visionary' => 'vis', 'application/vnd.vsf' => 'vsf', 'application/vnd.wap.wbxml' => 'wbxml', 'application/vnd.wap.wmlc' => 'wmlc', 'application/vnd.wap.wmlscriptc' => 'wmlsc', 'application/vnd.webturbo' => 'wtb', 'application/vnd.wolfram.player' => 'nbp', 'application/vnd.wordperfect' => 'wpd', 'application/vnd.wqd' => 'wqd', 'application/vnd.wt.stf' => 'stf', 'application/vnd.xara' => 'xar', 'application/vnd.xfdl' => 'xfdl', 'application/vnd.yamaha.hv-dic' => 'hvd', 'application/vnd.yamaha.hv-script' => 'hvs', 'application/vnd.yamaha.hv-voice' => 'hvp', 'application/vnd.yamaha.openscoreformat' => 'osf', 'application/vnd.yamaha.openscoreformat.osfpvg+xml' => 'osfpvg', 'application/vnd.yamaha.smaf-audio' => 'saf', 'application/vnd.yamaha.smaf-phrase' => 'spf', 'application/vnd.yellowriver-custom-menu' => 'cmp', 'application/vnd.zul' => 'zir', 'application/vnd.zzazz.deck+xml' => 'zaz', 'application/voicexml+xml' => 'vxml', 'application/widget' => 'wgt', 'application/winhlp' => 'hlp', 'application/wsdl+xml' => 'wsdl', 'application/wspolicy+xml' => 'wspolicy', 'application/x-7z-compressed' => '7z', 'application/x-abiword' => 'abw', 'application/x-ace-compressed' => 'ace', 'application/x-apple-diskimage' => 'dmg', 'application/x-authorware-bin' => 'aab', 'application/x-authorware-map' => 'aam', 'application/x-authorware-seg' => 'aas', 'application/x-bcpio' => 'bcpio', 'application/x-bittorrent' => 'torrent', 'application/x-blorb' => 'blb', 'application/x-bzip' => 'bz', 'application/x-bzip2' => 'bz2', 'application/x-cbr' => 'cbr', 'application/x-cdlink' => 'vcd', 'application/x-cfs-compressed' => 'cfs', 'application/x-chat' => 'chat', 'application/x-chess-pgn' => 'pgn', 'application/x-conference' => 'nsc', 'application/x-cpio' => 'cpio', 'application/x-csh' => 'csh', 'application/x-debian-package' => 'deb', 'application/x-dgc-compressed' => 'dgc', 'application/x-director' => 'dir', 'application/x-doom' => 'wad', 'application/x-dtbncx+xml' => 'ncx', 'application/x-dtbook+xml' => 'dtb', 'application/x-dtbresource+xml' => 'res', 'application/x-dvi' => 'dvi', 'application/x-envoy' => 'evy', 'application/x-eva' => 'eva', 'application/x-font-bdf' => 'bdf', 'application/x-font-ghostscript' => 'gsf', 'application/x-font-linux-psf' => 'psf', 'application/x-font-otf' => 'otf', 'application/x-font-pcf' => 'pcf', 'application/x-font-snf' => 'snf', 'application/x-font-ttf' => 'ttf', 'application/x-font-type1' => 'pfa', 'application/x-font-woff' => 'woff', 'application/x-freearc' => 'arc', 'application/x-futuresplash' => 'spl', 'application/x-gca-compressed' => 'gca', 'application/x-glulx' => 'ulx', 'application/x-gnumeric' => 'gnumeric', 'application/x-gramps-xml' => 'gramps', 'application/x-gtar' => 'gtar', 'application/x-hdf' => 'hdf', 'application/x-install-instructions' => 'install', 'application/x-iso9660-image' => 'iso', 'application/x-java-jnlp-file' => 'jnlp', 'application/x-latex' => 'latex', 'application/x-lzh-compressed' => 'lzh', 'application/x-mie' => 'mie', 'application/x-mobipocket-ebook' => 'prc', 'application/x-ms-application' => 'application', 'application/x-ms-shortcut' => 'lnk', 'application/x-ms-wmd' => 'wmd', 'application/x-ms-wmz' => 'wmz', 'application/x-ms-xbap' => 'xbap', 'application/x-msaccess' => 'mdb', 'application/x-msbinder' => 'obd', 'application/x-mscardfile' => 'crd', 'application/x-msclip' => 'clp', 'application/x-msdownload' => 'exe', 'application/x-msmediaview' => 'mvb', 'application/x-msmetafile' => 'wmf', 'application/x-msmoney' => 'mny', 'application/x-mspublisher' => 'pub', 'application/x-msschedule' => 'scd', 'application/x-msterminal' => 'trm', 'application/x-mswrite' => 'wri', 'application/x-netcdf' => 'nc', 'application/x-nzb' => 'nzb', 'application/x-pkcs12' => 'p12', 'application/x-pkcs7-certificates' => 'p7b', 'application/x-pkcs7-certreqresp' => 'p7r', 'application/x-rar-compressed' => 'rar', 'application/x-rar' => 'rar', 'application/x-research-info-systems' => 'ris', 'application/x-sh' => 'sh', 'application/x-shar' => 'shar', 'application/x-shockwave-flash' => 'swf', 'application/x-silverlight-app' => 'xap', 'application/x-sql' => 'sql', 'application/x-stuffit' => 'sit', 'application/x-stuffitx' => 'sitx', 'application/x-subrip' => 'srt', 'application/x-sv4cpio' => 'sv4cpio', 'application/x-sv4crc' => 'sv4crc', 'application/x-t3vm-image' => 't3', 'application/x-tads' => 'gam', 'application/x-tar' => 'tar', 'application/x-tcl' => 'tcl', 'application/x-tex' => 'tex', 'application/x-tex-tfm' => 'tfm', 'application/x-texinfo' => 'texinfo', 'application/x-tgif' => 'obj', 'application/x-ustar' => 'ustar', 'application/x-wais-source' => 'src', 'application/x-x509-ca-cert' => 'der', 'application/x-xfig' => 'fig', 'application/x-xliff+xml' => 'xlf', 'application/x-xpinstall' => 'xpi', 'application/x-xz' => 'xz', 'application/x-zmachine' => 'z1', 'application/xaml+xml' => 'xaml', 'application/xcap-diff+xml' => 'xdf', 'application/xenc+xml' => 'xenc', 'application/xhtml+xml' => 'xhtml', 'application/xml' => 'xml', 'application/xml-dtd' => 'dtd', 'application/xop+xml' => 'xop', 'application/xproc+xml' => 'xpl', 'application/xslt+xml' => 'xslt', 'application/xspf+xml' => 'xspf', 'application/xv+xml' => 'mxml', 'application/yang' => 'yang', 'application/yin+xml' => 'yin', 'application/zip' => 'zip', 'audio/adpcm' => 'adp', 'audio/basic' => 'au', 'audio/midi' => 'mid', 'audio/mp4' => 'mp4a', 'audio/mpeg' => 'mpga', 'audio/ogg' => 'oga', 'audio/s3m' => 's3m', 'audio/silk' => 'sil', 'audio/vnd.dece.audio' => 'uva', 'audio/vnd.digital-winds' => 'eol', 'audio/vnd.dra' => 'dra', 'audio/vnd.dts' => 'dts', 'audio/vnd.dts.hd' => 'dtshd', 'audio/vnd.lucent.voice' => 'lvp', 'audio/vnd.ms-playready.media.pya' => 'pya', 'audio/vnd.nuera.ecelp4800' => 'ecelp4800', 'audio/vnd.nuera.ecelp7470' => 'ecelp7470', 'audio/vnd.nuera.ecelp9600' => 'ecelp9600', 'audio/vnd.rip' => 'rip', 'audio/webm' => 'weba', 'audio/x-aac' => 'aac', 'audio/x-aiff' => 'aif', 'audio/x-caf' => 'caf', 'audio/x-flac' => 'flac', 'audio/x-matroska' => 'mka', 'audio/x-mpegurl' => 'm3u', 'audio/x-ms-wax' => 'wax', 'audio/x-ms-wma' => 'wma', 'audio/x-pn-realaudio' => 'ram', 'audio/x-pn-realaudio-plugin' => 'rmp', 'audio/x-wav' => 'wav', 'audio/wav' => 'wav', 'audio/xm' => 'xm', 'chemical/x-cdx' => 'cdx', 'chemical/x-cif' => 'cif', 'chemical/x-cmdf' => 'cmdf', 'chemical/x-cml' => 'cml', 'chemical/x-csml' => 'csml', 'chemical/x-xyz' => 'xyz', 'image/bmp' => 'bmp', 'image/x-ms-bmp' => 'bmp', 'image/cgm' => 'cgm', 'image/g3fax' => 'g3', 'image/gif' => 'gif', 'image/ief' => 'ief', 'image/jpeg' => 'jpeg', 'image/pjpeg' => 'jpeg', 'image/ktx' => 'ktx', 'image/png' => 'png', 'image/prs.btif' => 'btif', 'image/sgi' => 'sgi', 'image/svg+xml' => 'svg', 'image/tiff' => 'tiff', 'image/vnd.adobe.photoshop' => 'psd', 'image/vnd.dece.graphic' => 'uvi', 'image/vnd.dvb.subtitle' => 'sub', 'image/vnd.djvu' => 'djvu', 'image/vnd.dwg' => 'dwg', 'image/vnd.dxf' => 'dxf', 'image/vnd.fastbidsheet' => 'fbs', 'image/vnd.fpx' => 'fpx', 'image/vnd.fst' => 'fst', 'image/vnd.fujixerox.edmics-mmr' => 'mmr', 'image/vnd.fujixerox.edmics-rlc' => 'rlc', 'image/vnd.ms-modi' => 'mdi', 'image/vnd.ms-photo' => 'wdp', 'image/vnd.net-fpx' => 'npx', 'image/vnd.wap.wbmp' => 'wbmp', 'image/vnd.xiff' => 'xif', 'image/webp' => 'webp', 'image/x-3ds' => '3ds', 'image/x-cmu-raster' => 'ras', 'image/x-cmx' => 'cmx', 'image/x-freehand' => 'fh', 'image/x-icon' => 'ico', 'image/x-mrsid-image' => 'sid', 'image/x-pcx' => 'pcx', 'image/x-pict' => 'pic', 'image/x-portable-anymap' => 'pnm', 'image/x-portable-bitmap' => 'pbm', 'image/x-portable-graymap' => 'pgm', 'image/x-portable-pixmap' => 'ppm', 'image/x-rgb' => 'rgb', 'image/x-tga' => 'tga', 'image/x-xbitmap' => 'xbm', 'image/x-xpixmap' => 'xpm', 'image/x-xwindowdump' => 'xwd', 'message/rfc822' => 'eml', 'model/iges' => 'igs', 'model/mesh' => 'msh', 'model/vnd.collada+xml' => 'dae', 'model/vnd.dwf' => 'dwf', 'model/vnd.gdl' => 'gdl', 'model/vnd.gtw' => 'gtw', 'model/vnd.mts' => 'mts', 'model/vnd.vtu' => 'vtu', 'model/vrml' => 'wrl', 'model/x3d+binary' => 'x3db', 'model/x3d+vrml' => 'x3dv', 'model/x3d+xml' => 'x3d', 'text/cache-manifest' => 'appcache', 'text/calendar' => 'ics', 'text/css' => 'css', 'text/csv' => 'csv', 'text/html' => 'html', 'text/n3' => 'n3', 'text/plain' => 'txt', 'text/prs.lines.tag' => 'dsc', 'text/richtext' => 'rtx', 'text/rtf' => 'rtf', 'text/sgml' => 'sgml', 'text/tab-separated-values' => 'tsv', 'text/troff' => 't', 'text/turtle' => 'ttl', 'text/uri-list' => 'uri', 'text/vcard' => 'vcard', 'text/vnd.curl' => 'curl', 'text/vnd.curl.dcurl' => 'dcurl', 'text/vnd.curl.scurl' => 'scurl', 'text/vnd.curl.mcurl' => 'mcurl', 'text/vnd.dvb.subtitle' => 'sub', 'text/vnd.fly' => 'fly', 'text/vnd.fmi.flexstor' => 'flx', 'text/vnd.graphviz' => 'gv', 'text/vnd.in3d.3dml' => '3dml', 'text/vnd.in3d.spot' => 'spot', 'text/vnd.sun.j2me.app-descriptor' => 'jad', 'text/vnd.wap.wml' => 'wml', 'text/vnd.wap.wmlscript' => 'wmls', 'text/vtt' => 'vtt', 'text/x-asm' => 's', 'text/x-c' => 'c', 'text/x-fortran' => 'f', 'text/x-pascal' => 'p', 'text/x-java-source' => 'java', 'text/x-opml' => 'opml', 'text/x-nfo' => 'nfo', 'text/x-setext' => 'etx', 'text/x-sfv' => 'sfv', 'text/x-uuencode' => 'uu', 'text/x-vcalendar' => 'vcs', 'text/x-vcard' => 'vcf', 'video/3gpp' => '3gp', 'video/3gpp2' => '3g2', 'video/h261' => 'h261', 'video/h263' => 'h263', 'video/h264' => 'h264', 'video/jpeg' => 'jpgv', 'video/jpm' => 'jpm', 'video/mj2' => 'mj2', 'video/mp4' => 'mp4', 'video/mpeg' => 'mpeg', 'video/ogg' => 'ogv', 'video/quicktime' => 'qt', 'video/vnd.dece.hd' => 'uvh', 'video/vnd.dece.mobile' => 'uvm', 'video/vnd.dece.pd' => 'uvp', 'video/vnd.dece.sd' => 'uvs', 'video/vnd.dece.video' => 'uvv', 'video/vnd.dvb.file' => 'dvb', 'video/vnd.fvt' => 'fvt', 'video/vnd.mpegurl' => 'mxu', 'video/vnd.ms-playready.media.pyv' => 'pyv', 'video/vnd.uvvu.mp4' => 'uvu', 'video/vnd.vivo' => 'viv', 'video/webm' => 'webm', 'video/x-f4v' => 'f4v', 'video/x-fli' => 'fli', 'video/x-flv' => 'flv', 'video/x-m4v' => 'm4v', 'video/x-matroska' => 'mkv', 'video/x-mng' => 'mng', 'video/x-ms-asf' => 'asf', 'video/x-ms-vob' => 'vob', 'video/x-ms-wm' => 'wm', 'video/x-ms-wmv' => 'wmv', 'video/x-ms-wmx' => 'wmx', 'video/x-ms-wvx' => 'wvx', 'video/x-msvideo' => 'avi', 'video/x-sgi-movie' => 'movie', 'video/x-smv' => 'smv', 'x-conference/x-cooltalk' => 'ice'];
         /**
          * Original file name.
          *
@@ -35523,7 +35664,7 @@ namespace FluentForm\Framework\Response {
         public function sendSuccess($data = null, $code = 200)
         {
         }
-        public function sendError($data = null, $code = 423)
+        public function sendError($data = null, $code = 422)
         {
         }
     }
@@ -36955,6 +37096,26 @@ namespace FluentForm\Framework\Validator {
         protected function presentOrRuleIsImplicit($rule, $attribute, $value)
         {
         }
+        /**
+         * Determine if the given attribute has a rule in the given set.
+         *
+         * @param string $attribute
+         * @param string|array $rules
+         * @return bool
+         */
+        public function hasRule($attribute, $rules)
+        {
+        }
+        /**
+         * Get a rule and its parameters for a given attribute.
+         *
+         * @param string $attribute
+         * @param string|array $rules
+         * @return array|null
+         */
+        protected function getRule($attribute, $rules)
+        {
+        }
     }
 }
 namespace FluentForm\Framework\View {
@@ -37462,6 +37623,9 @@ namespace {
     {
     }
     function fluentform_options_sanitize($options)
+    {
+    }
+    function fluentform_iframe_srcdoc_sanitize($value)
     {
     }
     function fluentform_sanitize_html($html)
