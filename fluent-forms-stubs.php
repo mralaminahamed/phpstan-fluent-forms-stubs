@@ -31,8 +31,10 @@ namespace FluentForm\App\Api {
         {
         }
         /**
-         * get Form Properties instance
+         * Get Form Properties instance
+         *
          * @param int|object $form
+         *
          * @return \FluentForm\App\Api\FormProperties
          */
         public function form($form)
@@ -50,7 +52,9 @@ namespace FluentForm\App\Api {
         }
         /**
          * Get Form formatted inputs
+         *
          * @param string[] $with
+         *
          * @return array
          */
         public function inputs($with = ['admin_label', 'raw'])
@@ -58,6 +62,7 @@ namespace FluentForm\App\Api {
         }
         /**
          * Get Form Input labels
+         *
          * @return array
          */
         public function labels()
@@ -65,6 +70,7 @@ namespace FluentForm\App\Api {
         }
         /**
          * Get Form Fields
+         *
          * @return array
          */
         public function fields()
@@ -72,6 +78,7 @@ namespace FluentForm\App\Api {
         }
         /**
          * Get Form Settings
+         *
          * @return array
          */
         public function settings()
@@ -79,23 +86,28 @@ namespace FluentForm\App\Api {
         }
         /**
          * Get Email Notifications as an array
+         *
          * @return array
+         *
          * @throws \WpFluent\Exception
          */
         public function emailNotifications()
         {
         }
         /**
-         * get Form metas
+         * Get Form metas
+         *
          * @param $metaName
          * @param false $default
+         *
          * @return mixed|string
          */
         public function meta($metaName, $default = false)
         {
         }
         /**
-         * get form renerable pass settings as an array
+         * Get form renerable pass settings as an array
+         *
          * @return array
          */
         public function renderable()
@@ -252,10 +264,10 @@ namespace FluentForm\App\Databases\Migrations {
 namespace FluentForm\App\Helpers {
     class Helper
     {
-        static $tabIndex = 0;
-        static $formInstance = 0;
-        static $loadedForms = [];
-        static $tabIndexStatus = 'na';
+        public static $tabIndex = 0;
+        public static $formInstance = 0;
+        public static $loadedForms = [];
+        public static $tabIndexStatus = 'na';
         /**
          * Sanitize form inputs recursively.
          *
@@ -369,7 +381,67 @@ namespace FluentForm\App\Helpers {
         private static function getConversionUrl($formId)
         {
         }
+        public static function fileUploadLocations()
+        {
+        }
         private function unreadCount($formId)
+        {
+        }
+        public static function getForms()
+        {
+        }
+        public static function replaceBrTag($content, $with = '')
+        {
+        }
+        public static function hasBrTag($content)
+        {
+        }
+        public static function sanitizeForCSV($content)
+        {
+        }
+        public static function sanitizeOrderValue($orderType = '')
+        {
+        }
+        public static function getForm($id)
+        {
+        }
+        public static function shouldHidePassword($formId)
+        {
+        }
+        // make tabular-grid value markdown format
+        public static function getTabularGridFormatValue($girdData, $field, $rowJoiner = '<br />', $colJoiner = ', ', $type = '')
+        {
+        }
+        public static function getInputNameFromShortCode($value)
+        {
+        }
+    }
+    class Protector
+    {
+        /**
+         * Get the salt for the encryption and decryption.
+         */
+        public static function getSalt()
+        {
+        }
+        /**
+         * Encryp a text using a predefined salt.
+         *
+         * @param string $text
+         *
+         * @return string $text
+         */
+        public static function encrypt($text)
+        {
+        }
+        /**
+         * Decrypt a text using a predefined salt.
+         *
+         * @param string $text
+         *
+         * @return string $text
+         */
+        public static function decrypt($text)
         {
         }
     }
@@ -378,8 +450,9 @@ namespace FluentForm\App\Helpers {
         /**
          * Determine if a given string starts with a given substring.
          *
-         * @param string $haystack
+         * @param string       $haystack
          * @param string|array $needles
+         *
          * @return bool
          */
         public static function startsWith($haystack, $needles)
@@ -388,8 +461,9 @@ namespace FluentForm\App\Helpers {
         /**
          * Determine if a given string ends with a given substring.
          *
-         * @param string $haystack
+         * @param string       $haystack
          * @param string|array $needles
+         *
          * @return bool
          */
         public static function endsWith($haystack, $needles)
@@ -398,8 +472,9 @@ namespace FluentForm\App\Helpers {
         /**
          * Determine if a given string contains a given substring.
          *
-         * @param string $haystack
+         * @param string       $haystack
          * @param string|array $needles
+         *
          * @return bool
          */
         public static function contains($haystack, $needles)
@@ -408,8 +483,9 @@ namespace FluentForm\App\Helpers {
         /**
          * Determine if a given string does not contain a given substring.
          *
-         * @param string $haystack
+         * @param string       $haystack
          * @param string|array $needles
+         *
          * @return bool
          */
         public static function doNotContains($haystack, $needles)
@@ -420,6 +496,8 @@ namespace FluentForm\App\Helpers {
 namespace FluentForm\App\Modules\Acl {
     class Acl
     {
+        public static $capability = '';
+        public static $role = '';
         public static function getPermissionSet()
         {
         }
@@ -433,22 +511,76 @@ namespace FluentForm\App\Modules\Acl {
          * Verify if current user has a fluentform permission.
          *
          * @param $permission
-         * @param null $formId
+         * @param null   $formId
          * @param string $message
-         * @param bool $json
+         * @param bool   $json
          *
          * @throws \Exception
          */
         public static function verify($permission, $formId = null, $message = 'You do not have permission to perform this action.', $json = true)
         {
         }
-        public static function hasPermission($permission, $formId = false)
+        public static function hasPermission($permissions, $formId = false)
         {
         }
         public static function hasAnyFormPermission($form_id = false)
         {
         }
+        public static function getCurrentUserCapability()
+        {
+        }
+        public static function findUserCapability($user)
+        {
+        }
+        public static function getCurrentUserRole()
+        {
+        }
         public static function verifyNonce($key = 'fluent_forms_admin_nonce')
+        {
+        }
+        public static function getReadablePermissions()
+        {
+        }
+        public static function getUserPermissions($user = false)
+        {
+        }
+        public static function isSuperMan($user = false)
+        {
+        }
+        public static function getCurrentUserPermissions()
+        {
+        }
+        public static function attachPermissions($user, $permissions)
+        {
+        }
+    }
+    class Managers
+    {
+        /**
+         * Request object
+         *
+         * @var \FluentForm\Framework\Request\Request $request
+         */
+        protected $request;
+        public function __construct()
+        {
+        }
+        public function get()
+        {
+        }
+        public function store()
+        {
+        }
+        public function remove()
+        {
+        }
+        private function validate()
+        {
+        }
+        private function sendError($data, $code = 423)
+        {
+        }
+        public function dependencyValidate($permissions)
         {
         }
     }
@@ -473,6 +605,7 @@ namespace FluentForm\App\Modules {
     {
         /**
          * This method will be called on plugin activation
+         *
          * @return void
          */
         public function handleActivation($network_wide)
@@ -534,6 +667,20 @@ namespace FluentForm\App\Modules {
         }
     }
 }
+namespace FluentForm\App\Modules\CLI {
+    class Commands
+    {
+        public function stats($args, $assoc_args)
+        {
+        }
+        public function activate_license($args, $assoc_args)
+        {
+        }
+        public function license_status()
+        {
+        }
+    }
+}
 namespace FluentForm\App\Modules\Component {
     trait ComponentInitTrait
     {
@@ -546,7 +693,7 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Validate certain required properties
-         * 
+         *
          * @return void
          */
         private function _fluentFormValidateComponent()
@@ -555,7 +702,8 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Add the component in fluentform editor's components array.
          *
-         * @param  array $components
+         * @param array $components
+         *
          * @return array $components
          */
         public function _fluentEditorComponenstCallback($components)
@@ -563,8 +711,9 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Add the keywords for the component to search in the editor.
-         * 
-         * @param  array $keywords
+         *
+         * @param array $keywords
+         *
          * @return array $keywords
          */
         public function _fluentEditorElementSearchTagsCallback($keywords)
@@ -572,8 +721,9 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Configure placements of input customization options in editor.
-         * 
-         * @param  array $placemenSettings
+         *
+         * @param array $placemenSettings
+         *
          * @return array $placemenSettings
          */
         public function _fluentEditorElementSettingsPlacementCallback($placementSettings)
@@ -581,8 +731,9 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Configure input customization options/items in the editor.
-         * 
-         * @param  array $customizationSettings
+         *
+         * @param array $customizationSettings
+         *
          * @return array $customizationSettings
          */
         public function _fluentEditorElementCustomizationSettingsCallback($customizationSettings)
@@ -591,9 +742,10 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Prepare the submission data for the element on Form Submission.
          *
-         * @param  array $formData
-         * @param  int   $formId
-         * @param  array $inputConfigs
+         * @param array $formData
+         * @param int   $formId
+         * @param array $inputConfigs
+         *
          * @return array $formData
          */
         public function _fluentformInsertResponseDataCallback($formData, $formId, $inputConfigs)
@@ -602,8 +754,9 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Add the component type in fluentform field
          * types to be available in FormFieldParser.
-         * 
-         * @param  array $types
+         *
+         * @param array $types
+         *
          * @return array $types
          */
         public function _fluentformFormInputTypesCallback($types)
@@ -612,8 +765,9 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Render the component.
          *
-         * @param array $data
-         * @param stdClass $form
+         * @param array    $data
+         * @param \stdClass $form
+         *
          * @return void
          */
         public function _elementRenderHookCallback($item, $form)
@@ -621,10 +775,11 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Element's entry value transformation.
-         * 
-         * @param  mixed $value
-         * @param  string $field
-         * @param  int $formId
+         *
+         * @param mixed  $value
+         * @param string $field
+         * @param int    $formId
+         *
          * @return mixed $value
          */
         public function _elementEntryFormatCallback($value, $field, $formId)
@@ -636,46 +791,46 @@ namespace FluentForm\App\Modules\Component {
         use \FluentForm\App\Modules\Component\ComponentInitTrait;
         /**
          * The unique name of the component.
-         * 
+         *
          * @return string
          */
         public abstract function name();
         /**
          * The label of the component.
-         * 
+         *
          * @return string
          */
         public abstract function label();
         /**
          * The element type of the component from already
          * available elements (input_text, textarea e.t.c).
-         * 
+         *
          * @return string
          */
         public abstract function element();
         /**
          * The template type of the component to display preview in editor dropzone from
          * already available templates (inputText, selectCountry, addressFields e.t.c).
-         * 
+         *
          * @return string
          */
         public abstract function template();
         /**
          * Render the element on frontend form.
-         * 
-         * @param  array $component Element Config
-         * @param  object $form The Form Object
-         * 
+         *
+         * @param array  $component Element Config
+         * @param object $form      The Form Object
+         *
          * @return void
          */
         public abstract function render($component, $form);
         /**
          * Form submission callback.
-         * 
-         * @param  array $formData Submitted form data
-         * @param  int $formId Submitted form id
-         * @param  array $config Form elements config
-         * 
+         *
+         * @param array $formData Submitted form data
+         * @param int   $formId   Submitted form id
+         * @param array $config   Form elements config
+         *
          * @return array $formData
          */
         public abstract function onSubmit($formData, $formId, $config);
@@ -683,7 +838,7 @@ namespace FluentForm\App\Modules\Component {
          * Component position in editor. If null is returned then
          * the element will be pushed at last but the derived class
          * will override this method if any customization is needed.
-         * 
+         *
          * @return int|null
          */
         public function index()
@@ -693,7 +848,7 @@ namespace FluentForm\App\Modules\Component {
          * The group, where the component should be added. By default,
          * the element will be added in "general" group and the derived
          *  class will override this method if any customization is needed.
-         * 
+         *
          * @return string general|advanced|container
          */
         public function group()
@@ -702,7 +857,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * The element icon class for the component to display in the button in
          * the editor element list which is mapped to editor_options.icon_class.
-         * 
+         *
          * @return string
          */
         public function elementIconClass()
@@ -712,7 +867,8 @@ namespace FluentForm\App\Modules\Component {
          * Element editor/form attributes and the derived class will
          * override this method if any customization is needed.
          *
-         * @param  array $dafault
+         * @param array $dafault
+         *
          * @return array $default
          */
         public function attributes($default)
@@ -721,8 +877,9 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Element editor settings and the derived class will
          * override this method if any customization is needed.
-         * 
-         * @param  array $dafault
+         *
+         * @param array $dafault
+         *
          * @return array $default
          */
         public function settings($default)
@@ -731,8 +888,9 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Element editor options and the derived class will
          * override this method if any customization is needed.
-         * 
-         * @param  array $dafault
+         *
+         * @param array $dafault
+         *
          * @return array $default
          */
         public function options($default)
@@ -741,7 +899,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Element's form submission validation rules and the derived
          * class will override this method if needed any customization.
-         * 
+         *
          * @return array
          */
         public function validationRules()
@@ -750,8 +908,9 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Element editor placement settings and the derived class
          * will override this method if any customization is needed.
-         * 
+         *
          * @param array $placemenSettings
+         *
          * @return array $placemenSettings
          */
         public function placementSettings($placemenSettings)
@@ -760,8 +919,9 @@ namespace FluentForm\App\Modules\Component {
         /**
          * The customization for the component and derived class can
          * override this method if any customization is needed.
-         * 
-         * @param  array $customizationSettings
+         *
+         * @param array $customizationSettings
+         *
          * @return array $customizationSettings
          */
         public function customizationSettings($customizationSettings)
@@ -771,8 +931,9 @@ namespace FluentForm\App\Modules\Component {
          * Add the component type in fluentform field types to
          * be available in FormFieldParser and derived class can
          * override this method if any customization is needed.
-         * 
-         * @param  array $types
+         *
+         * @param array $types
+         *
          * @return array $types
          */
         public function addType($types)
@@ -781,7 +942,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * The keywords to search the element in the editor and
          * the derived class will override this method if needed.
-         * 
+         *
          * @return array
          */
         public function searchBy()
@@ -789,15 +950,16 @@ namespace FluentForm\App\Modules\Component {
         }
         /**
          * Transform the element's submitted value saved in database
-         * to show it properly/formatted in entry page if needed and 
+         * to show it properly/formatted in entry page if needed and
          * this method implementation optional so a default method is
          * implemented here and original value is returned. In any case
          * if any customization of the value is needed then the derived
          * class will override it and will format and return the the value.
-         * 
-         * @param  mixed $value   [description]
-         * @param  string $field
-         * @param  int $formId
+         *
+         * @param mixed  $value  [description]
+         * @param string $field
+         * @param int    $formId
+         *
          * @return mixed $value
          */
         public function formatEntryValue($value, $field, $formId)
@@ -812,6 +974,12 @@ namespace FluentForm\App\Modules\Component {
          * @var $app
          */
         protected $app = null;
+        /**
+         * Determine whether to register Elementor PopUp handler.
+         *
+         * @var bool
+         */
+        protected $elementorPopUpHandler = false;
         /**
          * Biuld the instance of this class
          *
@@ -829,7 +997,8 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Get all the available components
          *
-         * @return  void
+         * @return void
+         *
          * @throws \Exception
          * @throws \FluentForm\Framework\Exception\UnResolveableEntityException
          */
@@ -848,6 +1017,7 @@ namespace FluentForm\App\Modules\Component {
          * Get available shortcodes for editor
          *
          * @return void
+         *
          * @throws \Exception
          */
         public function getEditorShortcodes()
@@ -857,6 +1027,7 @@ namespace FluentForm\App\Modules\Component {
          * Get all available shortcodes for editor
          *
          * @return void
+         *
          * @throws \Exception
          */
         public function getAllEditorShortcodes()
@@ -865,7 +1036,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Register the form renderer shortcode
          *
-         * @return  void
+         * @return void
          */
         public function addFluentFormShortCode()
         {
@@ -876,8 +1047,9 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Process the output HTML to generate the default values.
          *
-         * @param string $output
+         * @param string    $output
          * @param \stdClass $form
+         *
          * @return string
          */
         public function replaceEditorSmartCodes($output, $form)
@@ -886,7 +1058,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Register renderer actions for compiling each element
          *
-         * @return  void
+         * @return void
          */
         public function addRendererActions()
         {
@@ -894,7 +1066,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Register dynamic value shortcode parser (filter default value)
          *
-         * @return  void
+         * @return void
          */
         public function addFluentFormDefaultValueParser()
         {
@@ -902,7 +1074,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Register filter to check whether the form is renderable
          *
-         * @return  mixed
+         * @return mixed
          */
         public function addIsRenderableFilter()
         {
@@ -940,7 +1112,7 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Register fluentform_submission_inserted actions
          *
-         * @return  void
+         * @return void
          */
         public function addFluentformSubmissionInsertedFilter()
         {
@@ -948,12 +1120,12 @@ namespace FluentForm\App\Modules\Component {
         /**
          * Add inline scripts [Add localized script using same var]
          *
-         * @return  void
+         * @return void
          */
         private function addInlineVars()
         {
         }
-        private function getDatei18n()
+        public static function getDatei18n()
         {
         }
         protected function maybeHasAdvandedFields($form, $formBuilder)
@@ -987,6 +1159,7 @@ namespace FluentForm\App\Modules {
     {
         /**
          * This method will be called on plugin deactivation
+         *
          * @return void
          */
         public function handleDeactivation()
@@ -1025,6 +1198,8 @@ namespace FluentForm\App\Modules\Entries {
     class EntryQuery
     {
         /**
+         * Request object
+         *
          * @var \FluentForm\Framework\Request\Request $request
          */
         protected $request;
@@ -1037,7 +1212,7 @@ namespace FluentForm\App\Modules\Entries {
         protected $is_favourite = null;
         protected $sort_by = 'ASC';
         protected $search = false;
-        protected $wheres = array();
+        protected $wheres = [];
         protected $startDate;
         protected $endDate;
         public function __construct()
@@ -1107,6 +1282,7 @@ namespace FluentForm\App\Modules\Entries {
          * @param array $with
          *
          * @return array
+         *
          * @todo: Implement Caching mechanism so we don't have to parse these things for every request
          */
         public function getFormInputsAndLabels($form, $with = ['admin_label', 'raw'])
@@ -1148,18 +1324,27 @@ namespace FluentForm\App\Modules\Entries {
         public function changeEntryUser()
         {
         }
+        public function getAvailableForms()
+        {
+        }
     }
     class Export
     {
         /**
+         * App instance
+         *
          * @var \FluentForm\Framework\Foundation\Application
          */
         protected $app;
         /**
+         * Request object
+         *
          * @var \FluentForm\Framework\Request\Request
          */
         protected $request;
         /**
+         * Table name
+         *
          * @var String table/data source name
          */
         protected $tableName;
@@ -1197,6 +1382,8 @@ namespace FluentForm\App\Modules\Entries {
         {
         }
         /**
+         * Get report
+         *
          * @param bool $formId
          */
         public function getReport($formId = false)
@@ -1209,6 +1396,12 @@ namespace FluentForm\App\Modules\Entries {
         {
         }
         public function getSubFieldInputReport($formId, $fieldNames, $whereClasuses)
+        {
+        }
+        protected function getFormattedReportsForSubInputs($reports, $formId, $whereClasuses)
+        {
+        }
+        protected function setReportForSubInput($report, &$formattedReports)
         {
         }
         public function getEntryTotal($fieldName, $formId, $whereClasuses)
@@ -1247,6 +1440,8 @@ namespace FluentForm\App\Modules\Form {
     class Analytics
     {
         /**
+         * App instance
+         *
          * @var \FluentForm\Framework\Foundation\Application
          */
         protected $app;
@@ -1260,8 +1455,6 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Save form view analytics data
-         * 
-         * @return json respoonse
          */
         public function record($formId)
         {
@@ -1271,15 +1464,14 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Save form view analytics data
-         * @return void
          */
         private function saveViewAnalytics($formId)
         {
         }
         /**
          * Store (create/update) total view of a form
-         * @param  int $formId
-         * @return void
+         *
+         * @param int $formId
          */
         private function increaseTotalViews($formId)
         {
@@ -1288,6 +1480,8 @@ namespace FluentForm\App\Modules\Form {
     class Form
     {
         /**
+         * Request object
+         *
          * @var \FluentForm\Framework\Request\Request $request
          */
         protected $request;
@@ -1312,6 +1506,7 @@ namespace FluentForm\App\Modules\Form {
         protected $metas = [];
         protected $formType = 'form';
         protected $hasPayment = 0;
+        protected $model;
         /**
          * Form constructor.
          *
@@ -1325,7 +1520,6 @@ namespace FluentForm\App\Modules\Form {
         /**
          * Get all forms from database
          *
-         * @return  void
          * @throws \Exception
          */
         public function index()
@@ -1333,6 +1527,7 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Create a form from backend/editor
+         *
          * @return void|array
          */
         public function store($returnJSON = true)
@@ -1355,7 +1550,6 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Find/Read a from from the database
-         * @return void
          */
         public function find()
         {
@@ -1363,6 +1557,7 @@ namespace FluentForm\App\Modules\Form {
         /**
          * Fetch a from from the database
          * Note: required for ninja-tables
+         *
          * @return mixed
          */
         public function fetchForm($formId)
@@ -1370,15 +1565,21 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Save/update a form from backend/editor
-         * @return void
+         *
          * @throws \WpFluent\Exception
          */
         public function update()
         {
         }
+        private function sanitizeFields($formFields)
+        {
+        }
+        private function sanitizeFieldMaps($fields)
+        {
+        }
         /**
          * Delete a from from database
-         * @return void
+         *
          * @throws \WpFluent\Exception
          */
         public function delete()
@@ -1389,7 +1590,7 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Duplicate a from
-         * @return void
+         *
          * @throws \WpFluent\Exception
          */
         public function duplicate()
@@ -1397,9 +1598,11 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Validate a form  by form title & for duplicate name attributes
-         * @return void
          */
         private function validate()
+        {
+        }
+        public function convertToConversational()
         {
         }
         private function getAdminPermalink($route, $form)
@@ -1409,6 +1612,34 @@ namespace FluentForm\App\Modules\Form {
         {
         }
         public function getAllForms()
+        {
+        }
+        /**
+         * Map pdf feed ID to replace with duplicated PDF feed ID when duplicating form
+         *
+         * @param array $extras
+         * @param array $newFormId
+         *
+         * @return array
+         */
+        private function getPdfFeedMap($extras, $newFormId)
+        {
+        }
+        /**
+         * Map notification data with PDF feed map
+         *
+         * @param array $extras
+         * @param array $pdfFeedMap
+         *
+         * @return array
+         */
+        private function notificationWithPdfMap($extras, $pdfFeedMap)
+        {
+        }
+        public function findFormLocations()
+        {
+        }
+        public static function getShortCodeIds($content)
         {
         }
     }
@@ -1430,10 +1661,10 @@ namespace FluentForm\App\Modules\Form {
         public static function formatValue($value)
         {
         }
-        public static function formatFileValues($values, $isHtml)
+        public static function formatFileValues($values, $isHtml, $form_id = null)
         {
         }
-        public static function formatImageValues($values, $isHtml)
+        public static function formatImageValues($values, $isHtml, $form_id = null)
         {
         }
         public static function formatRepeatFieldValue($value, $field, $form_id)
@@ -1463,16 +1694,18 @@ namespace FluentForm\App\Modules\Form {
         }
     }
     /**
-     * @method array getShortCodeInputs(\stdClass $form, array $with = ['admin_label'])
-     * @method array getValidations(\stdClass $form, array $inputs, array $fields = [])
-     * @method array getElement(\stdClass $form, string $name, array $with = [])
-     * @method boolean hasElement(\stdClass $form, string $name)
-     * @method boolean hasPaymentFields(\stdClass $form)
-     * @method array getPaymentFields(\stdClass $form, $with = [])
-     * @method array getPaymentInputFields(\stdClass $form, $with = [])
-     * @method array getAttachmentInputFields(\stdClass $form, $with = [])
-     * @method boolean hasRequiredFields(\stdClass $form, array $fields)
-     * @method array getInputsByElementTypes(\stdClass $form, array $elements)
+     * Available methods
+     *
+     * @method array      getShortCodeInputs(\stdClass $form, array $with = ['admin_label'])
+     * @method array      getValidations(\stdClass $form, array $inputs, array $fields = [])
+     * @method array      getElement(\stdClass $form, string|array $name, array $with = [])
+     * @method boolean    hasElement(\stdClass $form, string $name)
+     * @method boolean    hasPaymentFields(\stdClass $form)
+     * @method array      getPaymentFields(\stdClass $form, $with = [])
+     * @method array      getPaymentInputFields(\stdClass $form, $with = [])
+     * @method array      getAttachmentInputFields(\stdClass $form, $with = [])
+     * @method boolean    hasRequiredFields(\stdClass $form, array $fields)
+     * @method array      getInputsByElementTypes(\stdClass $form, array $elements, array $with = [])
      * @method array|null getField(\stdClass $form, string|array $element, string|array $attribute, array $with = [])
      */
     class FormFieldsParser
@@ -1501,8 +1734,9 @@ namespace FluentForm\App\Modules\Form {
          * Deligate dynamic static method calls to FormParser method.
          * And set the result to the store before returning to dev.
          *
-         * @param  string $method
-         * @param  array  $parameters
+         * @param string $method
+         * @param array  $parameters
+         *
          * @return mixed
          */
         public static function __callStatic($method, $parameters)
@@ -1515,19 +1749,25 @@ namespace FluentForm\App\Modules\Form {
     class FormHandler
     {
         /**
+         * App instance
+         *
          * @var \FluentForm\Framework\Foundation\Application
          */
         protected $app;
         /**
+         * Request object
+         *
          * @var \FluentForm\Framework\Request\Request
          */
         protected $request;
         /**
+         * Form Data
+         *
          * @var array $formData
          */
         protected $formData;
         /**
-         * The fluent form object.
+         * The Fluent Forms object.
          *
          * @var \stdClass
          */
@@ -1544,6 +1784,7 @@ namespace FluentForm\App\Modules\Form {
          * Set the form using it's ID.
          *
          * @param $formId
+         *
          * @return $this
          */
         public function setForm($formId)
@@ -1565,6 +1806,7 @@ namespace FluentForm\App\Modules\Form {
          * Validate form data.
          *
          * @param $fields
+         *
          * @return bool
          */
         private function validate(&$fields)
@@ -1589,6 +1831,18 @@ namespace FluentForm\App\Modules\Form {
         {
         }
         /**
+         * Validate hCaptcha.
+         */
+        private function validateHCaptcha()
+        {
+        }
+        /**
+         * Validate turnstile.
+         */
+        private function validateTurnstile()
+        {
+        }
+        /**
          * Validate form data based on the form restrictions settings.
          *
          * @param $fields
@@ -1609,6 +1863,7 @@ namespace FluentForm\App\Modules\Form {
          * Prepare the data to be inserted to the database.
          *
          * @param boolean $formData
+         *
          * @return array
          */
         public function prepareInsertData($formData = false)
@@ -1618,11 +1873,19 @@ namespace FluentForm\App\Modules\Form {
          * Delegate the validation rules & messages to the
          * ones that the validation library recognizes.
          *
-         * @param  $rules
-         * @param  $messages
+         * @param $rules
+         * @param $messages
+         *
          * @return array
          */
         protected function delegateValidations($rules, $messages, $search = [], $replace = [])
+        {
+        }
+        /**
+         * Prevents malicious attacks when the submission
+         * count exceeds in an allowed interval.
+         */
+        public function preventMaliciousAttacks()
         {
         }
     }
@@ -1648,11 +1911,14 @@ namespace FluentForm\App\Modules\Form {
     class Inputs
     {
         /**
+         * Request object
+         *
          * @var \FluentForm\Framework\Request\Request
          */
         private $request;
         /**
          * Build the class instance
+         *
          * @throws \Exception
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $application)
@@ -1675,7 +1941,8 @@ namespace FluentForm\App\Modules\Form {
     {
         /**
          * all JSON data will be stored here
-         * @return  array
+         *
+         * @return array
          */
         private function getPredefinedForms()
         {
@@ -1691,6 +1958,7 @@ namespace FluentForm\App\Modules\Form {
         }
         /**
          * Create a predefined form
+         *
          * @param $name
          */
         public function create()
@@ -1708,7 +1976,17 @@ namespace FluentForm\App\Modules\Form\Settings {
     class EntryColumnViewSettings
     {
         /**
+         * Request object
+         *
+         * @var \FluentForm\Framework\Request\Request $request
+         */
+        protected $request;
+        public function __construct()
+        {
+        }
+        /**
          * Save settings for visible entry columns
+         *
          * @return void
          */
         public function saveVisibleColumnsAjax()
@@ -1733,38 +2011,39 @@ namespace FluentForm\App\Modules\Form\Settings {
     class ExtraSettings
     {
         /**
+         * Request Object
+         *
          * @var \FluentForm\Framework\Request\Request $request
          */
         protected $request;
         /**
+         * Query Builder Handler Object
+         *
          * @var \WpFluent\QueryBuilder\QueryBuilderHandler
          */
         protected $form_model;
         /**
          * Construct the object
+         *
          * @throws \Exception
-         * @return  void
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $application)
         {
         }
         /**
          * Get extra settig navigations
-         * @return void
          */
         public function getExtraSettingNavs()
         {
         }
         /**
          * Get extra settigs component
-         * @return void
          */
         public function getExtraSettingsComponent()
         {
         }
         /**
          * Get trello settigs
-         * @return void
          */
         public function getTrelloSettingsComponent($component, $formId)
         {
@@ -1772,6 +2051,15 @@ namespace FluentForm\App\Modules\Form\Settings {
     }
     class FormCssJs
     {
+        /**
+         * Request object
+         *
+         * @var \FluentForm\Framework\Request\Request $request
+         */
+        protected $request;
+        public function __construct()
+        {
+        }
         public function addCssJs($formId)
         {
         }
@@ -1789,19 +2077,14 @@ namespace FluentForm\App\Modules\Form\Settings {
         }
         /**
          * Get settings for a particular form by id
-         * @return void
          */
         public function getSettingsAjax()
         {
         }
         /**
          * Save settings for a particular form by id
-         * @return void
          */
         public function saveSettingsAjax()
-        {
-        }
-        protected function escCss($css)
         {
         }
         protected function getData($formId, $metaKey)
@@ -1814,13 +2097,12 @@ namespace FluentForm\App\Modules\Form\Settings {
     class FormSettings
     {
         /**
+         * Request object
+         *
          * @var \FluentForm\Framework\Request\Request
          */
         private $request;
         private $app;
-        /**
-         * @var int form ID.
-         */
         private $formId;
         /**
          * The settings (fluentform_form_meta) query builder.
@@ -1830,6 +2112,7 @@ namespace FluentForm\App\Modules\Form\Settings {
         private $settingsQuery;
         /**
          * Construct the object
+         *
          * @throws \Exception
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $application)
@@ -1837,7 +2120,6 @@ namespace FluentForm\App\Modules\Form\Settings {
         }
         /**
          * Get settings for a particular form by id
-         * @return void
          */
         public function index()
         {
@@ -1856,9 +2138,11 @@ namespace FluentForm\App\Modules\Form\Settings {
         }
         /**
          * Delete settings/meta from database for a given form
-         * @return void
          */
         public function remove()
+        {
+        }
+        private function sanitizeData($settings, $sanitizerMap)
         {
         }
     }
@@ -2005,6 +2289,8 @@ namespace FluentForm\App\Modules\Form {
     class Transfer
     {
         /**
+         * Request object
+         *
          * @var \FluentForm\Framework\Request\Request $request
          */
         protected $request;
@@ -2029,6 +2315,22 @@ namespace FluentForm\App\Modules\Form {
         {
         }
         public function getFormMetas($formId)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\HCaptcha {
+    class HCaptcha
+    {
+        /**
+         * Verify hCaptcha response.
+         *
+         * @param string $token  response from the user.
+         * @param null   $secret provided or already stored secret key.
+         *
+         * @return bool
+         */
+        public static function validate($token, $secret = null)
         {
         }
     }
@@ -2113,9 +2415,26 @@ namespace FluentForm\App\Modules\ReCaptcha {
     }
 }
 namespace FluentForm\App\Modules\Registerer {
+    class AdminBar
+    {
+        public function register()
+        {
+        }
+        public static function isDisabled()
+        {
+        }
+        public function addMenuBar($wpAdminBar)
+        {
+        }
+        private function getMenuItems()
+        {
+        }
+    }
     class Menu
     {
         /**
+         * App instance
+         *
          * @var \FluentForm\Framework\Foundation\Application
          */
         protected $app;
@@ -2151,7 +2470,7 @@ namespace FluentForm\App\Modules\Registerer {
         public function renderAllEntriesAdminRoute()
         {
         }
-        private function renderFormInnerPages()
+        public function renderFormInnerPages()
         {
         }
         public function renderSettings($form_id)
@@ -2159,7 +2478,9 @@ namespace FluentForm\App\Modules\Registerer {
         }
         /**
          * Remove the inactive addOn menu items
+         *
          * @param string $addOn
+         *
          * @return boolean
          */
         public function filterFormSettingsMenu($settingsMenus, $form_id)
@@ -2212,7 +2533,34 @@ namespace FluentForm\App\Modules\Registerer {
         public function renderSmtpPromo()
         {
         }
-        private function getAdminI18n()
+        private function usedNameAttributes($formId)
+        {
+        }
+    }
+    class TranslationString
+    {
+        public static function getAdminI18n()
+        {
+        }
+        public static function getSettingsI18n()
+        {
+        }
+        public static function getGlobalSettingsI18n()
+        {
+        }
+        public static function getEditorI18n()
+        {
+        }
+        public static function getEntriesI18n()
+        {
+        }
+        public static function getAddOnModuleI18n()
+        {
+        }
+        public static function getTransferModuleI18n()
+        {
+        }
+        public static function getPaymentsI18n()
         {
         }
     }
@@ -2221,6 +2569,8 @@ namespace FluentForm\App\Modules\Renderer\GlobalSettings {
     class Settings
     {
         /**
+         * App instance
+         *
          * @var \FluentForm\Framework\Foundation\Application
          */
         protected $app;
@@ -2259,6 +2609,8 @@ namespace FluentForm\App\Modules\Settings {
     class Settings
     {
         /**
+         * Request Object
+         *
          * @var \FluentForm\Framework\Request\Request
          */
         protected $request;
@@ -2280,6 +2632,12 @@ namespace FluentForm\App\Modules\Settings {
         {
         }
         public function storeReCaptcha()
+        {
+        }
+        public function storeHCaptcha()
+        {
+        }
+        public function storeTurnstile()
         {
         }
         public function storeSaveGlobalLayoutSettings()
@@ -2338,6 +2696,25 @@ namespace FluentForm\App\Modules\Track {
         }
     }
 }
+namespace FluentForm\App\Modules\Turnstile {
+    class Turnstile
+    {
+        /**
+         * Verify turnstile response.
+         *
+         * @param string $token  response from the user.
+         * @param null   $secret provided or already stored secret key.
+         *
+         * @return bool
+         */
+        public static function validate($token, $secret)
+        {
+        }
+        public static function ensureSettings($values)
+        {
+        }
+    }
+}
 namespace FluentForm\App\Modules\Widgets {
     class ElementorWidget
     {
@@ -2349,9 +2726,6 @@ namespace FluentForm\App\Modules\Widgets {
         {
         }
         public function enqueueAssets()
-        {
-        }
-        public static function getForms()
         {
         }
     }
@@ -2379,7 +2753,7 @@ namespace FluentForm\App\Modules\Widgets {
         public function get_script_depends()
         {
         }
-        protected function _register_controls()
+        protected function register_controls()
         {
         }
         protected function register_general_controls()
@@ -2454,13 +2828,122 @@ namespace FluentForm\App\Modules\Widgets {
          *
          * @access protected
          */
-        protected function _content_template()
+        protected function content_template()
+        {
+        }
+    }
+    class OxygenEl extends \OxyEl
+    {
+        public function init()
+        {
+        }
+        public function class_names()
+        {
+        }
+        public function button_place()
+        {
+        }
+        public function button_priority()
+        {
+        }
+        public function isBuilderEditorActive()
+        {
+        }
+    }
+    class OxyFluentFormWidget extends \FluentForm\App\Modules\Widgets\OxygenEl
+    {
+        public $css_added = false;
+        public function name()
+        {
+        }
+        public function slug()
+        {
+        }
+        public function accordion_button_place()
+        {
+        }
+        public function icon()
+        {
+        }
+        public function controls()
+        {
+        }
+        public function formContainerStyleControls()
+        {
+        }
+        public function formInputLabelsStyle()
+        {
+        }
+        public function formInputsStyle()
+        {
+        }
+        public function checkboxGridStyle()
+        {
+        }
+        public function gdprAndTermsConditionStyle()
+        {
+        }
+        public function sectionBreakStyle()
+        {
+        }
+        public function render($options, $defaults, $content)
+        {
+        }
+        public function init()
+        {
+        }
+        public function enablePresets()
+        {
+        }
+        public function enableFullPresets()
+        {
+        }
+        public function customCSS($options, $selector)
+        {
+        }
+        public function checkboxAndRadioStyle()
+        {
+        }
+        public function fileUploadStyle()
+        {
+        }
+        public function progressBarStyle()
+        {
+        }
+        public function submitBtnStyle()
+        {
+        }
+        public function stepButtonStyle()
+        {
+        }
+        public function successMessageStyle()
+        {
+        }
+        public function errorMessageStyle()
+        {
+        }
+    }
+    class OxygenWidget
+    {
+        public function __construct()
+        {
+        }
+        public function initOxygenEl()
+        {
+        }
+        public function initWidgets()
+        {
+        }
+        public function addAccordionSection()
+        {
+        }
+        public function registerAddPlusSubsections()
         {
         }
     }
     class SidebarWidgets extends \WP_Widget
     {
-        function __construct()
+        public function __construct()
         {
         }
         public function widget($args, $instance)
@@ -2484,7 +2967,7 @@ namespace FluentForm\Framework\Foundation {
         protected $app = null;
         /**
          * Build the instance
-         * @param \Framework\Foundation\Application $app
+         * @param \FluentForm\Framework\Foundation\Application $app
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $app)
         {
@@ -2618,6 +3101,15 @@ namespace FluentForm\App\Providers {
          * @return void
          */
         public function booting()
+        {
+        }
+    }
+    class MigratorProvider extends \FluentForm\Framework\Foundation\Provider
+    {
+        public function booting()
+        {
+        }
+        public function booted()
         {
         }
     }
@@ -4362,7 +4854,7 @@ namespace FluentForm\App\Services\Emogrifier {
             $message,
             $file,
             $line,
-            array $context
+            array $context = []
         )
         {
         }
@@ -4384,6 +4876,9 @@ namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
         public static function convert($form)
         {
         }
+        public static function convertExistingForm($form)
+        {
+        }
         public static function fieldTypes()
         {
         }
@@ -4398,7 +4893,9 @@ namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
         }
         /**
          * Load country list from file
+         *
          * @param array $data
+         *
          * @return array
          */
         public static function loadCountries($data)
@@ -4416,6 +4913,9 @@ namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
         private static function getAdvancedOptions($field)
         {
         }
+        private static function hasFormula($question)
+        {
+        }
     }
 }
 namespace FluentForm\App\Services\FormBuilder\Components {
@@ -4427,7 +4927,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Build unique ID concating form id and name attribute
+         *
          * @param array $data $form
+         *
          * @return string for id value
          */
         protected function makeElementId($data, $form)
@@ -4435,7 +4937,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Build attributes for any html element
+         *
          * @param array $attributes
+         *
          * @return string [Compiled key='value' attributes]
          */
         protected function buildAttributes($attributes, $form = null)
@@ -4443,7 +4947,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Extract value attribute from attribute list
-         * @param array  &$element
+         *
+         * @param array &$element
+         *
          * @return string
          */
         protected function extractValueFromAttributes(&$element)
@@ -4454,7 +4960,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Determine if the given element has conditions bound
+         *
          * @param array $element [Html element being compiled]
+         *
          * @return boolean
          */
         protected function hasConditions($element)
@@ -4462,7 +4970,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate a unique id for an element
+         *
          * @param string $str [preix]
+         *
          * @return string [Unique id]
          */
         protected function getUniqueId($str)
@@ -4470,6 +4980,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Get a default class for each form element wrapper
+         *
          * @return string
          */
         protected function getDefaultContainerClass()
@@ -4477,7 +4988,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Get required class for form element wrapper
+         *
          * @param array $rules [Validation rules]
+         *
          * @return mixed
          */
         protected function getRequiredClass($rules)
@@ -4485,14 +4998,17 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Get asterisk placement for the required form elements
-         * @return String
+         *
+         * @return string
          */
         protected function getAsteriskPlacement($form)
         {
         }
         /**
          * Generate a label for any element
+         *
          * @param array $data
+         *
          * @return string [label Html element]
          */
         protected function buildElementLabel($data, $form)
@@ -4500,17 +5016,21 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate html/markup for any element
-         * @param string $elMarkup [Predifined partial markup]
-         * @param array $data
-         * @param StdClass $form [Form object]
-         * @return string   [Compiled markup]
+         *
+         * @param string    $elMarkup [Predifined partial markup]
+         * @param array     $data
+         * @param \stdClass $form     [Form object]
+         *
+         * @return string [Compiled markup]
          */
         protected function buildElementMarkup($elMarkup, $data, $form)
         {
         }
         /**
          * Generate a help message for any element beside label
+         *
          * @param array $data
+         *
          * @return string [Html]
          */
         protected function getLabelHelpMessage($data)
@@ -4518,13 +5038,18 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate a help message for any element beside form element
+         *
          * @param array $data
+         *
          * @return string [Html]
          */
         protected function getInputHelpMessage($data, $hideClass = '')
         {
         }
         protected function parseEditorSmartCode($text, $form)
+        {
+        }
+        protected function printContent($hook, $html, $data, $form)
         {
         }
     }
@@ -4572,8 +5097,8 @@ namespace FluentForm\App\Services\FormBuilder {
         public function pushTags($tags, $form)
         {
         }
-        abstract function getComponent();
-        abstract function render($element, $form);
+        public abstract function getComponent();
+        public abstract function render($element, $form);
     }
 }
 namespace FluentForm\App\Services\FluentConversational\Classes\Elements {
@@ -4676,7 +5201,7 @@ namespace FluentForm\App\Services\FluentConversational\Classes {
         private function getExtraHiddenInputs($formId)
         {
         }
-        private function getRandomPhoto()
+        public function getRandomPhoto()
         {
         }
         private function renderFormHtml($formId, $providedKey = '')
@@ -4688,6 +5213,17 @@ namespace FluentForm\App\Services\FluentConversational\Classes {
         private function enqueueScripts()
         {
         }
+        /**
+         * Get the payment configuration of this form.
+         *
+         * @param $form
+         */
+        private function getPaymentConfig($form)
+        {
+        }
+        protected function getAsteriskPlacement($formId)
+        {
+        }
     }
 }
 namespace FluentForm\App\Services\FormBuilder {
@@ -4695,11 +5231,13 @@ namespace FluentForm\App\Services\FormBuilder {
     {
         /**
          * $items [Components list]
+         *
          * @var array
          */
-        protected $items = array();
+        protected $items = [];
         /**
          * Build the object instance
+         *
          * @param array $items
          */
         public function __construct(array $items)
@@ -4707,9 +5245,11 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Add a component into list [$items]
+         *
          * @param string $name
          * @param array  $component
-         * @param string $group ['general'|'advanced']
+         * @param string $group     ['general'|'advanced']
+         *
          * @return $this
          */
         public function add($name, array $component, $group)
@@ -4717,8 +5257,10 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Remove a component from the list [$items]
-         * @param  string $name
-         * @param  string $group ['general'|'advanced']
+         *
+         * @param string $name
+         * @param string $group ['general'|'advanced']
+         *
          * @return $this
          */
         public function remove($name, $group)
@@ -4726,9 +5268,11 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Modify an existing component
-         * @param  string $name
-         * @param  Closure $callback [to modify the component within]
-         * @param  string $group
+         *
+         * @param string  $name
+         * @param Closure $callback [to modify the component within]
+         * @param string  $group
+         *
          * @return $this
          */
         public function update($name, \Closure $callback, $group)
@@ -4736,7 +5280,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Sort the components in list [$items]
-         * @param  string $sortBy [key to sort by]
+         *
+         * @param string $sortBy [key to sort by]
+         *
          * @return $this
          */
         public function sort($sortBy = 'index')
@@ -4744,6 +5290,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Return array [$items]
+         *
          * @return array
          */
         public function toArray()
@@ -4751,6 +5298,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Return array [$items]
+         *
          * @return array
          */
         public function jsonSerialize()
@@ -4758,6 +5306,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Getter to hook proxy call
+         *
          * @return mixed
          */
         public function __get($key)
@@ -4770,14 +5319,17 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Wrapper class for address element
+         *
          * @var string
          */
         protected $wrapperClass = 'fluent-address';
         /**
          * Compile and echo the html element
-         * @param array $data [element data]
-         * @param stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -4787,9 +5339,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -4799,24 +5353,29 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Max columns for container
+         *
          * @var integer
          */
         protected $maxColumns = 12;
         /**
          * Container column class
+         *
          * @var string
          */
         protected $columnClass = 'ff-t-cell';
         /**
          * Container wrapper class
+         *
          * @var string
          */
         protected $wrapperClass = 'ff-t-container ff-column-container';
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -4826,9 +5385,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -4842,7 +5403,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         public function pushFormInputType($types)
         {
         }
-        function getComponent()
+        public function getComponent()
         {
         }
         public function pushConditionalSupport($conditonalItems)
@@ -4862,9 +5423,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -4888,20 +5451,38 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         {
         }
     }
+    class Hcaptcha extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
+    {
+        /**
+         * Compile and echo the html element
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
+         */
+        public function compile($data, $form)
+        {
+        }
+    }
     class Select extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
     {
         /**
          * Compile and echo the html element
-         * @param array $data [element data]
-         * @param stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
         }
         /**
          * Build options for select
+         *
          * @param array $options
+         *
          * @return string/html [compiled options]
          */
         protected function buildOptions($data, $defaultValues)
@@ -4912,9 +5493,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -4924,9 +5507,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -4936,9 +5521,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -4948,9 +5535,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -4960,30 +5549,36 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param array $data [element data]
-         * @param stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
         }
         /**
          * Load countt list from file
+         *
          * @param array $data
+         *
          * @return array
          */
-        protected function loadCountries($data)
+        public function loadCountries($data)
         {
         }
         /**
          * Build options for country list/select
+         *
          * @param array $options
+         *
          * @return string/html [compiled options]
          */
         protected function buildOptions($options, $defaultValues = [])
         {
         }
-        protected function getSelectedCountries($keys = [])
+        public function getSelectedCountries($keys = [])
         {
         }
     }
@@ -4991,9 +5586,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param array $data [element data]
-         * @param stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5003,9 +5600,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5024,9 +5623,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5036,9 +5637,11 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
          */
         public function compile($data, $form)
         {
@@ -5051,8 +5654,24 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     {
         /**
          * Compile and echo the html element
-         * @param  array     $data [element data]
-         * @param  \stdClass $form [Form Object]
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
+         * @return void
+         */
+        public function compile($data, $form)
+        {
+        }
+    }
+    class Turnstile extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
+    {
+        /**
+         * Compile and echo the html element
+         *
+         * @param array     $data [element data]
+         * @param \stdClass $form [Form Object]
+         *
          * @return void
          */
         public function compile($data, $form)
@@ -5061,7 +5680,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
     }
 }
 namespace FluentForm\App\Services\FormBuilder {
-    class EditorShortcode
+    class EditorShortCode
     {
         public static function getGeneralShortCodes()
         {
@@ -5095,17 +5714,21 @@ namespace FluentForm\App\Services\FormBuilder {
     {
         /**
          * Available dynamic short codes
+         *
          * @var null
          */
         private static $dynamicShortcodes = null;
         /**
          * mappings of methods to parse the shortcode
+         *
          * @var array
          */
         private static $handlers = ['ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'http_referer' => 'parseWPProperties', 'wp.admin_email' => 'parseWPProperties', 'wp.site_url' => 'parseWPProperties', 'wp.site_title' => 'parseWPProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties', 'get.param_name' => 'parseQueryParam', 'random_string.param_name' => 'parseRandomString'];
         /**
          * Filter dynamic shortcodes in input value
+         *
          * @param string $value
+         *
          * @return string
          */
         public static function filter($value, $form)
@@ -5113,7 +5736,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse the curly braced shortcode into array
+         *
          * @param string $value
+         *
          * @return mixed
          */
         public static function parseValue($value)
@@ -5124,7 +5749,9 @@ namespace FluentForm\App\Services\FormBuilder {
          */
         /**
          * Parse loggedin user properties
+         *
          * @param string $value
+         *
          * @return string
          */
         private static function parseUserProperties($value, $form = null)
@@ -5132,7 +5759,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse embedded post properties
+         *
          * @param string $value
+         *
          * @return string
          */
         private static function parsePostProperties($value, $form = null)
@@ -5140,7 +5769,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse WP Properties
+         *
          * @param string $value
+         *
          * @return string
          */
         private static function parseWPProperties($value, $form = null)
@@ -5148,7 +5779,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse browser/user-agent properties
+         *
          * @param string $value
+         *
          * @return string
          */
         private static function parseBrowserProperties($value, $form = null)
@@ -5156,7 +5789,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse ip shortcode
+         *
          * @param string $value
+         *
          * @return string
          */
         private static function parseIp($value, $form = null)
@@ -5164,7 +5799,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse date shortcode
+         *
          * @param string $value
+         *
          * @return string
          */
         private static function parseDate($value, $form = null)
@@ -5173,8 +5810,9 @@ namespace FluentForm\App\Services\FormBuilder {
         /**
          * Parse request query param.
          *
-         * @param string $value
+         * @param string    $value
          * @param \stdClass $form
+         *
          * @return string
          */
         public static function parseQueryParam($value)
@@ -5184,6 +5822,7 @@ namespace FluentForm\App\Services\FormBuilder {
          * Generate random a string with prefix
          *
          * @param $value
+         *
          * @return string
          */
         public static function parseRandomString($value)
@@ -5194,52 +5833,67 @@ namespace FluentForm\App\Services\FormBuilder {
     {
         /**
          * The Applivcation instance
-         * @var Framework\Foundation\Application
+         *
+         * @var \FluentForm\Framework\Foundation\Application
          */
         protected $app = null;
         protected $form = null;
         /**
          * Conditional logic for elements
+         *
          * @var array
          */
-        public $conditions = array();
+        public $conditions = [];
         /**
          * Validation rules for elements
+         *
          * @var array
          */
-        public $validationRules = array();
+        public $validationRules = [];
         public $tabIndex = 1;
         public $fieldLists = [];
         public $containerCounter;
         /**
          * Construct the form builder instance
-         * @param Framework\Foundation\Application $app
+         *
+         * @param \FluentForm\Framework\Foundation\Application $app
          */
         public function __construct($app)
         {
         }
         /**
          * Render the form
-         * @param  \StdClass $form [Form entry from database]
+         *
+         * @param \StdClass $form [Form entry from database]
+         *
          * @return mixed
          */
         public function build($form, $extraCssClass = '', $instanceCssClass = '', $atts = [])
         {
         }
+        /**
+         * @param \stdClass $form
+         * 
+         * @return string form body
+         */
         public function buildFormBody($form)
         {
         }
         /**
          * Set unique name/data-name for an element
+         *
          * @param array &$item
-         * @return  void
+         *
+         * @return void
          */
         protected function setUniqueIdentifier(&$item)
         {
         }
         /**
          * Recursively extract validation rules from a given element
+         *
          * @param array $item
+         *
          * @return void
          */
         protected function extractValidationRules($item)
@@ -5247,7 +5901,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Extract validation rules from a given element
+         *
          * @param array $item
+         *
          * @return void
          */
         protected function extractValidationRule($item)
@@ -5255,7 +5911,9 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Extract conditipnal logic from a given element
+         *
          * @param array $item
+         *
          * @return void
          */
         protected function extractConditionalLogic($item)
@@ -5263,10 +5921,22 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Build attributes for any html element
-         * @param  array  $attributes
+         *
+         * @param array $attributes
+         *
          * @return string [Compiled key='value' attributes]
          */
         protected function buildAttributes($attributes, $form = null)
+        {
+        }
+        /**
+         * Get hidden fieldset html
+         *
+         * @param $form
+         *
+         * @return string
+         */
+        private function fieldsetHtml($form)
         {
         }
     }
@@ -5274,12 +5944,14 @@ namespace FluentForm\App\Services\FormBuilder {
     {
         /**
          * Element group
+         *
          * @var string
          */
         protected $group = null;
         /**
-         * FluentForm\App\Services\FormBuilder\Components
-         * @var object
+         * Form builder components collection
+         *
+         * @var \FluentForm\App\Services\FormBuilder\Components
          */
         protected $collection = null;
         public function __construct($collection, $group)
@@ -5287,9 +5959,11 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Dynamic call method
-         * @param  string $method
-         * @param  array $params
-         * @return FluentForm\App\Services\FormBuilder\Components
+         *
+         * @param string $method
+         * @param array  $params
+         *
+         * @return \FluentForm\App\Services\FormBuilder\Components
          */
         public function __call($method, $params)
         {
@@ -5300,11 +5974,13 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static $cache = null;
         /**
          * Parse Norifications
-         * @param array $notifications
-         * @param int $insertId
-         * @param array $data
+         *
+         * @param array  $notifications
+         * @param int    $insertId
+         * @param array  $data
          * @param object $form
-         * @return  bool $cache
+         *
+         * @return bool $cache
          */
         public static function parse($notifications, $insertId, $data, $form, $cache = true)
         {
@@ -5319,12 +5995,15 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
     {
         /**
          * FluentForm\Framework\Foundation\Application
+         *
          * @var $app
          */
         protected $app = null;
         /**
          * Biuld the instance of this class
-         * @param FluentForm\Framework\Foundation\Application $app
+         *
+         * @param \FluentForm\Framework\Foundation\Application $app
+         *
          * @return $this
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $app)
@@ -5332,9 +6011,11 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         }
         /**
          * Send the email notification
-         * @param array $notification [Notification settings from form meta]
-         * @param array $submittedData [User submitted form data]
-         * @param \StdClass $form [The form object from database]
+         *
+         * @param array     $notification  [Notification settings from form meta]
+         * @param array     $submittedData [User submitted form data]
+         * @param \StdClass $form          [The form object from database]
+         *
          * @return bool
          */
         public function notify($notification, $submittedData, $form, $entryId = false)
@@ -5348,7 +6029,9 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         }
         /**
          * @param $formId
+         *
          * @return array
+         *
          * @todo: Implement Caching mechanism so we don't have to parse these things for every request
          */
         private function getFormInputsAndLabels($form)
@@ -5373,7 +6056,27 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         public function register()
         {
         }
+        public function notifyOnSubmitPaymentForm($submissionId, $submissionData, $form)
+        {
+        }
         public function notify($feed, $formData, $entry, $form)
+        {
+        }
+        /**
+         * @param $emailData
+         * @param $formData
+         * @param $entry
+         * @param $form
+         *
+         * @return array
+         */
+        private function getAttachments($emailData, $formData, $entry, $form)
+        {
+        }
+        public function getFormData($submissionId)
+        {
+        }
+        public function getEntry($submissionId)
         {
         }
     }
@@ -5386,7 +6089,7 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static $browser = null;
         protected static $formFields = null;
         protected static $store = ['inputs' => null, 'original_inputs' => null, 'user' => null, 'post' => null, 'other' => null, 'submission' => null];
-        public static function parse($parsable, $entryId, $data = [], $form = null, $isUrl = false, $provider = false)
+        public static function parse($parsable, $entryId, $data = [], $form = null, $isUrl = false, $providerOrIsHTML = false)
         {
         }
         protected static function setDependencies($entry, $data, $form)
@@ -5497,7 +6200,12 @@ namespace FluentForm\App\Services\Integrations {
     }
     class GlobalIntegrationManager
     {
-        private $app;
+        /**
+         * Request object
+         *
+         * @var \FluentForm\Framework\Request\Request $request
+         */
+        protected $request;
         public function __construct(\FluentForm\Framework\Foundation\Application $app)
         {
         }
@@ -5541,10 +6249,20 @@ namespace FluentForm\App\Services\Integrations {
         public function checkCondition($parsedValue, $formData, $insertId)
         {
         }
-        private function getEntry($id, $form)
+        public function getEntry($id, $form)
         {
         }
         public function cleanUpPassword($entryId, $form)
+        {
+        }
+        /**
+         * @param $feeds
+         * @param $formData
+         * @param $insertId
+         *
+         * @return array
+         */
+        public function getEnabledFeeds($feeds, $formData, $insertId)
         {
         }
     }
@@ -5638,13 +6356,14 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
      * This wrapper: https://github.com/drewm/mailchimp-api
      *
      * @author Drew McLellan <drew.mclellan@gmail.com>
+     *
      * @version 2.4
      */
     class MailChimp
     {
         private $api_key;
         private $api_endpoint = 'https://<dc>.api.mailchimp.com/3.0';
-        const TIMEOUT = 10;
+        public const TIMEOUT = 10;
         /*  SSL Verification
                 Read before disabling:
                 http://snippets.webaware.com.au/howto/stop-turning-off-curlopt_ssl_verifypeer-and-fix-your-php-config/
@@ -5652,12 +6371,14 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         public $verify_ssl = true;
         private $request_successful = false;
         private $last_error = '';
-        private $last_response = array();
-        private $last_request = array();
+        private $last_response = [];
+        private $last_request = [];
         /**
          * Create a new instance
-         * @param string $api_key Your MailChimp API key
+         *
+         * @param string $api_key      Your MailChimp API key
          * @param string $api_endpoint Optional custom API endpoint
+         *
          * @throws \Exception
          */
         public function __construct($api_key, $api_endpoint = null)
@@ -5671,15 +6392,18 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         }
         /**
          * Convert an email address into a 'subscriber hash' for identifying the subscriber in a method URL
-         * @param   string $email The subscriber's email address
-         * @return  string          Hashed version of the input
+         *
+         * @param string $email The subscriber's email address
+         *
+         * @return string Hashed version of the input
          */
         public function subscriberHash($email)
         {
         }
         /**
          * Was the last request successful?
-         * @return bool  True for success, false for failure
+         *
+         * @return bool True for success, false for failure
          */
         public function success()
         {
@@ -5687,92 +6411,109 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         /**
          * Get the last error returned by either the network transport, or by the API.
          * If something didn't work, this should contain the string describing the problem.
-         * @return  string|false  describing the error
+         *
+         * @return string|false describing the error
          */
         public function getLastError()
         {
         }
         /**
          * Get an array containing the HTTP headers and the body of the API response.
-         * @return array  Assoc array with keys 'headers' and 'body'
+         *
+         * @return array Assoc array with keys 'headers' and 'body'
          */
         public function getLastResponse()
         {
         }
         /**
          * Get an array containing the HTTP headers and the body of the API request.
-         * @return array  Assoc array
+         *
+         * @return array Assoc array
          */
         public function getLastRequest()
         {
         }
         /**
          * Make an HTTP DELETE request - for deleting data
-         * @param   string $method URL of the API request method
-         * @param   array $args Assoc array of arguments (if any)
-         * @param   int $timeout Timeout limit for request in seconds
-         * @return  array|false   Assoc array of API response, decoded from JSON
+         *
+         * @param string $method  URL of the API request method
+         * @param array  $args    Assoc array of arguments (if any)
+         * @param int    $timeout Timeout limit for request in seconds
+         *
+         * @return array|false Assoc array of API response, decoded from JSON
          */
-        public function delete($method, $args = array(), $timeout = self::TIMEOUT)
+        public function delete($method, $args = [], $timeout = self::TIMEOUT)
         {
         }
         /**
          * Make an HTTP GET request - for retrieving data
-         * @param   string $method URL of the API request method
-         * @param   array $args Assoc array of arguments (usually your data)
-         * @param   int $timeout Timeout limit for request in seconds
-         * @return  array|false   Assoc array of API response, decoded from JSON
+         *
+         * @param string $method  URL of the API request method
+         * @param array  $args    Assoc array of arguments (usually your data)
+         * @param int    $timeout Timeout limit for request in seconds
+         *
+         * @return array|false Assoc array of API response, decoded from JSON
          */
-        public function get($method, $args = array(), $timeout = self::TIMEOUT)
+        public function get($method, $args = [], $timeout = self::TIMEOUT)
         {
         }
         /**
          * Make an HTTP PATCH request - for performing partial updates
-         * @param   string $method URL of the API request method
-         * @param   array $args Assoc array of arguments (usually your data)
-         * @param   int $timeout Timeout limit for request in seconds
-         * @return  array|false   Assoc array of API response, decoded from JSON
+         *
+         * @param string $method  URL of the API request method
+         * @param array  $args    Assoc array of arguments (usually your data)
+         * @param int    $timeout Timeout limit for request in seconds
+         *
+         * @return array|false Assoc array of API response, decoded from JSON
          */
-        public function patch($method, $args = array(), $timeout = self::TIMEOUT)
+        public function patch($method, $args = [], $timeout = self::TIMEOUT)
         {
         }
         /**
          * Make an HTTP POST request - for creating and updating items
-         * @param   string $method URL of the API request method
-         * @param   array $args Assoc array of arguments (usually your data)
-         * @param   int $timeout Timeout limit for request in seconds
-         * @return  array|false   Assoc array of API response, decoded from JSON
+         *
+         * @param string $method  URL of the API request method
+         * @param array  $args    Assoc array of arguments (usually your data)
+         * @param int    $timeout Timeout limit for request in seconds
+         *
+         * @return array|false Assoc array of API response, decoded from JSON
          */
-        public function post($method, $args = array(), $timeout = self::TIMEOUT)
+        public function post($method, $args = [], $timeout = self::TIMEOUT)
         {
         }
         /**
          * Make an HTTP PUT request - for creating new items
-         * @param string $method URL of the API request method
-         * @param array $args Assoc array of arguments (usually your data)
-         * @param int $timeout Timeout limit for request in seconds
-         * @return  array|false   Assoc array of API response, decoded from JSON
+         *
+         * @param string $method  URL of the API request method
+         * @param array  $args    Assoc array of arguments (usually your data)
+         * @param int    $timeout Timeout limit for request in seconds
+         *
+         * @return array|false Assoc array of API response, decoded from JSON
+         *
          * @throws \Exception
          */
-        public function put($method, $args = array(), $timeout = self::TIMEOUT)
+        public function put($method, $args = [], $timeout = self::TIMEOUT)
         {
         }
         /**
          * Performs the underlying HTTP request. Not very exciting.
-         * @param  string $http_verb The HTTP verb to use: get, post, put, patch, delete
-         * @param  string $method The API method to be called
-         * @param  array $args Assoc array of parameters to be passed
-         * @param int $timeout
+         *
+         * @param string $http_verb The HTTP verb to use: get, post, put, patch, delete
+         * @param string $method    The API method to be called
+         * @param array  $args      Assoc array of parameters to be passed
+         * @param int    $timeout
+         *
          * @return array|false Assoc array of decoded result
+         *
          * @throws \Exception
          */
-        private function makeRequest($http_verb, $method, $args = array(), $timeout = self::TIMEOUT)
+        private function makeRequest($http_verb, $method, $args = [], $timeout = self::TIMEOUT)
         {
         }
         /**
-         * @param string $http_verb
-         * @param string $method
-         * @param string $url
+         * @param string  $http_verb
+         * @param string  $method
+         * @param string  $url
          * @param integer $timeout
          */
         private function prepareStateForRequest($http_verb, $method, $url, $timeout)
@@ -5780,12 +6521,13 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         }
         /**
          * Get the HTTP headers as an array of header-name => header-value pairs.
-         * 
+         *
          * The "Link" header is parsed into an associative array based on the
          * rel names it contains. The original value is available under
          * the "_raw" key.
-         * 
+         *
          * @param string $headersAsString
+         *
          * @return array
          */
         private function getHeadersAsArray($headersAsString)
@@ -5793,13 +6535,14 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         }
         /**
          * Extract all rel => URL pairs from the provided Link header value
-         * 
+         *
          * Mailchimp only implements the URI reference and relation type from
          * RFC 5988, so the value of the header is something like this:
-         * 
+         *
          * 'https://us13.api.mailchimp.com/schema/3.0/Lists/Instance.json; rel="describedBy", <https://us13.admin.mailchimp.com/lists/members/?id=XXXX>; rel="dashboard"'
-         * 
+         *
          * @param string $linkHeaderAsString
+         *
          * @return array
          */
         private function getLinkHeaderAsArray($linkHeaderAsString)
@@ -5807,24 +6550,29 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         }
         /**
          * Encode the data and attach it to the request
-         * @param   resource $ch cURL session handle, used by reference
-         * @param   array $data Assoc array of data to attach
+         *
+         * @param resource $ch   cURL session handle, used by reference
+         * @param array    $data Assoc array of data to attach
          */
         private function attachRequestPayload(&$ch, $data)
         {
         }
         /**
          * Decode the response and format any error messages for debugging
+         *
          * @param array $response The response from the curl request
-         * @return array|false    The JSON decoded into an array
+         *
+         * @return array|false The JSON decoded into an array
          */
         private function formatResponse($response)
         {
         }
         /**
          * Do post-request formatting and setting state from the response
-         * @param array $response The response from the curl request
+         *
+         * @param array  $response        The response from the curl request
          * @param string $responseContent The body of the response from the curl request
+         *
          * * @return array    The modified response
          */
         private function setResponseState($response, $responseContent, $ch)
@@ -5832,19 +6580,23 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         }
         /**
          * Check if the response was successful or a failure. If it failed, store the error.
-         * @param array $response The response from the curl request
+         *
+         * @param array       $response          The response from the curl request
          * @param array|false $formattedResponse The response body payload from the curl request
-         * @param int $timeout The timeout supplied to the curl request.
-         * @return bool     If the request was successful
+         * @param int         $timeout           The timeout supplied to the curl request.
+         *
+         * @return bool If the request was successful
          */
         private function determineSuccess($response, $formattedResponse, $timeout)
         {
         }
         /**
          * Find the HTTP status code from the headers or API response body
-         * @param array $response The response from the curl request
+         *
+         * @param array       $response          The response from the curl request
          * @param array|false $formattedResponse The response body payload from the curl request
-         * @return int  HTTP status code
+         *
+         * @return int HTTP status code
          */
         private function findHTTPStatus($response, $formattedResponse)
         {
@@ -5861,6 +6613,7 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         protected $feeds = [];
         /**
          * Required for api response logging
+         *
          * @var string
          */
         protected $metaKey = 'fluentform_mailchimp_feed';
@@ -5890,7 +6643,9 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
          * @param $formData
          * @param $entry
          * @param $form
+         *
          * @return array|bool|false
+         *
          * @throws \Exception
          */
         public function subscribe($feed, $formData, $entry, $form)
@@ -5943,6 +6698,9 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         public function getMergeFields($list, $listId, $formId)
         {
         }
+        public function findMergeFields($listId)
+        {
+        }
         public function fetchInterestGroups()
         {
         }
@@ -5950,6 +6708,9 @@ namespace FluentForm\App\Services\Integrations\MailChimp {
         {
         }
         private function getInterestSubCategories($listId, $categoryId)
+        {
+        }
+        public function sanitizeSettings($integration, $integrationId, $formId)
         {
         }
         /*
@@ -5977,7 +6738,7 @@ namespace FluentForm\App\Services\Integrations\Slack {
          * @param $formData
          * @param $form
          */
-        public function handle($feed, $formData, $form, $entry)
+        public static function handle($feed, $formData, $form, $entry)
         {
         }
     }
@@ -5996,18 +6757,545 @@ namespace FluentForm\App\Services\Integrations\Slack {
     }
 }
 namespace FluentForm\App\Services\Migrator {
+    class Bootstrap
+    {
+        protected $importer;
+        public function boot()
+        {
+        }
+        public function availableMigrations()
+        {
+        }
+        public function setImporterType()
+        {
+        }
+        public function getMigratorData()
+        {
+        }
+        public function importForms()
+        {
+        }
+        public function importEntries()
+        {
+        }
+        public function hasOtherForms()
+        {
+        }
+        public function getFormsByKey()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Migrator\Classes {
     abstract class BaseMigrator
     {
+        /** Constants used for default entry migrations max limit */
+        const DEFAULT_ENTRY_MIGRATION_MAX_LIMIT = 1000;
+        public $key;
+        public $title;
+        public $shortcode;
+        public $submitBtn;
+        public $unSupportFields = [];
+        public function import_forms($selectedForms = [])
+        {
+        }
+        protected abstract function getForms();
+        protected abstract function getFields($form);
+        protected abstract function getFormName($form);
+        protected abstract function getFormMetas($form);
+        protected abstract function getFormsFormatted();
+        protected abstract function exist();
+        public function getFluentClassicField($field, $args = [])
+        {
+        }
+        public static function defaultFieldConfig($args)
+        {
+        }
+        public function getSubmitBttn($args)
+        {
+        }
+        protected abstract function getFormId($form);
+        /**
+         * @param $metas
+         * @param $formId
+         */
+        protected function updateMetas($metas, $formId)
+        {
+        }
+        /**
+         * @param array $form
+         * @param array $insertedForms
+         * @param $formItem
+         * @param array $refs
+         * @return array
+         */
+        public function insertForm($form, $insertedForms, $formItem)
+        {
+        }
+        protected function getFileTypes($field, $arg)
+        {
+        }
+        public function isAlreadyImported($formItem)
+        {
+        }
+        public function updateForm($formId, $formFields, $insertedForms)
+        {
+        }
+        public function insertEntries($fluentFormId, $importFormId)
+        {
+        }
+        private function resetEntries($formId)
+        {
+        }
+        /**
+         * @param array $urls
+         *
+         * @return array
+         */
+        public function migrateFilesAndGetUrls($urls)
+        {
+        }
     }
-    class CalderaMigrator extends \FluentForm\App\Services\Migrator\BaseMigrator
+    class CalderaMigrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
     {
+        public function __construct()
+        {
+        }
+        /**
+         * @return bool
+         */
         public function exist()
         {
         }
+        /**
+         * @return array
+         */
         public function getForms()
         {
         }
+        public function getForm($id)
+        {
+        }
+        public function getFormsFormatted()
+        {
+        }
+        /**
+         * @param $form
+         * @return array
+         */
         public function getFields($form)
+        {
+        }
+        private function formatFieldData($field, $form)
+        {
+        }
+        private function getLabelPlacement($field)
+        {
+        }
+        // Function to convert shortcodes in numeric field calculations (todo)
+        private function convertFormulas($calculationField, $form)
+        {
+        }
+        /**
+         * @param $field
+         * @return int
+         */
+        private function getFileSize($field)
+        {
+        }
+        /**
+         * @return array
+         */
+        public function fieldPrefix()
+        {
+        }
+        /**
+         * @return array
+         */
+        public function fieldTypes()
+        {
+        }
+        /**
+         * @param $options
+         * @return array
+         */
+        public function getOptions($options)
+        {
+        }
+        /**
+         * @param $form
+         * @param $fluentFields
+         * @return array
+         */
+        private function getContainer($form, $fluentFields)
+        {
+        }
+        /**
+         * @param null $array
+         * @param int $depth
+         * @return array
+         */
+        public static function arrayFlat($array = null, $depth = 1)
+        {
+        }
+        /**
+         * @return array
+         */
+        private function getStepWrapper()
+        {
+        }
+        /**
+         * @param $form
+         * @return array default parsed form metas
+         * @throws \Exception
+         */
+        public function getFormMetas($form)
+        {
+        }
+        /**
+         * @param $form
+         * @return mixed
+         */
+        protected function getFormId($form)
+        {
+        }
+        /**
+         * @param $form
+         * @return mixed
+         */
+        protected function getFormName($form)
+        {
+        }
+        public function getEntries($formId)
+        {
+        }
+        /**
+         * Map Field key with its name to insert entry with input name
+         *
+         * @param array|null $form
+         * @return array|mixed
+         */
+        public function getFieldsNameMap($form)
+        {
+        }
+    }
+    class GravityFormsMigrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
+    {
+        public function __construct()
+        {
+        }
+        public function exist()
+        {
+        }
+        /**
+         * @param $form
+         * @return array
+         */
+        public function getFields($form)
+        {
+        }
+        private function formatFieldData(array $field)
+        {
+        }
+        private function getInputName($field)
+        {
+        }
+        private function getLabelPlacement($field)
+        {
+        }
+        /**
+         * @param $field
+         * @return filesize in MB
+         */
+        private function getFileSize($field)
+        {
+        }
+        /**
+         * @return array
+         */
+        public function fieldTypes()
+        {
+        }
+        /**
+         * @param array $field
+         * @return array[]
+         */
+        private function getAddressArgs(array $field)
+        {
+        }
+        /**
+         * @param $options
+         * @return array
+         */
+        public function getOptions($options = [])
+        {
+        }
+        /**
+         * @param $repeaterFields
+         * @param $label
+         * @return array
+         */
+        protected function getRepeaterFields($repeaterFields, $label)
+        {
+        }
+        private function getContainer($fields, $fluentFields)
+        {
+        }
+        protected static function getLayout($fields, $id = '')
+        {
+        }
+        public static function getInputIdsFromLayoutGrp($id, $array)
+        {
+        }
+        /**
+         * @param null $array
+         * @param int $depth
+         * @return array
+         */
+        public static function arrayFlat($array = null, $depth = 1)
+        {
+        }
+        /**
+         * @return array
+         */
+        private function getStepWrapper()
+        {
+        }
+        /**
+         * @param $form
+         * @return array default parsed form metas
+         * @throws \Exception
+         */
+        public function getFormMetas($form)
+        {
+        }
+        public function getFormsFormatted()
+        {
+        }
+        protected function getForms()
+        {
+        }
+        protected function getForm($id)
+        {
+        }
+        protected function getFormName($form)
+        {
+        }
+        public function getEntries($formId)
+        {
+        }
+        /**
+         * @param $form
+         * @return mixed
+         */
+        protected function getFormId($form)
+        {
+        }
+        protected function getSubmissionArrayValue($type, $field, $inputs, $submission)
+        {
+        }
+        protected function getSubmissionValue($id, $submission)
+        {
+        }
+    }
+    class NinjaFormsMigrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
+    {
+        public function __construct()
+        {
+        }
+        /**
+         * Check if form type exists
+         * @return bool
+         */
+        public function exist()
+        {
+        }
+        /**
+         * Get array of all forms
+         * @return array Forms with fields
+         */
+        public function getForms()
+        {
+        }
+        public function getForm($id)
+        {
+        }
+        public function getFormsFormatted()
+        {
+        }
+        /**
+         *
+         * Get formatted fields form array
+         * @param array $form
+         * @return array fluentform data formatted for database
+         */
+        public function getFields($form)
+        {
+        }
+        /**
+         * Format each field with proper data
+         * @param $field
+         * @return array required arguments for single field
+         */
+        protected function formatFieldData($field)
+        {
+        }
+        /**
+         * Get field type in fluentforms type
+         * @return array
+         */
+        public function fieldTypes()
+        {
+        }
+        /**
+         * Get formatted options for select,radio etc type fields
+         * @param $options
+         * @param bool $hasImage
+         * @return array (options list and selected option)
+         */
+        public function getOptions($options, $hasImage = false)
+        {
+        }
+        /**
+         * Get Form Metas
+         * @param $form
+         * @return array
+         */
+        public function getFormMetas($form)
+        {
+        }
+        /**
+         * Update recaptcha key if already not has
+         */
+        protected function addRecaptcha()
+        {
+        }
+        /**
+         * Get notification data for metas
+         * @param $actionData
+         * @return array
+         */
+        private function getNotificationData($actionData)
+        {
+        }
+        /**
+         * Convert Ninja Forms merge Tags to Fluent forms dynamic shortcodes.
+         * @param $msg
+         * @return string
+         */
+        private function dynamicShortcodeConverter($msg)
+        {
+        }
+        /**
+         * Get shortcode in fluentforms format
+         * @return array
+         */
+        protected function dynamicShortcodes()
+        {
+        }
+        /**
+         * Get form settings
+         * @param $form
+         * @return array $formSettings
+         */
+        protected function getFormSettings($form)
+        {
+        }
+        /**
+         * @param $form
+         * @return mixed
+         */
+        protected function getFormId($form)
+        {
+        }
+        /**
+         * @param $form
+         * @return mixed
+         */
+        protected function getFormName($form)
+        {
+        }
+        public function getEntries($formId)
+        {
+        }
+        public function getFieldKeyMaps($form)
+        {
+        }
+        /**
+         * @param array $values
+         * @return array
+         */
+        public function formatEntries(array $values)
+        {
+        }
+    }
+    class WpFormsMigrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
+    {
+        public function __construct()
+        {
+        }
+        protected function getForms()
+        {
+        }
+        public function getFields($form)
+        {
+        }
+        public function getSubmitBttn($args)
+        {
+        }
+        protected function getFormName($form)
+        {
+        }
+        protected function getFormMetas($form)
+        {
+        }
+        protected function getFormId($form)
+        {
+        }
+        protected function getForm($id)
+        {
+        }
+        public function getEntries($formId)
+        {
+        }
+        protected function getSubmissionNameValue($nameFields, $submissionField)
+        {
+        }
+        public function getFormsFormatted()
+        {
+        }
+        public function exist()
+        {
+        }
+        protected function formatFieldData($field, $type)
+        {
+        }
+        private function fieldTypeMap()
+        {
+        }
+        private function getConfirmations($form, $defaultValues)
+        {
+        }
+        private function getAdvancedValidation() : array
+        {
+        }
+        private function getNotifications($form)
+        {
+        }
+        public function getOptions($options)
+        {
+        }
+        /**
+         * @return array
+         */
+        private function getStepWrapper()
+        {
+        }
+        /**
+         * @param array $field
+         * @return array[]
+         */
+        private function getAddressArgs($field, $args)
         {
         }
     }
@@ -6028,7 +7316,7 @@ namespace FluentForm\App\Services\Parser {
          */
         protected $with;
         /**
-         * The supported form input types defined for Fluent Form.
+         * The supported form input types defined for Fluent Forms.
          *
          * @var array
          */
@@ -6353,6 +7641,14 @@ namespace FluentForm\App\Services\Parser {
          * @return array
          */
         public function getInputsByElementTypes($types, $with = ['element'])
+        {
+        }
+        /**
+         * Get Address Fields
+         *
+         * @return array
+         */
+        public function getAddressFields($with = ['admin_label', 'attributes'])
         {
         }
     }
@@ -13531,12 +14827,12 @@ namespace FluentForm\App\Services\WPAsync {
         protected $actions = array();
         /**
          * $app Instance of Application/Framework
-         * @var FluentForm\Framework\Foundation\Application
+         * @var \FluentForm\Framework\Foundation\Application
          */
         protected $app = null;
         /**
          * Construct the Object
-         * @param FluentForm\Framework\Foundation\Application $app
+         * @param \FluentForm\Framework\Foundation\Application $app
          */
         public function __construct(\FluentForm\Framework\Foundation\Application $app)
         {
@@ -13570,7 +14866,7 @@ namespace FluentValidator {
          * Check if an item or items exist in an array using "dot" notation.
          *
          * @param \ArrayAccess|array $array
-         * @param string|array $keys
+         * @param string|array       $keys
          *
          * @return bool
          */
@@ -13581,8 +14877,8 @@ namespace FluentValidator {
          * Get an item from an array using "dot" notation.
          *
          * @param \ArrayAccess|array $array
-         * @param string $key
-         * @param mixed $default
+         * @param string             $key
+         * @param mixed              $default
          *
          * @return mixed
          */
@@ -13594,9 +14890,9 @@ namespace FluentValidator {
          *
          * If no key is given to the method, the entire array will be replaced.
          *
-         * @param array $array
+         * @param array  $array
          * @param string $key
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return array
          */
@@ -13606,7 +14902,7 @@ namespace FluentValidator {
         /**
          * Get a subset of the items from the given array.
          *
-         * @param array $array
+         * @param array        $array
          * @param array|string $keys
          *
          * @return array
@@ -13617,7 +14913,7 @@ namespace FluentValidator {
         /**
          * Get all of the given array except for a specified array of items.
          *
-         * @param array $array
+         * @param array        $array
          * @param array|string $keys
          *
          * @return array
@@ -13628,7 +14924,7 @@ namespace FluentValidator {
         /**
          * Remove one or many array items from a given array using "dot" notation.
          *
-         * @param array $array
+         * @param array        $array
          * @param array|string $keys
          *
          * @return void
@@ -13650,7 +14946,7 @@ namespace FluentValidator {
          * Determine if the given key exists in the provided array.
          *
          * @param \ArrayAccess|array $array
-         * @param string|int $key
+         * @param string|int         $key
          *
          * @return bool
          */
@@ -13670,7 +14966,7 @@ namespace FluentValidator {
         /**
          * Flatten a multi-dimensional associative array with dots.
          *
-         * @param array $array
+         * @param array  $array
          * @param string $prepend
          *
          * @return array
@@ -13717,7 +15013,7 @@ namespace FluentValidator {
          *
          * @var array
          */
-        protected $bag = ['email' => 'The :attribute must be a valid email address.', 'max' => ['numeric' => 'The :attribute may not be greater than :max.', 'file' => 'The :attribute may not be greater than :max kilobytes.', 'string' => 'The :attribute may not be greater than :max characters.', 'array' => 'The :attribute may not have more than :max items.'], 'mimes' => 'The :attribute must be a file of type: :values.', 'mimetypes' => 'The :attribute must be a file of type: :values.', 'min' => ['numeric' => 'The :attribute must be at least :min.', 'file' => 'The :attribute must be at least :min kilobytes.', 'string' => 'The :attribute must be at least :min characters.', 'array' => 'The :attribute must have at least :min items.'], 'numeric' => 'The :attribute must be a number.', 'required' => 'The :attribute field is required.', 'required_if' => 'The :attribute field is required when :other is :value.', 'same' => 'The :attribute and :other must match.', 'size' => ['numeric' => 'The :attribute must be :size.', 'file' => 'The :attribute must be :size kilobytes.', 'string' => 'The :attribute must be :size characters.', 'array' => 'The :attribute must contain :size items.'], 'url' => 'The :attribute format is invalid.'];
+        protected $bag = ['email' => 'The :attribute must be a valid email address.', 'max' => ['numeric' => 'The :attribute may not be greater than :max.', 'file' => 'The :attribute may not be greater than :max kilobytes.', 'string' => 'The :attribute may not be greater than :max characters.', 'array' => 'The :attribute may not have more than :max items.'], 'mimes' => 'The :attribute must be a file of type: :values.', 'mimetypes' => 'The :attribute must be a file of type: :values.', 'min' => ['numeric' => 'The :attribute must be at least :min.', 'file' => 'The :attribute must be at least :min kilobytes.', 'string' => 'The :attribute must be at least :min characters.', 'array' => 'The :attribute must have at least :min items.'], 'numeric' => 'The :attribute must be a number.', 'required' => 'The :attribute field is required.', 'required_if' => 'The :attribute field is required when :other is :value.', 'same' => 'The :attribute and :other must match.', 'size' => ['numeric' => 'The :attribute must be :size.', 'file' => 'The :attribute must be :size kilobytes.', 'string' => 'The :attribute must be :size characters.', 'array' => 'The :attribute must contain :size items.'], 'url' => 'The :attribute format is invalid.', 'digits' => 'The :attribute must be :digits characters.'];
         /**
          * Generate a validation error message.
          *
@@ -13862,14 +15158,25 @@ namespace FluentValidator {
         protected function replaceMimes($attribute, $parameters)
         {
         }
+        /**
+         * Replace all place-holders for the digits rule.
+         *
+         * @param $attribute
+         * @param $parameters
+         *
+         * @return string
+         */
+        protected function replaceDigits($attribute, $parameters)
+        {
+        }
     }
     trait ValidatesAttributes
     {
         /**
          * Require a certain number of parameters to be present.
          *
-         * @param int $count
-         * @param array $parameters
+         * @param int    $count
+         * @param array  $parameters
          * @param string $rule
          *
          * @return void
@@ -13883,7 +15190,7 @@ namespace FluentValidator {
          * Get the size of an attribute.
          *
          * @param string $attribute
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return mixed
          */
@@ -13914,7 +15221,7 @@ namespace FluentValidator {
          * Validate that a required attribute exists.
          *
          * @param string $attribute
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return bool
          */
@@ -13925,8 +15232,8 @@ namespace FluentValidator {
          * Validate that an attribute exists when another attribute has a given value.
          *
          * @param string $attribute
-         * @param mixed $value
-         * @param mixed $parameters
+         * @param mixed  $value
+         * @param mixed  $parameters
          *
          * @return bool
          */
@@ -13937,7 +15244,7 @@ namespace FluentValidator {
          * Validate that an attribute is a valid e-mail address.
          *
          * @param string $attribute
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return bool
          */
@@ -13948,8 +15255,8 @@ namespace FluentValidator {
          * Validate the size of an attribute.
          *
          * @param string $attribute
-         * @param mixed $value
-         * @param array $parameters
+         * @param mixed  $value
+         * @param array  $parameters
          *
          * @return bool
          */
@@ -13960,8 +15267,8 @@ namespace FluentValidator {
          * Validate the size of an attribute is greater than a minimum value.
          *
          * @param string $attribute
-         * @param mixed $value
-         * @param array $parameters
+         * @param mixed  $value
+         * @param array  $parameters
          *
          * @return bool
          */
@@ -13972,8 +15279,8 @@ namespace FluentValidator {
          * Validate the size of an attribute is less than a maximum value.
          *
          * @param string $attribute
-         * @param mixed $value
-         * @param array $parameters
+         * @param mixed  $value
+         * @param array  $parameters
          *
          * @return bool
          */
@@ -13984,8 +15291,8 @@ namespace FluentValidator {
          * Validate that two attributes match.
          *
          * @param string $attribute
-         * @param mixed $value
-         * @param array $parameters
+         * @param mixed  $value
+         * @param array  $parameters
          *
          * @return bool
          */
@@ -13996,7 +15303,7 @@ namespace FluentValidator {
          * Validate that an attribute is a valid URL.
          *
          * @param string $attribute
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return bool
          */
@@ -14007,7 +15314,7 @@ namespace FluentValidator {
          * Validate that an attribute is numeric.
          *
          * @param string $attribute
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return bool
          */
@@ -14018,8 +15325,8 @@ namespace FluentValidator {
          * Validate the guessed extension of a file upload is in a set of file extensions.
          *
          * @param string $attribute
-         * @param mixed $value
-         * @param array $parameters
+         * @param mixed  $value
+         * @param array  $parameters
          *
          * @return bool
          */
@@ -14051,11 +15358,23 @@ namespace FluentValidator {
          * Validate that an attribute exists even if not filled.
          *
          * @param string $attribute
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return bool
          */
         protected function validatePresent($attribute, $value)
+        {
+        }
+        /**
+         * Validate that an attribute has a given number of digits.
+         *
+         * @param string $attribute
+         * @param mixed  $value
+         * @param array  $parameters
+         *
+         * @return bool
+         */
+        public function validateDigits($attribute, $value, $parameters)
         {
         }
     }
@@ -14068,7 +15387,7 @@ namespace FluentValidator {
          * Gather a copy of the attribute data filled with any missing attributes.
          *
          * @param string $attribute
-         * @param array $masterData
+         * @param array  $masterData
          *
          * @return array
          */
@@ -14078,8 +15397,8 @@ namespace FluentValidator {
         /**
          * Get all of the exact attribute values for a given wildcard attribute.
          *
-         * @param array $masterData
-         * @param array $data
+         * @param array  $masterData
+         * @param array  $data
          * @param string $attribute
          *
          * @return array
@@ -14093,7 +15412,7 @@ namespace FluentValidator {
          * Used to extract a sub-section of the data for faster iteration.
          *
          * @param string $attribute
-         * @param array $masterData
+         * @param array  $masterData
          *
          * @return array
          */
@@ -14117,14 +15436,14 @@ namespace FluentValidator {
         /**
          * Set an item on an array or object using dot notation.
          *
-         * @param mixed $target
+         * @param mixed        $target
          * @param string|array $key
-         * @param mixed $value
-         * @param bool $overwrite
+         * @param mixed        $value
+         * @param bool         $overwrite
          *
          * @return mixed
          */
-        function data_set(&$target, $key, $value, $overwrite = true)
+        public function data_set(&$target, $key, $value, $overwrite = true)
         {
         }
     }
@@ -14179,8 +15498,8 @@ namespace FluentValidator {
         /**
          * Define a set of rules that apply to each element in an array attribute.
          *
-         * @param array $results
-         * @param string $attribute
+         * @param array        $results
+         * @param string       $attribute
          * @param string|array $rules
          *
          * @return array
@@ -14191,7 +15510,7 @@ namespace FluentValidator {
         /**
          * Merge additional rules into a given attribute(s).
          *
-         * @param array $results
+         * @param array        $results
          * @param string|array $attribute
          * @param string|array $rules
          *
@@ -14203,8 +15522,8 @@ namespace FluentValidator {
         /**
          * Merge additional rules into a given attribute.
          *
-         * @param array $results
-         * @param string $attribute
+         * @param array        $results
+         * @param string       $attribute
          * @param string|array $rules
          *
          * @return array
@@ -14225,7 +15544,8 @@ namespace FluentValidator {
     }
     class Validator
     {
-        use \FluentValidator\ValidatesAttributes, \FluentValidator\MessageBag;
+        use \FluentValidator\ValidatesAttributes;
+        use \FluentValidator\MessageBag;
         /**
          * The data under validation.
          *
@@ -14360,7 +15680,7 @@ namespace FluentValidator {
          *
          * @param string|array $attribute
          * @param string|array $rules
-         * @param callable $callback
+         * @param callable     $callback
          *
          * @return $this
          */
@@ -14414,7 +15734,7 @@ namespace FluentValidator {
          *
          * @param string $rule
          * @param string $attribute
-         * @param mixed $value
+         * @param mixed  $value
          *
          * @return bool
          */
@@ -15793,6 +17113,7 @@ namespace FluentForm\Framework\Config {
          * @param  string  $key
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function offsetExists($key)
         {
         }
@@ -15802,6 +17123,7 @@ namespace FluentForm\Framework\Config {
          * @param  string  $key
          * @return mixed
          */
+        #[\ReturnTypeWillChange]
         public function offsetGet($key)
         {
         }
@@ -15812,6 +17134,7 @@ namespace FluentForm\Framework\Config {
          * @param  mixed  $value
          * @return void
          */
+        #[\ReturnTypeWillChange]
         public function offsetSet($key, $value)
         {
         }
@@ -15821,6 +17144,7 @@ namespace FluentForm\Framework\Config {
          * @param  string  $key
          * @return void
          */
+        #[\ReturnTypeWillChange]
         public function offsetUnset($key)
         {
         }
@@ -15903,19 +17227,19 @@ namespace FluentForm\Framework\Foundation {
     {
         /**
          * $instance Application
-         * @var FluentForm\Framework\Foundation\Application
+         * @var \FluentForm\Framework\Foundation\Application
          */
         static $instance = null;
         /**
          * Sets the app instance from Application
-         * @param FluentForm\Framework\Foundation\Application $instance
+         * @param \FluentForm\Framework\Foundation\Application $instance
          */
         public static function setApplication($instance)
         {
         }
         /**
          * Get the app instance stored earlier during the bootstrap
-         * @param FluentForm\Framework\Foundation\Application $instance
+         * @param \FluentForm\Framework\Foundation\Application $instance
          */
         public static function getApplication()
         {
@@ -16092,6 +17416,7 @@ namespace FluentForm\Framework\Foundation {
          * @param string $offset
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function offsetExists($offset)
         {
         }
@@ -16101,6 +17426,7 @@ namespace FluentForm\Framework\Foundation {
          * @param mixed $value
          * @return void
          */
+        #[\ReturnTypeWillChange]
         public function offsetGet($offset)
         {
         }
@@ -16110,6 +17436,7 @@ namespace FluentForm\Framework\Foundation {
          * @param mixed $value
          * @return void
          */
+        #[\ReturnTypeWillChange]
         public function offsetSet($offset, $value)
         {
         }
@@ -16118,6 +17445,7 @@ namespace FluentForm\Framework\Foundation {
          * @param string $offset
          * @return void
          */
+        #[\ReturnTypeWillChange]
         public function offsetUnset($offset)
         {
         }
@@ -17056,7 +18384,7 @@ namespace FluentForm\Framework\Request {
          *
          * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
          */
-        protected $defaultExtensions = ['application/andrew-inset' => 'ez', 'application/applixware' => 'aw', 'application/atom+xml' => 'atom', 'application/atomcat+xml' => 'atomcat', 'application/atomsvc+xml' => 'atomsvc', 'application/ccxml+xml' => 'ccxml', 'application/cdmi-capability' => 'cdmia', 'application/cdmi-container' => 'cdmic', 'application/cdmi-domain' => 'cdmid', 'application/cdmi-object' => 'cdmio', 'application/cdmi-queue' => 'cdmiq', 'application/cu-seeme' => 'cu', 'application/davmount+xml' => 'davmount', 'application/docbook+xml' => 'dbk', 'application/dssc+der' => 'dssc', 'application/dssc+xml' => 'xdssc', 'application/ecmascript' => 'ecma', 'application/emma+xml' => 'emma', 'application/epub+zip' => 'epub', 'application/exi' => 'exi', 'application/font-tdpfr' => 'pfr', 'application/gml+xml' => 'gml', 'application/gpx+xml' => 'gpx', 'application/gxf' => 'gxf', 'application/hyperstudio' => 'stk', 'application/inkml+xml' => 'ink', 'application/ipfix' => 'ipfix', 'application/java-archive' => 'jar', 'application/java-serialized-object' => 'ser', 'application/java-vm' => 'class', 'application/javascript' => 'js', 'application/json' => 'json', 'application/jsonml+json' => 'jsonml', 'application/lost+xml' => 'lostxml', 'application/mac-binhex40' => 'hqx', 'application/mac-compactpro' => 'cpt', 'application/mads+xml' => 'mads', 'application/marc' => 'mrc', 'application/marcxml+xml' => 'mrcx', 'application/mathematica' => 'ma', 'application/mathml+xml' => 'mathml', 'application/mbox' => 'mbox', 'application/mediaservercontrol+xml' => 'mscml', 'application/metalink+xml' => 'metalink', 'application/metalink4+xml' => 'meta4', 'application/mets+xml' => 'mets', 'application/mods+xml' => 'mods', 'application/mp21' => 'm21', 'application/mp4' => 'mp4s', 'application/msword' => 'doc', 'application/mxf' => 'mxf', 'application/octet-stream' => 'bin', 'application/oda' => 'oda', 'application/oebps-package+xml' => 'opf', 'application/ogg' => 'ogx', 'application/omdoc+xml' => 'omdoc', 'application/onenote' => 'onetoc', 'application/oxps' => 'oxps', 'application/patch-ops-error+xml' => 'xer', 'application/pdf' => 'pdf', 'application/pgp-encrypted' => 'pgp', 'application/pgp-signature' => 'asc', 'application/pics-rules' => 'prf', 'application/pkcs10' => 'p10', 'application/pkcs7-mime' => 'p7m', 'application/pkcs7-signature' => 'p7s', 'application/pkcs8' => 'p8', 'application/pkix-attr-cert' => 'ac', 'application/pkix-cert' => 'cer', 'application/pkix-crl' => 'crl', 'application/pkix-pkipath' => 'pkipath', 'application/pkixcmp' => 'pki', 'application/pls+xml' => 'pls', 'application/postscript' => 'ai', 'application/prs.cww' => 'cww', 'application/pskc+xml' => 'pskcxml', 'application/rdf+xml' => 'rdf', 'application/reginfo+xml' => 'rif', 'application/relax-ng-compact-syntax' => 'rnc', 'application/resource-lists+xml' => 'rl', 'application/resource-lists-diff+xml' => 'rld', 'application/rls-services+xml' => 'rs', 'application/rpki-ghostbusters' => 'gbr', 'application/rpki-manifest' => 'mft', 'application/rpki-roa' => 'roa', 'application/rsd+xml' => 'rsd', 'application/rss+xml' => 'rss', 'application/rtf' => 'rtf', 'application/sbml+xml' => 'sbml', 'application/scvp-cv-request' => 'scq', 'application/scvp-cv-response' => 'scs', 'application/scvp-vp-request' => 'spq', 'application/scvp-vp-response' => 'spp', 'application/sdp' => 'sdp', 'application/set-payment-initiation' => 'setpay', 'application/set-registration-initiation' => 'setreg', 'application/shf+xml' => 'shf', 'application/smil+xml' => 'smi', 'application/sparql-query' => 'rq', 'application/sparql-results+xml' => 'srx', 'application/srgs' => 'gram', 'application/srgs+xml' => 'grxml', 'application/sru+xml' => 'sru', 'application/ssdl+xml' => 'ssdl', 'application/ssml+xml' => 'ssml', 'application/tei+xml' => 'tei', 'application/thraud+xml' => 'tfi', 'application/timestamped-data' => 'tsd', 'application/vnd.3gpp.pic-bw-large' => 'plb', 'application/vnd.3gpp.pic-bw-small' => 'psb', 'application/vnd.3gpp.pic-bw-var' => 'pvb', 'application/vnd.3gpp2.tcap' => 'tcap', 'application/vnd.3m.post-it-notes' => 'pwn', 'application/vnd.accpac.simply.aso' => 'aso', 'application/vnd.accpac.simply.imp' => 'imp', 'application/vnd.acucobol' => 'acu', 'application/vnd.acucorp' => 'atc', 'application/vnd.adobe.air-application-installer-package+zip' => 'air', 'application/vnd.adobe.formscentral.fcdt' => 'fcdt', 'application/vnd.adobe.fxp' => 'fxp', 'application/vnd.adobe.xdp+xml' => 'xdp', 'application/vnd.adobe.xfdf' => 'xfdf', 'application/vnd.ahead.space' => 'ahead', 'application/vnd.airzip.filesecure.azf' => 'azf', 'application/vnd.airzip.filesecure.azs' => 'azs', 'application/vnd.amazon.ebook' => 'azw', 'application/vnd.americandynamics.acc' => 'acc', 'application/vnd.amiga.ami' => 'ami', 'application/vnd.android.package-archive' => 'apk', 'application/vnd.anser-web-certificate-issue-initiation' => 'cii', 'application/vnd.anser-web-funds-transfer-initiation' => 'fti', 'application/vnd.antix.game-component' => 'atx', 'application/vnd.apple.installer+xml' => 'mpkg', 'application/vnd.apple.mpegurl' => 'm3u8', 'application/vnd.aristanetworks.swi' => 'swi', 'application/vnd.astraea-software.iota' => 'iota', 'application/vnd.audiograph' => 'aep', 'application/vnd.blueice.multipass' => 'mpm', 'application/vnd.bmi' => 'bmi', 'application/vnd.businessobjects' => 'rep', 'application/vnd.chemdraw+xml' => 'cdxml', 'application/vnd.chipnuts.karaoke-mmd' => 'mmd', 'application/vnd.cinderella' => 'cdy', 'application/vnd.claymore' => 'cla', 'application/vnd.cloanto.rp9' => 'rp9', 'application/vnd.clonk.c4group' => 'c4g', 'application/vnd.cluetrust.cartomobile-config' => 'c11amc', 'application/vnd.cluetrust.cartomobile-config-pkg' => 'c11amz', 'application/vnd.commonspace' => 'csp', 'application/vnd.contact.cmsg' => 'cdbcmsg', 'application/vnd.cosmocaller' => 'cmc', 'application/vnd.crick.clicker' => 'clkx', 'application/vnd.crick.clicker.keyboard' => 'clkk', 'application/vnd.crick.clicker.palette' => 'clkp', 'application/vnd.crick.clicker.template' => 'clkt', 'application/vnd.crick.clicker.wordbank' => 'clkw', 'application/vnd.criticaltools.wbs+xml' => 'wbs', 'application/vnd.ctc-posml' => 'pml', 'application/vnd.cups-ppd' => 'ppd', 'application/vnd.curl.car' => 'car', 'application/vnd.curl.pcurl' => 'pcurl', 'application/vnd.dart' => 'dart', 'application/vnd.data-vision.rdz' => 'rdz', 'application/vnd.dece.data' => 'uvf', 'application/vnd.dece.ttml+xml' => 'uvt', 'application/vnd.dece.unspecified' => 'uvx', 'application/vnd.dece.zip' => 'uvz', 'application/vnd.denovo.fcselayout-link' => 'fe_launch', 'application/vnd.dna' => 'dna', 'application/vnd.dolby.mlp' => 'mlp', 'application/vnd.dpgraph' => 'dpg', 'application/vnd.dreamfactory' => 'dfac', 'application/vnd.ds-keypoint' => 'kpxx', 'application/vnd.dvb.ait' => 'ait', 'application/vnd.dvb.service' => 'svc', 'application/vnd.dynageo' => 'geo', 'application/vnd.ecowin.chart' => 'mag', 'application/vnd.enliven' => 'nml', 'application/vnd.epson.esf' => 'esf', 'application/vnd.epson.msf' => 'msf', 'application/vnd.epson.quickanime' => 'qam', 'application/vnd.epson.salt' => 'slt', 'application/vnd.epson.ssf' => 'ssf', 'application/vnd.eszigno3+xml' => 'es3', 'application/vnd.ezpix-album' => 'ez2', 'application/vnd.ezpix-package' => 'ez3', 'application/vnd.fdf' => 'fdf', 'application/vnd.fdsn.mseed' => 'mseed', 'application/vnd.fdsn.seed' => 'seed', 'application/vnd.flographit' => 'gph', 'application/vnd.fluxtime.clip' => 'ftc', 'application/vnd.framemaker' => 'fm', 'application/vnd.frogans.fnc' => 'fnc', 'application/vnd.frogans.ltf' => 'ltf', 'application/vnd.fsc.weblaunch' => 'fsc', 'application/vnd.fujitsu.oasys' => 'oas', 'application/vnd.fujitsu.oasys2' => 'oa2', 'application/vnd.fujitsu.oasys3' => 'oa3', 'application/vnd.fujitsu.oasysgp' => 'fg5', 'application/vnd.fujitsu.oasysprs' => 'bh2', 'application/vnd.fujixerox.ddd' => 'ddd', 'application/vnd.fujixerox.docuworks' => 'xdw', 'application/vnd.fujixerox.docuworks.binder' => 'xbd', 'application/vnd.fuzzysheet' => 'fzs', 'application/vnd.genomatix.tuxedo' => 'txd', 'application/vnd.geogebra.file' => 'ggb', 'application/vnd.geogebra.tool' => 'ggt', 'application/vnd.geometry-explorer' => 'gex', 'application/vnd.geonext' => 'gxt', 'application/vnd.geoplan' => 'g2w', 'application/vnd.geospace' => 'g3w', 'application/vnd.gmx' => 'gmx', 'application/vnd.google-earth.kml+xml' => 'kml', 'application/vnd.google-earth.kmz' => 'kmz', 'application/vnd.grafeq' => 'gqf', 'application/vnd.groove-account' => 'gac', 'application/vnd.groove-help' => 'ghf', 'application/vnd.groove-identity-message' => 'gim', 'application/vnd.groove-injector' => 'grv', 'application/vnd.groove-tool-message' => 'gtm', 'application/vnd.groove-tool-template' => 'tpl', 'application/vnd.groove-vcard' => 'vcg', 'application/vnd.hal+xml' => 'hal', 'application/vnd.handheld-entertainment+xml' => 'zmm', 'application/vnd.hbci' => 'hbci', 'application/vnd.hhe.lesson-player' => 'les', 'application/vnd.hp-hpgl' => 'hpgl', 'application/vnd.hp-hpid' => 'hpid', 'application/vnd.hp-hps' => 'hps', 'application/vnd.hp-jlyt' => 'jlt', 'application/vnd.hp-pcl' => 'pcl', 'application/vnd.hp-pclxl' => 'pclxl', 'application/vnd.hydrostatix.sof-data' => 'sfd-hdstx', 'application/vnd.ibm.minipay' => 'mpy', 'application/vnd.ibm.modcap' => 'afp', 'application/vnd.ibm.rights-management' => 'irm', 'application/vnd.ibm.secure-container' => 'sc', 'application/vnd.iccprofile' => 'icc', 'application/vnd.igloader' => 'igl', 'application/vnd.immervision-ivp' => 'ivp', 'application/vnd.immervision-ivu' => 'ivu', 'application/vnd.insors.igm' => 'igm', 'application/vnd.intercon.formnet' => 'xpw', 'application/vnd.intergeo' => 'i2g', 'application/vnd.intu.qbo' => 'qbo', 'application/vnd.intu.qfx' => 'qfx', 'application/vnd.ipunplugged.rcprofile' => 'rcprofile', 'application/vnd.irepository.package+xml' => 'irp', 'application/vnd.is-xpr' => 'xpr', 'application/vnd.isac.fcs' => 'fcs', 'application/vnd.jam' => 'jam', 'application/vnd.jcp.javame.midlet-rms' => 'rms', 'application/vnd.jisp' => 'jisp', 'application/vnd.joost.joda-archive' => 'joda', 'application/vnd.kahootz' => 'ktz', 'application/vnd.kde.karbon' => 'karbon', 'application/vnd.kde.kchart' => 'chrt', 'application/vnd.kde.kformula' => 'kfo', 'application/vnd.kde.kivio' => 'flw', 'application/vnd.kde.kontour' => 'kon', 'application/vnd.kde.kpresenter' => 'kpr', 'application/vnd.kde.kspread' => 'ksp', 'application/vnd.kde.kword' => 'kwd', 'application/vnd.kenameaapp' => 'htke', 'application/vnd.kidspiration' => 'kia', 'application/vnd.kinar' => 'kne', 'application/vnd.koan' => 'skp', 'application/vnd.kodak-descriptor' => 'sse', 'application/vnd.las.las+xml' => 'lasxml', 'application/vnd.llamagraphics.life-balance.desktop' => 'lbd', 'application/vnd.llamagraphics.life-balance.exchange+xml' => 'lbe', 'application/vnd.lotus-1-2-3' => '123', 'application/vnd.lotus-approach' => 'apr', 'application/vnd.lotus-freelance' => 'pre', 'application/vnd.lotus-notes' => 'nsf', 'application/vnd.lotus-organizer' => 'org', 'application/vnd.lotus-screencam' => 'scm', 'application/vnd.lotus-wordpro' => 'lwp', 'application/vnd.macports.portpkg' => 'portpkg', 'application/vnd.mcd' => 'mcd', 'application/vnd.medcalcdata' => 'mc1', 'application/vnd.mediastation.cdkey' => 'cdkey', 'application/vnd.mfer' => 'mwf', 'application/vnd.mfmp' => 'mfm', 'application/vnd.micrografx.flo' => 'flo', 'application/vnd.micrografx.igx' => 'igx', 'application/vnd.mif' => 'mif', 'application/vnd.mobius.daf' => 'daf', 'application/vnd.mobius.dis' => 'dis', 'application/vnd.mobius.mbk' => 'mbk', 'application/vnd.mobius.mqy' => 'mqy', 'application/vnd.mobius.msl' => 'msl', 'application/vnd.mobius.plc' => 'plc', 'application/vnd.mobius.txf' => 'txf', 'application/vnd.mophun.application' => 'mpn', 'application/vnd.mophun.certificate' => 'mpc', 'application/vnd.mozilla.xul+xml' => 'xul', 'application/vnd.ms-artgalry' => 'cil', 'application/vnd.ms-cab-compressed' => 'cab', 'application/vnd.ms-excel' => 'xls', 'application/vnd.ms-excel.addin.macroenabled.12' => 'xlam', 'application/vnd.ms-excel.sheet.binary.macroenabled.12' => 'xlsb', 'application/vnd.ms-excel.sheet.macroenabled.12' => 'xlsm', 'application/vnd.ms-excel.template.macroenabled.12' => 'xltm', 'application/vnd.ms-fontobject' => 'eot', 'application/vnd.ms-htmlhelp' => 'chm', 'application/vnd.ms-ims' => 'ims', 'application/vnd.ms-lrm' => 'lrm', 'application/vnd.ms-officetheme' => 'thmx', 'application/vnd.ms-pki.seccat' => 'cat', 'application/vnd.ms-pki.stl' => 'stl', 'application/vnd.ms-powerpoint' => 'ppt', 'application/vnd.ms-powerpoint.addin.macroenabled.12' => 'ppam', 'application/vnd.ms-powerpoint.presentation.macroenabled.12' => 'pptm', 'application/vnd.ms-powerpoint.slide.macroenabled.12' => 'sldm', 'application/vnd.ms-powerpoint.slideshow.macroenabled.12' => 'ppsm', 'application/vnd.ms-powerpoint.template.macroenabled.12' => 'potm', 'application/vnd.ms-project' => 'mpp', 'application/vnd.ms-word.document.macroenabled.12' => 'docm', 'application/vnd.ms-word.template.macroenabled.12' => 'dotm', 'application/vnd.ms-works' => 'wps', 'application/vnd.ms-wpl' => 'wpl', 'application/vnd.ms-xpsdocument' => 'xps', 'application/vnd.mseq' => 'mseq', 'application/vnd.musician' => 'mus', 'application/vnd.muvee.style' => 'msty', 'application/vnd.mynfc' => 'taglet', 'application/vnd.neurolanguage.nlu' => 'nlu', 'application/vnd.nitf' => 'ntf', 'application/vnd.noblenet-directory' => 'nnd', 'application/vnd.noblenet-sealer' => 'nns', 'application/vnd.noblenet-web' => 'nnw', 'application/vnd.nokia.n-gage.data' => 'ngdat', 'application/vnd.nokia.n-gage.symbian.install' => 'n-gage', 'application/vnd.nokia.radio-preset' => 'rpst', 'application/vnd.nokia.radio-presets' => 'rpss', 'application/vnd.novadigm.edm' => 'edm', 'application/vnd.novadigm.edx' => 'edx', 'application/vnd.novadigm.ext' => 'ext', 'application/vnd.oasis.opendocument.chart' => 'odc', 'application/vnd.oasis.opendocument.chart-template' => 'otc', 'application/vnd.oasis.opendocument.database' => 'odb', 'application/vnd.oasis.opendocument.formula' => 'odf', 'application/vnd.oasis.opendocument.formula-template' => 'odft', 'application/vnd.oasis.opendocument.graphics' => 'odg', 'application/vnd.oasis.opendocument.graphics-template' => 'otg', 'application/vnd.oasis.opendocument.image' => 'odi', 'application/vnd.oasis.opendocument.image-template' => 'oti', 'application/vnd.oasis.opendocument.presentation' => 'odp', 'application/vnd.oasis.opendocument.presentation-template' => 'otp', 'application/vnd.oasis.opendocument.spreadsheet' => 'ods', 'application/vnd.oasis.opendocument.spreadsheet-template' => 'ots', 'application/vnd.oasis.opendocument.text' => 'odt', 'application/vnd.oasis.opendocument.text-master' => 'odm', 'application/vnd.oasis.opendocument.text-template' => 'ott', 'application/vnd.oasis.opendocument.text-web' => 'oth', 'application/vnd.olpc-sugar' => 'xo', 'application/vnd.oma.dd2+xml' => 'dd2', 'application/vnd.openofficeorg.extension' => 'oxt', 'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'pptx', 'application/vnd.openxmlformats-officedocument.presentationml.slide' => 'sldx', 'application/vnd.openxmlformats-officedocument.presentationml.slideshow' => 'ppsx', 'application/vnd.openxmlformats-officedocument.presentationml.template' => 'potx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.template' => 'xltx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.template' => 'dotx', 'application/vnd.osgeo.mapguide.package' => 'mgp', 'application/vnd.osgi.dp' => 'dp', 'application/vnd.osgi.subsystem' => 'esa', 'application/vnd.palm' => 'pdb', 'application/vnd.pawaafile' => 'paw', 'application/vnd.pg.format' => 'str', 'application/vnd.pg.osasli' => 'ei6', 'application/vnd.picsel' => 'efif', 'application/vnd.pmi.widget' => 'wg', 'application/vnd.pocketlearn' => 'plf', 'application/vnd.powerbuilder6' => 'pbd', 'application/vnd.previewsystems.box' => 'box', 'application/vnd.proteus.magazine' => 'mgz', 'application/vnd.publishare-delta-tree' => 'qps', 'application/vnd.pvi.ptid1' => 'ptid', 'application/vnd.quark.quarkxpress' => 'qxd', 'application/vnd.realvnc.bed' => 'bed', 'application/vnd.recordare.musicxml' => 'mxl', 'application/vnd.recordare.musicxml+xml' => 'musicxml', 'application/vnd.rig.cryptonote' => 'cryptonote', 'application/vnd.rim.cod' => 'cod', 'application/vnd.rn-realmedia' => 'rm', 'application/vnd.rn-realmedia-vbr' => 'rmvb', 'application/vnd.route66.link66+xml' => 'link66', 'application/vnd.sailingtracker.track' => 'st', 'application/vnd.seemail' => 'see', 'application/vnd.sema' => 'sema', 'application/vnd.semd' => 'semd', 'application/vnd.semf' => 'semf', 'application/vnd.shana.informed.formdata' => 'ifm', 'application/vnd.shana.informed.formtemplate' => 'itp', 'application/vnd.shana.informed.interchange' => 'iif', 'application/vnd.shana.informed.package' => 'ipk', 'application/vnd.simtech-mindmapper' => 'twd', 'application/vnd.smaf' => 'mmf', 'application/vnd.smart.teacher' => 'teacher', 'application/vnd.solent.sdkm+xml' => 'sdkm', 'application/vnd.spotfire.dxp' => 'dxp', 'application/vnd.spotfire.sfs' => 'sfs', 'application/vnd.stardivision.calc' => 'sdc', 'application/vnd.stardivision.draw' => 'sda', 'application/vnd.stardivision.impress' => 'sdd', 'application/vnd.stardivision.math' => 'smf', 'application/vnd.stardivision.writer' => 'sdw', 'application/vnd.stardivision.writer-global' => 'sgl', 'application/vnd.stepmania.package' => 'smzip', 'application/vnd.stepmania.stepchart' => 'sm', 'application/vnd.sun.xml.calc' => 'sxc', 'application/vnd.sun.xml.calc.template' => 'stc', 'application/vnd.sun.xml.draw' => 'sxd', 'application/vnd.sun.xml.draw.template' => 'std', 'application/vnd.sun.xml.impress' => 'sxi', 'application/vnd.sun.xml.impress.template' => 'sti', 'application/vnd.sun.xml.math' => 'sxm', 'application/vnd.sun.xml.writer' => 'sxw', 'application/vnd.sun.xml.writer.global' => 'sxg', 'application/vnd.sun.xml.writer.template' => 'stw', 'application/vnd.sus-calendar' => 'sus', 'application/vnd.svd' => 'svd', 'application/vnd.symbian.install' => 'sis', 'application/vnd.syncml+xml' => 'xsm', 'application/vnd.syncml.dm+wbxml' => 'bdm', 'application/vnd.syncml.dm+xml' => 'xdm', 'application/vnd.tao.intent-module-archive' => 'tao', 'application/vnd.tcpdump.pcap' => 'pcap', 'application/vnd.tmobile-livetv' => 'tmo', 'application/vnd.trid.tpt' => 'tpt', 'application/vnd.triscape.mxs' => 'mxs', 'application/vnd.trueapp' => 'tra', 'application/vnd.ufdl' => 'ufd', 'application/vnd.uiq.theme' => 'utz', 'application/vnd.umajin' => 'umj', 'application/vnd.unity' => 'unityweb', 'application/vnd.uoml+xml' => 'uoml', 'application/vnd.vcx' => 'vcx', 'application/vnd.visio' => 'vsd', 'application/vnd.visionary' => 'vis', 'application/vnd.vsf' => 'vsf', 'application/vnd.wap.wbxml' => 'wbxml', 'application/vnd.wap.wmlc' => 'wmlc', 'application/vnd.wap.wmlscriptc' => 'wmlsc', 'application/vnd.webturbo' => 'wtb', 'application/vnd.wolfram.player' => 'nbp', 'application/vnd.wordperfect' => 'wpd', 'application/vnd.wqd' => 'wqd', 'application/vnd.wt.stf' => 'stf', 'application/vnd.xara' => 'xar', 'application/vnd.xfdl' => 'xfdl', 'application/vnd.yamaha.hv-dic' => 'hvd', 'application/vnd.yamaha.hv-script' => 'hvs', 'application/vnd.yamaha.hv-voice' => 'hvp', 'application/vnd.yamaha.openscoreformat' => 'osf', 'application/vnd.yamaha.openscoreformat.osfpvg+xml' => 'osfpvg', 'application/vnd.yamaha.smaf-audio' => 'saf', 'application/vnd.yamaha.smaf-phrase' => 'spf', 'application/vnd.yellowriver-custom-menu' => 'cmp', 'application/vnd.zul' => 'zir', 'application/vnd.zzazz.deck+xml' => 'zaz', 'application/voicexml+xml' => 'vxml', 'application/widget' => 'wgt', 'application/winhlp' => 'hlp', 'application/wsdl+xml' => 'wsdl', 'application/wspolicy+xml' => 'wspolicy', 'application/x-7z-compressed' => '7z', 'application/x-abiword' => 'abw', 'application/x-ace-compressed' => 'ace', 'application/x-apple-diskimage' => 'dmg', 'application/x-authorware-bin' => 'aab', 'application/x-authorware-map' => 'aam', 'application/x-authorware-seg' => 'aas', 'application/x-bcpio' => 'bcpio', 'application/x-bittorrent' => 'torrent', 'application/x-blorb' => 'blb', 'application/x-bzip' => 'bz', 'application/x-bzip2' => 'bz2', 'application/x-cbr' => 'cbr', 'application/x-cdlink' => 'vcd', 'application/x-cfs-compressed' => 'cfs', 'application/x-chat' => 'chat', 'application/x-chess-pgn' => 'pgn', 'application/x-conference' => 'nsc', 'application/x-cpio' => 'cpio', 'application/x-csh' => 'csh', 'application/x-debian-package' => 'deb', 'application/x-dgc-compressed' => 'dgc', 'application/x-director' => 'dir', 'application/x-doom' => 'wad', 'application/x-dtbncx+xml' => 'ncx', 'application/x-dtbook+xml' => 'dtb', 'application/x-dtbresource+xml' => 'res', 'application/x-dvi' => 'dvi', 'application/x-envoy' => 'evy', 'application/x-eva' => 'eva', 'application/x-font-bdf' => 'bdf', 'application/x-font-ghostscript' => 'gsf', 'application/x-font-linux-psf' => 'psf', 'application/x-font-otf' => 'otf', 'application/x-font-pcf' => 'pcf', 'application/x-font-snf' => 'snf', 'application/x-font-ttf' => 'ttf', 'application/x-font-type1' => 'pfa', 'application/x-font-woff' => 'woff', 'application/x-freearc' => 'arc', 'application/x-futuresplash' => 'spl', 'application/x-gca-compressed' => 'gca', 'application/x-glulx' => 'ulx', 'application/x-gnumeric' => 'gnumeric', 'application/x-gramps-xml' => 'gramps', 'application/x-gtar' => 'gtar', 'application/x-hdf' => 'hdf', 'application/x-install-instructions' => 'install', 'application/x-iso9660-image' => 'iso', 'application/x-java-jnlp-file' => 'jnlp', 'application/x-latex' => 'latex', 'application/x-lzh-compressed' => 'lzh', 'application/x-mie' => 'mie', 'application/x-mobipocket-ebook' => 'prc', 'application/x-ms-application' => 'application', 'application/x-ms-shortcut' => 'lnk', 'application/x-ms-wmd' => 'wmd', 'application/x-ms-wmz' => 'wmz', 'application/x-ms-xbap' => 'xbap', 'application/x-msaccess' => 'mdb', 'application/x-msbinder' => 'obd', 'application/x-mscardfile' => 'crd', 'application/x-msclip' => 'clp', 'application/x-msdownload' => 'exe', 'application/x-msmediaview' => 'mvb', 'application/x-msmetafile' => 'wmf', 'application/x-msmoney' => 'mny', 'application/x-mspublisher' => 'pub', 'application/x-msschedule' => 'scd', 'application/x-msterminal' => 'trm', 'application/x-mswrite' => 'wri', 'application/x-netcdf' => 'nc', 'application/x-nzb' => 'nzb', 'application/x-pkcs12' => 'p12', 'application/x-pkcs7-certificates' => 'p7b', 'application/x-pkcs7-certreqresp' => 'p7r', 'application/x-rar-compressed' => 'rar', 'application/x-rar' => 'rar', 'application/x-research-info-systems' => 'ris', 'application/x-sh' => 'sh', 'application/x-shar' => 'shar', 'application/x-shockwave-flash' => 'swf', 'application/x-silverlight-app' => 'xap', 'application/x-sql' => 'sql', 'application/x-stuffit' => 'sit', 'application/x-stuffitx' => 'sitx', 'application/x-subrip' => 'srt', 'application/x-sv4cpio' => 'sv4cpio', 'application/x-sv4crc' => 'sv4crc', 'application/x-t3vm-image' => 't3', 'application/x-tads' => 'gam', 'application/x-tar' => 'tar', 'application/x-tcl' => 'tcl', 'application/x-tex' => 'tex', 'application/x-tex-tfm' => 'tfm', 'application/x-texinfo' => 'texinfo', 'application/x-tgif' => 'obj', 'application/x-ustar' => 'ustar', 'application/x-wais-source' => 'src', 'application/x-x509-ca-cert' => 'der', 'application/x-xfig' => 'fig', 'application/x-xliff+xml' => 'xlf', 'application/x-xpinstall' => 'xpi', 'application/x-xz' => 'xz', 'application/x-zmachine' => 'z1', 'application/xaml+xml' => 'xaml', 'application/xcap-diff+xml' => 'xdf', 'application/xenc+xml' => 'xenc', 'application/xhtml+xml' => 'xhtml', 'application/xml' => 'xml', 'application/xml-dtd' => 'dtd', 'application/xop+xml' => 'xop', 'application/xproc+xml' => 'xpl', 'application/xslt+xml' => 'xslt', 'application/xspf+xml' => 'xspf', 'application/xv+xml' => 'mxml', 'application/yang' => 'yang', 'application/yin+xml' => 'yin', 'application/zip' => 'zip', 'audio/adpcm' => 'adp', 'audio/basic' => 'au', 'audio/midi' => 'mid', 'audio/mp4' => 'mp4a', 'audio/mpeg' => 'mp3', 'audio/ogg' => 'oga', 'audio/s3m' => 's3m', 'audio/silk' => 'sil', 'audio/vnd.dece.audio' => 'uva', 'audio/vnd.digital-winds' => 'eol', 'audio/vnd.dra' => 'dra', 'audio/vnd.dts' => 'dts', 'audio/vnd.dts.hd' => 'dtshd', 'audio/vnd.lucent.voice' => 'lvp', 'audio/vnd.ms-playready.media.pya' => 'pya', 'audio/vnd.nuera.ecelp4800' => 'ecelp4800', 'audio/vnd.nuera.ecelp7470' => 'ecelp7470', 'audio/vnd.nuera.ecelp9600' => 'ecelp9600', 'audio/vnd.rip' => 'rip', 'audio/webm' => 'weba', 'audio/x-aac' => 'aac', 'audio/x-aiff' => 'aif', 'audio/x-caf' => 'caf', 'audio/x-flac' => 'flac', 'audio/x-matroska' => 'mka', 'audio/x-mpegurl' => 'm3u', 'audio/x-ms-wax' => 'wax', 'audio/x-ms-wma' => 'wma', 'audio/x-pn-realaudio' => 'ram', 'audio/x-pn-realaudio-plugin' => 'rmp', 'audio/x-wav' => 'wav', 'audio/wav' => 'wav', 'audio/xm' => 'xm', 'chemical/x-cdx' => 'cdx', 'chemical/x-cif' => 'cif', 'chemical/x-cmdf' => 'cmdf', 'chemical/x-cml' => 'cml', 'chemical/x-csml' => 'csml', 'chemical/x-xyz' => 'xyz', 'image/bmp' => 'bmp', 'image/x-ms-bmp' => 'bmp', 'image/cgm' => 'cgm', 'image/g3fax' => 'g3', 'image/gif' => 'gif', 'image/ief' => 'ief', 'image/jpeg' => 'jpeg', 'image/pjpeg' => 'jpeg', 'image/ktx' => 'ktx', 'image/png' => 'png', 'image/prs.btif' => 'btif', 'image/sgi' => 'sgi', 'image/svg+xml' => 'svg', 'image/tiff' => 'tiff', 'image/vnd.adobe.photoshop' => 'psd', 'image/vnd.dece.graphic' => 'uvi', 'image/vnd.dvb.subtitle' => 'sub', 'image/vnd.djvu' => 'djvu', 'image/vnd.dwg' => 'dwg', 'image/vnd.dxf' => 'dxf', 'image/vnd.fastbidsheet' => 'fbs', 'image/vnd.fpx' => 'fpx', 'image/vnd.fst' => 'fst', 'image/vnd.fujixerox.edmics-mmr' => 'mmr', 'image/vnd.fujixerox.edmics-rlc' => 'rlc', 'image/vnd.ms-modi' => 'mdi', 'image/vnd.ms-photo' => 'wdp', 'image/vnd.net-fpx' => 'npx', 'image/vnd.wap.wbmp' => 'wbmp', 'image/vnd.xiff' => 'xif', 'image/webp' => 'webp', 'image/x-3ds' => '3ds', 'image/x-cmu-raster' => 'ras', 'image/x-cmx' => 'cmx', 'image/x-freehand' => 'fh', 'image/x-icon' => 'ico', 'image/x-mrsid-image' => 'sid', 'image/x-pcx' => 'pcx', 'image/x-pict' => 'pic', 'image/x-portable-anymap' => 'pnm', 'image/x-portable-bitmap' => 'pbm', 'image/x-portable-graymap' => 'pgm', 'image/x-portable-pixmap' => 'ppm', 'image/x-rgb' => 'rgb', 'image/x-tga' => 'tga', 'image/x-xbitmap' => 'xbm', 'image/x-xpixmap' => 'xpm', 'image/x-xwindowdump' => 'xwd', 'message/rfc822' => 'eml', 'model/iges' => 'igs', 'model/mesh' => 'msh', 'model/vnd.collada+xml' => 'dae', 'model/vnd.dwf' => 'dwf', 'model/vnd.gdl' => 'gdl', 'model/vnd.gtw' => 'gtw', 'model/vnd.mts' => 'mts', 'model/vnd.vtu' => 'vtu', 'model/vrml' => 'wrl', 'model/x3d+binary' => 'x3db', 'model/x3d+vrml' => 'x3dv', 'model/x3d+xml' => 'x3d', 'text/cache-manifest' => 'appcache', 'text/calendar' => 'ics', 'text/css' => 'css', 'text/csv' => 'csv', 'text/html' => 'html', 'text/n3' => 'n3', 'text/plain' => 'txt', 'text/prs.lines.tag' => 'dsc', 'text/richtext' => 'rtx', 'text/rtf' => 'rtf', 'text/sgml' => 'sgml', 'text/tab-separated-values' => 'tsv', 'text/troff' => 't', 'text/turtle' => 'ttl', 'text/uri-list' => 'uri', 'text/vcard' => 'vcard', 'text/vnd.curl' => 'curl', 'text/vnd.curl.dcurl' => 'dcurl', 'text/vnd.curl.scurl' => 'scurl', 'text/vnd.curl.mcurl' => 'mcurl', 'text/vnd.dvb.subtitle' => 'sub', 'text/vnd.fly' => 'fly', 'text/vnd.fmi.flexstor' => 'flx', 'text/vnd.graphviz' => 'gv', 'text/vnd.in3d.3dml' => '3dml', 'text/vnd.in3d.spot' => 'spot', 'text/vnd.sun.j2me.app-descriptor' => 'jad', 'text/vnd.wap.wml' => 'wml', 'text/vnd.wap.wmlscript' => 'wmls', 'text/vtt' => 'vtt', 'text/x-asm' => 's', 'text/x-c' => 'c', 'text/x-fortran' => 'f', 'text/x-pascal' => 'p', 'text/x-java-source' => 'java', 'text/x-opml' => 'opml', 'text/x-nfo' => 'nfo', 'text/x-setext' => 'etx', 'text/x-sfv' => 'sfv', 'text/x-uuencode' => 'uu', 'text/x-vcalendar' => 'vcs', 'text/x-vcard' => 'vcf', 'video/3gpp' => '3gp', 'video/3gpp2' => '3g2', 'video/h261' => 'h261', 'video/h263' => 'h263', 'video/h264' => 'h264', 'video/jpeg' => 'jpgv', 'video/jpm' => 'jpm', 'video/mj2' => 'mj2', 'video/mp4' => 'mp4', 'video/mpeg' => 'mpeg', 'video/ogg' => 'ogv', 'video/quicktime' => 'qt', 'video/vnd.dece.hd' => 'uvh', 'video/vnd.dece.mobile' => 'uvm', 'video/vnd.dece.pd' => 'uvp', 'video/vnd.dece.sd' => 'uvs', 'video/vnd.dece.video' => 'uvv', 'video/vnd.dvb.file' => 'dvb', 'video/vnd.fvt' => 'fvt', 'video/vnd.mpegurl' => 'mxu', 'video/vnd.ms-playready.media.pyv' => 'pyv', 'video/vnd.uvvu.mp4' => 'uvu', 'video/vnd.vivo' => 'viv', 'video/webm' => 'webm', 'video/x-f4v' => 'f4v', 'video/x-fli' => 'fli', 'video/x-flv' => 'flv', 'video/x-m4v' => 'm4v', 'video/x-matroska' => 'mkv', 'video/x-mng' => 'mng', 'video/x-ms-asf' => 'asf', 'video/x-ms-vob' => 'vob', 'video/x-ms-wm' => 'wm', 'video/x-ms-wmv' => 'wmv', 'video/x-ms-wmx' => 'wmx', 'video/x-ms-wvx' => 'wvx', 'video/x-msvideo' => 'avi', 'video/x-sgi-movie' => 'movie', 'video/x-smv' => 'smv', 'x-conference/x-cooltalk' => 'ice'];
+        protected $defaultExtensions = ['application/andrew-inset' => 'ez', 'application/applixware' => 'aw', 'application/atom+xml' => 'atom', 'application/atomcat+xml' => 'atomcat', 'application/atomsvc+xml' => 'atomsvc', 'application/ccxml+xml' => 'ccxml', 'application/cdmi-capability' => 'cdmia', 'application/cdmi-container' => 'cdmic', 'application/cdmi-domain' => 'cdmid', 'application/cdmi-object' => 'cdmio', 'application/cdmi-queue' => 'cdmiq', 'application/cu-seeme' => 'cu', 'application/davmount+xml' => 'davmount', 'application/docbook+xml' => 'dbk', 'application/dssc+der' => 'dssc', 'application/dssc+xml' => 'xdssc', 'application/ecmascript' => 'ecma', 'application/emma+xml' => 'emma', 'application/epub+zip' => 'epub', 'application/exi' => 'exi', 'application/font-tdpfr' => 'pfr', 'application/gml+xml' => 'gml', 'application/gpx+xml' => 'gpx', 'application/gxf' => 'gxf', 'application/hyperstudio' => 'stk', 'application/inkml+xml' => 'ink', 'application/ipfix' => 'ipfix', 'application/java-archive' => 'jar', 'application/java-serialized-object' => 'ser', 'application/java-vm' => 'class', 'application/javascript' => 'js', 'application/json' => 'json', 'application/jsonml+json' => 'jsonml', 'application/lost+xml' => 'lostxml', 'application/mac-binhex40' => 'hqx', 'application/mac-compactpro' => 'cpt', 'application/mads+xml' => 'mads', 'application/marc' => 'mrc', 'application/marcxml+xml' => 'mrcx', 'application/mathematica' => 'ma', 'application/mathml+xml' => 'mathml', 'application/mbox' => 'mbox', 'application/mediaservercontrol+xml' => 'mscml', 'application/metalink+xml' => 'metalink', 'application/metalink4+xml' => 'meta4', 'application/mets+xml' => 'mets', 'application/mods+xml' => 'mods', 'application/mp21' => 'm21', 'application/mp4' => 'mp4s', 'application/msword' => 'doc', 'application/mxf' => 'mxf', 'application/octet-stream' => 'bin', 'application/oda' => 'oda', 'application/oebps-package+xml' => 'opf', 'application/ogg' => 'ogx', 'application/omdoc+xml' => 'omdoc', 'application/onenote' => 'onetoc', 'application/oxps' => 'oxps', 'application/patch-ops-error+xml' => 'xer', 'application/pdf' => 'pdf', 'application/pgp-encrypted' => 'pgp', 'application/pgp-signature' => 'asc', 'application/pics-rules' => 'prf', 'application/pkcs10' => 'p10', 'application/pkcs7-mime' => 'p7m', 'application/pkcs7-signature' => 'p7s', 'application/pkcs8' => 'p8', 'application/pkix-attr-cert' => 'ac', 'application/pkix-cert' => 'cer', 'application/pkix-crl' => 'crl', 'application/pkix-pkipath' => 'pkipath', 'application/pkixcmp' => 'pki', 'application/pls+xml' => 'pls', 'application/postscript' => 'ai', 'application/prs.cww' => 'cww', 'application/pskc+xml' => 'pskcxml', 'application/rdf+xml' => 'rdf', 'application/reginfo+xml' => 'rif', 'application/relax-ng-compact-syntax' => 'rnc', 'application/resource-lists+xml' => 'rl', 'application/resource-lists-diff+xml' => 'rld', 'application/rls-services+xml' => 'rs', 'application/rpki-ghostbusters' => 'gbr', 'application/rpki-manifest' => 'mft', 'application/rpki-roa' => 'roa', 'application/rsd+xml' => 'rsd', 'application/rss+xml' => 'rss', 'application/rtf' => 'rtf', 'application/sbml+xml' => 'sbml', 'application/scvp-cv-request' => 'scq', 'application/scvp-cv-response' => 'scs', 'application/scvp-vp-request' => 'spq', 'application/scvp-vp-response' => 'spp', 'application/sdp' => 'sdp', 'application/set-payment-initiation' => 'setpay', 'application/set-registration-initiation' => 'setreg', 'application/shf+xml' => 'shf', 'application/smil+xml' => 'smi', 'application/sparql-query' => 'rq', 'application/sparql-results+xml' => 'srx', 'application/srgs' => 'gram', 'application/srgs+xml' => 'grxml', 'application/sru+xml' => 'sru', 'application/ssdl+xml' => 'ssdl', 'application/ssml+xml' => 'ssml', 'application/tei+xml' => 'tei', 'application/thraud+xml' => 'tfi', 'application/timestamped-data' => 'tsd', 'application/vnd.3gpp.pic-bw-large' => 'plb', 'application/vnd.3gpp.pic-bw-small' => 'psb', 'application/vnd.3gpp.pic-bw-var' => 'pvb', 'application/vnd.3gpp2.tcap' => 'tcap', 'application/vnd.3m.post-it-notes' => 'pwn', 'application/vnd.accpac.simply.aso' => 'aso', 'application/vnd.accpac.simply.imp' => 'imp', 'application/vnd.acucobol' => 'acu', 'application/vnd.acucorp' => 'atc', 'application/vnd.adobe.air-application-installer-package+zip' => 'air', 'application/vnd.adobe.formscentral.fcdt' => 'fcdt', 'application/vnd.adobe.fxp' => 'fxp', 'application/vnd.adobe.xdp+xml' => 'xdp', 'application/vnd.adobe.xfdf' => 'xfdf', 'application/vnd.ahead.space' => 'ahead', 'application/vnd.airzip.filesecure.azf' => 'azf', 'application/vnd.airzip.filesecure.azs' => 'azs', 'application/vnd.amazon.ebook' => 'azw', 'application/vnd.americandynamics.acc' => 'acc', 'application/vnd.amiga.ami' => 'ami', 'application/vnd.android.package-archive' => 'apk', 'application/vnd.anser-web-certificate-issue-initiation' => 'cii', 'application/vnd.anser-web-funds-transfer-initiation' => 'fti', 'application/vnd.antix.game-component' => 'atx', 'application/vnd.apple.installer+xml' => 'mpkg', 'application/vnd.apple.mpegurl' => 'm3u8', 'application/vnd.aristanetworks.swi' => 'swi', 'application/vnd.astraea-software.iota' => 'iota', 'application/vnd.audiograph' => 'aep', 'application/vnd.blueice.multipass' => 'mpm', 'application/vnd.bmi' => 'bmi', 'application/vnd.businessobjects' => 'rep', 'application/vnd.chemdraw+xml' => 'cdxml', 'application/vnd.chipnuts.karaoke-mmd' => 'mmd', 'application/vnd.cinderella' => 'cdy', 'application/vnd.claymore' => 'cla', 'application/vnd.cloanto.rp9' => 'rp9', 'application/vnd.clonk.c4group' => 'c4g', 'application/vnd.cluetrust.cartomobile-config' => 'c11amc', 'application/vnd.cluetrust.cartomobile-config-pkg' => 'c11amz', 'application/vnd.commonspace' => 'csp', 'application/vnd.contact.cmsg' => 'cdbcmsg', 'application/vnd.cosmocaller' => 'cmc', 'application/vnd.crick.clicker' => 'clkx', 'application/vnd.crick.clicker.keyboard' => 'clkk', 'application/vnd.crick.clicker.palette' => 'clkp', 'application/vnd.crick.clicker.template' => 'clkt', 'application/vnd.crick.clicker.wordbank' => 'clkw', 'application/vnd.criticaltools.wbs+xml' => 'wbs', 'application/vnd.ctc-posml' => 'pml', 'application/vnd.cups-ppd' => 'ppd', 'application/vnd.curl.car' => 'car', 'application/vnd.curl.pcurl' => 'pcurl', 'application/vnd.dart' => 'dart', 'application/vnd.data-vision.rdz' => 'rdz', 'application/vnd.dece.data' => 'uvf', 'application/vnd.dece.ttml+xml' => 'uvt', 'application/vnd.dece.unspecified' => 'uvx', 'application/vnd.dece.zip' => 'uvz', 'application/vnd.denovo.fcselayout-link' => 'fe_launch', 'application/vnd.dna' => 'dna', 'application/vnd.dolby.mlp' => 'mlp', 'application/vnd.dpgraph' => 'dpg', 'application/vnd.dreamfactory' => 'dfac', 'application/vnd.ds-keypoint' => 'kpxx', 'application/vnd.dvb.ait' => 'ait', 'application/vnd.dvb.service' => 'svc', 'application/vnd.dynageo' => 'geo', 'application/vnd.ecowin.chart' => 'mag', 'application/vnd.enliven' => 'nml', 'application/vnd.epson.esf' => 'esf', 'application/vnd.epson.msf' => 'msf', 'application/vnd.epson.quickanime' => 'qam', 'application/vnd.epson.salt' => 'slt', 'application/vnd.epson.ssf' => 'ssf', 'application/vnd.eszigno3+xml' => 'es3', 'application/vnd.ezpix-album' => 'ez2', 'application/vnd.ezpix-package' => 'ez3', 'application/vnd.fdf' => 'fdf', 'application/vnd.fdsn.mseed' => 'mseed', 'application/vnd.fdsn.seed' => 'seed', 'application/vnd.flographit' => 'gph', 'application/vnd.fluxtime.clip' => 'ftc', 'application/vnd.framemaker' => 'fm', 'application/vnd.frogans.fnc' => 'fnc', 'application/vnd.frogans.ltf' => 'ltf', 'application/vnd.fsc.weblaunch' => 'fsc', 'application/vnd.fujitsu.oasys' => 'oas', 'application/vnd.fujitsu.oasys2' => 'oa2', 'application/vnd.fujitsu.oasys3' => 'oa3', 'application/vnd.fujitsu.oasysgp' => 'fg5', 'application/vnd.fujitsu.oasysprs' => 'bh2', 'application/vnd.fujixerox.ddd' => 'ddd', 'application/vnd.fujixerox.docuworks' => 'xdw', 'application/vnd.fujixerox.docuworks.binder' => 'xbd', 'application/vnd.fuzzysheet' => 'fzs', 'application/vnd.genomatix.tuxedo' => 'txd', 'application/vnd.geogebra.file' => 'ggb', 'application/vnd.geogebra.tool' => 'ggt', 'application/vnd.geometry-explorer' => 'gex', 'application/vnd.geonext' => 'gxt', 'application/vnd.geoplan' => 'g2w', 'application/vnd.geospace' => 'g3w', 'application/vnd.gmx' => 'gmx', 'application/vnd.google-earth.kml+xml' => 'kml', 'application/vnd.google-earth.kmz' => 'kmz', 'application/vnd.grafeq' => 'gqf', 'application/vnd.groove-account' => 'gac', 'application/vnd.groove-help' => 'ghf', 'application/vnd.groove-identity-message' => 'gim', 'application/vnd.groove-injector' => 'grv', 'application/vnd.groove-tool-message' => 'gtm', 'application/vnd.groove-tool-template' => 'tpl', 'application/vnd.groove-vcard' => 'vcg', 'application/vnd.hal+xml' => 'hal', 'application/vnd.handheld-entertainment+xml' => 'zmm', 'application/vnd.hbci' => 'hbci', 'application/vnd.hhe.lesson-player' => 'les', 'application/vnd.hp-hpgl' => 'hpgl', 'application/vnd.hp-hpid' => 'hpid', 'application/vnd.hp-hps' => 'hps', 'application/vnd.hp-jlyt' => 'jlt', 'application/vnd.hp-pcl' => 'pcl', 'application/vnd.hp-pclxl' => 'pclxl', 'application/vnd.hydrostatix.sof-data' => 'sfd-hdstx', 'application/vnd.ibm.minipay' => 'mpy', 'application/vnd.ibm.modcap' => 'afp', 'application/vnd.ibm.rights-management' => 'irm', 'application/vnd.ibm.secure-container' => 'sc', 'application/vnd.iccprofile' => 'icc', 'application/vnd.igloader' => 'igl', 'application/vnd.immervision-ivp' => 'ivp', 'application/vnd.immervision-ivu' => 'ivu', 'application/vnd.insors.igm' => 'igm', 'application/vnd.intercon.formnet' => 'xpw', 'application/vnd.intergeo' => 'i2g', 'application/vnd.intu.qbo' => 'qbo', 'application/vnd.intu.qfx' => 'qfx', 'application/vnd.ipunplugged.rcprofile' => 'rcprofile', 'application/vnd.irepository.package+xml' => 'irp', 'application/vnd.is-xpr' => 'xpr', 'application/vnd.isac.fcs' => 'fcs', 'application/vnd.jam' => 'jam', 'application/vnd.jcp.javame.midlet-rms' => 'rms', 'application/vnd.jisp' => 'jisp', 'application/vnd.joost.joda-archive' => 'joda', 'application/vnd.kahootz' => 'ktz', 'application/vnd.kde.karbon' => 'karbon', 'application/vnd.kde.kchart' => 'chrt', 'application/vnd.kde.kformula' => 'kfo', 'application/vnd.kde.kivio' => 'flw', 'application/vnd.kde.kontour' => 'kon', 'application/vnd.kde.kpresenter' => 'kpr', 'application/vnd.kde.kspread' => 'ksp', 'application/vnd.kde.kword' => 'kwd', 'application/vnd.kenameaapp' => 'htke', 'application/vnd.kidspiration' => 'kia', 'application/vnd.kinar' => 'kne', 'application/vnd.koan' => 'skp', 'application/vnd.kodak-descriptor' => 'sse', 'application/vnd.las.las+xml' => 'lasxml', 'application/vnd.llamagraphics.life-balance.desktop' => 'lbd', 'application/vnd.llamagraphics.life-balance.exchange+xml' => 'lbe', 'application/vnd.lotus-1-2-3' => '123', 'application/vnd.lotus-approach' => 'apr', 'application/vnd.lotus-freelance' => 'pre', 'application/vnd.lotus-notes' => 'nsf', 'application/vnd.lotus-organizer' => 'org', 'application/vnd.lotus-screencam' => 'scm', 'application/vnd.lotus-wordpro' => 'lwp', 'application/vnd.macports.portpkg' => 'portpkg', 'application/vnd.mcd' => 'mcd', 'application/vnd.medcalcdata' => 'mc1', 'application/vnd.mediastation.cdkey' => 'cdkey', 'application/vnd.mfer' => 'mwf', 'application/vnd.mfmp' => 'mfm', 'application/vnd.micrografx.flo' => 'flo', 'application/vnd.micrografx.igx' => 'igx', 'application/vnd.mif' => 'mif', 'application/vnd.mobius.daf' => 'daf', 'application/vnd.mobius.dis' => 'dis', 'application/vnd.mobius.mbk' => 'mbk', 'application/vnd.mobius.mqy' => 'mqy', 'application/vnd.mobius.msl' => 'msl', 'application/vnd.mobius.plc' => 'plc', 'application/vnd.mobius.txf' => 'txf', 'application/vnd.mophun.application' => 'mpn', 'application/vnd.mophun.certificate' => 'mpc', 'application/vnd.mozilla.xul+xml' => 'xul', 'application/vnd.ms-artgalry' => 'cil', 'application/vnd.ms-cab-compressed' => 'cab', 'application/vnd.ms-excel' => 'xls', 'application/vnd.ms-excel.addin.macroenabled.12' => 'xlam', 'application/vnd.ms-excel.sheet.binary.macroenabled.12' => 'xlsb', 'application/vnd.ms-excel.sheet.macroenabled.12' => 'xlsm', 'application/vnd.ms-excel.template.macroenabled.12' => 'xltm', 'application/vnd.ms-fontobject' => 'eot', 'application/vnd.ms-htmlhelp' => 'chm', 'application/vnd.ms-ims' => 'ims', 'application/vnd.ms-lrm' => 'lrm', 'application/vnd.ms-officetheme' => 'thmx', 'application/vnd.ms-pki.seccat' => 'cat', 'application/vnd.ms-pki.stl' => 'stl', 'application/vnd.ms-powerpoint' => 'ppt', 'application/vnd.ms-powerpoint.addin.macroenabled.12' => 'ppam', 'application/vnd.ms-powerpoint.presentation.macroenabled.12' => 'pptm', 'application/vnd.ms-powerpoint.slide.macroenabled.12' => 'sldm', 'application/vnd.ms-powerpoint.slideshow.macroenabled.12' => 'ppsm', 'application/vnd.ms-powerpoint.template.macroenabled.12' => 'potm', 'application/vnd.ms-project' => 'mpp', 'application/vnd.ms-word.document.macroenabled.12' => 'docm', 'application/vnd.ms-word.template.macroenabled.12' => 'dotm', 'application/vnd.ms-works' => 'wps', 'application/vnd.ms-wpl' => 'wpl', 'application/vnd.ms-xpsdocument' => 'xps', 'application/vnd.mseq' => 'mseq', 'application/vnd.musician' => 'mus', 'application/vnd.muvee.style' => 'msty', 'application/vnd.mynfc' => 'taglet', 'application/vnd.neurolanguage.nlu' => 'nlu', 'application/vnd.nitf' => 'ntf', 'application/vnd.noblenet-directory' => 'nnd', 'application/vnd.noblenet-sealer' => 'nns', 'application/vnd.noblenet-web' => 'nnw', 'application/vnd.nokia.n-gage.data' => 'ngdat', 'application/vnd.nokia.n-gage.symbian.install' => 'n-gage', 'application/vnd.nokia.radio-preset' => 'rpst', 'application/vnd.nokia.radio-presets' => 'rpss', 'application/vnd.novadigm.edm' => 'edm', 'application/vnd.novadigm.edx' => 'edx', 'application/vnd.novadigm.ext' => 'ext', 'application/vnd.oasis.opendocument.chart' => 'odc', 'application/vnd.oasis.opendocument.chart-template' => 'otc', 'application/vnd.oasis.opendocument.database' => 'odb', 'application/vnd.oasis.opendocument.formula' => 'odf', 'application/vnd.oasis.opendocument.formula-template' => 'odft', 'application/vnd.oasis.opendocument.graphics' => 'odg', 'application/vnd.oasis.opendocument.graphics-template' => 'otg', 'application/vnd.oasis.opendocument.image' => 'odi', 'application/vnd.oasis.opendocument.image-template' => 'oti', 'application/vnd.oasis.opendocument.presentation' => 'odp', 'application/vnd.oasis.opendocument.presentation-template' => 'otp', 'application/vnd.oasis.opendocument.spreadsheet' => 'ods', 'application/vnd.oasis.opendocument.spreadsheet-template' => 'ots', 'application/vnd.oasis.opendocument.text' => 'odt', 'application/vnd.oasis.opendocument.text-master' => 'odm', 'application/vnd.oasis.opendocument.text-template' => 'ott', 'application/vnd.oasis.opendocument.text-web' => 'oth', 'application/vnd.olpc-sugar' => 'xo', 'application/vnd.oma.dd2+xml' => 'dd2', 'application/vnd.openofficeorg.extension' => 'oxt', 'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'pptx', 'application/vnd.openxmlformats-officedocument.presentationml.slide' => 'sldx', 'application/vnd.openxmlformats-officedocument.presentationml.slideshow' => 'ppsx', 'application/vnd.openxmlformats-officedocument.presentationml.template' => 'potx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.template' => 'xltx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.template' => 'dotx', 'application/vnd.osgeo.mapguide.package' => 'mgp', 'application/vnd.osgi.dp' => 'dp', 'application/vnd.osgi.subsystem' => 'esa', 'application/vnd.palm' => 'pdb', 'application/vnd.pawaafile' => 'paw', 'application/vnd.pg.format' => 'str', 'application/vnd.pg.osasli' => 'ei6', 'application/vnd.picsel' => 'efif', 'application/vnd.pmi.widget' => 'wg', 'application/vnd.pocketlearn' => 'plf', 'application/vnd.powerbuilder6' => 'pbd', 'application/vnd.previewsystems.box' => 'box', 'application/vnd.proteus.magazine' => 'mgz', 'application/vnd.publishare-delta-tree' => 'qps', 'application/vnd.pvi.ptid1' => 'ptid', 'application/vnd.quark.quarkxpress' => 'qxd', 'application/vnd.realvnc.bed' => 'bed', 'application/vnd.recordare.musicxml' => 'mxl', 'application/vnd.recordare.musicxml+xml' => 'musicxml', 'application/vnd.rig.cryptonote' => 'cryptonote', 'application/vnd.rim.cod' => 'cod', 'application/vnd.rn-realmedia' => 'rm', 'application/vnd.rn-realmedia-vbr' => 'rmvb', 'application/vnd.route66.link66+xml' => 'link66', 'application/vnd.sailingtracker.track' => 'st', 'application/vnd.seemail' => 'see', 'application/vnd.sema' => 'sema', 'application/vnd.semd' => 'semd', 'application/vnd.semf' => 'semf', 'application/vnd.shana.informed.formdata' => 'ifm', 'application/vnd.shana.informed.formtemplate' => 'itp', 'application/vnd.shana.informed.interchange' => 'iif', 'application/vnd.shana.informed.package' => 'ipk', 'application/vnd.simtech-mindmapper' => 'twd', 'application/vnd.smaf' => 'mmf', 'application/vnd.smart.teacher' => 'teacher', 'application/vnd.solent.sdkm+xml' => 'sdkm', 'application/vnd.spotfire.dxp' => 'dxp', 'application/vnd.spotfire.sfs' => 'sfs', 'application/vnd.stardivision.calc' => 'sdc', 'application/vnd.stardivision.draw' => 'sda', 'application/vnd.stardivision.impress' => 'sdd', 'application/vnd.stardivision.math' => 'smf', 'application/vnd.stardivision.writer' => 'sdw', 'application/vnd.stardivision.writer-global' => 'sgl', 'application/vnd.stepmania.package' => 'smzip', 'application/vnd.stepmania.stepchart' => 'sm', 'application/vnd.sun.xml.calc' => 'sxc', 'application/vnd.sun.xml.calc.template' => 'stc', 'application/vnd.sun.xml.draw' => 'sxd', 'application/vnd.sun.xml.draw.template' => 'std', 'application/vnd.sun.xml.impress' => 'sxi', 'application/vnd.sun.xml.impress.template' => 'sti', 'application/vnd.sun.xml.math' => 'sxm', 'application/vnd.sun.xml.writer' => 'sxw', 'application/vnd.sun.xml.writer.global' => 'sxg', 'application/vnd.sun.xml.writer.template' => 'stw', 'application/vnd.sus-calendar' => 'sus', 'application/vnd.svd' => 'svd', 'application/vnd.symbian.install' => 'sis', 'application/vnd.syncml+xml' => 'xsm', 'application/vnd.syncml.dm+wbxml' => 'bdm', 'application/vnd.syncml.dm+xml' => 'xdm', 'application/vnd.tao.intent-module-archive' => 'tao', 'application/vnd.tcpdump.pcap' => 'pcap', 'application/vnd.tmobile-livetv' => 'tmo', 'application/vnd.trid.tpt' => 'tpt', 'application/vnd.triscape.mxs' => 'mxs', 'application/vnd.trueapp' => 'tra', 'application/vnd.ufdl' => 'ufd', 'application/vnd.uiq.theme' => 'utz', 'application/vnd.umajin' => 'umj', 'application/vnd.unity' => 'unityweb', 'application/vnd.uoml+xml' => 'uoml', 'application/vnd.vcx' => 'vcx', 'application/vnd.visio' => 'vsd', 'application/vnd.visionary' => 'vis', 'application/vnd.vsf' => 'vsf', 'application/vnd.wap.wbxml' => 'wbxml', 'application/vnd.wap.wmlc' => 'wmlc', 'application/vnd.wap.wmlscriptc' => 'wmlsc', 'application/vnd.webturbo' => 'wtb', 'application/vnd.wolfram.player' => 'nbp', 'application/vnd.wordperfect' => 'wpd', 'application/vnd.wqd' => 'wqd', 'application/vnd.wt.stf' => 'stf', 'application/vnd.xara' => 'xar', 'application/vnd.xfdl' => 'xfdl', 'application/vnd.yamaha.hv-dic' => 'hvd', 'application/vnd.yamaha.hv-script' => 'hvs', 'application/vnd.yamaha.hv-voice' => 'hvp', 'application/vnd.yamaha.openscoreformat' => 'osf', 'application/vnd.yamaha.openscoreformat.osfpvg+xml' => 'osfpvg', 'application/vnd.yamaha.smaf-audio' => 'saf', 'application/vnd.yamaha.smaf-phrase' => 'spf', 'application/vnd.yellowriver-custom-menu' => 'cmp', 'application/vnd.zul' => 'zir', 'application/vnd.zzazz.deck+xml' => 'zaz', 'application/voicexml+xml' => 'vxml', 'application/widget' => 'wgt', 'application/winhlp' => 'hlp', 'application/wsdl+xml' => 'wsdl', 'application/wspolicy+xml' => 'wspolicy', 'application/x-7z-compressed' => '7z', 'application/x-abiword' => 'abw', 'application/x-ace-compressed' => 'ace', 'application/x-apple-diskimage' => 'dmg', 'application/x-authorware-bin' => 'aab', 'application/x-authorware-map' => 'aam', 'application/x-authorware-seg' => 'aas', 'application/x-bcpio' => 'bcpio', 'application/x-bittorrent' => 'torrent', 'application/x-blorb' => 'blb', 'application/x-bzip' => 'bz', 'application/x-bzip2' => 'bz2', 'application/x-cbr' => 'cbr', 'application/x-cdlink' => 'vcd', 'application/x-cfs-compressed' => 'cfs', 'application/x-chat' => 'chat', 'application/x-chess-pgn' => 'pgn', 'application/x-conference' => 'nsc', 'application/x-cpio' => 'cpio', 'application/x-csh' => 'csh', 'application/x-debian-package' => 'deb', 'application/x-dgc-compressed' => 'dgc', 'application/x-director' => 'dir', 'application/x-doom' => 'wad', 'application/x-dtbncx+xml' => 'ncx', 'application/x-dtbook+xml' => 'dtb', 'application/x-dtbresource+xml' => 'res', 'application/x-dvi' => 'dvi', 'application/x-envoy' => 'evy', 'application/x-eva' => 'eva', 'application/x-font-bdf' => 'bdf', 'application/x-font-ghostscript' => 'gsf', 'application/x-font-linux-psf' => 'psf', 'application/x-font-otf' => 'otf', 'application/x-font-pcf' => 'pcf', 'application/x-font-snf' => 'snf', 'application/x-font-ttf' => 'ttf', 'application/x-font-type1' => 'pfa', 'application/x-font-woff' => 'woff', 'application/x-freearc' => 'arc', 'application/x-futuresplash' => 'spl', 'application/x-gca-compressed' => 'gca', 'application/x-glulx' => 'ulx', 'application/x-gnumeric' => 'gnumeric', 'application/x-gramps-xml' => 'gramps', 'application/x-gtar' => 'gtar', 'application/x-hdf' => 'hdf', 'application/x-install-instructions' => 'install', 'application/x-iso9660-image' => 'iso', 'application/x-java-jnlp-file' => 'jnlp', 'application/x-latex' => 'latex', 'application/x-lzh-compressed' => 'lzh', 'application/x-mie' => 'mie', 'application/x-mobipocket-ebook' => 'prc', 'application/x-ms-application' => 'application', 'application/x-ms-shortcut' => 'lnk', 'application/x-ms-wmd' => 'wmd', 'application/x-ms-wmz' => 'wmz', 'application/x-ms-xbap' => 'xbap', 'application/x-msaccess' => 'mdb', 'application/x-msbinder' => 'obd', 'application/x-mscardfile' => 'crd', 'application/x-msclip' => 'clp', 'application/x-msdownload' => 'exe', 'application/x-msmediaview' => 'mvb', 'application/x-msmetafile' => 'wmf', 'application/x-msmoney' => 'mny', 'application/x-mspublisher' => 'pub', 'application/x-msschedule' => 'scd', 'application/x-msterminal' => 'trm', 'application/x-mswrite' => 'wri', 'application/x-netcdf' => 'nc', 'application/x-nzb' => 'nzb', 'application/x-pkcs12' => 'p12', 'application/x-pkcs7-certificates' => 'p7b', 'application/x-pkcs7-certreqresp' => 'p7r', 'application/x-rar-compressed' => 'rar', 'application/x-rar' => 'rar', 'application/x-research-info-systems' => 'ris', 'application/x-sh' => 'sh', 'application/x-shar' => 'shar', 'application/x-shockwave-flash' => 'swf', 'application/x-silverlight-app' => 'xap', 'application/x-sql' => 'sql', 'application/x-stuffit' => 'sit', 'application/x-stuffitx' => 'sitx', 'application/x-subrip' => 'srt', 'application/x-sv4cpio' => 'sv4cpio', 'application/x-sv4crc' => 'sv4crc', 'application/x-t3vm-image' => 't3', 'application/x-tads' => 'gam', 'application/x-tar' => 'tar', 'application/x-tcl' => 'tcl', 'application/x-tex' => 'tex', 'application/x-tex-tfm' => 'tfm', 'application/x-texinfo' => 'texinfo', 'application/x-tgif' => 'obj', 'application/x-ustar' => 'ustar', 'application/x-wais-source' => 'src', 'application/x-x509-ca-cert' => 'der', 'application/x-xfig' => 'fig', 'application/x-xliff+xml' => 'xlf', 'application/x-xpinstall' => 'xpi', 'application/x-xz' => 'xz', 'application/x-zmachine' => 'z1', 'application/xaml+xml' => 'xaml', 'application/xcap-diff+xml' => 'xdf', 'application/xenc+xml' => 'xenc', 'application/xhtml+xml' => 'xhtml', 'application/xml' => 'xml', 'application/xml-dtd' => 'dtd', 'application/xop+xml' => 'xop', 'application/xproc+xml' => 'xpl', 'application/xslt+xml' => 'xslt', 'application/xspf+xml' => 'xspf', 'application/xv+xml' => 'mxml', 'application/yang' => 'yang', 'application/yin+xml' => 'yin', 'application/zip' => 'zip', 'audio/adpcm' => 'adp', 'audio/basic' => 'au', 'audio/midi' => 'mid', 'audio/mp4' => 'mp4a', 'audio/mpeg' => 'mp3', 'audio/ogg' => 'oga', 'audio/s3m' => 's3m', 'audio/silk' => 'sil', 'audio/vnd.dece.audio' => 'uva', 'audio/vnd.digital-winds' => 'eol', 'audio/vnd.dra' => 'dra', 'audio/vnd.dts' => 'dts', 'audio/vnd.dts.hd' => 'dtshd', 'audio/vnd.lucent.voice' => 'lvp', 'audio/vnd.ms-playready.media.pya' => 'pya', 'audio/vnd.nuera.ecelp4800' => 'ecelp4800', 'audio/vnd.nuera.ecelp7470' => 'ecelp7470', 'audio/vnd.nuera.ecelp9600' => 'ecelp9600', 'audio/vnd.rip' => 'rip', 'audio/webm' => 'weba', 'audio/x-aac' => 'aac', 'audio/x-aiff' => 'aif', 'audio/x-caf' => 'caf', 'audio/x-flac' => 'flac', 'audio/x-matroska' => 'mka', 'audio/x-mpegurl' => 'm3u', 'audio/x-ms-wax' => 'wax', 'audio/x-ms-wma' => 'wma', 'audio/x-pn-realaudio' => 'ram', 'audio/x-pn-realaudio-plugin' => 'rmp', 'audio/x-wav' => 'wav', 'audio/wav' => 'wav', 'audio/xm' => 'xm', 'chemical/x-cdx' => 'cdx', 'chemical/x-cif' => 'cif', 'chemical/x-cmdf' => 'cmdf', 'chemical/x-cml' => 'cml', 'chemical/x-csml' => 'csml', 'chemical/x-xyz' => 'xyz', 'image/bmp' => 'bmp', 'image/x-ms-bmp' => 'bmp', 'image/cgm' => 'cgm', 'image/g3fax' => 'g3', 'image/gif' => 'gif', 'image/ief' => 'ief', 'image/jpeg' => 'jpeg', 'image/pjpeg' => 'jpeg', 'image/ktx' => 'ktx', 'image/png' => 'png', 'image/prs.btif' => 'btif', 'image/sgi' => 'sgi', 'image/svg+xml' => 'svg', 'image/tiff' => 'tiff', 'image/vnd.adobe.photoshop' => 'psd', 'image/vnd.dece.graphic' => 'uvi', 'image/vnd.dvb.subtitle' => 'sub', 'image/vnd.djvu' => 'djvu', 'image/vnd.dwg' => 'dwg', 'image/vnd.dxf' => 'dxf', 'image/vnd.fastbidsheet' => 'fbs', 'image/vnd.fpx' => 'fpx', 'image/vnd.fst' => 'fst', 'image/vnd.fujixerox.edmics-mmr' => 'mmr', 'image/vnd.fujixerox.edmics-rlc' => 'rlc', 'image/vnd.ms-modi' => 'mdi', 'image/vnd.ms-photo' => 'wdp', 'image/vnd.net-fpx' => 'npx', 'image/vnd.wap.wbmp' => 'wbmp', 'image/vnd.xiff' => 'xif', 'image/webp' => 'webp', 'image/x-3ds' => '3ds', 'image/x-cmu-raster' => 'ras', 'image/x-cmx' => 'cmx', 'image/x-freehand' => 'fh', 'image/x-icon' => 'ico', 'image/x-mrsid-image' => 'sid', 'image/x-pcx' => 'pcx', 'image/x-pict' => 'pic', 'image/x-portable-anymap' => 'pnm', 'image/x-portable-bitmap' => 'pbm', 'image/x-portable-graymap' => 'pgm', 'image/x-portable-pixmap' => 'ppm', 'image/x-rgb' => 'rgb', 'image/x-tga' => 'tga', 'image/x-xbitmap' => 'xbm', 'image/x-xpixmap' => 'xpm', 'image/x-xwindowdump' => 'xwd', 'message/rfc822' => 'eml', 'model/iges' => 'igs', 'model/mesh' => 'msh', 'model/vnd.collada+xml' => 'dae', 'model/vnd.dwf' => 'dwf', 'model/vnd.gdl' => 'gdl', 'model/vnd.gtw' => 'gtw', 'model/vnd.mts' => 'mts', 'model/vnd.vtu' => 'vtu', 'model/vrml' => 'wrl', 'model/x3d+binary' => 'x3db', 'model/x3d+vrml' => 'x3dv', 'model/x3d+xml' => 'x3d', 'text/cache-manifest' => 'appcache', 'text/calendar' => 'ics', 'text/css' => 'css', 'text/csv' => 'csv', 'text/html' => 'html', 'text/n3' => 'n3', 'text/plain' => 'txt', 'text/prs.lines.tag' => 'dsc', 'text/richtext' => 'rtx', 'text/rtf' => 'rtf', 'text/sgml' => 'sgml', 'text/tab-separated-values' => 'tsv', 'text/troff' => 't', 'text/turtle' => 'ttl', 'text/uri-list' => 'uri', 'text/vcard' => 'vcard', 'text/vnd.curl' => 'curl', 'text/vnd.curl.dcurl' => 'dcurl', 'text/vnd.curl.scurl' => 'scurl', 'text/vnd.curl.mcurl' => 'mcurl', 'text/vnd.dvb.subtitle' => 'sub', 'text/vnd.fly' => 'fly', 'text/vnd.fmi.flexstor' => 'flx', 'text/vnd.graphviz' => 'gv', 'text/vnd.in3d.3dml' => '3dml', 'text/vnd.in3d.spot' => 'spot', 'text/vnd.sun.j2me.app-descriptor' => 'jad', 'text/vnd.wap.wml' => 'wml', 'text/vnd.wap.wmlscript' => 'wmls', 'text/vtt' => 'vtt', 'text/x-asm' => 's', 'text/x-c' => 'c', 'text/x-fortran' => 'f', 'text/x-pascal' => 'p', 'text/x-java-source' => 'java', 'text/x-opml' => 'opml', 'text/x-nfo' => 'nfo', 'text/x-setext' => 'etx', 'text/x-sfv' => 'sfv', 'text/x-uuencode' => 'uu', 'text/x-vcalendar' => 'vcs', 'text/x-vcard' => 'vcf', 'video/3gpp' => '3gp', 'video/3gpp2' => '3g2', 'video/h261' => 'h261', 'video/h263' => 'h263', 'video/h264' => 'h264', 'video/jpeg' => 'jpgv', 'video/jpm' => 'jpm', 'video/mj2' => 'mj2', 'video/mp4' => 'mp4', 'video/mpeg' => 'mpeg', 'video/ogg' => 'ogv', 'video/quicktime' => 'qt', 'video/vnd.dece.hd' => 'uvh', 'video/vnd.dece.mobile' => 'uvm', 'video/vnd.dece.pd' => 'uvp', 'video/vnd.dece.sd' => 'uvs', 'video/vnd.dece.video' => 'uvv', 'video/vnd.dvb.file' => 'dvb', 'video/vnd.fvt' => 'fvt', 'video/vnd.mpegurl' => 'mxu', 'video/vnd.ms-playready.media.pyv' => 'pyv', 'video/vnd.uvvu.mp4' => 'uvu', 'video/vnd.vivo' => 'viv', 'video/webm' => 'webm', 'video/x-f4v' => 'f4v', 'video/x-fli' => 'fli', 'video/x-flv' => 'flv', 'video/x-m4v' => 'm4v', 'video/x-matroska' => 'mkv', 'video/x-mng' => 'mng', 'video/x-ms-asf' => 'asf', 'video/x-ms-vob' => 'vob', 'video/x-ms-wm' => 'wm', 'video/x-ms-wmv' => 'wmv', 'video/x-ms-wmx' => 'wmx', 'video/x-ms-wvx' => 'wvx', 'video/x-msvideo' => 'avi', 'video/avi' => 'avi', 'video/x-sgi-movie' => 'movie', 'video/x-smv' => 'smv', 'x-conference/x-cooltalk' => 'ice'];
         /**
          * Original file name.
          *
@@ -17218,21 +18546,21 @@ namespace FluentForm\Framework\Request {
          */
         use \FluentForm\Framework\Request\FileHandler;
         protected $app = null;
-        protected $headers = array();
-        protected $server = array();
-        protected $cookie = array();
-        protected $json = array();
-        protected $get = array();
-        protected $post = array();
-        protected $files = array();
-        protected $request = array();
+        protected $headers = [];
+        protected $server = [];
+        protected $cookie = [];
+        protected $json = [];
+        protected $get = [];
+        protected $post = [];
+        protected $files = [];
+        protected $request = [];
         public function __construct($app, $get, $post, $files)
         {
         }
         /**
          * Clean up the slashes from GET/POST added by WP
          * using "wp_magic_quotes" function in load.php.
-         * 
+         *
          * @param  array $data
          * @return array
          */
@@ -17329,7 +18657,7 @@ namespace FluentForm\Framework\View {
     {
         /**
          * The Application (Framework)
-         * @var FluentForm\Framework\Foundation\Application
+         * @var \FluentForm\Framework\Foundation\Application
          */
         protected $app;
         /**
@@ -17354,7 +18682,7 @@ namespace FluentForm\Framework\View {
         protected static $composerCallbacks = [];
         /**
          * Make an instance of the the class
-         * @param FluentForm\Framework\Foundation\Application $app
+         * @param \FluentForm\Framework\Foundation\Application $app
          */
         public function __construct($app)
         {
@@ -17437,7 +18765,7 @@ namespace FluentForm\Framework\View {
         /**
          * Register view composer calbacks for specific view
          * @param  string $viewName
-         * @param  closure $callback
+         * @param  \closure $callback
          * @return void
          */
         public function composer($viewName, $callback)
@@ -17518,6 +18846,7 @@ namespace {
      * @param string $manifestDirectory
      *
      * @return string
+     *
      * @throws \Exception
      */
     function fluentformMix($path, $manifestDirectory = '')
@@ -17541,8 +18870,10 @@ namespace {
     }
     /**
      * Recursively implode a multi-dimentional array
+     *
      * @param string $glue
-     * @param array $array
+     * @param array  $array
+     *
      * @return string
      */
     function fluentImplodeRecursive($glue, array $array)
@@ -17575,7 +18906,53 @@ namespace {
     function fluentform_upgrade_url()
     {
     }
+    function fluentform_integrations_url()
+    {
+    }
     function fluentFormApi($module = 'forms')
+    {
+    }
+    function fluentFormGetRandomPhoto()
+    {
+    }
+    function fluentFormRender($atts)
+    {
+    }
+    /**
+     * Print internal content (not user input) without escaping.
+     */
+    function fluentFormPrintUnescapedInternalString($string)
+    {
+    }
+    function fluentform_options_sanitize($options)
+    {
+    }
+    function fluentform_sanitize_html($html)
+    {
+    }
+    function fluentform_kses_js($content)
+    {
+    }
+    /**
+     * Sanitize inputs recursively.
+     *
+     * @param array $input
+     * @param array $sanitizeMap
+     *
+     * @return array $input
+     */
+    function fluentform_backend_sanitizer($array, $sanitizeMap = [])
+    {
+    }
+    /**
+     * Sanitizes CSS.
+     *
+     * @return mixed $css
+     */
+    function fluentformSanitizeCSS($css)
+    {
+    }
+    function fluentformCanUnfilteredHTML()
     {
     }
     function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
