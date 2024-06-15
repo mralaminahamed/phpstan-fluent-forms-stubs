@@ -3,6 +3,8 @@ name: Release new version
 on:
   push:
     paths:
+      - "release-all-versions.sh"
+      - "release-latest-versions.sh"
       - ".github/workflows/release.yml"
   schedule:
     - cron: '0 * * * *'
@@ -35,7 +37,7 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-suggest --no-progress --no-interaction --ignore-platform-reqs
-      
+
       - name: Set up Git user
         run: |
           git config user.name 'github-actions'
