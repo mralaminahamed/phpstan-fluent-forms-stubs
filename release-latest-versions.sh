@@ -3,6 +3,10 @@
 # Generate Fluent Forms stubs from all available versions.
 set -e
 
+# Fetch the latest changes from the remote repository.
+git fetch --all
+git reset --hard origin/main
+
 # Fetch plugin information from WordPress.org.
 WC_JSON="$(wget -q -O- "https://api.wordpress.org/plugins/info/1.0/fluentform.json")"
 
@@ -36,7 +40,7 @@ while IFS= read -r VERSION; do
     find source/ -mindepth 1 ! -name 'composer.json' ! -name '.gitignore' -exec rm -rf {} +
 
     # Download the new version.
-    wget -q -P source/ "https://downloads.wordpress.org/plugin/fluentform.${VERSION}.zip"
+    wget -P source/ "https://downloads.wordpress.org/plugin/fluentform.${VERSION}.zip"
     unzip -q -d source/ "source/fluentform.${VERSION}.zip"
 
     # Generate stubs.
@@ -57,5 +61,10 @@ while IFS= read -r VERSION; do
     # Clean up the source directory to prevent conflicts.
     find source/ -mindepth 1 ! -name 'composer.json' ! -name '.gitignore' -exec rm -rf {} +
 done < "$OUTPUT_FILE"
+
+# Authenticate and push changes to the remote repository.
+git remote set-url origin https://$GITHUB_TOKEN@github.com/mralaminahamed/fluent-forms-stubs.git
+git push origin main
+git push origin --tags
 
 echo "All versions processed."
