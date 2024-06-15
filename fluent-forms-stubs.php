@@ -821,7 +821,7 @@ namespace FluentForm\App\Http\Controllers {
         public function index(\FluentForm\App\Services\Integrations\GlobalIntegrationService $globalIntegrationService)
         {
         }
-        public function update()
+        public function updateIntegration()
         {
         }
         public function updateModuleStatus(\FluentForm\App\Services\Integrations\GlobalIntegrationService $globalIntegrationService)
@@ -1074,6 +1074,9 @@ namespace FluentForm\App\Http\Policies {
         {
         }
         public function updateModuleStatus()
+        {
+        }
+        public function updateIntegration()
         {
         }
         public function ping()
@@ -5923,6 +5926,14 @@ namespace FluentForm\App\Modules\Widgets {
         public function get_icon()
         {
         }
+        /**
+         * Elementor version compare to 3.0.0
+         *
+         * @return bool|int true if version is 3.0.0 or above
+         */
+        protected function is_v3_or_above()
+        {
+        }
         public function get_keywords()
         {
         }
@@ -8585,6 +8596,12 @@ namespace FluentForm\App\Services\Form {
         {
         }
         protected function insertSubmission($insertData, $formDataRaw, $formId)
+        {
+        }
+        protected function isSpamAndSkipProcessing($insertData)
+        {
+        }
+        protected function processSpamSubmission($insertData)
         {
         }
     }
