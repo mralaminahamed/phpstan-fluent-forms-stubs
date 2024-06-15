@@ -10,4 +10,5 @@
 \define('FLUENT_CONVERSATIONAL_FORM_DIR_URL', \plugin_dir_url(__FILE__));
 \define('FLUENT_CONVERSATIONAL_FORM_DIR_PATH', \plugin_dir_path(__FILE__));
 \define('FLUENTFORM_DIR_PATH', \plugin_dir_path(__FILE__));
+\define('FLUENTFORM_FRAMEWORK_UPGRADE', '4.3.22');
 \define('FLUENTFORM_HAS_NIA', \true);
