@@ -139,7 +139,7 @@ namespace FluentForm\App\Helpers {
         public static function isSlackEnabled()
         {
         }
-        public static function getEntryStutuses($form_id = false)
+        public static function getEntryStatuses($form_id = false)
         {
         }
         public static function getReportableInputs()
@@ -188,6 +188,24 @@ namespace FluentForm\App\Helpers {
         {
         }
         public static function hasFormElement($formId, $elementName)
+        {
+        }
+        public static function isUniqueValidation($validation, $field, $formData, $fields, $form)
+        {
+        }
+        public static function getNumericFormatters()
+        {
+        }
+        public static function getNumericValue($input, $formatterName)
+        {
+        }
+        public static function getNumericFormatted($input, $formatterName)
+        {
+        }
+        public static function getDuplicateFieldNames($fields)
+        {
+        }
+        protected static function getFieldNamesStatuses($fields)
         {
         }
     }
@@ -264,6 +282,9 @@ namespace FluentForm\App\Modules\Acl {
         {
         }
         public static function hasAnyFormPermission($form_id = false)
+        {
+        }
+        public static function verifyNonce($key = 'fluent_forms_admin_nonce')
         {
         }
     }
@@ -692,7 +713,7 @@ namespace FluentForm\App\Modules\Component {
          * @param \stdClass $form
          * @return string
          */
-        private function processOutput($output, $form)
+        public function replaceEditorSmartCodes($output, $form)
         {
         }
         /**
@@ -730,7 +751,7 @@ namespace FluentForm\App\Modules\Component {
         {
         }
         /**
-         * Check if form has scheduled date and open for submission
+         * Check if form has scheduled date & weekdays and open for submission
          *
          * @param array $restrictions
          *
@@ -769,6 +790,12 @@ namespace FluentForm\App\Modules\Component {
         {
         }
         protected function maybeHasAdvandedFields($form, $formBuilder)
+        {
+        }
+        public function registerInputSanitizers()
+        {
+        }
+        public function getNumericInputValue($value, $field)
         {
         }
     }
@@ -884,6 +911,12 @@ namespace FluentForm\App\Modules\Entries {
         public function __construct()
         {
         }
+        public function getAllFormEntries()
+        {
+        }
+        public function getEntriesReport()
+        {
+        }
         public function renderEntries($form_id)
         {
         }
@@ -946,16 +979,23 @@ namespace FluentForm\App\Modules\Entries {
     class Export
     {
         /**
+         * @var \FluentForm\Framework\Foundation\Application
+         */
+        protected $app;
+        /**
          * @var \FluentForm\Framework\Request\Request
          */
         protected $request;
-        protected $app;
+        /**
+         * @var String table/data source name
+         */
+        protected $tableName;
         /**
          * Export constructor.
          *
          * @param \FluentForm\Framework\Foundation\Application $application
          */
-        public function __construct(\FluentForm\Framework\Foundation\Application $application)
+        public function __construct(\FluentForm\Framework\Foundation\Application $application, $tableName = 'fluentform_submissions')
         {
         }
         /**
@@ -1093,6 +1133,9 @@ namespace FluentForm\App\Modules\Form {
          * @var array $formFields
          */
         protected $formFields;
+        protected $metas = [];
+        protected $formType = 'form';
+        protected $hasPayment = 0;
         /**
          * Form constructor.
          *
@@ -1128,7 +1171,19 @@ namespace FluentForm\App\Modules\Form {
         public function store()
         {
         }
-        private function getFormsDefaultSettings($formId = false)
+        public function getFormsDefaultSettings($formId = false)
+        {
+        }
+        public function getAdvancedValidationSettings($formId)
+        {
+        }
+        public function getMeta($formId, $metaKey, $isJson = true)
+        {
+        }
+        public function updateMeta($formId, $metaKey, $metaValue)
+        {
+        }
+        public function deleteMeta($formId, $metaKey)
         {
         }
         /**
@@ -1162,6 +1217,9 @@ namespace FluentForm\App\Modules\Form {
         public function delete()
         {
         }
+        protected function deleteFormAssests($formId)
+        {
+        }
         /**
          * Duplicate a from
          * @return void
@@ -1171,7 +1229,7 @@ namespace FluentForm\App\Modules\Form {
         {
         }
         /**
-         * Validate a form only by form title
+         * Validate a form  by form title & for duplicate name attributes
          * @return void
          */
         private function validate()
@@ -1233,6 +1291,9 @@ namespace FluentForm\App\Modules\Form {
         public static function formatName($value)
         {
         }
+        public static function formatCheckBoxValues($values, $field, $isHtml = false)
+        {
+        }
     }
     /**
      * @method array getShortCodeInputs(\stdClass $form, array $with = ['admin_label'])
@@ -1244,6 +1305,7 @@ namespace FluentForm\App\Modules\Form {
      * @method array getPaymentInputFields(\stdClass $form, $with = [])
      * @method array getAttachmentInputFields(\stdClass $form, $with = [])
      * @method boolean hasRequiredFields(\stdClass $form, array $fields)
+     * @method array getInputsByElementTypes(\stdClass $form, array $elements)
      * @method array|null getField(\stdClass $form, string|array $element, string|array $attribute, array $with = [])
      */
     class FormFieldsParser
@@ -1370,7 +1432,7 @@ namespace FluentForm\App\Modules\Form {
          * @param array $settings
          * @param $fields
          */
-        private function handleDenyEmptySubmission($settings = [], &$fields)
+        private function handleDenyEmptySubmission($settings, &$fields)
         {
         }
         /**
@@ -1464,6 +1526,31 @@ namespace FluentForm\App\Modules\Form {
     }
 }
 namespace FluentForm\App\Modules\Form\Settings {
+    class EntryColumnViewSettings
+    {
+        /**
+         * Save settings for visible entry columns
+         * @return void
+         */
+        public function saveVisibleColumnsAjax()
+        {
+        }
+        /**
+         * Save settings for entry column display order
+         */
+        public function saveEntryColumnsOrderAjax()
+        {
+        }
+        /**
+         * Reset column display order settings
+         */
+        public function resetEntryDisplaySettings()
+        {
+        }
+        protected function store($formId, $metaKey, $metaValue)
+        {
+        }
+    }
     class ExtraSettings
     {
         /**
@@ -1529,6 +1616,9 @@ namespace FluentForm\App\Modules\Form\Settings {
         public function saveSettingsAjax()
         {
         }
+        protected function escCss($css)
+        {
+        }
         protected function getData($formId, $metaKey)
         {
         }
@@ -1542,6 +1632,7 @@ namespace FluentForm\App\Modules\Form\Settings {
          * @var \FluentForm\Framework\Request\Request
          */
         private $request;
+        private $app;
         /**
          * @var int form ID.
          */
@@ -1564,6 +1655,12 @@ namespace FluentForm\App\Modules\Form\Settings {
          * @return void
          */
         public function index()
+        {
+        }
+        public function getGeneralSettingsAjax()
+        {
+        }
+        public function saveGeneralSettingsAjax()
         {
         }
         /**
@@ -1779,6 +1876,12 @@ namespace FluentForm\App\Modules\Logger {
         public function deleteApiLogsByIds($ids = [])
         {
         }
+        public function retryApiAction()
+        {
+        }
+        private function getEntry($submission, $form)
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules {
@@ -1796,7 +1899,7 @@ namespace FluentForm\App\Modules {
         /**
          * Set the posts to one
          *
-         * @param  WP_Query $query
+         * @param WP_Query $query
          *
          * @return void
          */
@@ -1855,6 +1958,9 @@ namespace FluentForm\App\Modules\Registerer {
         {
         }
         public function renderFormAdminRoute()
+        {
+        }
+        public function renderAllEntriesAdminRoute()
         {
         }
         private function renderFormInnerPages()
@@ -1916,6 +2022,9 @@ namespace FluentForm\App\Modules\Registerer {
         {
         }
         public function renderPaymentEntries()
+        {
+        }
+        public function renderSmtpPromo()
         {
         }
     }
@@ -1982,9 +2091,6 @@ namespace FluentForm\App\Modules\Settings {
         public function store()
         {
         }
-        public function storeFluentformsPdf()
-        {
-        }
         public function storeReCaptcha()
         {
         }
@@ -1994,9 +2100,27 @@ namespace FluentForm\App\Modules\Settings {
         public function storeMailChimpSettings()
         {
         }
+        public function storeEmailSummarySettings()
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules\Track {
+    class SetupModule
+    {
+        public function installPlugin($repoSlug)
+        {
+        }
+        private function installFluentSMTP()
+        {
+        }
+        private function backgroundInstaller($plugin_to_install, $plugin_id)
+        {
+        }
+        private function associate_plugin_file($plugins, $key)
+        {
+        }
+    }
     class TrackModule
     {
         private $apiUrl = 'https://wpfluentform.com';
@@ -2027,6 +2151,125 @@ namespace FluentForm\App\Modules\Track {
     }
 }
 namespace FluentForm\App\Modules\Widgets {
+    class ElementorWidget
+    {
+        private $app = null;
+        public function __construct($app)
+        {
+        }
+        public function init_widgets()
+        {
+        }
+        public function enqueueAssets()
+        {
+        }
+        public static function getForms()
+        {
+        }
+    }
+    // Exit if accessed directly
+    class FluentFormWidget extends \Elementor\Widget_Base
+    {
+        public function get_name()
+        {
+        }
+        public function get_title()
+        {
+        }
+        public function get_icon()
+        {
+        }
+        public function get_keywords()
+        {
+        }
+        public function get_categories()
+        {
+        }
+        public function get_style_depends()
+        {
+        }
+        public function get_script_depends()
+        {
+        }
+        protected function _register_controls()
+        {
+        }
+        protected function register_general_controls()
+        {
+        }
+        protected function register_error_controls()
+        {
+        }
+        protected function register_title_description_style_controls()
+        {
+        }
+        protected function register_form_container_style_controls()
+        {
+        }
+        protected function register_label_style_controls()
+        {
+        }
+        protected function register_input_textarea_style_controls()
+        {
+        }
+        protected function register_terms_gdpr_style_controls()
+        {
+        }
+        protected function register_placeholder_style_controls()
+        {
+        }
+        protected function register_radio_checkbox_style_controls()
+        {
+        }
+        protected function register_section_break_style_controls()
+        {
+        }
+        protected function register_checkbox_grid_style_controls()
+        {
+        }
+        protected function register_address_line_style_controls()
+        {
+        }
+        protected function register_image_upload_style_controls()
+        {
+        }
+        protected function register_pagination_style_controls()
+        {
+        }
+        protected function register_submit_button_style_controls()
+        {
+        }
+        protected function register_success_message_style_controls()
+        {
+        }
+        protected function register_errors_style_controls()
+        {
+        }
+        /**
+         * Render the widget output on the frontend.
+         *
+         * Written in PHP and used to generate the final HTML.
+         *
+         * @since 1.0.0
+         *
+         * @access protected
+         */
+        protected function render()
+        {
+        }
+        /**
+         * Render the widget output in the editor.
+         *
+         * Written as a Backbone JavaScript template and used to generate the live preview.
+         *
+         * @since 1.0.0
+         *
+         * @access protected
+         */
+        protected function _content_template()
+        {
+        }
+    }
     class SidebarWidgets extends \WP_Widget
     {
         function __construct()
@@ -3947,7 +4190,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Build unique ID concating form id and name attribute
-         * @param  array  $data $form
+         * @param array $data $form
          * @return string for id value
          */
         protected function makeElementId($data, $form)
@@ -3955,7 +4198,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Build attributes for any html element
-         * @param  array  $attributes
+         * @param array $attributes
          * @return string [Compiled key='value' attributes]
          */
         protected function buildAttributes($attributes, $form = null)
@@ -3963,15 +4206,18 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Extract value attribute from attribute list
-         * @param  array  &$element
+         * @param array  &$element
          * @return string
          */
         protected function extractValueFromAttributes(&$element)
         {
         }
+        protected function extractDynamicValues($data, $form)
+        {
+        }
         /**
          * Determine if the given element has conditions bound
-         * @param  array   $element [Html element being compiled]
+         * @param array $element [Html element being compiled]
          * @return boolean
          */
         protected function hasConditions($element)
@@ -3979,7 +4225,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate a unique id for an element
-         * @param  string $str [preix]
+         * @param string $str [preix]
          * @return string [Unique id]
          */
         protected function getUniqueId($str)
@@ -3994,7 +4240,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Get required class for form element wrapper
-         * @param  array $rules [Validation rules]
+         * @param array $rules [Validation rules]
          * @return mixed
          */
         protected function getRequiredClass($rules)
@@ -4009,7 +4255,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate a label for any element
-         * @param  array  $data
+         * @param array $data
          * @return string [label Html element]
          */
         protected function buildElementLabel($data, $form)
@@ -4017,9 +4263,9 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate html/markup for any element
-         * @param  string   $elMarkup [Predifined partial markup]
-         * @param  array    $data
-         * @param  StdClass $form     [Form object]
+         * @param string $elMarkup [Predifined partial markup]
+         * @param array $data
+         * @param StdClass $form [Form object]
          * @return string   [Compiled markup]
          */
         protected function buildElementMarkup($elMarkup, $data, $form)
@@ -4027,7 +4273,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate a help message for any element beside label
-         * @param  array  $data
+         * @param array $data
          * @return string [Html]
          */
         protected function getLabelHelpMessage($data)
@@ -4035,10 +4281,13 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Generate a help message for any element beside form element
-         * @param  array  $data
+         * @param array $data
          * @return string [Html]
          */
         protected function getInputHelpMessage($data, $hideClass = '')
+        {
+        }
+        protected function parseEditorSmartCode($text, $form)
         {
         }
     }
@@ -4256,7 +4505,27 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         {
         }
     }
-    class Name extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
+    class Select extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
+    {
+        /**
+         * Compile and echo the html element
+         * @param array $data [element data]
+         * @param stdClass $form [Form Object]
+         * @return viod
+         */
+        public function compile($data, $form)
+        {
+        }
+        /**
+         * Build options for select
+         * @param array $options
+         * @return string/html [compiled options]
+         */
+        protected function buildOptions($data, $defaultValues)
+        {
+        }
+    }
+    class Name extends \FluentForm\App\Services\FormBuilder\Components\Select
     {
         /**
          * Compile and echo the html element
@@ -4304,32 +4573,12 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         {
         }
     }
-    class Select extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
-    {
-        /**
-         * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
-         * @return viod
-         */
-        public function compile($data, $form)
-        {
-        }
-        /**
-         * Build options for select
-         * @param  array $options
-         * @return string/html [compiled options]
-         */
-        protected function buildOptions($data, $defaultValues)
-        {
-        }
-    }
     class SelectCountry extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
     {
         /**
          * Compile and echo the html element
-         * @param  array $data [element data]
-         * @param  stdClass $form [Form Object]
+         * @param array $data [element data]
+         * @param stdClass $form [Form Object]
          * @return viod
          */
         public function compile($data, $form)
@@ -4337,7 +4586,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Load countt list from file
-         * @param  array $data
+         * @param array $data
          * @return array
          */
         protected function loadCountries($data)
@@ -4345,10 +4594,13 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         }
         /**
          * Build options for country list/select
-         * @param  array $options
+         * @param array $options
          * @return string/html [compiled options]
          */
-        protected function buildOptions($options, $defaultValues)
+        protected function buildOptions($options, $defaultValues = [])
+        {
+        }
+        protected function getSelectedCountries($keys = [])
         {
         }
     }
@@ -4467,10 +4719,10 @@ namespace FluentForm\App\Services\FormBuilder {
          * mappings of methods to parse the shortcode
          * @var array
          */
-        private static $handlers = ['ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'http_referer' => 'parseWPProperties', 'wp.admin_email' => 'parseWPProperties', 'wp.site_url' => 'parseWPProperties', 'wp.site_title' => 'parseWPProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties', 'get.param_name' => 'parseQueryParam'];
+        private static $handlers = ['ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'http_referer' => 'parseWPProperties', 'wp.admin_email' => 'parseWPProperties', 'wp.site_url' => 'parseWPProperties', 'wp.site_title' => 'parseWPProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties', 'get.param_name' => 'parseQueryParam', 'random_string.param_name' => 'parseRandomString'];
         /**
          * Filter dynamic shortcodes in input value
-         * @param  string $value
+         * @param string $value
          * @return string
          */
         public static function filter($value, $form)
@@ -4478,10 +4730,10 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse the curly braced shortcode into array
-         * @param  string $value
+         * @param string $value
          * @return mixed
          */
-        private static function parseValue($value)
+        public static function parseValue($value)
         {
         }
         /**
@@ -4489,15 +4741,15 @@ namespace FluentForm\App\Services\FormBuilder {
          */
         /**
          * Parse loggedin user properties
-         * @param  string $value
+         * @param string $value
          * @return string
          */
         private static function parseUserProperties($value, $form = null)
         {
         }
         /**
-         * Parse loggedin user properties
-         * @param  string $value
+         * Parse embedded post properties
+         * @param string $value
          * @return string
          */
         private static function parsePostProperties($value, $form = null)
@@ -4505,7 +4757,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse WP Properties
-         * @param  string $value
+         * @param string $value
          * @return string
          */
         private static function parseWPProperties($value, $form = null)
@@ -4513,7 +4765,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse browser/user-agent properties
-         * @param  string $value
+         * @param string $value
          * @return string
          */
         private static function parseBrowserProperties($value, $form = null)
@@ -4521,7 +4773,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse ip shortcode
-         * @param  string $value
+         * @param string $value
          * @return string
          */
         private static function parseIp($value, $form = null)
@@ -4529,7 +4781,7 @@ namespace FluentForm\App\Services\FormBuilder {
         }
         /**
          * Parse date shortcode
-         * @param  string $value
+         * @param string $value
          * @return string
          */
         private static function parseDate($value, $form = null)
@@ -4538,11 +4790,20 @@ namespace FluentForm\App\Services\FormBuilder {
         /**
          * Parse request query param.
          *
-         * @param  string $value
-         * @param  \stdClass $form
+         * @param string $value
+         * @param \stdClass $form
          * @return string
          */
         public static function parseQueryParam($value)
+        {
+        }
+        /**
+         * Generate random a string with prefix
+         *
+         * @param $value
+         * @return string
+         */
+        public static function parseRandomString($value)
         {
         }
     }
@@ -4553,6 +4814,7 @@ namespace FluentForm\App\Services\FormBuilder {
          * @var Framework\Foundation\Application
          */
         protected $app = null;
+        protected $form = null;
         /**
          * Conditional logic for elements
          * @var array
@@ -4565,6 +4827,7 @@ namespace FluentForm\App\Services\FormBuilder {
         public $validationRules = array();
         public $tabIndex = 1;
         public $fieldLists = [];
+        public $containerCounter;
         /**
          * Construct the form builder instance
          * @param Framework\Foundation\Application $app
@@ -4694,6 +4957,12 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         public function notify($notification, $submittedData, $form, $entryId = false)
         {
         }
+        private function broadCast($data)
+        {
+        }
+        private function getSendAddresses($notification, $submittedData)
+        {
+        }
         /**
          * @param $formId
          * @return array
@@ -4708,7 +4977,7 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         private function getFooterText($form, $notification)
         {
         }
-        private function getHeaders($notification, $isSendAsPlain = false)
+        public function getHeaders($notification, $isSendAsPlain = false)
         {
         }
     }
@@ -4734,7 +5003,7 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static $browser = null;
         protected static $formFields = null;
         protected static $store = ['inputs' => null, 'original_inputs' => null, 'user' => null, 'post' => null, 'other' => null, 'submission' => null];
-        public static function parse($parsable, $entryId, $data = null, $form = null)
+        public static function parse($parsable, $entryId, $data = [], $form = null, $isUrl = false, $provider = false)
         {
         }
         protected static function setDependencies($entry, $data, $form)
@@ -4749,13 +5018,13 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static function setForm($form)
         {
         }
-        protected static function parseShortCodeFromArray($parsable)
+        protected static function parseShortCodeFromArray($parsable, $isUrl = false, $provider = false)
         {
         }
-        protected static function parseShortCodeFromString($parsable)
+        protected static function parseShortCodeFromString($parsable, $isUrl = false, $isHtml = false)
         {
         }
-        protected static function getFormData($key)
+        protected static function getFormData($key, $isHtml = false)
         {
         }
         protected static function getUserData($key)
@@ -4786,6 +5055,9 @@ namespace FluentForm\App\Services\FormBuilder {
         {
         }
         public static function getInstance()
+        {
+        }
+        public static function getInputs()
         {
         }
     }
@@ -4852,6 +5124,9 @@ namespace FluentForm\App\Services\Integrations {
         public function getAllFormIntegrations()
         {
         }
+        public function getNotificationFeeds($formId)
+        {
+        }
         public function updateNotificationStatus()
         {
         }
@@ -4877,10 +5152,13 @@ namespace FluentForm\App\Services\Integrations {
         public function globalNotify($insertId, $formData, $form)
         {
         }
-        private function checkCondition($parsedValue, $formData, $insertId)
+        public function checkCondition($parsedValue, $formData, $insertId)
         {
         }
         private function getEntry($id, $form)
+        {
+        }
+        public function cleanUpPassword($entryId, $form)
         {
         }
     }
@@ -4948,6 +5226,12 @@ namespace FluentForm\App\Services\Integrations {
         {
         }
         public function getApiSettings()
+        {
+        }
+        protected function getSelectedTagIds($data, $inputData, $simpleKey = 'tag_ids', $routingId = 'tag_ids_selection_type', $routersKey = 'tag_routers')
+        {
+        }
+        protected function evaluateRoutings($routings, $inputData)
         {
         }
     }
@@ -5325,6 +5609,23 @@ namespace FluentForm\App\Services\Integrations\Slack {
         }
     }
 }
+namespace FluentForm\App\Services\Migrator {
+    abstract class BaseMigrator
+    {
+    }
+    class CalderaMigrator extends \FluentForm\App\Services\Migrator\BaseMigrator
+    {
+        public function exist()
+        {
+        }
+        public function getForms()
+        {
+        }
+        public function getFields($form)
+        {
+        }
+    }
+}
 namespace FluentForm\App\Services\Parser {
     class Extractor
     {
@@ -5661,6 +5962,13 @@ namespace FluentForm\App\Services\Parser {
         public function getAttachmentInputFields($with = ['element'])
         {
         }
+        /**
+         * Get Any Field Type
+         * @return array
+         */
+        public function getInputsByElementTypes($types, $with = ['element'])
+        {
+        }
     }
     class Validations
     {
@@ -5729,7 +6037,7 @@ namespace FluentForm\App\Services\Parser {
         {
         }
         /**
-         * Determines if the filed is applicable for extracting validations.
+         * Determines if the field is applicable for extracting validations.
          *
          * @param  array   $field
          * @return boolean
@@ -5794,6 +6102,17 @@ namespace FluentForm\App\Services\Parser {
          * @return string
          */
         protected function getLogic($ruleName, $rule)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Scheduler {
+    class Scheduler
+    {
+        public static function processEmailReport()
+        {
+        }
+        private static function cleanUpOldData()
         {
         }
     }
@@ -15251,10 +15570,10 @@ namespace FluentForm\Framework\Foundation {
         protected static $container = array('facades' => array(), 'aliases' => array(), 'resolved' => array(), 'bindings' => array(), 'singletons' => array());
         /**
          * Bind an instance into service container
-         * @param  string $key identifier
-         * @param  mixed $concrete
-         * @param  string $facade [optional facade]
-         * @param  string $alias [optional alias]
+         * @param string $key identifier
+         * @param mixed $concrete
+         * @param string $facade [optional facade]
+         * @param string $alias [optional alias]
          * @return void
          */
         public function bind($key, $concrete = null, $facade = null, $alias = null, $shared = false)
@@ -15262,10 +15581,10 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Bind a singleton instance into service container
-         * @param  string $key identifier
-         * @param  mixed $concrete
-         * @param  string $facade [optional facade]
-         * @param  string $alias [optional alias]
+         * @param string $key identifier
+         * @param mixed $concrete
+         * @param string $facade [optional facade]
+         * @param string $alias [optional alias]
          * @return void
          */
         public function bindSingleton($key, $concrete = null, $facade = null, $alias = null)
@@ -15273,10 +15592,10 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Bind a singleton instance into service container
-         * @param  string $key identifier
-         * @param  mixed $concrete
-         * @param  string $facade [optional facade]
-         * @param  string $alias [optional alias]
+         * @param string $key identifier
+         * @param mixed $concrete
+         * @param string $facade [optional facade]
+         * @param string $alias [optional alias]
          * @return void
          */
         public function bindInstance($key, $concrete, $facade = null, $alias = null)
@@ -15284,8 +15603,8 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Register a facade for a registered instance
-         * @param  string $key
-         * @param  string $facade
+         * @param string $key
+         * @param string $facade
          * @return string
          */
         public function facade($key, $facade)
@@ -15293,8 +15612,8 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Register an alias for a registered instance
-         * @param  string $key
-         * @param  string $alias
+         * @param string $key
+         * @param string $alias
          * @return string
          */
         public function alias($key, $aliases)
@@ -15302,7 +15621,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Resolve an instance from container
-         * @param  string $key
+         * @param string $key
          * @return mixed
          * @throws \FluentForm\Framework\Exception\UnResolveableEntityException
          */
@@ -15311,7 +15630,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Resolve an item from the container
-         * @param  mixed $value
+         * @param mixed $value
          * @return mixed
          */
         protected function resolve($value, $params = [])
@@ -15327,7 +15646,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Resolve all dependencies of a single class
-         * @param  array $dependencies Constructor Parameters
+         * @param array $dependencies Constructor Parameters
          * @return array An array of all the resolved dependencies of one class
          */
         protected function resolveDependencies(array $dependencies)
@@ -15335,7 +15654,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Resolves a single class instance
-         * @param  ReflectionParameter $parameter
+         * @param ReflectionParameter $parameter
          * @return mixed
          * @throws Exception
          */
@@ -15343,8 +15662,16 @@ namespace FluentForm\Framework\Foundation {
         {
         }
         /**
+         * Get the parameter type for the given parameter.
+         *
+         * @return object ReflectionClass|ReflectionNamedType
+         */
+        protected function getParameterType($parameter)
+        {
+        }
+        /**
          * Get the alias for a key if available.
-         * @param  string  $key
+         * @param string $key
          * @return string
          */
         public function getAlias($key)
@@ -15352,7 +15679,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Check if a given class/interface exists
-         * @param  string $key
+         * @param string $key
          * @return bool
          */
         protected function classExists($key)
@@ -15360,7 +15687,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Check if an item exists at a given offset
-         * @param  string  $offset
+         * @param string $offset
          * @return bool
          */
         public function bound($offset)
@@ -15368,7 +15695,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Check if an item exists at a given offset
-         * @param  string  $offset
+         * @param string $offset
          * @return bool
          */
         public function has($offset)
@@ -15376,7 +15703,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Check if an item exists at a given offset
-         * @param  string  $offset
+         * @param string $offset
          * @return bool
          */
         public function offsetExists($offset)
@@ -15384,8 +15711,8 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Get the value from given offset
-         * @param  string  $offset
-         * @param  mixed   $value
+         * @param string $offset
+         * @param mixed $value
          * @return void
          */
         public function offsetGet($offset)
@@ -15393,8 +15720,8 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Set the value at a given offset
-         * @param  string  $offset
-         * @param  mixed   $value
+         * @param string $offset
+         * @param mixed $value
          * @return void
          */
         public function offsetSet($offset, $value)
@@ -15402,7 +15729,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Unset the value at a given offset
-         * @param  string  $offset
+         * @param string $offset
          * @return void
          */
         public function offsetUnset($offset)
@@ -15410,7 +15737,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Determine whether a shared entity is resolved.
-         * @param  string $key
+         * @param string $key
          * @return bool
          */
         public function resolved($key)
@@ -15418,7 +15745,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Get one or all resolved instance(s)
-         * @param  string $key
+         * @param string $key
          * @return mixed
          */
         public function getResolved($key = null)
@@ -15426,7 +15753,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Clear one or all resolved instance(s)
-         * @param  string $key
+         * @param string $key
          * @return void
          */
         public function clearResolved($key = null)
@@ -15434,7 +15761,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Get one or all binding(s)
-         * @param  string $key
+         * @param string $key
          * @return void
          */
         public function getBindings($key = null)
@@ -15442,7 +15769,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Clear one or all binding(s)
-         * @param  string $key
+         * @param string $key
          * @return void
          */
         public function clearBindings($key = null)
@@ -15450,7 +15777,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Get one or all singletons(s)
-         * @param  string $key
+         * @param string $key
          * @return void
          */
         public function getSingletons($key = null)
@@ -15458,7 +15785,7 @@ namespace FluentForm\Framework\Foundation {
         }
         /**
          * Clear one or all singletons(s)
-         * @param  string $key
+         * @param string $key
          * @return void
          */
         public function clearSingletons($key = null)
@@ -15744,7 +16071,7 @@ namespace FluentForm\Framework\Foundation {
          * @param string $scope [specify the scope of the ajax action|internal use]
          * @return Framework\Foundation\HookReference
          */
-        private function addAjaxAction($tag, $handler, $priority = 10, $scope)
+        private function addAjaxAction($tag, $handler, $priority, $scope)
         {
         }
         /**
@@ -15775,7 +16102,7 @@ namespace FluentForm\Framework\Foundation {
          * @param string $scope [specify the scope of the ajax action|internal use]
          * @return mixed [a reference to the handler to remove the action later]
          */
-        private function removeAjaxAction($tag, $handler, $priority = 10, $scope)
+        private function removeAjaxAction($tag, $handler, $priority, $scope)
         {
         }
         /**
@@ -16835,6 +17162,9 @@ namespace {
     function fluentImplodeRecursive($glue, array $array)
     {
     }
+    function fluentform_get_active_theme_slug()
+    {
+    }
     function getFluentFormCountryList()
     {
     }
@@ -16850,7 +17180,13 @@ namespace {
     function fluentform_mb_strpos($haystack, $needle)
     {
     }
-    function fluentformHandleScheduledTasks()
+    function fluentFormHandleScheduledTasks()
+    {
+    }
+    function fluentFormHandleScheduledEmailReport()
+    {
+    }
+    function fluentform_upgrade_url()
     {
     }
     function fluentform_after_submission_api_response_success($form, $entryId, $data, $feed, $res, $msg = '')
