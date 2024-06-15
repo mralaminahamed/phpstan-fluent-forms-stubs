@@ -46,6 +46,15 @@ jobs:
       - name: Release new stubs from latest version
         run: bash release-latest-versions.sh
 
+      - name: Push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git push origin main
+          git push origin --tags
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:

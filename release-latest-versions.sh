@@ -36,7 +36,7 @@ while IFS= read -r VERSION; do
     find source/ -mindepth 1 ! -name 'composer.json' ! -name '.gitignore' -exec rm -rf {} +
 
     # Download the new version.
-    wget -P source/ "https://downloads.wordpress.org/plugin/fluentform.${VERSION}.zip"
+    wget -q -P source/ "https://downloads.wordpress.org/plugin/fluentform.${VERSION}.zip"
     unzip -q -d source/ "source/fluentform.${VERSION}.zip"
 
     # Generate stubs.
