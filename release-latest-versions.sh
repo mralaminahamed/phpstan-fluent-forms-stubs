@@ -62,9 +62,4 @@ while IFS= read -r VERSION; do
     find source/ -mindepth 1 ! -name 'composer.json' ! -name '.gitignore' -exec rm -rf {} +
 done < "$OUTPUT_FILE"
 
-# Authenticate and push changes to the remote repository.
-git remote set-url origin https://$GITHUB_TOKEN@github.com/mralaminahamed/fluent-forms-stubs.git
-git push origin main
-git push origin --tags
-
 echo "All versions processed."
