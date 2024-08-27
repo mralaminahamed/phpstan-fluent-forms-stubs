@@ -264,6 +264,9 @@ namespace FluentForm\App\Helpers {
         public static function setFormMeta($formId, $metaKey, $value)
         {
         }
+        public static function deleteFormMeta($formId, $metaKey)
+        {
+        }
         public static function getSubmissionMeta($submissionId, $metaKey, $default = false)
         {
         }
@@ -1014,6 +1017,14 @@ namespace FluentForm\App\Http\Controllers {
         public function all(\FluentForm\App\Models\Submission $submission)
         {
         }
+        /**
+         * Get printable content
+         * @param SubmissionService $submissionService
+         * @return \WP_REST_Response
+         */
+        public function print(\FluentForm\App\Services\Submission\SubmissionService $submissionService)
+        {
+        }
     }
     class SubmissionHandlerController extends \FluentForm\App\Http\Controllers\Controller
     {
@@ -1152,6 +1163,9 @@ namespace FluentForm\App\Http\Policies {
         {
         }
         public function remove()
+        {
+        }
+        public function print()
         {
         }
     }
@@ -4884,6 +4898,7 @@ namespace FluentForm\App\Modules\Form {
     class FormDataParser
     {
         protected static $data = null;
+        protected static $submissionId = null;
         public static function parseFormEntries($entries, $form, $fields = null)
         {
         }
@@ -5924,14 +5939,6 @@ namespace FluentForm\App\Modules\Widgets {
         {
         }
         public function get_icon()
-        {
-        }
-        /**
-         * Elementor version compare to 3.0.0
-         *
-         * @return bool|int true if version is 3.0.0 or above
-         */
-        protected function is_v3_or_above()
         {
         }
         public function get_keywords()
@@ -24991,6 +24998,21 @@ namespace Box\Spout\Writer\XLSX {
     }
 }
 namespace FluentForm\App\Services\Submission {
+    class SubmissionPrint
+    {
+        public function getContent($attr)
+        {
+        }
+        protected function getBody($submissions, $form)
+        {
+        }
+        protected function addNotes($htmlBody, $submission, $form)
+        {
+        }
+        protected function getCss()
+        {
+        }
+    }
     class SubmissionService
     {
         /**
@@ -25041,6 +25063,9 @@ namespace FluentForm\App\Services\Submission {
         {
         }
         public function recordEntryDetails($entryId, $formId, $data)
+        {
+        }
+        public function getPrintContent($attr)
         {
         }
     }
