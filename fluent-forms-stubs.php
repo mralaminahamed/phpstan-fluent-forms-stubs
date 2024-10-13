@@ -752,6 +752,12 @@ namespace FluentForm\App\Http\Controllers {
         public function findShortCodePage(\FluentForm\App\Services\Form\FormService $formService, $formId)
         {
         }
+        public function formEditHistory(\FluentForm\App\Services\Form\HistoryService $historyService, $formId)
+        {
+        }
+        public function clearEditHistory(\FluentForm\App\Services\Form\HistoryService $historyService)
+        {
+        }
         public function ping()
         {
         }
@@ -1078,16 +1084,16 @@ namespace FluentForm\App\Http\Policies {
         public function verifyRequest(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function index()
+        public function index(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function templates()
+        public function templates(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function updateModuleStatus()
+        public function updateModuleStatus(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function updateIntegration()
+        public function updateIntegration(\FluentForm\Framework\Request\Request $request)
         {
         }
         public function ping()
@@ -1153,19 +1159,19 @@ namespace FluentForm\App\Http\Policies {
         public function verifyRequest(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function handleBulkActions()
+        public function handleBulkActions(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function updateStatus()
+        public function updateStatus(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function toggleIsFavorite()
+        public function toggleIsFavorite(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function remove()
+        public function remove(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function print()
+        public function print(\FluentForm\Framework\Request\Request $request)
         {
         }
     }
@@ -4584,6 +4590,9 @@ namespace FluentForm\App\Modules\Entries {
         {
         }
     }
+    /**
+     * @deprecated deprecated use FluentForm\App\Services\Transfer
+     */
     class Export
     {
         /**
@@ -4615,6 +4624,7 @@ namespace FluentForm\App\Modules\Entries {
         /**
          * Only used exports form partial entries
          *
+         * @deprecated deprecated use FluentForm\App\Services\Transfer::exportEntries
          * @todo:: refactor.
          */
         public function index()
@@ -5922,7 +5932,7 @@ namespace FluentForm\App\Modules\Widgets {
         public function __construct($app)
         {
         }
-        public function init_widgets()
+        public function init_widgets($widgets_manager)
         {
         }
         public function enqueueAssets()
@@ -7890,6 +7900,9 @@ namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
         public static function convertExistingForm($form)
         {
         }
+        private static function buildBaseQuestion($field, $validationsRules, $form)
+        {
+        }
         public static function fieldTypes()
         {
         }
@@ -8544,6 +8557,68 @@ namespace FluentForm\App\Services\Form {
          * @throws ValidationException
          */
         public static function throwValidationException($message)
+        {
+        }
+    }
+    class HistoryService
+    {
+        private $changes = [];
+        private $addedFields = [];
+        private $removedFields = [];
+        public function init($form, $postData)
+        {
+        }
+        public function checkAndStoreFormChanges($oldData, $newData, $formId)
+        {
+        }
+        private function compareFields($oldFields, $newFields)
+        {
+        }
+        private function mapFieldsByUniqueKey($fields)
+        {
+        }
+        private function getFieldKey($field)
+        {
+        }
+        private function getFieldLabel($field)
+        {
+        }
+        private function compareFieldDetails($oldField, $newField)
+        {
+        }
+        private function compareFieldProperties($oldField, $newField, $fieldLabel, $category)
+        {
+        }
+        private function compareArrayRecursively($oldValue, $newValue, $fieldLabel, $category, $parentKey = '')
+        {
+        }
+        private function areColumnsChanged($oldColumns, $newColumns)
+        {
+        }
+        private function checkFieldOrder($oldFields, $newFields)
+        {
+        }
+        private function addChange($type, $label, $key = null, $newValue = null, $oldValue = null, $category = null)
+        {
+        }
+        private function generateChangeTitle()
+        {
+        }
+        private function storeFormHistory($formId, $oldData, $changeTitle)
+        {
+        }
+        public static function get($formId)
+        {
+        }
+        public function delete($formId)
+        {
+        }
+        /**
+         * Delete records keeping only last 10 per form
+         * @param $formId
+         * @return void
+         */
+        private function maybeCleanOldData($formId)
         {
         }
     }
@@ -16510,6 +16585,33 @@ namespace FluentForm\App\Services\Logger {
     }
 }
 namespace FluentForm\App\Services\Manager {
+    class FormManagerService
+    {
+        public static function maybeAddUserAllowedFormIds($formId)
+        {
+        }
+        public static function addUserAllowedForms($formIds, $userId = false)
+        {
+        }
+        public static function updateHasSpecificFormsPermission($userId, $status)
+        {
+        }
+        public static function hasSpecificFormsPermission($userId)
+        {
+        }
+        /**
+         * Return user allowed form id's
+         * @param string $userId Optional, If not pass user will be current user
+         *
+         * @return mixed|false
+         */
+        public static function getUserAllowedForms($userId = false)
+        {
+        }
+        public static function hasFormPermission($formId)
+        {
+        }
+    }
     class ManagerService
     {
         public function getManagers($attributes = [])
