@@ -7970,9 +7970,6 @@ namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
         private static function getSaveAndResumeData($form)
         {
         }
-        public static function getAttributeWithShortcode($questions, $form)
-        {
-        }
     }
 }
 namespace FluentForm\App\Services\FormBuilder\Components {
