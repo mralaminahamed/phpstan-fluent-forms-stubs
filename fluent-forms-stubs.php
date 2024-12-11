@@ -18,6 +18,12 @@ namespace FluentForm\App\Api {
         public function entry($entryId, $includeFormats = false)
         {
         }
+        public function entryBySerial($serialNumber, $includeFormats = false)
+        {
+        }
+        public function getFormattedEntry($submission, $includeFormats = false)
+        {
+        }
         public function report($statuses = ['read', 'unread', 'unapproved', 'approved', 'declined', 'unconfirmed', 'confirmed'])
         {
         }
@@ -426,6 +432,15 @@ namespace FluentForm\App\Helpers {
          * @return string
          */
         public static function shortCodeParseOnValidationMessage($message, $form, $fieldName)
+        {
+        }
+        public static function getDefaultDateTimeFormatForMoment()
+        {
+        }
+        public static function isDefaultWPDateEnabled()
+        {
+        }
+        public static function getLandingPageEnabledForms()
         {
         }
     }
@@ -7955,6 +7970,9 @@ namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
         private static function getSaveAndResumeData($form)
         {
         }
+        public static function getAttributeWithShortcode($questions, $form)
+        {
+        }
     }
 }
 namespace FluentForm\App\Services\FormBuilder\Components {
@@ -8002,7 +8020,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
          *
          * @param array $element [Html element being compiled]
          *
-         * @return boolean
+         * @return bool
          */
         protected function hasConditions($element)
         {
@@ -8058,7 +8076,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
          *
          * @param string    $elMarkup [Predifined partial markup]
          * @param array     $data
-         * @param \stdClass $form     [Form object]
+         * @param stdClass $form     [Form object]
          *
          * @return string [Compiled markup]
          */
@@ -8534,6 +8552,14 @@ namespace FluentForm\App\Services\Form {
         {
         }
         /**
+         * Get IP and Country from geoplugin
+         *
+         * @throws ValidationException
+         */
+        private function getIpBasedOnCountry($ip)
+        {
+        }
+        /**
          * @param $value
          * @param $providedKeywords
          * @return bool
@@ -8541,9 +8567,15 @@ namespace FluentForm\App\Services\Form {
         public static function containsRestrictedKeywords($value, $providedKeywords)
         {
         }
-        private function checkIpRestriction($settings)
+        /**
+         * @throws ValidationException
+         */
+        private function checkIpRestriction($settings, $ip)
         {
         }
+        /**
+         * @throws ValidationException
+         */
         private function checkCountryRestriction($settings, $country)
         {
         }
@@ -8702,6 +8734,15 @@ namespace FluentForm\App\Services\Form {
         {
         }
         private function updatePrimaryEmail($form)
+        {
+        }
+        private function sanitizeCustomSubmit($fields)
+        {
+        }
+        public function sanitizeMinWidth($value)
+        {
+        }
+        public function sanitizeRgbColor($value)
         {
         }
     }
@@ -17855,7 +17896,7 @@ namespace FluentForm\App\Services\Parser {
 namespace FluentForm\App\Services\Report {
     class ReportHelper
     {
-        public static function generateReport($form, $statuses = ['read', 'unread'])
+        public static function generateReport($form, $statuses = ['read', 'unread', 'unapproved', 'approved', 'declined', 'unconfirmed', 'confirmed'])
         {
         }
         public static function getInputReport($formId, $fieldNames, $statuses = ['read', 'unread', 'unapproved', 'approved', 'declined', 'unconfirmed', 'confirmed'])
@@ -17978,6 +18019,9 @@ namespace FluentForm\App\Services\Settings {
          * @throws \Exception
          */
         public function savePreset($attributes)
+        {
+        }
+        public function secureMetaDescription($description)
         {
         }
     }
@@ -25129,6 +25173,9 @@ namespace FluentForm\App\Services\Submission {
         {
         }
         public function find($submissionId)
+        {
+        }
+        public function findBySerialID($formId, $serialNumber = null, $isHtml = false)
         {
         }
         public function resources($attributes)
