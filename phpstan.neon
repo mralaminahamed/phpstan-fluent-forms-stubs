@@ -1,8 +1,8 @@
 parameters:
     paths:
-        - fluent-forms-stubs.php
+        - fluent-forms-stubs.stub
     scanFiles:
-        - fluent-forms-constants-stubs.php
+        - fluent-forms-constants-stubs.stub
     bootstrapFiles:
         - bootstrap.php
     level: 5

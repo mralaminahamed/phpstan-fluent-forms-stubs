@@ -5,8 +5,8 @@
 
 HEADER=$'/**\n * Generated stub declarations for Fluent Forms.\n * @see https://fluentforms.com/\n * @see https://github.com/mralaminahamed/phpstan-fluent-forms-stubs\n */'
 
-FILE="fluent-forms-stubs.php"
-FILE_CONSTANTS="fluent-forms-constants-stubs.php"
+FILE="fluent-forms-stubs.stub"
+FILE_CONSTANTS="fluent-forms-constants-stubs.stub"
 
 set -e
 

@@ -34,6 +34,6 @@ Include stubs in PHPStan configuration file.
 ```yaml
 parameters:
     bootstrapFiles:
-        - vendor/mralaminahamed/fluent-forms-stubs/fluent-forms-constants-stubs.php
-        - vendor/mralaminahamed/fluent-forms-stubs/fluent-forms-stubs.php
+        - vendor/mralaminahamed/fluent-forms-stubs/fluent-forms-constants-stubs.stub
+        - vendor/mralaminahamed/fluent-forms-stubs/fluent-forms-stubs.stub
 ```
