@@ -25,7 +25,7 @@ Require this package as a development dependency with [Composer](https://getcomp
 composer require --dev mralaminahamed/fluent-forms-stubs
 ```
 
-Alternatively you may download `fluent-forms-stubs.php` directly.
+Alternatively you may download `fluent-forms-stubs.stub` directly.
 
 ## Usage in PHPStan
 
