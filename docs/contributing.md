@@ -46,7 +46,7 @@ Submit issues through the [GitHub issue tracker](https://github.com/mralaminaham
 
 1. Clone your fork of the repository
    ```bash
-   git clone https://github.com/YOUR-USERNAME/phpstan-fluent-forms-stubs.git
+   git clone https://github.com/mralaminahamed/phpstan-fluent-forms-stubs.git
    cd phpstan-fluent-forms-stubs
    ```
 
@@ -120,4 +120,4 @@ If you have questions about contributing, feel free to:
 - Open an issue labeled as 'question'
 - Reach out to the maintainers
 
-Thank you for your contributions! 
+Thank you for your contributions!
