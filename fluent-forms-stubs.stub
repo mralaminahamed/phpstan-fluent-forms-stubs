@@ -443,10 +443,19 @@ namespace FluentForm\App\Helpers {
         public static function isDefaultWPDateEnabled()
         {
         }
+        public static function isPaymentCompatible()
+        {
+        }
+        public static function hasPro()
+        {
+        }
         public static function getLandingPageEnabledForms()
         {
         }
         public static function sanitizeArrayKeysAndValues($values)
+        {
+        }
+        public static function getFrontendFacingUrl($args = '')
         {
         }
     }
@@ -3981,6 +3990,191 @@ namespace FluentForm\App\Modules {
         }
     }
 }
+namespace FluentForm\App\Modules\Ai {
+    /**
+     *  Handling Ai Module.
+     *
+     * @since 6.0.0
+     */
+    class AiController
+    {
+        public function boot()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\Form {
+    class FormService
+    {
+        /** @var \FluentForm\Framework\Foundation\Application */
+        protected $app;
+        /** @var \FluentForm\App\Models\Form|\FluentForm\Framework\Database\Query\Builder */
+        protected $model;
+        /** @var \FluentForm\App\Services\Form\Updater */
+        protected $updater;
+        /** @var \FluentForm\App\Services\Form\Duplicator */
+        protected $duplicator;
+        /** @var \FluentForm\App\Services\Form\Fields */
+        protected $fields;
+        public function __construct()
+        {
+        }
+        /**
+         * Get the paginated forms matching search criteria.
+         *
+         * @param array $attributes
+         * @return array
+         */
+        public function get($attributes = [])
+        {
+        }
+        /**
+         * Store a form with its associated meta.
+         *
+         * @param array $attributes
+         * @return \FluentForm\App\Models\Form $form
+         * @throws Exception
+         */
+        public function store($attributes = [])
+        {
+        }
+        /**
+         * Duplicate a form with its associated meta.
+         *
+         * @param array $attributes
+         * @return \FluentForm\App\Models\Form $form
+         * @throws Exception
+         */
+        public function duplicate($attributes = [])
+        {
+        }
+        public function find($id)
+        {
+        }
+        public function delete($id)
+        {
+        }
+        /**
+         * Update a form with its relevant fields.
+         *
+         * @param array $attributes
+         * @return \FluentForm\App\Models\Form $form
+         * @throws Exception
+         */
+        public function update($attributes = [])
+        {
+        }
+        /**
+         * Duplicate a form with its associated meta.
+         *
+         * @param int $id
+         * @return \FluentForm\App\Models\Form $form
+         * @throws Exception
+         */
+        public function convert($id)
+        {
+        }
+        public function templates()
+        {
+        }
+        public function components($formId)
+        {
+        }
+        public function getDisabledComponents()
+        {
+        }
+        public function fields($id)
+        {
+        }
+        public function shortcodes($id)
+        {
+        }
+        public function pages()
+        {
+        }
+        public function getInputsAndLabels($formId, $with = ['admin_label', 'raw'])
+        {
+        }
+        public function findShortCodePage($formId)
+        {
+        }
+        public static function getShortCodeId($content, $shortcodeTag = 'fluentform')
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Ai {
+    class AiFormBuilder extends \FluentForm\App\Services\Form\FormService
+    {
+        private $allDefaultFields = [];
+        public function __construct()
+        {
+        }
+        public function buildForm()
+        {
+        }
+        /**
+         * @param array $form
+         * @return Form|\FluentForm\Framework\Database\Query\Builder
+         * @throws Exception
+         */
+        protected function prepareAndSaveForm($form)
+        {
+        }
+        /**
+         * @param array $args
+         * @return array response form fields
+         * @throws Exception
+         */
+        protected function generateForm($args)
+        {
+        }
+        protected function getDefaultFields()
+        {
+        }
+        protected function processField($element, $field, $allFields)
+        {
+        }
+        protected function resolveInput($field)
+        {
+        }
+        protected function getOptions($options = [])
+        {
+        }
+        protected function getBlankFormConfig()
+        {
+        }
+        protected function saveForm($formattedInputs, $title, $isStepForm = false, $isConversational = false)
+        {
+        }
+        protected function prepareCustomForm($formattedInputs, $isStepForm)
+        {
+        }
+        protected function resolveContainerFields($field, $allFields)
+        {
+        }
+        /**
+         * @return array
+         */
+        protected function getStepWrapper()
+        {
+        }
+        private function getUserPrompt($args)
+        {
+        }
+    }
+    /**
+     *  Handling AI Api.
+     * @since 6.0.0
+     */
+    class FluentFormAIAPI
+    {
+        private $url = 'https://ai.fluentforms.com/';
+        public function makeRequest($requestData = [])
+        {
+        }
+    }
+}
 namespace FluentForm\App\Modules\CLI {
     class Commands
     {
@@ -4775,6 +4969,9 @@ namespace FluentForm\App\Modules\Form {
     }
     class CleanTalkHandler
     {
+        public function setCleanTalkScript()
+        {
+        }
         public static function validate($accessKey)
         {
         }
@@ -5642,6 +5839,1478 @@ namespace FluentForm\App\Modules\Logger {
         {
         }
         public function getApiLogFilters()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Payments {
+    class AjaxEndpoints
+    {
+        public function handleEndpoint($route)
+        {
+        }
+        public function enablePaymentModule()
+        {
+        }
+        private function upgradeDB()
+        {
+        }
+        public function updateGlobalSettings()
+        {
+        }
+        public function getPaymentMethodSettings()
+        {
+        }
+        public function savePaymentMethodSettings()
+        {
+        }
+        public function getFormSettings()
+        {
+        }
+        public function saveFormSettings()
+        {
+        }
+        public function updateTransaction()
+        {
+        }
+        public function getStripeConnectConfig()
+        {
+        }
+        public function disconnectStripeConnect()
+        {
+        }
+        public function getWpPages()
+        {
+        }
+        public function cancelSubscription()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Payments\Classes {
+    class PaymentAction
+    {
+        private $form;
+        private $data;
+        private $submissionData;
+        private $submissionId = null;
+        private $orderItems = [];
+        private $hookedOrderItems = [];
+        private $subscriptionItems = [];
+        private $quantityItems = [];
+        public $selectedPaymentMethod = '';
+        public $methodSettings = [];
+        protected $paymentInputs = null;
+        protected $subscriptionInputs = null;
+        protected $currency = null;
+        protected $methodField = null;
+        protected $discountCodes = [];
+        protected $couponField = [];
+        public function __construct($form, $insertData, $data)
+        {
+        }
+        private function setSubmissionData($insertData)
+        {
+        }
+        private function setupData()
+        {
+        }
+        public function isConditionPass()
+        {
+        }
+        public function draftFormEntry()
+        {
+        }
+        public function getOrderItems($forced = false)
+        {
+        }
+        private function getQuantity($productName)
+        {
+        }
+        private function pushItem($data)
+        {
+        }
+        private function getItemFromVariables($item, $key)
+        {
+        }
+        public function getCalculatedAmount()
+        {
+        }
+        public function getPaymentType()
+        {
+        }
+        private function getCurrency()
+        {
+        }
+        public function getSubscriptionItems()
+        {
+        }
+        private function checkForExistingSubmission()
+        {
+        }
+        private function insertOrderItems($items, $existing = false)
+        {
+        }
+        private function validateSubscriptionInputs()
+        {
+        }
+        protected function applyDiscountCodes()
+        {
+        }
+    }
+    class PaymentEntries
+    {
+        public function init()
+        {
+        }
+        public function loadApp()
+        {
+        }
+        public function getPayments()
+        {
+        }
+        public function handleBulkAction()
+        {
+        }
+        public function getFilters()
+        {
+        }
+    }
+    class PaymentManagement
+    {
+        public function cancelSubscription($subscription)
+        {
+        }
+    }
+    class PaymentReceipt
+    {
+        private $entry;
+        private $orderItems = null;
+        private $subscriptions = null;
+        private $subscriptionTotal = null;
+        private $discountItems = null;
+        public function __construct($entry)
+        {
+        }
+        public function getItem($property)
+        {
+        }
+        public function getSubmissionValue($property)
+        {
+        }
+        public function getOrderItems()
+        {
+        }
+        private function getSubscriptions()
+        {
+        }
+        public function getDiscountItems()
+        {
+        }
+        public function renderReceipt()
+        {
+        }
+        private function beforePaymentReceipt()
+        {
+        }
+        private function afterPaymentReceipt()
+        {
+        }
+        private function paymentInfo()
+        {
+        }
+        private function paymentInfoTable()
+        {
+        }
+        private function itemDetails()
+        {
+        }
+        private function customerDetails()
+        {
+        }
+        private function loadCss()
+        {
+        }
+        public function loadView($fileName, $data)
+        {
+        }
+        private function subscriptionDetails()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\FormBuilder\Components {
+    class BaseComponent
+    {
+        public $app;
+        public function __construct($key = '', $title = '', $tags = [], $position = 'advanced')
+        {
+        }
+        /**
+         * Build unique ID concatenating form id and name attribute
+         *
+         * @param array $data $form
+         *
+         * @return string for id value
+         */
+        protected function makeElementId($data, $form)
+        {
+        }
+        /**
+         * Build attributes for any html element
+         *
+         * @param array $attributes
+         *
+         * @return string [Compiled key='value' attributes]
+         */
+        protected function buildAttributes($attributes, $form = null)
+        {
+        }
+        /**
+         * Extract value attribute from attribute list
+         *
+         * @param array &$element
+         *
+         * @return string
+         */
+        protected function extractValueFromAttributes(&$element)
+        {
+        }
+        protected function extractDynamicValues($data, $form)
+        {
+        }
+        /**
+         * Determine if the given element has conditions bound
+         *
+         * @param array $element [Html element being compiled]
+         *
+         * @return bool
+         */
+        protected function hasConditions($element)
+        {
+        }
+        /**
+         * Generate a unique id for an element
+         *
+         * @param string $str [preix]
+         *
+         * @return string [Unique id]
+         */
+        protected function getUniqueId($str)
+        {
+        }
+        /**
+         * Get a default class for each form element wrapper
+         * @return string
+         */
+        protected function getDefaultContainerClass()
+        {
+        }
+        /**
+         * Get required class for form element wrapper
+         *
+         * @param array $rules [Validation rules]
+         *
+         * @return mixed
+         */
+        protected function getRequiredClass($rules)
+        {
+        }
+        /**
+         * Get asterisk placement for the required form elements
+         * @return string
+         */
+        protected function getAsteriskPlacement($form)
+        {
+        }
+        /**
+         * Generate a label for any element
+         *
+         * @param array $data
+         *
+         * @return string [label Html element]
+         */
+        protected function buildElementLabel($data, $form)
+        {
+        }
+        /**
+         * Generate html/markup for any element
+         *
+         * @param string $elMarkup [Predifined partial markup]
+         * @param array $data
+         * @param stdClass $form   [Form object]
+         *
+         * @return string [Compiled markup]
+         */
+        protected function buildElementMarkup($elMarkup, $data, $form)
+        {
+        }
+        /**
+         * Generate a help message for any element beside label
+         *
+         * @param array $data
+         *
+         * @return string [Html]
+         */
+        protected function getLabelHelpMessage($data)
+        {
+        }
+        /**
+         * Generate a help message for any element beside form element
+         *
+         * @param array $data
+         *
+         * @return string [Html]
+         */
+        protected function getInputHelpMessage($data, $hideClass = '')
+        {
+        }
+        protected function parseEditorSmartCode($text, $form)
+        {
+        }
+        protected function printContent($hook, $html, $data, $form)
+        {
+        }
+        /**
+         * A helper method for remove shortcode from aria label
+         *
+         * @param string $label
+         *
+         * @return string $label
+         */
+        protected function removeShortcode($label)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Services\FormBuilder {
+    abstract class BaseFieldManager extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
+    {
+        protected $key = '';
+        protected $title = '';
+        protected $tags = [];
+        protected $position = 'advanced';
+        public function __construct($key, $title, $tags = [], $position = 'advanced')
+        {
+        }
+        public function register()
+        {
+        }
+        public function pushConditionalSupport($conditonalItems)
+        {
+        }
+        public function pushFormInputType($types)
+        {
+        }
+        public function pushComponent($components)
+        {
+        }
+        public function pushEditorElementPositions($placement_settings)
+        {
+        }
+        public function generalEditorElement()
+        {
+        }
+        public function advancedEditorElement()
+        {
+        }
+        public function getGeneralEditorElements()
+        {
+        }
+        public function getAdvancedEditorElements()
+        {
+        }
+        public function getEditorCustomizationSettings()
+        {
+        }
+        public function pushTags($tags, $form)
+        {
+        }
+        public abstract function getComponent();
+        public abstract function render($element, $form);
+    }
+}
+namespace FluentForm\App\Modules\Payments\Components {
+    class CustomPaymentComponent extends \FluentForm\App\Services\FormBuilder\BaseFieldManager
+    {
+        public function __construct($key = 'custom_payment_component', $title = 'Custom Payment', $tags = ['custom', 'payment', 'donation'], $position = 'payments')
+        {
+        }
+        function getComponent()
+        {
+        }
+        public function getGeneralEditorElements()
+        {
+        }
+        public function getAdvancedEditorElements()
+        {
+        }
+        function render($data, $form)
+        {
+        }
+    }
+    class ItemQuantity extends \FluentForm\App\Services\FormBuilder\BaseFieldManager
+    {
+        public function __construct($key = 'item_quantity_component', $title = 'Quantity', $tags = ['custom', 'payment', 'quantity'], $position = 'payments')
+        {
+        }
+        function getComponent()
+        {
+        }
+        public function getGeneralEditorElements()
+        {
+        }
+        public function getAdvancedEditorElements()
+        {
+        }
+        public function getEditorCustomizationSettings()
+        {
+        }
+        function render($data, $form)
+        {
+        }
+    }
+    class MultiPaymentComponent extends \FluentForm\App\Services\FormBuilder\BaseFieldManager
+    {
+        public function __construct($key = 'multi_payment_component', $title = 'Multi Payment Item', $tags = ['custom', 'payment', 'donation'], $position = 'payments')
+        {
+        }
+        function getComponent()
+        {
+        }
+        public function getGeneralEditorElements()
+        {
+        }
+        public function getAdvancedEditorElements()
+        {
+        }
+        function render($data, $form)
+        {
+        }
+        public function renderSingleItem($data, $form)
+        {
+        }
+        public function renderMultiProduct($data, $form)
+        {
+        }
+    }
+    class PaymentMethods extends \FluentForm\App\Services\FormBuilder\BaseFieldManager
+    {
+        public function __construct()
+        {
+        }
+        function getComponent()
+        {
+        }
+        public function recheckEditorComponent($component)
+        {
+        }
+        public function getEditorCustomizationSettings()
+        {
+        }
+        public function getGeneralEditorElements()
+        {
+        }
+        function render($data, $form)
+        {
+        }
+    }
+    class PaymentSummaryComponent extends \FluentForm\App\Services\FormBuilder\BaseFieldManager
+    {
+        public function __construct($key = 'payment_summary_component', $title = 'Payment Summary', $tags = ['payment', 'summary', 'cart'], $position = 'payments')
+        {
+        }
+        public function register()
+        {
+        }
+        function getComponent()
+        {
+        }
+        public function getGeneralEditorElements()
+        {
+        }
+        public function generalEditorElement()
+        {
+        }
+        public function getAdvancedEditorElements()
+        {
+        }
+        function render($data, $form)
+        {
+        }
+    }
+    class Subscription extends \FluentForm\App\Services\FormBuilder\BaseFieldManager
+    {
+        public function __construct($key = 'subscription_payment_component', $title = 'Subscription Field', $tags = ['custom', 'payment', 'donation', 'subscription'], $position = 'payments')
+        {
+        }
+        function getComponent()
+        {
+        }
+        public function getGeneralEditorElements()
+        {
+        }
+        public function getAdvancedEditorElements()
+        {
+        }
+        function render($data, $form)
+        {
+        }
+        public function renderSingleItem($data, $form)
+        {
+        }
+        public function renderMultiProduct($data, $form)
+        {
+        }
+        private function getPaymentSummaryText($plan, $formId, $currency)
+        {
+        }
+        private function getPlanInputAttributes($plan)
+        {
+        }
+        private function hasTrial($plan)
+        {
+        }
+        private function hasSignupFee($plan)
+        {
+        }
+        private function makeCustomInputHtml($field, $plan, $parentInputType, $markup)
+        {
+        }
+        public function addWhiteListedFields($whiteListedFields, $formId)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Payments\Migrations {
+    class Migration
+    {
+        public static function run($network_wide = false)
+        {
+        }
+        public static function migrate()
+        {
+        }
+    }
+    class OrderItems
+    {
+        /**
+         * Migrate the table.
+         *
+         * @return void
+         */
+        public static function migrate()
+        {
+        }
+        public static function maybeAlterColumns()
+        {
+        }
+    }
+    class OrderSubscriptions
+    {
+        /**
+         * Migrate the table.
+         *
+         * @return void
+         */
+        public static function migrate()
+        {
+        }
+    }
+    class Transactions
+    {
+        /**
+         * Migrate the table.
+         *
+         * @return void
+         */
+        public static function migrate()
+        {
+        }
+        public static function maybeAlterColumns()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Payments\Orders {
+    class OrderData
+    {
+        public static function getSummary($submission, $form)
+        {
+        }
+        public static function getOrderItems($submission)
+        {
+        }
+        public static function getDiscounts($submission)
+        {
+        }
+        public static function getTransactions($submissionId)
+        {
+        }
+        public static function getRefunds($submissionId)
+        {
+        }
+        public static function calculateOrderItemsTotal($orderItems, $formatted = false, $currency = false, $discountItems = [])
+        {
+        }
+        public static function getSubscriptionsAndPaymentTotal($submission)
+        {
+        }
+        public static function getSubscriptionTransactions($subscriptionId)
+        {
+        }
+        public static function getTotalPaid($submission)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Payments {
+    class PaymentHandler
+    {
+        public function init()
+        {
+        }
+        public function pushGlobalSettings($components)
+        {
+        }
+        public function getGlobalSettingsPaymentVars($globalSettingVars)
+        {
+        }
+        public function handleAjaxEndpoints()
+        {
+        }
+        public function maybeHandlePayment($insertData, $data, $form)
+        {
+        }
+        public function isEnabled()
+        {
+        }
+        public function modifySingleEntryLabels($labels, $submission, $form)
+        {
+        }
+        public function maybeAddPaymentSettings($menus, $formId)
+        {
+        }
+        /**
+         * @param $html     string
+         * @param $property string
+         * @param $instance ShortCodeParser
+         * @return false|string
+         */
+        public function paymentReceiptView($html, $property, $instance)
+        {
+        }
+        private function validateFrameLessPage($data)
+        {
+        }
+        public function maybeAssignTransactions($userId)
+        {
+        }
+        public function paymentTranslations($i18n)
+        {
+        }
+        public function validateSubscriptionInputs($error, $field, $formData)
+        {
+        }
+        public function validatePaymentInputs($error, $field, $formData)
+        {
+        }
+        public function validatePaymentMethod($error, $field, $formData, $fields, $form)
+        {
+        }
+    }
+    class PaymentHelper
+    {
+        public static function getFormCurrency($formId)
+        {
+        }
+        public static function formatMoney($amountInCents, $currency)
+        {
+        }
+        public static function getFormSettings($formId, $scope = 'public')
+        {
+        }
+        public static function getCurrencyConfig($formId = false, $currency = false)
+        {
+        }
+        public static function getPaymentSettings()
+        {
+        }
+        public static function updatePaymentSettings($data)
+        {
+        }
+        /**
+         * https://support.stripe.com/questions/which-currencies-does-stripe-support
+         */
+        public static function getCurrencies()
+        {
+        }
+        /**
+         * Get a specific currency symbol
+         *
+         * https://support.stripe.com/questions/which-currencies-does-stripe-support
+         */
+        public static function getCurrencySymbol($currency = '')
+        {
+        }
+        public static function getCurrencySymbols()
+        {
+        }
+        public static function zeroDecimalCurrencies()
+        {
+        }
+        public static function isZeroDecimal($currencyCode)
+        {
+        }
+        public static function getPaymentStatuses()
+        {
+        }
+        public static function getFormPaymentMethods($formId)
+        {
+        }
+        public static function getCustomerEmail($submission, $form = false)
+        {
+        }
+        static function getCustomerPhoneNumber($submission, $form)
+        {
+        }
+        /**
+         * Trim a string and append a suffix.
+         *
+         * @param string $string String to trim.
+         * @param integer $chars Amount of characters.
+         *                         Defaults to 200.
+         * @param string $suffix Suffix.
+         *                         Defaults to '...'.
+         * @return string
+         */
+        public static function formatPaymentItemString($string, $chars = 200, $suffix = '...')
+        {
+        }
+        /**
+         * Limit length of an arg.
+         *
+         * @param string $string Argument to limit.
+         * @param integer $limit Limit size in characters.
+         * @return string
+         */
+        public static function limitLength($string, $limit = 127)
+        {
+        }
+        public static function floatToString($float)
+        {
+        }
+        public static function convertToCents($amount)
+        {
+        }
+        public static function getCustomerName($submission, $form = false)
+        {
+        }
+        public static function getStripeInlineConfig($formId)
+        {
+        }
+        public static function log($data, $submission = false, $forceInsert = false)
+        {
+        }
+        public static function maybeFireSubmissionActionHok($submission)
+        {
+        }
+        public static function loadView($fileName, $data)
+        {
+        }
+        public static function recordSubscriptionCancelled($subscription, $vendorData, $logData = [])
+        {
+        }
+        public static function getPaymentSummaryText($plan, $formId, $currency, $withMarkup = true)
+        {
+        }
+        public static function getCustomerAddress($submission)
+        {
+        }
+        public static function getBillingIntervals()
+        {
+        }
+        public static function getSubscriptionStatuses()
+        {
+        }
+        public static function getFormInput($formId, $inputType)
+        {
+        }
+        public static function encryptKey($value)
+        {
+        }
+        public static function decryptKey($raw_value)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Payments\PaymentMethods {
+    abstract class BasePaymentMethod
+    {
+        protected $key = '';
+        protected $settingsKey = '';
+        public function __construct($key)
+        {
+        }
+        public abstract function getGlobalFields();
+        public abstract function getGlobalSettings();
+    }
+    abstract class BaseProcessor
+    {
+        protected $method;
+        protected $form = null;
+        protected $submission = null;
+        protected $submissionId = null;
+        public function init()
+        {
+        }
+        public abstract function handlePaymentAction($submissionId, $submissionData, $form, $methodSettings, $hasSubscriptions, $totalPayable);
+        public function setSubmissionId($submissionId)
+        {
+        }
+        public function getSubmissionId()
+        {
+        }
+        public function insertTransaction($data)
+        {
+        }
+        public function insertRefund($data)
+        {
+        }
+        public function getTransaction($transactionId, $column = 'id')
+        {
+        }
+        public function getRefund($refundId, $column = 'id')
+        {
+        }
+        public function getTransactionByChargeId($chargeId)
+        {
+        }
+        public function getLastTransaction($submissionId)
+        {
+        }
+        public function changeSubmissionPaymentStatus($newStatus)
+        {
+        }
+        public function recalculatePaidTotal()
+        {
+        }
+        public function getRefundTotal()
+        {
+        }
+        public function changeTransactionStatus($transactionId, $newStatus)
+        {
+        }
+        public function updateTransaction($transactionId, $data)
+        {
+        }
+        public function completePaymentSubmission($isAjax = true)
+        {
+        }
+        public function getReturnData()
+        {
+        }
+        public function getSubmission()
+        {
+        }
+        public function getForm()
+        {
+        }
+        public function getOrderItems()
+        {
+        }
+        public function getDiscountItems()
+        {
+        }
+        public function setMetaData($name, $value)
+        {
+        }
+        public function deleteMetaData($name)
+        {
+        }
+        public function getMetaData($metaKey)
+        {
+        }
+        public function showPaymentView($returnData)
+        {
+        }
+        public function loadView($view, $data = [])
+        {
+        }
+        public function refund($refund_amount, $transaction, $submission, $method = '', $refundId = '', $refundNote = 'Refunded')
+        {
+        }
+        public function updateRefund($totalRefund, $transaction, $submission, $method = '', $refundId = '', $refundNote = 'Refunded')
+        {
+        }
+        private function maybeAutoLogin($loginId, $submission)
+        {
+        }
+        public function getAmountTotal()
+        {
+        }
+        public function handleSessionRedirectBack($data)
+        {
+        }
+        public function getSubscriptions($status = false)
+        {
+        }
+        public function updateSubscription($id, $data)
+        {
+        }
+        public function maybeInsertSubscriptionCharge($item)
+        {
+        }
+        public function getPaymentCountsAndTotal($subscriptionId, $paymentMethod = false)
+        {
+        }
+        protected function getCancelAtTimeStamp($subscription)
+        {
+        }
+        public function updateSubmission($id, $data)
+        {
+        }
+        public function limitLength($string, $limit = 127)
+        {
+        }
+        public function getTransactionDefaults()
+        {
+        }
+        public function createInitialPendingTransaction($submission = false, $hasSubscriptions = false)
+        {
+        }
+        /**
+         * @param object $subscription
+         * @param string $newStatus
+         * @param string $note
+         * @return object
+         */
+        public function updateSubscriptionStatus($subscription, $newStatus, $note = '')
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Payments\PaymentMethods\Stripe\API {
+    trait RequestProcessor
+    {
+        private static function processResponse($response)
+        {
+        }
+        private static function errorHandler($code, $message, $data = [])
+        {
+        }
+    }
+    class Account
+    {
+        use \FluentForm\App\Modules\Payments\PaymentMethods\Stripe\API\RequestProcessor;
+        public static function retrive($accountId, $key)
+        {
+        }
+    }
+    /**
+     * WC_Stripe_API class.
+     *
+     * Communicates with Stripe API.
+     */
+    class ApiRequest
+    {
+        /**
+         * Stripe API Endpoint
+         */
+        private static $ENDPOINT = 'https://api.stripe.com/v1/';
+        const STRIPE_API_VERSION = '2020-08-27';
+        /**
+         * Secret API Key.
+         * @var string
+         */
+        private static $secret_key = '';
+        /**
+         * Set secret API Key.
+         * @param string $secret_key
+         */
+        public static function set_secret_key($secret_key)
+        {
+        }
+        /**
+         * Set secret API Key.
+         * @param string $secret_key
+         */
+        public static function set_end_point($endpont)
+        {
+        }
+        /**
+         * Get secret key.
+         * @return string
+         */
+        public static function get_secret_key()
+        {
+        }
+        /**
+         * Generates the user agent we use to pass to API request so
+         * Stripe can identify our application.
+         *
+         * @since 4.0.0
+         * @version 4.0.0
+         */
+        public static function get_user_agent()
+        {
+        }
+        /**
+         * Generates the headers to pass to API request.
+         *
+         * @since 4.0.0
+         * @version 4.0.0
+         */
+        public static function get_headers()
+        {
+        }
+        /**
+         * Send the request to Stripe's API
+         *
+         * @param array $request
+         * @param string $api
+         * @param string $method
+         * @return object|\WP_Error
+         * @since 3.1.0
+         * @version 4.0.6
+         */
+        public static function request($request, $api = 'charges', $method = 'POST')
+        {
+        }
+        /**
+         * Retrieve API endpoint.
+         *
+         * @param string $api
+         * @return mixed|\WP_Error|null
+         * @since 4.0.0
+         * @version 4.0.0
+         */
+        public static function retrieve($api)
+        {
+        }
+    }
+    /**
+     * Handle Stripe Checkout Session
+     * @since 1.0.0
+     */
+    class CheckoutSession
+    {
+        public static function create($args)
+        {
+        }
+        public static function retrieve($sessionId, $args = [], $formId = false)
+        {
+        }
+    }
+    class Customer
+    {
+        use \FluentForm\App\Modules\Payments\PaymentMethods\Stripe\API\RequestProcessor;
+        public static function createCustomer($customerArgs, $formId)
+        {
+        }
+        public static function validate($args)
+        {
+        }
+    }
+    class Invoice
+    {
+        use \FluentForm\App\Modules\Payments\PaymentMethods\Stripe\API\RequestProcessor;
+        public static function createItem($item, $formId)
+        {
+        }
+        public static function retrieve($invoiceId, $formId, $args = [])
+        {
+        }
+    }
+    /**
+     * Handle Payment Charge Via Stripe
+     * @since 1.2.0
+     */
+    class Plan
+    {
+        use \FluentForm\App\Modules\Payments\PaymentMethods\Stripe\API\RequestProcessor;
+        public static function retrieve($planId, $formId)
+        {
+        }
+        public static function create($plan, $formId)
+        {
+        }
+        public static function getPriceIdsFromSubscriptionTransaction($subscription, $subscriptionTransaction)
+        {
+        }
+        public static function getOrCreate($subscription, $submission)
+        {
+        }
+        public static function getGeneratedSubscriptionId($subscription, $currency = 'USD')
+        {
+        }
+        public static function subscribe($subscriptionArgs, $formId)
+        {
+        }
+        public static function getCancelledAtTimestamp($subscription)
+        {
+        }
+        public static function getSubscriptionPlanBySubscription($subscription, $currency)
+        {
+        }
+        public static function maybeSetCancelAt($subscription, $stripeSub)
+        {
+        }
+    }
+    class SCA
+    {
+        use \FluentForm\App\Modules\Payments\PaymentMethods\Stripe\API\RequestProcessor;
+        public static function createPaymentIntent($args, $formId)
+        {
+        }
+        public static function retrievePaymentIntent($intentId, $args, $formId)
+        {
+        }
+        public static function confirmPayment($intendId, $args, $formId)
+        {
+        }
+    }
+    class StripeListener
+    {
+        public function verifyIPN()
+        {
+        }
+        // This is an onetime payment success
+        private function handleChargeSucceeded($event)
+        {
+        }
+        /*
+         * Handle Subscription Payment IPN
+         * Refactored in version 2.0
+         */
+        private function maybeHandleSubscriptionPayment($event)
+        {
+        }
+        /*
+         * Refactored at version 2.0
+         * We are logging refunds now for both subscription and
+         * One time payments
+         */
+        private function handleChargeRefund($event)
+        {
+        }
+        /*
+         * Handle Subscription Canceled
+         */
+        private function handleSubscriptionCancelled($event)
+        {
+        }
+        private function handleCheckoutSessionCompleted($event)
+        {
+        }
+        /*
+         *
+         */
+        public function retrive($eventId, $formId = false)
+        {
+        }
+        public function verifySignature($payload, $signature)
+        {
+        }
+        protected function getTimeStamp($signature)
+        {
+        }
+        private function getSignatures($header, $scheme = 'v1')
+        {
+        }
+        protected function secureCompare($a, $b)
+        {
+        }
+        protected function createSubsTransactionDataFromInvoice($invoice, $subscription, $submission)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Payments\PaymentMethods\Stripe\Components {
+    class StripeInline extends \FluentForm\App\Services\FormBuilder\BaseFieldManager
+    {
+        /**
+         * This is not a standalone editor components
+         * rather just a frontend rendering.
+         */
+        public function __construct()
+        {
+        }
+        public function maybePushPaymentInputs($inlineContents, $method, $data, $form)
+        {
+        }
+        /**
+         * We don't need to return anything from here
+         */
+        function getComponent()
+        {
+        }
+        /**
+         * We don't need to return anything from here
+         */
+        function render($element, $form)
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Payments\PaymentMethods\Stripe {
+    class ConnectConfig
+    {
+        private static $connectBase = 'https://apiv2.wpmanageninja.com/fluentform/';
+        public static function getConnectConfig()
+        {
+        }
+        public static function verifyAuthorizeSuccess($data)
+        {
+        }
+        private static function getAccountInfo($settings, $mode)
+        {
+        }
+        public static function disconnect($data, $sendResponse = false)
+        {
+        }
+    }
+    class PaymentManager
+    {
+        public function cancelSubscription($subscription, $scope = 'admin', $submission = false)
+        {
+        }
+        public function refundTransaction($transaction, $scope = 'admin')
+        {
+        }
+        private function retrieveVendorSubscription($subscription)
+        {
+        }
+        private function retrieveVendorTransaction($transaction)
+        {
+        }
+    }
+    class StripeHandler
+    {
+        protected $key = 'stripe';
+        public function init()
+        {
+        }
+        public function routeStripeProcessor($submissionId, $submissionData, $form, $methodSettings, $hasSubscriptions, $totalPayable = 0)
+        {
+        }
+        public function pushPaymentMethodToForm($methods)
+        {
+        }
+        public function enqueueAssets()
+        {
+        }
+        public function validateSettings($errors, $settings)
+        {
+        }
+        public function modifyTransaction($transaction)
+        {
+        }
+        public function isEnabled()
+        {
+        }
+        public function sanitizeGlobalSettings($settings)
+        {
+        }
+    }
+    class StripeProcessor extends \FluentForm\App\Modules\Payments\PaymentMethods\BaseProcessor
+    {
+        public $method = 'stripe';
+        protected $form;
+        public function init()
+        {
+        }
+        public function handlePaymentAction($submissionId, $submissionData, $form, $methodSettings, $hasSubscriptions, $totalPayable)
+        {
+        }
+        public function handleCheckoutSession($transaction, $submission, $form, $methodSettings)
+        {
+        }
+        protected function getPaymentIntentData($transaction, $submission, $form)
+        {
+        }
+        public function getFormattedItems($currency)
+        {
+        }
+        public function handleSessionRedirectBack($data)
+        {
+        }
+        public function processStripeSession($session, $submission, $transaction)
+        {
+        }
+        protected function getIntentSuccessName($intent)
+        {
+        }
+        protected function getDescriptor($title)
+        {
+        }
+        protected function formatAddress($address)
+        {
+        }
+        public function handleRefund($event)
+        {
+        }
+        public function getPaymentMode()
+        {
+        }
+        public function processSubscriptionSuccess($subscriptions, $invoice, $submission)
+        {
+        }
+        protected function recordStripeBillingAddress($charge, $submission)
+        {
+        }
+        protected function processOneTimeSuccess($invoice, $transaction, $paymentStatus)
+        {
+        }
+        protected function getIntentMetaData($submission, $form, $transaction, $paymentSettings = false)
+        {
+        }
+        protected function retrieveCustomerDetailsFromInvoice($invoice)
+        {
+        }
+        protected function retrieveCustomerDetailsFromCharge($charge)
+        {
+        }
+        protected function handlePaymentChargeError($message, $submission, $transaction, $charge = false, $type = 'general')
+        {
+        }
+        public function recordSubscriptionCharge($subscription, $transactionData)
+        {
+        }
+    }
+    class StripeInlineProcessor extends \FluentForm\App\Modules\Payments\PaymentMethods\Stripe\StripeProcessor
+    {
+        public function init()
+        {
+        }
+        public function handlePaymentAction($submissionId, $submissionData, $form, $methodSettings, $hasSubscriptions, $totalPayable)
+        {
+        }
+        // This is only for Subscription Payment
+        protected function handleSetupIntent($submission, $paymentMethodId, $customer, $transaction, $totalPayable)
+        {
+        }
+        protected function customerArguments($paymentMethodId, $submission)
+        {
+        }
+        protected function handlePaidSubscriptionInvoice($invoice, $submission)
+        {
+        }
+        protected function handlePaymentIntent($transaction, $submission, $intentArgs)
+        {
+        }
+        protected function handlePaymentSuccess($charge, $transaction, $submission)
+        {
+        }
+        public function confirmScaPayment()
+        {
+        }
+        public function confirmScaSetupIntentsPayment()
+        {
+        }
+        protected function sendSuccess($submission)
+        {
+        }
+        protected function processScaBeforeVerification($formId, $submissionId, $transactionId, $chargeId)
+        {
+        }
+        /**
+         * Products name comma separated
+         * @return string
+         */
+        public function getProductNames()
+        {
+        }
+    }
+    class StripeSettings
+    {
+        public static function getSettings($decrypted = true)
+        {
+        }
+        public static function updateSettings($data)
+        {
+        }
+        public static function encryptKeys($settings)
+        {
+        }
+        public static function maybeDecryptKeys($settings)
+        {
+        }
+        public static function getSecretKey($formId = false)
+        {
+        }
+        public static function getPublishableKey($formId = false)
+        {
+        }
+        public static function isLive($formId = false)
+        {
+        }
+        public static function getMode($formId = false)
+        {
+        }
+        public static function supportedShippingCountries()
+        {
+        }
+        public static function getClientId($paymentMode = 'live')
+        {
+        }
+        public static function guessFormIdFromEvent($event)
+        {
+        }
+        public static function getPaymentDescriptor($form)
+        {
+        }
+        public static function isConnectedAndPlatformCountrySame()
+        {
+        }
+        public static function getAccountId()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Payments {
+    class TransactionShortcodes
+    {
+        public function init()
+        {
+        }
+        public function registerPaymentsShortcode($atts, $content = '')
+        {
+        }
+        public function registerReceiptShortcode($atts, $content = '')
+        {
+        }
+        public function renderPaymentReceiptPage($data, $echo = true)
+        {
+        }
+        public function routeAjaxEndpoints()
+        {
+        }
+        public function getSubscriptionsHtml($userId, $viewConfig = [], $atts = [])
+        {
+        }
+        public function getTransactionsHtml($userId, $viewConfig = [], $atts = [])
+        {
+        }
+        public function sendSubscriptionPayments()
+        {
+        }
+        private function getViewConfig()
+        {
+        }
+        private function verifyNonce()
+        {
+        }
+        private function canCancelSubscription($subscription)
+        {
+        }
+        public function cancelSubscriptionAjax()
+        {
+        }
+        private function sendError($message)
+        {
+        }
+        public function getTransactionHtml($transaction, $withHeader = false)
         {
         }
     }
@@ -7027,6 +8696,12 @@ namespace FluentForm\App\Services {
         public static function evaluate(&$field, &$inputs)
         {
         }
+        private static function evaluateGroupConditions($conditionGroups, &$inputs)
+        {
+        }
+        private static function evaluateConditions($conditions, &$inputs, $type)
+        {
+        }
         public static function assess(&$conditional, &$inputs)
         {
         }
@@ -8012,6 +9687,15 @@ namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
         private static function parseConditionalLogic($field)
         {
         }
+        private static function parseSimpleConditionalLogic($logics)
+        {
+        }
+        private static function parseGroupConditionalLogic($logics)
+        {
+        }
+        private static function parseConditions($conditions)
+        {
+        }
         private static function getAdvancedOptions($field)
         {
         }
@@ -8033,199 +9717,6 @@ namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
         private static function getSaveAndResumeData($form)
         {
         }
-    }
-}
-namespace FluentForm\App\Services\FormBuilder\Components {
-    class BaseComponent
-    {
-        public $app;
-        public function __construct($key = '', $title = '', $tags = [], $position = 'advanced')
-        {
-        }
-        /**
-         * Build unique ID concatenating form id and name attribute
-         *
-         * @param array $data $form
-         *
-         * @return string for id value
-         */
-        protected function makeElementId($data, $form)
-        {
-        }
-        /**
-         * Build attributes for any html element
-         *
-         * @param array $attributes
-         *
-         * @return string [Compiled key='value' attributes]
-         */
-        protected function buildAttributes($attributes, $form = null)
-        {
-        }
-        /**
-         * Extract value attribute from attribute list
-         *
-         * @param array &$element
-         *
-         * @return string
-         */
-        protected function extractValueFromAttributes(&$element)
-        {
-        }
-        protected function extractDynamicValues($data, $form)
-        {
-        }
-        /**
-         * Determine if the given element has conditions bound
-         *
-         * @param array $element [Html element being compiled]
-         *
-         * @return bool
-         */
-        protected function hasConditions($element)
-        {
-        }
-        /**
-         * Generate a unique id for an element
-         *
-         * @param string $str [preix]
-         *
-         * @return string [Unique id]
-         */
-        protected function getUniqueId($str)
-        {
-        }
-        /**
-         * Get a default class for each form element wrapper
-         *
-         * @return string
-         */
-        protected function getDefaultContainerClass()
-        {
-        }
-        /**
-         * Get required class for form element wrapper
-         *
-         * @param array $rules [Validation rules]
-         *
-         * @return mixed
-         */
-        protected function getRequiredClass($rules)
-        {
-        }
-        /**
-         * Get asterisk placement for the required form elements
-         *
-         * @return string
-         */
-        protected function getAsteriskPlacement($form)
-        {
-        }
-        /**
-         * Generate a label for any element
-         *
-         * @param array $data
-         *
-         * @return string [label Html element]
-         */
-        protected function buildElementLabel($data, $form)
-        {
-        }
-        /**
-         * Generate html/markup for any element
-         *
-         * @param string    $elMarkup [Predifined partial markup]
-         * @param array     $data
-         * @param stdClass $form     [Form object]
-         *
-         * @return string [Compiled markup]
-         */
-        protected function buildElementMarkup($elMarkup, $data, $form)
-        {
-        }
-        /**
-         * Generate a help message for any element beside label
-         *
-         * @param array $data
-         *
-         * @return string [Html]
-         */
-        protected function getLabelHelpMessage($data)
-        {
-        }
-        /**
-         * Generate a help message for any element beside form element
-         *
-         * @param array $data
-         *
-         * @return string [Html]
-         */
-        protected function getInputHelpMessage($data, $hideClass = '')
-        {
-        }
-        protected function parseEditorSmartCode($text, $form)
-        {
-        }
-        protected function printContent($hook, $html, $data, $form)
-        {
-        }
-        /**
-         * A helper method for remove shortcode from aria label
-         *
-         * @param string $label
-         *
-         * @return string $label
-         */
-        protected function removeShortcode($label)
-        {
-        }
-    }
-}
-namespace FluentForm\App\Services\FormBuilder {
-    abstract class BaseFieldManager extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
-    {
-        protected $key = '';
-        protected $title = '';
-        protected $tags = [];
-        protected $position = 'advanced';
-        public function __construct($key, $title, $tags = [], $position = 'advanced')
-        {
-        }
-        public function register()
-        {
-        }
-        public function pushConditionalSupport($conditonalItems)
-        {
-        }
-        public function pushFormInputType($types)
-        {
-        }
-        public function pushComponent($components)
-        {
-        }
-        public function pushEditorElementPositions($placement_settings)
-        {
-        }
-        public function generalEditorElement()
-        {
-        }
-        public function advancedEditorElement()
-        {
-        }
-        public function getGeneralEditorElements()
-        {
-        }
-        public function getAdvancedEditorElements()
-        {
-        }
-        public function getEditorCustomizationSettings()
-        {
-        }
-        public function pushTags($tags, $form)
-        {
-        }
-        public abstract function getComponent();
-        public abstract function render($element, $form);
     }
 }
 namespace FluentForm\App\Services\FluentConversational\Classes\Elements {
@@ -8392,104 +9883,6 @@ namespace FluentForm\App\Services\Form {
         {
         }
         public function filterEditorFields($fields)
-        {
-        }
-    }
-    class FormService
-    {
-        /** @var \FluentForm\Framework\Foundation\Application */
-        protected $app;
-        /** @var \FluentForm\App\Models\Form|\FluentForm\Framework\Database\Query\Builder */
-        protected $model;
-        /** @var \FluentForm\App\Services\Form\Updater */
-        protected $updater;
-        /** @var \FluentForm\App\Services\Form\Duplicator */
-        protected $duplicator;
-        /** @var \FluentForm\App\Services\Form\Fields */
-        protected $fields;
-        public function __construct()
-        {
-        }
-        /**
-         * Get the paginated forms matching search criteria.
-         *
-         * @param array $attributes
-         * @return array
-         */
-        public function get($attributes = [])
-        {
-        }
-        /**
-         * Store a form with its associated meta.
-         *
-         * @param array $attributes
-         * @return \FluentForm\App\Models\Form $form
-         * @throws Exception
-         */
-        public function store($attributes = [])
-        {
-        }
-        /**
-         * Duplicate a form with its associated meta.
-         *
-         * @param array $attributes
-         * @return \FluentForm\App\Models\Form $form
-         * @throws Exception
-         */
-        public function duplicate($attributes = [])
-        {
-        }
-        public function find($id)
-        {
-        }
-        public function delete($id)
-        {
-        }
-        /**
-         * Update a form with its relevant fields.
-         *
-         * @param array $attributes
-         * @return \FluentForm\App\Models\Form $form
-         * @throws Exception
-         */
-        public function update($attributes = [])
-        {
-        }
-        /**
-         * Duplicate a form with its associated meta.
-         *
-         * @param int $id
-         * @return \FluentForm\App\Models\Form $form
-         * @throws Exception
-         */
-        public function convert($id)
-        {
-        }
-        public function templates()
-        {
-        }
-        public function components($formId)
-        {
-        }
-        public function getDisabledComponents()
-        {
-        }
-        public function fields($id)
-        {
-        }
-        public function shortcodes($id)
-        {
-        }
-        public function pages()
-        {
-        }
-        public function getInputsAndLabels($formId, $with = ['admin_label', 'raw'])
-        {
-        }
-        public function findShortCodePage($formId)
-        {
-        }
-        public static function getShortCodeId($content, $shortcodeTag = 'fluentform')
         {
         }
     }
@@ -8783,6 +10176,12 @@ namespace FluentForm\App\Services\Form {
         public function getReturnData($insertId, $form, $formData)
         {
         }
+        private function isSpamAndSkipProcessing($insertData)
+        {
+        }
+        private function shouldSkipProcessingForSource($source)
+        {
+        }
         /**
          * Validates Submission
          * @throws ValidationException
@@ -8793,10 +10192,7 @@ namespace FluentForm\App\Services\Form {
         protected function insertSubmission($insertData, $formDataRaw, $formId)
         {
         }
-        protected function isSpamAndSkipProcessing($insertData)
-        {
-        }
-        protected function processSpamSubmission($insertData)
+        private function processSpamSubmission($insertId, $type)
         {
         }
     }
@@ -8818,6 +10214,9 @@ namespace FluentForm\App\Services\Form {
         {
         }
         private function sanitizeCustomSubmit($fields)
+        {
+        }
+        private function sanitizeStepsWrapper($stepWrapper)
         {
         }
         public function sanitizeMinWidth($value)
@@ -35852,9 +37251,6 @@ namespace FluentForm\Framework\Request {
          * @return string
          */
         public function getIp()
-        {
-        }
-        private function isValidIp($ip)
         {
         }
         public function server($key = null, $default = null)
