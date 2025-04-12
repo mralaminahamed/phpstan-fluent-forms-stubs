@@ -18,6 +18,12 @@ namespace FluentForm\App\Api {
         public function entry($entryId, $includeFormats = false)
         {
         }
+        public function entryBySerial($serialNumber, $includeFormats = false)
+        {
+        }
+        public function getFormattedEntry($submission, $includeFormats = false)
+        {
+        }
         public function report($statuses = ['read', 'unread', 'unapproved', 'approved', 'declined', 'unconfirmed', 'confirmed'])
         {
         }
@@ -428,6 +434,18 @@ namespace FluentForm\App\Helpers {
         public static function shortCodeParseOnValidationMessage($message, $form, $fieldName)
         {
         }
+        public static function getDefaultDateTimeFormatForMoment()
+        {
+        }
+        public static function isDefaultWPDateEnabled()
+        {
+        }
+        public static function getLandingPageEnabledForms()
+        {
+        }
+        public static function sanitizeArrayKeysAndValues($values)
+        {
+        }
     }
     class IntegrationManagerHelper
     {
@@ -750,6 +768,12 @@ namespace FluentForm\App\Http\Controllers {
         {
         }
         public function findShortCodePage(\FluentForm\App\Services\Form\FormService $formService, $formId)
+        {
+        }
+        public function formEditHistory(\FluentForm\App\Services\Form\HistoryService $historyService, $formId)
+        {
+        }
+        public function clearEditHistory(\FluentForm\App\Services\Form\HistoryService $historyService)
         {
         }
         public function ping()
@@ -1078,16 +1102,16 @@ namespace FluentForm\App\Http\Policies {
         public function verifyRequest(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function index()
+        public function index(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function templates()
+        public function templates(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function updateModuleStatus()
+        public function updateModuleStatus(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function updateIntegration()
+        public function updateIntegration(\FluentForm\Framework\Request\Request $request)
         {
         }
         public function ping()
@@ -1153,19 +1177,19 @@ namespace FluentForm\App\Http\Policies {
         public function verifyRequest(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function handleBulkActions()
+        public function handleBulkActions(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function updateStatus()
+        public function updateStatus(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function toggleIsFavorite()
+        public function toggleIsFavorite(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function remove()
+        public function remove(\FluentForm\Framework\Request\Request $request)
         {
         }
-        public function print()
+        public function print(\FluentForm\Framework\Request\Request $request)
         {
         }
     }
@@ -4584,6 +4608,9 @@ namespace FluentForm\App\Modules\Entries {
         {
         }
     }
+    /**
+     * @deprecated deprecated use FluentForm\App\Services\Transfer
+     */
     class Export
     {
         /**
@@ -4615,6 +4642,7 @@ namespace FluentForm\App\Modules\Entries {
         /**
          * Only used exports form partial entries
          *
+         * @deprecated deprecated use FluentForm\App\Services\Transfer::exportEntries
          * @todo:: refactor.
          */
         public function index()
@@ -5922,7 +5950,7 @@ namespace FluentForm\App\Modules\Widgets {
         public function __construct($app)
         {
         }
-        public function init_widgets()
+        public function init_widgets($widgets_manager)
         {
         }
         public function enqueueAssets()
@@ -7890,6 +7918,9 @@ namespace FluentForm\App\Services\FluentConversational\Classes\Converter {
         public static function convertExistingForm($form)
         {
         }
+        private static function buildBaseQuestion($field, $validationsRules, $form)
+        {
+        }
         public static function fieldTypes()
         {
         }
@@ -7989,7 +8020,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
          *
          * @param array $element [Html element being compiled]
          *
-         * @return boolean
+         * @return bool
          */
         protected function hasConditions($element)
         {
@@ -8045,7 +8076,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
          *
          * @param string    $elMarkup [Predifined partial markup]
          * @param array     $data
-         * @param \stdClass $form     [Form object]
+         * @param stdClass $form     [Form object]
          *
          * @return string [Compiled markup]
          */
@@ -8521,6 +8552,14 @@ namespace FluentForm\App\Services\Form {
         {
         }
         /**
+         * Get IP and Country from geoplugin
+         *
+         * @throws ValidationException
+         */
+        private function getIpBasedOnCountry($ip)
+        {
+        }
+        /**
          * @param $value
          * @param $providedKeywords
          * @return bool
@@ -8528,9 +8567,15 @@ namespace FluentForm\App\Services\Form {
         public static function containsRestrictedKeywords($value, $providedKeywords)
         {
         }
-        private function checkIpRestriction($settings)
+        /**
+         * @throws ValidationException
+         */
+        private function checkIpRestriction($settings, $ip)
         {
         }
+        /**
+         * @throws ValidationException
+         */
         private function checkCountryRestriction($settings, $country)
         {
         }
@@ -8544,6 +8589,68 @@ namespace FluentForm\App\Services\Form {
          * @throws ValidationException
          */
         public static function throwValidationException($message)
+        {
+        }
+    }
+    class HistoryService
+    {
+        private $changes = [];
+        private $addedFields = [];
+        private $removedFields = [];
+        public function init($form, $postData)
+        {
+        }
+        public function checkAndStoreFormChanges($oldData, $newData, $formId)
+        {
+        }
+        private function compareFields($oldFields, $newFields)
+        {
+        }
+        private function mapFieldsByUniqueKey($fields)
+        {
+        }
+        private function getFieldKey($field)
+        {
+        }
+        private function getFieldLabel($field)
+        {
+        }
+        private function compareFieldDetails($oldField, $newField)
+        {
+        }
+        private function compareFieldProperties($oldField, $newField, $fieldLabel, $category)
+        {
+        }
+        private function compareArrayRecursively($oldValue, $newValue, $fieldLabel, $category, $parentKey = '')
+        {
+        }
+        private function areColumnsChanged($oldColumns, $newColumns)
+        {
+        }
+        private function checkFieldOrder($oldFields, $newFields)
+        {
+        }
+        private function addChange($type, $label, $key = null, $newValue = null, $oldValue = null, $category = null)
+        {
+        }
+        private function generateChangeTitle()
+        {
+        }
+        private function storeFormHistory($formId, $oldData, $changeTitle)
+        {
+        }
+        public static function get($formId)
+        {
+        }
+        public function delete($formId)
+        {
+        }
+        /**
+         * Delete records keeping only last 10 per form
+         * @param $formId
+         * @return void
+         */
+        private function maybeCleanOldData($formId)
         {
         }
     }
@@ -8627,6 +8734,15 @@ namespace FluentForm\App\Services\Form {
         {
         }
         private function updatePrimaryEmail($form)
+        {
+        }
+        private function sanitizeCustomSubmit($fields)
+        {
+        }
+        public function sanitizeMinWidth($value)
+        {
+        }
+        public function sanitizeRgbColor($value)
         {
         }
     }
@@ -16510,6 +16626,33 @@ namespace FluentForm\App\Services\Logger {
     }
 }
 namespace FluentForm\App\Services\Manager {
+    class FormManagerService
+    {
+        public static function maybeAddUserAllowedFormIds($formId)
+        {
+        }
+        public static function addUserAllowedForms($formIds, $userId = false)
+        {
+        }
+        public static function updateHasSpecificFormsPermission($userId, $status)
+        {
+        }
+        public static function hasSpecificFormsPermission($userId)
+        {
+        }
+        /**
+         * Return user allowed form id's
+         * @param string $userId Optional, If not pass user will be current user
+         *
+         * @return mixed|false
+         */
+        public static function getUserAllowedForms($userId = false)
+        {
+        }
+        public static function hasFormPermission($formId)
+        {
+        }
+    }
     class ManagerService
     {
         public function getManagers($attributes = [])
@@ -17753,7 +17896,7 @@ namespace FluentForm\App\Services\Parser {
 namespace FluentForm\App\Services\Report {
     class ReportHelper
     {
-        public static function generateReport($form, $statuses = ['read', 'unread'])
+        public static function generateReport($form, $statuses = ['read', 'unread', 'unapproved', 'approved', 'declined', 'unconfirmed', 'confirmed'])
         {
         }
         public static function getInputReport($formId, $fieldNames, $statuses = ['read', 'unread', 'unapproved', 'approved', 'declined', 'unconfirmed', 'confirmed'])
@@ -17876,6 +18019,9 @@ namespace FluentForm\App\Services\Settings {
          * @throws \Exception
          */
         public function savePreset($attributes)
+        {
+        }
+        public function secureMetaDescription($description)
         {
         }
     }
@@ -25027,6 +25173,9 @@ namespace FluentForm\App\Services\Submission {
         {
         }
         public function find($submissionId)
+        {
+        }
+        public function findBySerialID($formId, $serialNumber = null, $isHtml = false)
         {
         }
         public function resources($attributes)
