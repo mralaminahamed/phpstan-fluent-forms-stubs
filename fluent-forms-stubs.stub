@@ -5527,6 +5527,36 @@ namespace FluentForm\App\Modules\Form\Settings\Validator {
     }
 }
 namespace FluentForm\App\Modules\Form {
+    class TokenBasedSpamProtection
+    {
+        public function __construct($app)
+        {
+        }
+        public function renderTokenField($form)
+        {
+        }
+        public function ajaxGenerateToken()
+        {
+        }
+        private function generateToken($formId)
+        {
+        }
+        public function verify($insertData, $requestData, $formId)
+        {
+        }
+        private function validateToken($token, $formId)
+        {
+        }
+        private function handleSpam($reason)
+        {
+        }
+        public function isEnabled($formId = false)
+        {
+        }
+        private function getFieldName($formId)
+        {
+        }
+    }
     /* @deprecated Current File FluentForm\App\Http\Controllers\TransferController */
     class Transfer
     {
