@@ -279,6 +279,9 @@ namespace FluentForm\App\Helpers {
         public static function setSubmissionMeta($submissionId, $metaKey, $value, $formId = false)
         {
         }
+        public static function setSubmissionMetaAsArrayPush($submissionId, $metaKey, $value, $formId = false)
+        {
+        }
         public static function isEntryAutoDeleteEnabled($formId)
         {
         }
@@ -3826,6 +3829,9 @@ namespace FluentForm\App\Models {
         public static function persist($submissionId, $metaKey, $metaValue, $formId = null)
         {
         }
+        public static function persistArray($submissionId, $metaKey, $metaValue, $formId = null)
+        {
+        }
     }
     class User extends \FluentForm\App\Models\Model
     {
@@ -4767,6 +4773,21 @@ namespace FluentForm\App\Modules\Form {
         {
         }
     }
+    class CleanTalkHandler
+    {
+        public static function isEnabled()
+        {
+        }
+        public static function isPluginEnabled()
+        {
+        }
+        public static function isSpamSubmission($formData, $form)
+        {
+        }
+        protected static function getCleanTalkRequest($data, $form)
+        {
+        }
+    }
     class Form
     {
         /**
@@ -5104,7 +5125,7 @@ namespace FluentForm\App\Modules\Form {
         protected function handleSpamError()
         {
         }
-        protected function isSpam($formData, $form)
+        protected function isAkismetSpam($formData, $form)
         {
         }
         /**
@@ -8500,13 +8521,22 @@ namespace FluentForm\App\Services\Form {
         protected function validateNonce()
         {
         }
-        /** Validate Spam
+        /** Validate Akismet Spam
          * @throws ValidationException
          */
-        public function handleSpamError()
+        public function handleAkismetSpamError()
         {
         }
-        public function isSpam($formData, $form)
+        /** Validate CleanTalk Spam
+         * @throws ValidationException
+         */
+        public function handleCleanTalkSpamError()
+        {
+        }
+        public function isAkismetSpam($formData, $form)
+        {
+        }
+        public function isCleanTalkSpam($formData, $form)
         {
         }
         /**
@@ -9442,7 +9472,7 @@ namespace FluentForm\App\Services\FormBuilder {
          *
          * @return void
          */
-        protected function extractValidationRule($item)
+        protected function extractValidationRule($item, $name = '')
         {
         }
         /**
