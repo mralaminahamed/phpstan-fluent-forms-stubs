@@ -4775,6 +4775,15 @@ namespace FluentForm\App\Modules\Form {
     }
     class CleanTalkHandler
     {
+        public static function validate($accessKey)
+        {
+        }
+        public static function spamSubmissionCheckWithApi($formData, $form)
+        {
+        }
+        public static function isCleantalkActivated()
+        {
+        }
         public static function isEnabled()
         {
         }
@@ -8309,6 +8318,9 @@ namespace FluentForm\App\Services\FluentConversational\Classes {
         private function getLocalizedForm($form)
         {
         }
+        public function localizeSaveProgressButton($field, $formId)
+        {
+        }
     }
 }
 namespace FluentForm\App\Services\Form {
@@ -8533,10 +8545,19 @@ namespace FluentForm\App\Services\Form {
         public function handleCleanTalkSpamError()
         {
         }
+        /** Validate CleanTalk Spam While Using API
+         * @throws ValidationException
+         */
+        public function handleCleanTalkSpamErrorUsingAPi()
+        {
+        }
         public function isAkismetSpam($formData, $form)
         {
         }
         public function isCleanTalkSpam($formData, $form)
+        {
+        }
+        public function isCleanTalkSpamUsingApi($formData, $form)
         {
         }
         /**
@@ -9747,6 +9768,9 @@ namespace FluentForm\App\Services\GlobalSettings {
         {
         }
         public function storeHCaptcha($attributes)
+        {
+        }
+        public function storeCleantalk($attributes)
         {
         }
         public function storeTurnstile($attributes)
@@ -35798,6 +35822,9 @@ namespace FluentForm\Framework\Request {
          * @return string
          */
         public function getIp()
+        {
+        }
+        private function isValidIp($ip)
         {
         }
         public function server($key = null, $default = null)
