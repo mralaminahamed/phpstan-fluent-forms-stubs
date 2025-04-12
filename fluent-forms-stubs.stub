@@ -25264,6 +25264,9 @@ namespace FluentForm\App\Services\Transfer {
         public static function exportEntries($args)
         {
         }
+        private static function getFieldExportContent($submission, $fieldName)
+        {
+        }
         private static function exportAsJSON($form, $args)
         {
         }
