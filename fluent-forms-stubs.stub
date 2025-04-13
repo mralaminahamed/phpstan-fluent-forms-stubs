@@ -6527,6 +6527,13 @@ namespace FluentForm\App\Modules\Payments {
         public static function formatMoney($amountInCents, $currency)
         {
         }
+        /**
+         * Check payment settings available or not
+         * @return bool
+         */
+        public static function hasPaymentSettings()
+        {
+        }
         public static function getFormSettings($formId, $scope = 'public')
         {
         }
@@ -10176,7 +10183,7 @@ namespace FluentForm\App\Services\Form {
         public function getReturnData($insertId, $form, $formData)
         {
         }
-        private function isSpamAndSkipProcessing($insertData)
+        private function isSpamAndSkipProcessing(&$insertData)
         {
         }
         private function shouldSkipProcessingForSource($source)
