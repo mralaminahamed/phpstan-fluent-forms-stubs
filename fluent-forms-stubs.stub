@@ -482,6 +482,13 @@ namespace FluentForm\App\Helpers {
         public static function safeUnserialize($data)
         {
         }
+        /**
+         * If elementor editor is open
+         * @return bool
+         */
+        public static function isElementorEditor()
+        {
+        }
     }
     class IntegrationManagerHelper
     {
@@ -10845,22 +10852,6 @@ namespace FluentForm\App\Services\FormBuilder {
          */
         private static $handlers = ['ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'http_referer' => 'parseWPProperties', 'wp.admin_email' => 'parseWPProperties', 'wp.site_url' => 'parseWPProperties', 'wp.site_title' => 'parseWPProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties', 'get.param_name' => 'parseRequestParam', 'random_string.param_name' => 'parseRandomString'];
         /**
-         * Allow-list of user meta keys permitted in {user.meta.<key>} smart codes
-         * Filter: fluentform/editor_allowed_user_meta_keys
-         *
-         * @var array
-         */
-        private static $allowedUserMetaKeys = ['first_name', 'last_name', 'nickname', 'description'];
-        /**
-         * Get allow-listed user meta keys with filter support
-         *
-         * @param mixed $form
-         * @return array
-         */
-        private static function getAllowedUserMetaKeys($form = null)
-        {
-        }
-        /**
          * Filter dynamic shortcodes in input value
          *
          * @param string $value
@@ -20085,10 +20076,10 @@ namespace Box\Spout\Common {
         protected function init()
         {
         }
-        final private function __wakeup()
+        final public function __wakeup()
         {
         }
-        final private function __clone()
+        final public function __clone()
         {
         }
     }
