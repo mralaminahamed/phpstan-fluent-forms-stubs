@@ -6442,6 +6442,9 @@ namespace FluentForm\App\Modules\Payments\Components {
         function render($data, $form)
         {
         }
+        private function isPlanExpiredAndHidden($plan)
+        {
+        }
         public function renderSingleItem($data, $form)
         {
         }
@@ -6733,6 +6736,9 @@ namespace FluentForm\App\Modules\Payments {
         {
         }
         public static function decryptKey($raw_value)
+        {
+        }
+        public static function isPlanExpiredAndHidden($plan)
         {
         }
     }
