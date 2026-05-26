@@ -398,6 +398,9 @@ namespace FluentForm\App\Helpers {
         public static function isAutoloadCaptchaEnabled()
         {
         }
+        public static function isAutosaveEnabled()
+        {
+        }
         public static function maybeDecryptUrl($url)
         {
         }
@@ -11514,6 +11517,9 @@ namespace FluentForm\App\Services\GlobalSettings {
         public function storeEmailSummarySettings($attributes)
         {
         }
+        public function storeAutosaveSettings($attributes)
+        {
+        }
     }
     class GlobalSettingsService
     {
@@ -21435,7 +21441,7 @@ namespace FluentForm\App\Services\Parser {
          * @param array $with array
          * @return array
          */
-        public function getPaymentFields($with = ['element'])
+        public function getPaymentFields($with = ['element', 'settings'])
         {
         }
         /**
