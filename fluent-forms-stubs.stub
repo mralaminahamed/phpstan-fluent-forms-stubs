@@ -3609,6 +3609,24 @@ namespace FluentForm\App\Http\Policies {
         {
         }
     }
+    class GlobalIntegrationPolicy extends \FluentForm\Framework\Foundation\Policy
+    {
+        public function verifyRequest(\FluentForm\Framework\Http\Request\Request $request)
+        {
+        }
+        public function index()
+        {
+        }
+        public function updateIntegration()
+        {
+        }
+        public function updateModuleStatus()
+        {
+        }
+        private function canManageGlobalIntegrations()
+        {
+        }
+    }
     class GlobalSettingsPolicy extends \FluentForm\Framework\Foundation\Policy
     {
         public function verifyRequest(\FluentForm\Framework\Http\Request\Request $request)
@@ -8437,6 +8455,12 @@ namespace FluentForm\App\Modules\Acl {
         public static function hasPermission($permissions, $formId = false)
         {
         }
+        private static function hasExplicitFullAccess()
+        {
+        }
+        private static function filterPermissionCheck($permission, $allowed, $formId)
+        {
+        }
         public static function hasAnyFormPermission($form_id = false)
         {
         }
@@ -9085,6 +9109,9 @@ namespace FluentForm\App\Modules\Component {
         {
         }
         public function renderForm($atts)
+        {
+        }
+        protected function getNotRenderableHtml($formId, $message)
         {
         }
         /**
@@ -15759,6 +15786,9 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
          * @return array
          */
         private function getAttachments($emailData, $formData, $entry, $form)
+        {
+        }
+        private function resolveUploadAttachmentPath($fileUrl, $uploadDir)
         {
         }
         public function getFormData($submissionId)
@@ -33598,6 +33628,27 @@ namespace FluentForm\App\Services\Transfer {
         {
         }
         private static function getFieldExportContent($submission, $fieldName)
+        {
+        }
+        private static function getSelectedExportShortcodes($args, $form)
+        {
+        }
+        private static function getDefaultExportShortcodes($form)
+        {
+        }
+        private static function getLegacyExportShortcodeHeaders()
+        {
+        }
+        private static function getRegularExportShortcodes($selectedShortcodes, $legacyShortcodeHeaders)
+        {
+        }
+        private static function getSelectedShortcodeExportValues($selectedShortcodes, $parsedShortCodes, $legacyShortcodeHeaders, $submission)
+        {
+        }
+        private static function getSelectedShortcodeExportLabels($selectedShortcodes, $parsedShortCodes, $legacyShortcodeHeaders)
+        {
+        }
+        private static function getLegacyExportValue($header, $submission)
         {
         }
         private static function exportAsJSON($form, $args)
