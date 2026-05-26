@@ -226,6 +226,7 @@ namespace FluentForm\App\Helpers {
         public static $formInstance = 0;
         public static $loadedForms = [];
         public static $tabIndexStatus = 'na';
+        protected static $formMetaCache = [];
         /**
          * Sanitize form inputs recursively.
          *
@@ -264,7 +265,7 @@ namespace FluentForm\App\Helpers {
         public static function getSubFieldReportableInputs()
         {
         }
-        public static function getFormMeta($formId, $metaKey, $default = '')
+        public static function getFormMeta($formId, $metaKey, $default = '', $forced = false)
         {
         }
         public static function setFormMeta($formId, $metaKey, $value)
@@ -468,6 +469,17 @@ namespace FluentForm\App\Helpers {
         {
         }
         public static function getFrontendFacingUrl($args = '')
+        {
+        }
+        public static function getCountryCodeFromHeaders()
+        {
+        }
+        /**
+         * Fixes PHP Object Injection Vulnerability
+         * @param $data
+         * @return mixed
+         */
+        public static function safeUnserialize($data)
         {
         }
     }
@@ -1007,6 +1019,97 @@ namespace FluentForm\App\Http\Controllers {
          * @return \WP_REST_Response
          */
         public function submissions(\FluentForm\App\Services\Report\ReportService $reportService)
+        {
+        }
+        /**
+         * Get Forms for Dropdown
+         * @return \WP_REST_Response
+         */
+        public function getFormsDropdown(\FluentForm\App\Services\Report\ReportService $reportService)
+        {
+        }
+        /**
+         * Get payment revenue grouped by different criteria
+         * @return \WP_REST_Response
+         */
+        public function netRevenue(\FluentForm\App\Services\Report\ReportService $reportService)
+        {
+        }
+        /**
+         * Get submission analysis grouped by different criteria
+         * @return \WP_REST_Response
+         */
+        public function submissionsAnalysis()
+        {
+        }
+        /**
+         * Get Overview Chart Data
+         * @return \WP_REST_Response
+         */
+        public function getOverviewChart(\FluentForm\App\Services\Report\ReportService $reportService)
+        {
+        }
+        /**
+         * Get Revenue Chart Data
+         * @return \WP_REST_Response
+         */
+        public function getRevenueChart(\FluentForm\App\Services\Report\ReportService $reportService)
+        {
+        }
+        /**
+         * Get Completion Rate Data
+         * @return \WP_REST_Response
+         */
+        public function getCompletionRate()
+        {
+        }
+        /**
+         * Get Form Stats Data
+         * @return \WP_REST_Response
+         */
+        public function getFormStats(\FluentForm\App\Services\Report\ReportService $reportService)
+        {
+        }
+        /**
+         * Get Heatmap Data
+         * @return \WP_REST_Response
+         */
+        public function getHeatmapData()
+        {
+        }
+        /**
+         * Get Country Heatmap Data
+         * @return \WP_REST_Response
+         */
+        public function getCountryHeatmap(\FluentForm\App\Services\Report\ReportService $reportService)
+        {
+        }
+        /**
+         * Get API Logs Data
+         * @return \WP_REST_Response
+         */
+        public function getApiLogs(\FluentForm\App\Services\Report\ReportService $reportService)
+        {
+        }
+        /**
+         * Get Top Performing Forms Data
+         * @return \WP_REST_Response
+         */
+        public function getTopPerformingForms(\FluentForm\App\Services\Report\ReportService $reportService)
+        {
+        }
+        /**
+         * Get Subscriptions Data
+         * @return \WP_REST_Response
+         */
+        public function getSubscriptions()
+        {
+        }
+        /**
+         * Get Payment Types Data
+         * @return \WP_REST_Response
+         */
+        public function getPaymentTypes(\FluentForm\App\Services\Report\ReportService $reportService)
         {
         }
     }
@@ -7453,6 +7556,9 @@ namespace FluentForm\App\Modules\Registerer {
         public function renderSmtpPromo()
         {
         }
+        public function renderReports()
+        {
+        }
         private function usedNameAttributes($formId)
         {
         }
@@ -7501,6 +7607,9 @@ namespace FluentForm\App\Modules\Registerer {
         public static function getPaymentsI18n()
         {
         }
+        public static function getReportsI18n()
+        {
+        }
         protected static function getSettingsCommonI18n()
         {
         }
@@ -7537,6 +7646,18 @@ namespace FluentForm\App\Modules\Renderer\GlobalSettings {
          * @throws \Exception
          */
         public function enqueue()
+        {
+        }
+    }
+}
+namespace FluentForm\App\Modules\Report {
+    class ReportHandler
+    {
+        protected $app;
+        public function register($app)
+        {
+        }
+        public function renderReport()
         {
         }
     }
@@ -10004,7 +10125,7 @@ namespace FluentForm\App\Services\Form {
          *
          * @throws ValidationException
          */
-        private function getIpInfo()
+        private function getIpInfo($ip)
         {
         }
         /**
@@ -10045,6 +10166,19 @@ namespace FluentForm\App\Services\Form {
          * @throws ValidationException
          */
         public static function throwValidationException($message)
+        {
+        }
+        /**
+         * Check if captcha validation should be skipped based on autoload captcha settings
+         *
+         * When autoload captcha is enabled, only the selected captcha type should be validated.
+         * This method returns true if the current captcha type is NOT the selected autoload type,
+         * preventing unnecessary validation of multiple captcha types on the same form.
+         *
+         * @param string $captchaType The captcha type to check ('recaptcha', 'hcaptcha', 'turnstile')
+         * @return bool True if validation should be skipped, false otherwise
+         */
+        private function shouldSkipCaptchaValidation($captchaType)
         {
         }
     }
@@ -10118,6 +10252,7 @@ namespace FluentForm\App\Services\Form {
         protected $formData;
         protected $validationService;
         protected $submissionService;
+        protected $alreadyInsertedId;
         public function __construct()
         {
         }
@@ -10701,16 +10836,30 @@ namespace FluentForm\App\Services\FormBuilder {
     {
         /**
          * Available dynamic short codes
-         *
          * @var null
          */
         private static $dynamicShortcodes = null;
         /**
          * mappings of methods to parse the shortcode
-         *
          * @var array
          */
         private static $handlers = ['ip' => 'parseIp', 'date.m/d/Y' => 'parseDate', 'date.d/m/Y' => 'parseDate', 'embed_post.ID' => 'parsePostProperties', 'embed_post.post_title' => 'parsePostProperties', 'embed_post.permalink' => 'parsePostProperties', 'http_referer' => 'parseWPProperties', 'wp.admin_email' => 'parseWPProperties', 'wp.site_url' => 'parseWPProperties', 'wp.site_title' => 'parseWPProperties', 'user.ID' => 'parseUserProperties', 'user.display_name' => 'parseUserProperties', 'user.first_name' => 'parseUserProperties', 'user.last_name' => 'parseUserProperties', 'user.user_email' => 'parseUserProperties', 'user.user_login' => 'parseUserProperties', 'browser.name' => 'parseBrowserProperties', 'browser.platform' => 'parseBrowserProperties', 'get.param_name' => 'parseRequestParam', 'random_string.param_name' => 'parseRandomString'];
+        /**
+         * Allow-list of user meta keys permitted in {user.meta.<key>} smart codes
+         * Filter: fluentform/editor_allowed_user_meta_keys
+         *
+         * @var array
+         */
+        private static $allowedUserMetaKeys = ['first_name', 'last_name', 'nickname', 'description'];
+        /**
+         * Get allow-listed user meta keys with filter support
+         *
+         * @param mixed $form
+         * @return array
+         */
+        private static function getAllowedUserMetaKeys($form = null)
+        {
+        }
         /**
          * Filter dynamic shortcodes in input value
          *
@@ -10724,7 +10873,7 @@ namespace FluentForm\App\Services\FormBuilder {
         /**
          * Parse request query param.
          *
-         * @param string    $value
+         * @param string $value
          * @param \stdClass $form
          *
          * @return string
@@ -10808,7 +10957,7 @@ namespace FluentForm\App\Services\FormBuilder {
         /**
          * Parse request query param.
          *
-         * @param string    $value
+         * @param string $value
          * @param \stdClass $form
          *
          * @return string
@@ -10914,7 +11063,7 @@ namespace FluentForm\App\Services\FormBuilder {
          *
          * @return void
          */
-        protected function extractConditionalLogic($item)
+        protected function extractConditionalLogic($item, $itemName = '')
         {
         }
         /**
@@ -18254,6 +18403,10 @@ namespace FluentForm\App\Services\Migrator\Classes {
     }
     class CalderaMigrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
     {
+        /**
+         * @var bool
+         */
+        protected $hasStep = false;
         public function __construct()
         {
         }
@@ -18437,6 +18590,10 @@ namespace FluentForm\App\Services\Migrator\Classes {
     }
     class GravityFormsMigrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
     {
+        /**
+         * @var bool
+         */
+        protected $hasStep = false;
         public function __construct()
         {
         }
@@ -18732,6 +18889,10 @@ namespace FluentForm\App\Services\Migrator\Classes {
     }
     class WpFormsMigrator extends \FluentForm\App\Services\Migrator\Classes\BaseMigrator
     {
+        /**
+         * @var bool
+         */
+        protected $hasStep = false;
         public function __construct()
         {
         }
@@ -19029,7 +19190,10 @@ namespace FluentForm\App\Services\Parser {
         {
         }
         /**
-         * Handle the child fields of the custom field.
+         * Handle the child fields of complex form fields (address, name, repeater).
+         *
+         * This method processes fields that have sub-fields (like address field having
+         * address_line_1, city, state, etc.) and prepares them for shortcode generation.
          *
          * @return $this
          */
@@ -19403,6 +19567,99 @@ namespace FluentForm\App\Services\Report {
         public static function maybeMigrateData($formId)
         {
         }
+        /**
+         * Get overview chart data
+         */
+        public static function getOverviewChartData($startDate, $endDate, $formId, $view)
+        {
+        }
+        public static function getFormStats($startDate, $endDate, $formId)
+        {
+        }
+        /**
+         * Initialize heatmap data structure based on aggregation type
+         */
+        protected static function initializeHeatmapData($aggregationType)
+        {
+        }
+        /**
+         * Get submission data for heatmap with appropriate grouping
+         * Optimized version with better query performance
+         */
+        protected static function getHeatmapSubmissionData($startDate, $endDate, $formId, $aggregationType)
+        {
+        }
+        public static function getApiLogs($startDate, $endDate, $formId = null)
+        {
+        }
+        /**
+         * Get top performing forms by entries, views, or payments
+         */
+        public static function getTopPerformingForms($startDate, $endDate, $metric = 'entries')
+        {
+        }
+        /**
+         * Get form views date chunks
+         */
+        private static function getFormViews($startDate, $endDate, $groupingMode, $formId)
+        {
+        }
+        /**
+         * Process date range
+         */
+        public static function processDateRange($startDate, $endDate)
+        {
+        }
+        /**
+         * Determine grouping mode based on date range
+         */
+        private static function getGroupingMode($daysInterval)
+        {
+        }
+        /**
+         * Get aggregated data based on grouping mode
+         */
+        private static function getAggregatedData($startDate, $endDate, $groupingMode, $view, $formId)
+        {
+        }
+        /**
+         * Generate date labels based on grouping mode
+         */
+        private static function getDateLabels(\DateTime $startDate, \DateTime $endDate, $groupingMode)
+        {
+        }
+        public static function getPaymentsByType($startDate, $endDate, $type, $formId = 0)
+        {
+        }
+        /**
+         * Format payment method name for display
+         */
+        protected static function formatPaymentMethodName($paymentMethod)
+        {
+        }
+        /**
+         * Format data for the chart
+         */
+        private static function formatDataForChart($dateLabels, $data, $formId)
+        {
+        }
+        /**
+         * Fill in missing data based on date intervals
+         *
+         * @param array $allDates Array of interval start dates
+         * @param array $data     Associative array of date => value pairs
+         *
+         * @return array Result with interval start dates mapped to summed values
+         */
+        private static function fillMissingData($allDates, $data)
+        {
+        }
+        private static function getPaymentStats($startDate, $endDate, $previousStartDate, $previousEndDate, $formId)
+        {
+        }
+        protected static function getDateDifference($startDate, $endDate)
+        {
+        }
     }
     class ReportService
     {
@@ -19421,6 +19678,71 @@ namespace FluentForm\App\Services\Report {
          * @throws Exception
          */
         public function submissions($args)
+        {
+        }
+        /**
+         * Get forms for dropdown
+         *
+         * @return array
+         */
+        public function getFormsDropdown()
+        {
+        }
+        /**
+         * Get Overview Chart Data
+         *
+         * @param array $data
+         * @return array
+         */
+        public function getOverviewChart($data)
+        {
+        }
+        /**
+         * Get Revenue Chart Data
+         *
+         * @param array $data
+         * @return array
+         */
+        public function getRevenueChart($data)
+        {
+        }
+        /**
+         * Get Form Stats Data
+         *
+         * @param array $data
+         * @return array
+         */
+        public function getFormStats($data)
+        {
+        }
+        /**
+         * Get API Logs Data
+         *
+         * @param array $data
+         * @return array
+         */
+        public function getApiLogs($data)
+        {
+        }
+        /**
+         * Get Top Performing Forms Data
+         *
+         * @param array $data
+         * @return array
+         */
+        public function getTopPerformingForms($data)
+        {
+        }
+        public function getPaymentTypes($data)
+        {
+        }
+        /**
+         * Sanitize and prepare common parameters
+         *
+         * @param array $data
+         * @return array
+         */
+        public function sanitizeCommonParams($data)
         {
         }
     }
@@ -37250,6 +37572,7 @@ namespace FluentForm\Framework\Request {
         }
         /**
          * Get user ip address
+         * @todo update framework and also check and update this code
          * @return string
          */
         public function getIp()
