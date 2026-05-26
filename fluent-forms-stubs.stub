@@ -10961,15 +10961,6 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         private function buildInputGroup($data, $form)
         {
         }
-        /**
-         * Check if a mask pattern is purely numeric
-         *
-         * @param string $mask The mask pattern
-         * @return bool True if mask is numeric only
-         */
-        private function isNumericMask($mask)
-        {
-        }
     }
     class TextArea extends \FluentForm\App\Services\FormBuilder\Components\BaseComponent
     {
