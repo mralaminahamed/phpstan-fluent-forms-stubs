@@ -437,6 +437,9 @@ namespace FluentForm\App\Helpers {
         public static function shortCodeParseOnValidationMessage($message, $form, $fieldName)
         {
         }
+        public static function getAjaxUrl()
+        {
+        }
         public static function getDefaultDateTimeFormatForMoment()
         {
         }
@@ -444,6 +447,15 @@ namespace FluentForm\App\Helpers {
         {
         }
         public static function isPaymentCompatible()
+        {
+        }
+        /**
+         * Determine pro payment script is compatible or not
+         * Script is compatible if pro version is greater than or equal to 6.0.4
+         *
+         * @return bool
+         */
+        public static function isProPaymentScriptCompatible()
         {
         }
         public static function hasPro()
@@ -11145,6 +11157,15 @@ namespace FluentForm\App\Services\FormBuilder {
         {
         }
         public static function getInputs()
+        {
+        }
+        /**
+         * Get the entry UID link for a submission
+         *
+         * @param object $entry
+         * @return string
+         */
+        protected static function getEntryUidLink($entry)
         {
         }
         public static function resetData()
@@ -26628,7 +26649,18 @@ namespace FluentForm\App\Services\Submission {
         public function find($submissionId)
         {
         }
-        public function findBySerialID($formId, $serialNumber = null, $isHtml = false)
+        /**
+         * @param array{
+         *     formId?: int,         // Optional when using uidHash
+         *     serialNumber?: int,   // Required if using formId without uidHash
+         *     uidHash?: string,     // Can be used with or without formId
+         *     isHtml?: bool
+         * } $params Either (formId + serialNumber) OR uidHash required
+         *
+         * @return Submission
+         * @throws Exception
+         */
+        public function findByParams($params)
         {
         }
         public function resources($attributes)
