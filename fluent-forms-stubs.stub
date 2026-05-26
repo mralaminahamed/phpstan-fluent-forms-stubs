@@ -776,7 +776,8 @@ namespace FluentForm\App\Http\Controllers {
         /**
          * Get the paginated forms matching search criteria.
          *
-         * @param  \FluentForm\App\Services\Form\FormService $formService
+         * @param \FluentForm\App\Services\Form\FormService $formService
+         *
          * @return \WP_REST_Response
          */
         public function index(\FluentForm\App\Services\Form\FormService $formService)
@@ -785,7 +786,8 @@ namespace FluentForm\App\Http\Controllers {
         /**
          * Create a form from backend/editor
          *
-         * @param  \FluentForm\App\Services\Form\FormService $formService
+         * @param \FluentForm\App\Services\Form\FormService $formService
+         *
          * @return \WP_REST_Response
          */
         public function store(\FluentForm\App\Services\Form\FormService $formService)
@@ -7313,6 +7315,18 @@ namespace FluentForm\App\Modules\Payments\PaymentMethods\Stripe {
         protected function handlePaymentSuccess($charge, $transaction, $submission)
         {
         }
+        /**
+         * Validate SCA payment confirmation request
+         *
+         * @param int $submissionId Submission ID
+         * @param string $paymentIntentId Payment Intent ID
+         * @param object|null $submission Submission object
+         * @param object|null $transaction Transaction object
+         * @return array|WP_Error Array with validation result or WP_Error on strict mode failure
+         */
+        protected function validateScaRequest($submissionId, $paymentIntentId, $submission = null, $transaction = null)
+        {
+        }
         public function confirmScaPayment()
         {
         }
@@ -8966,16 +8980,19 @@ namespace FluentForm\App\Services\Browser {
 namespace FluentForm\App\Services {
     class ConditionAssesor
     {
-        public static function evaluate(&$field, &$inputs)
+        public static function evaluate(&$field, &$inputs, $form = null)
         {
         }
-        private static function evaluateGroupConditions($conditionGroups, &$inputs)
+        private static function evaluateGroupConditions($conditionGroups, &$inputs, $form = null)
         {
         }
-        private static function evaluateConditions($conditions, &$inputs, $type)
+        private static function evaluateConditions($conditions, &$inputs, $type, $form = null)
         {
         }
-        public static function assess(&$conditional, &$inputs)
+        public static function assess(&$conditional, &$inputs, $form = null)
+        {
+        }
+        private static function processSmartCodesInValue($value, &$inputs, $form = null, $isArrayAcceptable = true)
         {
         }
     }
@@ -48866,6 +48883,9 @@ namespace FluentForm\Framework\Request {
          * @return string
          */
         public function getIp()
+        {
+        }
+        private function extractValidIp($value)
         {
         }
         public function server($key = null, $default = null)
