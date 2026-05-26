@@ -7295,6 +7295,18 @@ namespace FluentForm\App\Modules\Payments\PaymentMethods\Stripe {
         protected function handlePaymentSuccess($charge, $transaction, $submission)
         {
         }
+        /**
+         * Validate SCA payment confirmation request
+         *
+         * @param int $submissionId Submission ID
+         * @param string $paymentIntentId Payment Intent ID
+         * @param object|null $submission Submission object
+         * @param object|null $transaction Transaction object
+         * @return array|WP_Error Array with validation result or WP_Error on strict mode failure
+         */
+        protected function validateScaRequest($submissionId, $paymentIntentId, $submission = null, $transaction = null)
+        {
+        }
         public function confirmScaPayment()
         {
         }
