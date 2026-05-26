@@ -11416,7 +11416,7 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static $formFields = null;
         protected static $provider = null;
         protected static $store = ['inputs' => null, 'original_inputs' => null, 'user' => null, 'post' => null, 'other' => null, 'submission' => null];
-        public static function parse($parsable, $entryId, $data = [], $form = null, $isUrl = false, $providerOrIsHTML = false)
+        public static function parse($parsable, $entryId, $data = [], $form = null, $isUrl = false, $providerOrIsHTML = false, $htmlSanitized = false)
         {
         }
         protected static function setDependencies($entry, $data, $form, $provider)
@@ -11431,10 +11431,10 @@ namespace FluentForm\App\Services\FormBuilder {
         protected static function setForm($form)
         {
         }
-        protected static function parseShortCodeFromArray($parsable, $isUrl = false, $provider = false)
+        protected static function parseShortCodeFromArray($parsable, $isUrl = false, $provider = false, $htmlSanitized = false)
         {
         }
-        protected static function parseShortCodeFromString($parsable, $isUrl = false, $isHtml = false)
+        protected static function parseShortCodeFromString($parsable, $isUrl = false, $isHtml = false, $htmlSanitized = false)
         {
         }
         protected static function getFormData($key, $isHtml = false)
