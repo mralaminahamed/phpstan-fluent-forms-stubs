@@ -14562,7 +14562,7 @@ namespace FluentForm\App\Services\FluentConversational\Classes {
         public function getRandomPhoto()
         {
         }
-        private function renderFormHtml($formId, $providedKey = '')
+        public function renderFormHtml($formId, $providedKey = '')
         {
         }
         /**
