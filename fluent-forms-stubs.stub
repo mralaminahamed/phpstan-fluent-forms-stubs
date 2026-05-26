@@ -4789,6 +4789,9 @@ namespace FluentForm\App\Modules\Component {
         public function registerHelperShortCodes()
         {
         }
+        private function localizeJavaScriptMessages($form)
+        {
+        }
     }
 }
 namespace FluentForm\App\Modules {
@@ -7916,6 +7919,9 @@ namespace FluentForm\App\Modules\Widgets {
         protected function register_errors_style_controls()
         {
         }
+        private function getStylePresets()
+        {
+        }
         /**
          * Render the widget output on the frontend.
          *
@@ -10953,6 +10959,15 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         {
         }
         private function buildInputGroup($data, $form)
+        {
+        }
+        /**
+         * Check if a mask pattern is purely numeric
+         *
+         * @param string $mask The mask pattern
+         * @return bool True if mask is numeric only
+         */
+        private function isNumericMask($mask)
         {
         }
     }
