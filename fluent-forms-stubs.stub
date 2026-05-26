@@ -938,10 +938,10 @@ namespace FluentForm\App\Http\Controllers {
         public function prepareIntegrationFeed($setting, $feed, $formId)
         {
         }
-        public abstract function getIntegrationDefaults($settings, $formId);
-        public abstract function pushIntegration($integrations, $formId);
-        public abstract function getSettingsFields($settings, $formId);
-        public abstract function getMergeFields($list, $listId, $formId);
+        abstract public function getIntegrationDefaults($settings, $formId);
+        abstract public function pushIntegration($integrations, $formId);
+        abstract public function getSettingsFields($settings, $formId);
+        abstract public function getMergeFields($list, $listId, $formId);
         public function setFeedAttributes($feed, $formId)
         {
         }
@@ -4302,27 +4302,27 @@ namespace FluentForm\App\Modules\Component {
          *
          * @return string
          */
-        public abstract function name();
+        abstract public function name();
         /**
          * The label of the component.
          *
          * @return string
          */
-        public abstract function label();
+        abstract public function label();
         /**
          * The element type of the component from already
          * available elements (input_text, textarea e.t.c).
          *
          * @return string
          */
-        public abstract function element();
+        abstract public function element();
         /**
          * The template type of the component to display preview in editor dropzone from
          * already available templates (inputText, selectCountry, addressFields e.t.c).
          *
          * @return string
          */
-        public abstract function template();
+        abstract public function template();
         /**
          * Render the element on frontend form.
          *
@@ -4331,7 +4331,7 @@ namespace FluentForm\App\Modules\Component {
          *
          * @return void
          */
-        public abstract function render($component, $form);
+        abstract public function render($component, $form);
         /**
          * Form submission callback.
          *
@@ -4341,7 +4341,7 @@ namespace FluentForm\App\Modules\Component {
          *
          * @return array $formData
          */
-        public abstract function onSubmit($formData, $formId, $config);
+        abstract public function onSubmit($formData, $formId, $config);
         /**
          * Component position in editor. If null is returned then
          * the element will be pushed at last but the derived class
@@ -4924,46 +4924,6 @@ namespace FluentForm\App\Modules\Form {
         {
         }
         protected static function getAkismetFields($data, $form)
-        {
-        }
-    }
-    class Analytics
-    {
-        /**
-         * App instance
-         *
-         * @var \FluentForm\Framework\Foundation\Application
-         */
-        protected $app;
-        /**
-         * Build the instance
-         *
-         * @param \FluentForm\Framework\Foundation\Application $app
-         */
-        public function __construct(\FluentForm\Framework\Foundation\Application $app)
-        {
-        }
-        /**
-         * Save form view analytics data
-         */
-        public function record($formId)
-        {
-        }
-        public function resetFormAnalytics()
-        {
-        }
-        /**
-         * Save form view analytics data
-         */
-        private function saveViewAnalytics($formId)
-        {
-        }
-        /**
-         * Store (create/update) total view of a form
-         *
-         * @param int $formId
-         */
-        private function increaseTotalViews($formId)
         {
         }
     }
@@ -6226,8 +6186,8 @@ namespace FluentForm\App\Services\FormBuilder {
         public function pushTags($tags, $form)
         {
         }
-        public abstract function getComponent();
-        public abstract function render($element, $form);
+        abstract public function getComponent();
+        abstract public function render($element, $form);
     }
 }
 namespace FluentForm\App\Modules\Payments\Components {
@@ -6659,8 +6619,8 @@ namespace FluentForm\App\Modules\Payments\PaymentMethods {
         public function __construct($key)
         {
         }
-        public abstract function getGlobalFields();
-        public abstract function getGlobalSettings();
+        abstract public function getGlobalFields();
+        abstract public function getGlobalSettings();
     }
     abstract class BaseProcessor
     {
@@ -6671,7 +6631,7 @@ namespace FluentForm\App\Modules\Payments\PaymentMethods {
         public function init()
         {
         }
-        public abstract function handlePaymentAction($submissionId, $submissionData, $form, $methodSettings, $hasSubscriptions, $totalPayable);
+        abstract public function handlePaymentAction($submissionId, $submissionData, $form, $methodSettings, $hasSubscriptions, $totalPayable);
         public function setSubmissionId($submissionId)
         {
         }
@@ -8766,11 +8726,11 @@ namespace FluentForm\App\Services\Emogrifier {
         /**
          * @var string
          */
-        const ID_ATTRIBUTE_MATCHER = '/(\\w+)?\\#([\\w\\-]+)/';
+        const ID_ATTRIBUTE_MATCHER = '/(\w+)?\#([\w\-]+)/';
         /**
          * @var string
          */
-        const CLASS_ATTRIBUTE_MATCHER = '/(\\w+|[\\*\\]])?((\\.[\\w\\-]+)+)/';
+        const CLASS_ATTRIBUTE_MATCHER = '/(\w+|[\*\]])?((\.[\w\-]+)+)/';
         /**
          * @var string
          */
@@ -8846,31 +8806,31 @@ namespace FluentForm\App\Services\Emogrifier {
          */
         private $xPathRules = [
             // attribute presence
-            '/^\\[(\\w+|\\w+\\=[\'"]?\\w+[\'"]?)\\]/' => '*[@\\1]',
+            '/^\[(\w+|\w+\=[\'"]?\w+[\'"]?)\]/' => '*[@\1]',
             // type and attribute exact value
-            '/(\\w)\\[(\\w+)\\=[\'"]?([\\w\\s]+)[\'"]?\\]/' => '\\1[@\\2="\\3"]',
+            '/(\w)\[(\w+)\=[\'"]?([\w\s]+)[\'"]?\]/' => '\1[@\2="\3"]',
             // type and attribute value with ~ (one word within a whitespace-separated list of words)
-            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\~\\=[\\s]*[\'"]?([\\w\\-_\\/]+)[\'"]?\\]/' => '\\1[contains(concat(" ", @\\2, " "), concat(" ", "\\3", " "))]',
+            '/([\w\*]+)\[(\w+)[\s]*\~\=[\s]*[\'"]?([\w\-_\/]+)[\'"]?\]/' => '\1[contains(concat(" ", @\2, " "), concat(" ", "\3", " "))]',
             // type and attribute value with | (either exact value match or prefix followed by a hyphen)
-            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\|\\=[\\s]*[\'"]?([\\w\\-_\\s\\/]+)[\'"]?\\]/' => '\\1[@\\2="\\3" or starts-with(@\\2, concat("\\3", "-"))]',
+            '/([\w\*]+)\[(\w+)[\s]*\|\=[\s]*[\'"]?([\w\-_\s\/]+)[\'"]?\]/' => '\1[@\2="\3" or starts-with(@\2, concat("\3", "-"))]',
             // type and attribute value with ^ (prefix match)
-            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\^\\=[\\s]*[\'"]?([\\w\\-_\\/]+)[\'"]?\\]/' => '\\1[starts-with(@\\2, "\\3")]',
+            '/([\w\*]+)\[(\w+)[\s]*\^\=[\s]*[\'"]?([\w\-_\/]+)[\'"]?\]/' => '\1[starts-with(@\2, "\3")]',
             // type and attribute value with * (substring match)
-            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\*\\=[\\s]*[\'"]?([\\w\\-_\\s\\/:;]+)[\'"]?\\]/' => '\\1[contains(@\\2, "\\3")]',
+            '/([\w\*]+)\[(\w+)[\s]*\*\=[\s]*[\'"]?([\w\-_\s\/:;]+)[\'"]?\]/' => '\1[contains(@\2, "\3")]',
             // adjacent sibling
-            '/\\s+\\+\\s+/' => '/following-sibling::*[1]/self::',
+            '/\s+\+\s+/' => '/following-sibling::*[1]/self::',
             // child
-            '/\\s*>\\s*/' => '/',
+            '/\s*>\s*/' => '/',
             // descendant
-            '/\\s+(?=.*[^\\]]{1}$)/' => '//',
+            '/\s+(?=.*[^\]]{1}$)/' => '//',
             // type and :first-child
-            '/([^\\/]+):first-child/i' => '*[1]/self::\\1',
+            '/([^\/]+):first-child/i' => '*[1]/self::\1',
             // type and :last-child
-            '/([^\\/]+):last-child/i' => '*[last()]/self::\\1',
+            '/([^\/]+):last-child/i' => '*[last()]/self::\1',
             // The following matcher will break things if it is placed before the adjacent matcher.
             // So one of the matchers matches either too much or not enough.
             // type and attribute value with $ (suffix match)
-            '/([\\w\\*]+)\\[(\\w+)[\\s]*\\$\\=[\\s]*[\'"]?([\\w\\-_\\s\\/]+)[\'"]?\\]/' => '\\1[substring(@\\2, string-length(@\\2) - string-length("\\3") + 1) = "\\3"]',
+            '/([\w\*]+)\[(\w+)[\s]*\$\=[\s]*[\'"]?([\w\-_\s\/]+)[\'"]?\]/' => '\1[substring(@\2, string-length(@\2) - string-length("\3") + 1) = "\3"]',
         ];
         /**
          * Determines whether CSS styles that have an equivalent HTML attribute
@@ -9992,6 +9952,7 @@ namespace FluentForm\App\Services\Form {
         }
         /**
          * Validate reCaptcha.
+         * Uses 'fluentform/disable_captcha' filter with 'recaptcha' as the captcha type since 6.0.3
          * @throws ValidationException
          */
         private function validateReCaptcha()
@@ -9999,6 +9960,7 @@ namespace FluentForm\App\Services\Form {
         }
         /**
          * Validate hCaptcha.
+         *
          * @throws ValidationException
          */
         private function validateHCaptcha()
@@ -10006,6 +9968,7 @@ namespace FluentForm\App\Services\Form {
         }
         /**
          * Validate turnstile.
+         *
          * @throws ValidationException
          */
         private function validateTurnstile()
@@ -12317,7 +12280,7 @@ namespace {
          * Override this method to perform any actions required
          * during the async request.
          */
-        protected abstract function handle();
+        abstract protected function handle();
     }
     /**
      * ActionScheduler_AsyncRequest_QueueRunner class.
@@ -13413,14 +13376,14 @@ namespace {
          * @param string $lock_type A string to identify different lock types.
          * @return bool
          */
-        public abstract function set($lock_type);
+        abstract public function set($lock_type);
         /**
          * If a lock is set, return the timestamp it was set to expiry.
          *
          * @param string $lock_type A string to identify different lock types.
          * @return bool|int False if no lock is set, otherwise the timestamp for when the lock is set to expire.
          */
-        public abstract function get_expiration($lock_type);
+        abstract public function get_expiration($lock_type);
         /**
          * Get the amount of time to set for a given lock. 60 seconds by default.
          *
@@ -13717,7 +13680,7 @@ namespace {
          *        Generally, this should be capitalised and not localised as it's a proper noun.
          * @return int The number of actions processed.
          */
-        public abstract function run($context = '');
+        abstract public function run($context = '');
     }
     /**
      * Class ActionScheduler_QueueRunner
@@ -14458,13 +14421,13 @@ namespace {
         protected static function is_class_cli($class)
         {
         }
-        public final function __clone()
+        final public function __clone()
         {
         }
-        public final function __wakeup()
+        final public function __wakeup()
         {
         }
-        private final function __construct()
+        final private function __construct()
         {
         }
         /** Deprecated **/
@@ -14541,14 +14504,14 @@ namespace {
          *
          * @return bool
          */
-        public abstract function is_recurring();
+        abstract public function is_recurring();
         /**
          * Calculate when the next instance of this schedule would run based on a given date & time.
          *
          * @param DateTime $after
          * @return DateTime
          */
-        protected abstract function calculate_next(\DateTime $after);
+        abstract protected function calculate_next(\DateTime $after);
         /**
          * Get the next date & time when this schedule should run after a given date & time.
          *
@@ -14702,7 +14665,7 @@ namespace {
          *
          * @return string The CREATE TABLE statement, suitable for passing to dbDelta
          */
-        protected abstract function get_table_definition($table);
+        abstract protected function get_table_definition($table);
         /**
          * Determine if the database schema is out of date
          * by comparing the integer found in $this->schema_version
@@ -14770,19 +14733,19 @@ namespace {
          *
          * @return string The log entry ID
          */
-        public abstract function log($action_id, $message, \DateTime $date = \NULL);
+        abstract public function log($action_id, $message, \DateTime $date = \NULL);
         /**
          * @param string $entry_id
          *
          * @return ActionScheduler_LogEntry
          */
-        public abstract function get_entry($entry_id);
+        abstract public function get_entry($entry_id);
         /**
          * @param string $action_id
          *
          * @return ActionScheduler_LogEntry[]
          */
-        public abstract function get_logs($action_id);
+        abstract public function get_logs($action_id);
         /**
          * @codeCoverageIgnore
          */
@@ -14912,13 +14875,13 @@ namespace {
          *
          * @return int The action ID
          */
-        public abstract function save_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL);
+        abstract public function save_action(\ActionScheduler_Action $action, \DateTime $scheduled_date = \NULL);
         /**
          * @param string $action_id
          *
          * @return ActionScheduler_Action
          */
-        public abstract function fetch_action($action_id);
+        abstract public function fetch_action($action_id);
         /**
          * Find an action.
          *
@@ -14958,7 +14921,7 @@ namespace {
          *
          * @return string|array|null The IDs of actions matching the query. Null on failure.
          */
-        public abstract function query_actions($query = array(), $query_type = 'select');
+        abstract public function query_actions($query = array(), $query_type = 'select');
         /**
          * Run query to get a single action ID.
          *
@@ -14978,7 +14941,7 @@ namespace {
          *
          * @return array
          */
-        public abstract function action_counts();
+        abstract public function action_counts();
         /**
          * Get additional action counts.
          *
@@ -14992,17 +14955,17 @@ namespace {
         /**
          * @param string $action_id
          */
-        public abstract function cancel_action($action_id);
+        abstract public function cancel_action($action_id);
         /**
          * @param string $action_id
          */
-        public abstract function delete_action($action_id);
+        abstract public function delete_action($action_id);
         /**
          * @param string $action_id
          *
          * @return DateTime The date the action is schedule to run, or the date that it ran.
          */
-        public abstract function get_date($action_id);
+        abstract public function get_date($action_id);
         /**
          * @param int      $max_actions
          * @param DateTime $before_date Claim only actions schedule before the given date. Defaults to now.
@@ -15011,47 +14974,47 @@ namespace {
          *
          * @return ActionScheduler_ActionClaim
          */
-        public abstract function stake_claim($max_actions = 10, \DateTime $before_date = \null, $hooks = array(), $group = '');
+        abstract public function stake_claim($max_actions = 10, \DateTime $before_date = \null, $hooks = array(), $group = '');
         /**
          * @return int
          */
-        public abstract function get_claim_count();
+        abstract public function get_claim_count();
         /**
          * @param ActionScheduler_ActionClaim $claim
          */
-        public abstract function release_claim(\ActionScheduler_ActionClaim $claim);
+        abstract public function release_claim(\ActionScheduler_ActionClaim $claim);
         /**
          * @param string $action_id
          */
-        public abstract function unclaim_action($action_id);
+        abstract public function unclaim_action($action_id);
         /**
          * @param string $action_id
          */
-        public abstract function mark_failure($action_id);
+        abstract public function mark_failure($action_id);
         /**
          * @param string $action_id
          */
-        public abstract function log_execution($action_id);
+        abstract public function log_execution($action_id);
         /**
          * @param string $action_id
          */
-        public abstract function mark_complete($action_id);
+        abstract public function mark_complete($action_id);
         /**
          * @param string $action_id
          *
          * @return string
          */
-        public abstract function get_status($action_id);
+        abstract public function get_status($action_id);
         /**
          * @param string $action_id
          * @return mixed
          */
-        public abstract function get_claim_id($action_id);
+        abstract public function get_claim_id($action_id);
         /**
          * @param string $claim_id
          * @return array
          */
-        public abstract function find_actions_by_claim_id($claim_id);
+        abstract public function find_actions_by_claim_id($claim_id);
         /**
          * @param string $comparison_operator
          * @return string
@@ -18208,12 +18171,12 @@ namespace FluentForm\App\Services\Migrator\Classes {
         public function import_forms($selectedForms = [])
         {
         }
-        protected abstract function getForms();
-        protected abstract function getFields($form);
-        protected abstract function getFormName($form);
-        protected abstract function getFormMetas($form);
-        protected abstract function getFormsFormatted();
-        protected abstract function exist();
+        abstract protected function getForms();
+        abstract protected function getFields($form);
+        abstract protected function getFormName($form);
+        abstract protected function getFormMetas($form);
+        abstract protected function getFormsFormatted();
+        abstract protected function exist();
         public function getFluentClassicField($field, $args = [])
         {
         }
@@ -18223,7 +18186,7 @@ namespace FluentForm\App\Services\Migrator\Classes {
         public function getSubmitBttn($args)
         {
         }
-        protected abstract function getFormId($form);
+        abstract protected function getFormId($form);
         /**
          * @param $metas
          * @param $formId
@@ -18796,7 +18759,7 @@ namespace FluentForm\App\Services\Migrator\Classes {
         private function getConditionals($notification, $form)
         {
         }
-        private function getAdvancedValidation() : array
+        private function getAdvancedValidation(): array
         {
         }
         private function getNotifications($form)
@@ -19763,13 +19726,13 @@ namespace Box\Spout\Common {
         /**
          * @return static
          */
-        public static final function getInstance()
+        final public static function getInstance()
         {
         }
         /**
          * Singleton constructor.
          */
-        private final function __construct()
+        final private function __construct()
         {
         }
         /**
@@ -19779,10 +19742,10 @@ namespace Box\Spout\Common {
         protected function init()
         {
         }
-        private final function __wakeup()
+        final private function __wakeup()
         {
         }
-        private final function __clone()
+        final private function __clone()
         {
         }
     }
@@ -20527,32 +20490,32 @@ namespace Box\Spout\Reader {
          *
          * @return \Box\Spout\Reader\Common\ReaderOptions
          */
-        protected abstract function getOptions();
+        abstract protected function getOptions();
         /**
          * Returns whether stream wrappers are supported
          *
          * @return bool
          */
-        protected abstract function doesSupportStreamWrapper();
+        abstract protected function doesSupportStreamWrapper();
         /**
          * Opens the file at the given file path to make it ready to be read
          *
          * @param  string $filePath Path of the file to be read
          * @return void
          */
-        protected abstract function openReader($filePath);
+        abstract protected function openReader($filePath);
         /**
          * Returns an iterator to iterate over sheets.
          *
          * @return \Iterator To iterate over sheets
          */
-        protected abstract function getConcreteSheetIterator();
+        abstract protected function getConcreteSheetIterator();
         /**
          * Closes the reader. To be used after reading the file.
          *
          * @return AbstractReader
          */
-        protected abstract function closeReader();
+        abstract protected function closeReader();
         /**
          * @param \Box\Spout\Common\Helper\GlobalFunctionsHelper $globalFunctionsHelper
          * @return AbstractReader
@@ -23572,7 +23535,7 @@ namespace Box\Spout\Writer {
          * @return void
          * @throws \Box\Spout\Common\Exception\IOException If the writer cannot be opened
          */
-        protected abstract function openWriter();
+        abstract protected function openWriter();
         /**
          * Adds data to the currently openned writer.
          *
@@ -23581,13 +23544,13 @@ namespace Box\Spout\Writer {
          * @param Style\Style $style Style to be applied to the written row
          * @return void
          */
-        protected abstract function addRowToWriter(array $dataRow, $style);
+        abstract protected function addRowToWriter(array $dataRow, $style);
         /**
          * Closes the streamer, preventing any additional writing.
          *
          * @return void
          */
-        protected abstract function closeWriter();
+        abstract protected function closeWriter();
         /**
          *
          */
@@ -23782,7 +23745,7 @@ namespace Box\Spout\Writer {
         /**
          * @return Common\Internal\WorkbookInterface The workbook representing the file to be written
          */
-        protected abstract function getWorkbook();
+        abstract protected function getWorkbook();
         /**
          * Sets whether new sheets should be automatically created when the max rows limit per sheet is reached.
          * This must be set before opening the writer.
@@ -24307,18 +24270,18 @@ namespace Box\Spout\Writer\Common\Internal {
         /**
          * @return \Box\Spout\Writer\Common\Helper\AbstractStyleHelper The specific style helper
          */
-        protected abstract function getStyleHelper();
+        abstract protected function getStyleHelper();
         /**
          * @return int Maximum number of rows/columns a sheet can contain
          */
-        protected abstract function getMaxRowsPerWorksheet();
+        abstract protected function getMaxRowsPerWorksheet();
         /**
          * Creates a new sheet in the workbook. The current sheet remains unchanged.
          *
          * @return WorksheetInterface The created sheet
          * @throws \Box\Spout\Common\Exception\IOException If unable to open the sheet for writing
          */
-        public abstract function addNewSheet();
+        abstract public function addNewSheet();
         /**
          * Creates a new sheet in the workbook and make it the current sheet.
          * The writing will resume where it stopped (i.e. data won't be truncated).
@@ -24399,7 +24362,7 @@ namespace Box\Spout\Writer\Common\Internal {
          * @param resource $finalFilePointer Pointer to the ODS that will be created
          * @return void
          */
-        public abstract function close($finalFilePointer);
+        abstract public function close($finalFilePointer);
     }
     /**
      * Interface WorksheetInterface
@@ -26138,9 +26101,9 @@ namespace Box\Spout\Writer\XLSX\Helper {
     {
         const SHARED_STRINGS_FILE_NAME = 'sharedStrings.xml';
         const SHARED_STRINGS_XML_FILE_FIRST_PART_HEADER = <<<EOD
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"
-EOD;
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+        EOD;
         /**
          * This number must be really big so that the no generated file will have more strings than that.
          * If the strings number goes above, characters will be overwritten in an unwanted way and will corrupt the file.
@@ -26404,9 +26367,9 @@ namespace Box\Spout\Writer\XLSX\Internal {
          */
         const MAX_CHARACTERS_PER_CELL = 32767;
         const SHEET_XML_FILE_HEADER = <<<EOD
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
-EOD;
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+        EOD;
         /** @var \Box\Spout\Writer\Common\Sheet The "external" sheet */
         protected $externalSheet;
         /** @var string Path to the XML file that will contain the sheet data */
@@ -26914,9 +26877,9 @@ namespace {
 namespace Composer\Autoload {
     class ComposerStaticInitb99e07d253bf4705bf50ef1db90791ef
     {
-        public static $prefixLengthsPsr4 = array('W' => array('WPFluent\\' => 9), 'F' => array('FluentForm\\Framework\\' => 21, 'FluentForm\\App\\' => 15));
-        public static $prefixDirsPsr4 = array('WPFluent\\' => array(0 => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent'), 'FluentForm\\Framework\\' => array(0 => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent'), 'FluentForm\\App\\' => array(0 => __DIR__ . '/../..' . '/app'));
-        public static $classMap = array('Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php', 'FluentForm\\Database\\DBMigrator' => __DIR__ . '/../..' . '/database/DBMigrator.php', 'FluentForm\\Database\\Migrations\\FormAnalytics' => __DIR__ . '/../..' . '/database/Migrations/FormAnalytics.php', 'FluentForm\\Database\\Migrations\\FormMeta' => __DIR__ . '/../..' . '/database/Migrations/FormMeta.php', 'FluentForm\\Database\\Migrations\\Forms' => __DIR__ . '/../..' . '/database/Migrations/Forms.php', 'FluentForm\\Database\\Migrations\\Logs' => __DIR__ . '/../..' . '/database/Migrations/Logs.php', 'FluentForm\\Database\\Migrations\\ScheduledActions' => __DIR__ . '/../..' . '/database/Migrations/ScheduledActions.php', 'FluentForm\\Database\\Migrations\\SubmissionDetails' => __DIR__ . '/../..' . '/database/Migrations/SubmissionDetails.php', 'FluentForm\\Database\\Migrations\\SubmissionMeta' => __DIR__ . '/../..' . '/database/Migrations/SubmissionMeta.php', 'FluentForm\\Database\\Migrations\\Submissions' => __DIR__ . '/../..' . '/database/Migrations/Submissions.php');
+        public static $prefixLengthsPsr4 = array('W' => array('WPFluent\\' => 9), 'F' => array('FluentForm\Framework\\' => 21, 'FluentForm\App\\' => 15));
+        public static $prefixDirsPsr4 = array('WPFluent\\' => array(0 => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent'), 'FluentForm\Framework\\' => array(0 => __DIR__ . '/..' . '/wpfluent/framework/src/WPFluent'), 'FluentForm\App\\' => array(0 => __DIR__ . '/../..' . '/app'));
+        public static $classMap = array('Composer\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php', 'FluentForm\Database\DBMigrator' => __DIR__ . '/../..' . '/database/DBMigrator.php', 'FluentForm\Database\Migrations\FormAnalytics' => __DIR__ . '/../..' . '/database/Migrations/FormAnalytics.php', 'FluentForm\Database\Migrations\FormMeta' => __DIR__ . '/../..' . '/database/Migrations/FormMeta.php', 'FluentForm\Database\Migrations\Forms' => __DIR__ . '/../..' . '/database/Migrations/Forms.php', 'FluentForm\Database\Migrations\Logs' => __DIR__ . '/../..' . '/database/Migrations/Logs.php', 'FluentForm\Database\Migrations\ScheduledActions' => __DIR__ . '/../..' . '/database/Migrations/ScheduledActions.php', 'FluentForm\Database\Migrations\SubmissionDetails' => __DIR__ . '/../..' . '/database/Migrations/SubmissionDetails.php', 'FluentForm\Database\Migrations\SubmissionMeta' => __DIR__ . '/../..' . '/database/Migrations/SubmissionMeta.php', 'FluentForm\Database\Migrations\Submissions' => __DIR__ . '/../..' . '/database/Migrations/Submissions.php');
         public static function getInitializer(\Composer\Autoload\ClassLoader $loader)
         {
         }
@@ -29164,14 +29127,14 @@ namespace FluentForm\Framework\Database\Orm\Relations {
          *
          * @return void
          */
-        public abstract function addConstraints();
+        abstract public function addConstraints();
         /**
          * Set the constraints for an eager load of the relation.
          *
          * @param  array  $models
          * @return void
          */
-        public abstract function addEagerConstraints(array $models);
+        abstract public function addEagerConstraints(array $models);
         /**
          * Initialize the relation on a set of models.
          *
@@ -29179,7 +29142,7 @@ namespace FluentForm\Framework\Database\Orm\Relations {
          * @param  string  $relation
          * @return array
          */
-        public abstract function initRelation(array $models, $relation);
+        abstract public function initRelation(array $models, $relation);
         /**
          * Match the eagerly loaded results to their parents.
          *
@@ -29188,13 +29151,13 @@ namespace FluentForm\Framework\Database\Orm\Relations {
          * @param  string  $relation
          * @return array
          */
-        public abstract function match(array $models, \FluentForm\Framework\Database\Orm\Collection $results, $relation);
+        abstract public function match(array $models, \FluentForm\Framework\Database\Orm\Collection $results, $relation);
         /**
          * Get the results of the relationship.
          *
          * @return mixed
          */
-        public abstract function getResults();
+        abstract public function getResults();
         /**
          * Get the relationship for eager loading.
          *
