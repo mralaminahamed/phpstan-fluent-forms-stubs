@@ -20,12 +20,12 @@
         }
     ],
     "require": {
+        "php": ">=7.4",
         "php-stubs/wordpress-stubs": "^5.3 || ^6.0"
     },
     "require-dev": {
-        "php": "~7.1 || ~8.0",
         "php-stubs/generator": "^0.8.0",
-        "phpstan/phpstan": "^1.10",
+        "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
         "squizlabs/php_codesniffer": "^3.7"
     },
@@ -46,9 +46,18 @@
         },
         "sort-packages": true,
         "optimize-autoloader": true,
-        "preferred-install": "dist"
+        "preferred-install": "dist",
+        "platform": {
+            "php": "7.4.0"
+        }
     },
     "scripts": {
+        "post-install-cmd": [
+            "@composer --working-dir=source/ update --no-interaction"
+        ],
+        "post-update-cmd": [
+            "@composer --working-dir=source/ update --no-interaction"
+        ],
         "analyze": "phpstan analyze",
         "check": [
             "@cs",
@@ -56,37 +65,28 @@
             "@analyze"
         ],
         "cleanup": [
+            "git clean -xdf --exclude='.idea' --exclude='.vscode'",
             "git status --short --ignored | sed -n -e 's#^!! ##p' | xargs -r rm -vrf"
         ],
         "cs": "phpcs",
         "cs-fix": "phpcbf",
         "generate": "bash bin/generate.sh",
-        "release-latest": "bash bin/release-latest-versions.sh",
+        "release": "bash bin/release-latest-versions.sh",
         "release-all": "bash bin/release-all-versions.sh",
         "test": "phpunit",
-        "test-coverage": "phpunit --coverage-html coverage",
-        "validate": [
-            "@composer validate --strict",
-            "@check"
-        ],
-        "prepare-release": [
-            "@validate",
-            "@generate"
-        ]
+        "test-coverage": "phpunit --coverage-html coverage"
     },
     "scripts-descriptions": {
         "analyze": "Run static analysis using PHPStan",
         "check": "Run all checks (coding standards, tests, and static analysis)",
-        "cleanup": "Remove all ignored files",
+        "cleanup": "Remove all ignored and generated files",
         "cs": "Check coding standards",
         "cs-fix": "Fix coding standards automatically",
-        "generate": "Generate Fluent Forms stubs from source files",
-        "release-latest": "Generate stubs for the latest versions of Fluent Forms",
-        "release-all": "Generate stubs for all available versions of Fluent Forms",
+        "generate": "Generate Fluent Forms stubs",
+        "release": "Generate and release new version of stubs",
+        "release-all": "Generate stubs for all available versions",
         "test": "Run unit tests",
-        "test-coverage": "Run unit tests with code coverage report",
-        "validate": "Validate composer.json and run all checks",
-        "prepare-release": "Prepare for a new release by validating and generating stubs"
+        "test-coverage": "Run unit tests with code coverage report"
     },
     "support": {
         "issues": "https://github.com/mralaminahamed/phpstan-fluent-forms-stubs/issues",

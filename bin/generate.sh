@@ -24,7 +24,7 @@ HEADER=$'/**\n * Generated stub declarations for Fluent Forms.\n * @see https://
 FILE="$ROOT_DIR/fluent-forms-stubs.stub"
 FILE_CONSTANTS="$ROOT_DIR/fluent-forms-constants-stubs.stub"
 GENERATOR_BIN="$ROOT_DIR/vendor/bin/generate-stubs"
-FINDER_FILE="$ROOT_DIR/finder.php"
+FINDER_FILE="$ROOT_DIR/configs/finder.php"
 
 # Validate requirements
 echo "Validating requirements..."
