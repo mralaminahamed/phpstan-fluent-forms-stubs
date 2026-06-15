@@ -2531,6 +2531,17 @@ namespace FluentForm\App\Helpers {
         public static function deleteFormMeta($formId, $metaKey)
         {
         }
+        /**
+         * Resolve an entry's column => value map regardless of whether the entry is
+         * a stdClass DB row (columns are real properties) or a WPFluent Model
+         * (columns live in an internal attribute bag reached via __get).
+         *
+         * @param object|array $entry
+         * @return array
+         */
+        public static function getEntryColumns($entry)
+        {
+        }
         public static function getSubmissionMeta($submissionId, $metaKey, $default = false)
         {
         }
@@ -7800,6 +7811,15 @@ namespace FluentForm\App\Models {
         {
         }
     }
+    /**
+     * Legacy duplicate of the Submission model (deprecated code).
+     *
+     * @deprecated Dead pair with EntryMeta: they reference only each other (a circular
+     *             relation that is never invoked) plus Form. No external code in free or
+     *             Pro uses either class, and remove() has no callers. The live "Entry"
+     *             API is \FluentForm\App\Api\Entry; submissions go through Submission.
+     *             TODO: delete Entry AND EntryMeta together; remove() kept fail-closed meanwhile.
+     */
     class Entry extends \FluentForm\App\Models\Model
     {
         /**
@@ -7849,7 +7869,7 @@ namespace FluentForm\App\Models {
         public function amend($id, $data = [])
         {
         }
-        public static function remove($entryIds)
+        public static function remove($entryIds, $formId = null)
         {
         }
     }
@@ -8266,7 +8286,7 @@ namespace FluentForm\App\Models {
         public function amend($id, $data = [])
         {
         }
-        public static function remove($submissionIds)
+        public static function remove($submissionIds, $formId = null)
         {
         }
         public function allSubmissions($attributes = [])
@@ -10451,6 +10471,24 @@ namespace FluentForm\App\Modules\Payments\Classes {
         {
         }
         public function isConditionPass()
+        {
+        }
+        public function isFieldConditionPass($field)
+        {
+        }
+        /**
+         * Visible only when the coupon field's own conditions and every ancestor
+         * container's conditions pass — so a coupon inside a hidden container is
+         * not honored.
+         */
+        public function isCouponFieldVisible($couponField)
+        {
+        }
+        /**
+         * Return the ancestor container fields wrapping $targetName (containers nest
+         * children under columns[].fields[]), or null if not found in this branch.
+         */
+        public function getFieldAncestorContainers($fields, $targetName, $ancestors = [])
         {
         }
         public function draftFormEntry()
