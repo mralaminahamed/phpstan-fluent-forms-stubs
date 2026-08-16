@@ -2702,11 +2702,24 @@ namespace FluentForm\App\Helpers {
         public static function validateInput($field, $formData, $form, $fieldName = '', $inputValue = [])
         {
         }
+        /**
+         * Prefix used to store a checkable field's "Other" option value,
+         * built from the field's own (translated) label. Pass $form to run
+         * the field through the rendering filter (translation plugins) first.
+         *
+         * @param array $rawField
+         * @param object|null $form
+         * @return string
+         */
+        public static function getOtherOptionValuePrefix($rawField, $form = null)
+        {
+        }
         public static function getWhiteListedFields($formId)
         {
         }
         /**
          * Shortcode parse on validation message
+         *
          * @param string $message
          * @param object $form
          * @param string $fieldName
@@ -2753,6 +2766,7 @@ namespace FluentForm\App\Helpers {
         }
         /**
          * Fixes PHP Object Injection Vulnerability
+         *
          * @param $data
          * @return mixed
          */
@@ -2761,6 +2775,7 @@ namespace FluentForm\App\Helpers {
         }
         /**
          * If elementor editor is open
+         *
          * @return bool
          */
         public static function isElementorEditor()
@@ -2769,6 +2784,7 @@ namespace FluentForm\App\Helpers {
         /**
          * Check if we're in block editor context (Site Editor, Template Editor, or Post/Page Editor)
          * Covers all Gutenberg block editor contexts including mobile/tablet preview iframes
+         *
          * @return bool
          */
         public static function isSiteEditor()
@@ -8524,6 +8540,15 @@ namespace FluentForm\App\Modules\Acl {
         {
         }
         private static function hasExplicitFullAccess()
+        {
+        }
+        // Is the CURRENT user a Manager added by name (per-user), not just someone riding a delegated role?
+        private static function isExplicitManager()
+        {
+        }
+        // "Direct grant" = permissions attached to the USER themselves (per-user Manager),
+        // as opposed to access inherited from a delegated WordPress role.
+        private static function userHasDirectGrant($userId, $user)
         {
         }
         private static function filterPermissionCheck($permission, $allowed, $formId)
@@ -14942,6 +14967,7 @@ namespace FluentForm\App\Services\Form {
         }
         /**
          * Form Submission
+         *
          * @param $formDataRaw
          * @param $formId
          * @return array
@@ -14951,6 +14977,8 @@ namespace FluentForm\App\Services\Form {
         {
         }
         /**
+         * Prepare the form and validated form data for submission handling.
+         *
          * @throws ValidationException
          */
         protected function prepareHandler($formId, $formDataRaw)
@@ -14958,6 +14986,7 @@ namespace FluentForm\App\Services\Form {
         }
         /**
          * Prepare the data to be inserted to the database.
+         *
          * @param boolean $formData
          * @return array
          */
@@ -14969,6 +14998,7 @@ namespace FluentForm\App\Services\Form {
         }
         /**
          * Return Formatted Response Data
+         *
          * @param $insertId
          * @param $form
          * @param $formData
@@ -14985,6 +15015,7 @@ namespace FluentForm\App\Services\Form {
         }
         /**
          * Validates Submission
+         *
          * @throws ValidationException
          */
         private function handleValidation()
@@ -15241,7 +15272,7 @@ namespace FluentForm\App\Services\FormBuilder\Components {
         public function getDateFormatConfigJSON($settings, $form)
         {
         }
-        public function getCustomConfig($settings)
+        public function getCustomConfig($settings, $form = null)
         {
         }
         private function loadToFooter($config, $customConfigObject, $form, $id)
@@ -81208,6 +81239,12 @@ namespace {
     {
     }
     function fluentform_kses_js($content)
+    {
+    }
+    function fluentform_sanitize_json_object($value)
+    {
+    }
+    function fluentform_js_object_to_json($value)
     {
     }
     /**
