@@ -2482,6 +2482,20 @@ namespace FluentForm\App\Helpers {
         public static function sanitizer($input, $attribute = null, $fields = [])
         {
         }
+        /**
+         * Flatten a request value into a plain, printable string.
+         *
+         * Request values are string or array. Walks nested arrays so a crafted
+         * param[][] cannot raise an "Array to string conversion" notice, and the
+         * caller can escape the result in one pass instead of branching on shape.
+         *
+         * @param mixed $value
+         *
+         * @return string
+         */
+        public static function flattenRequestValue($value)
+        {
+        }
         public static function isOptionGroup($option)
         {
         }
