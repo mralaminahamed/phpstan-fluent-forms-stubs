@@ -81399,6 +81399,9 @@ namespace {
     function fluentformGetPages()
     {
     }
+    function fluentform_maybe_disable_contaminated_pro()
+    {
+    }
     function fluentform_eql()
     {
     }
