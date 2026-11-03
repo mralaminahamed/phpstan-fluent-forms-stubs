@@ -2702,6 +2702,20 @@ namespace FluentForm\App\Helpers {
         public static function unreadCount($formId)
         {
         }
+        /**
+         * Among the given upload basenames, those still referenced by a submission
+         * whose id is not in $excludeIds. A submitted file value is attacker-controlled
+         * and can name another entry's upload, so callers use this to avoid deleting
+         * or attaching a file another submission still owns. Matches are read in
+         * id-ordered batches and the scan stops once every basename is found.
+         *
+         * @param array $basenames upload basenames to test
+         * @param array|int $excludeIds submission ids to exclude (the entries being acted on)
+         * @return array map of referenced basename => true
+         */
+        public static function getFilesReferencedByOtherSubmissions($basenames, $excludeIds = [])
+        {
+        }
         public static function getForms()
         {
         }
@@ -8763,7 +8777,7 @@ namespace FluentForm\App\Modules\Acl {
         }
         // "Direct grant" = permissions attached to the USER themselves (per-user Manager),
         // as opposed to access inherited from a delegated WordPress role.
-        private static function userHasDirectGrant($userId, $user)
+        public static function userHasDirectGrant($userId, $user)
         {
         }
         private static function filterPermissionCheck($permission, $allowed, $formId)
@@ -11990,6 +12004,7 @@ namespace FluentForm\App\Modules\Payments\Classes {
         private $hookedOrderItems = [];
         private $subscriptionItems = [];
         private $quantityItems = [];
+        private $hasDroppedPaidItem = false;
         public $selectedPaymentMethod = '';
         public $methodSettings = [];
         protected $paymentInputs = null;
@@ -12113,6 +12128,16 @@ namespace FluentForm\App\Modules\Payments\Classes {
         private function getQuantity($productName)
         {
         }
+        /**
+         * Remember that a paid option the visitor picked was left out of the order.
+         * A single or number item at quantity 0 is a declined add-on, so it is not marked.
+         *
+         * @param mixed $price
+         * @return void
+         */
+        private function markDroppedItem($price)
+        {
+        }
         private function pushItem($data)
         {
         }
@@ -12122,10 +12147,13 @@ namespace FluentForm\App\Modules\Payments\Classes {
         public function getCalculatedAmount()
         {
         }
-        // A $0 order is a completed free order when a real priced product was zeroed by a
-        // server-validated discount (both a non-discount and a discount line are present;
-        // discount lines come solely from getValidCoupons), or when the visitor chose one of
-        // the form's own $0 options. Otherwise the $0 total is an omitted or zeroed input.
+        /**
+         * A $0 order is free when a priced product was zeroed by a validated coupon, or the
+         * visitor chose one of the form's own $0 options. A $0 option does not count when a
+         * picked paid option was dropped at quantity 0, since the quantity zeroed that order.
+         *
+         * @return bool
+         */
         public function isZeroTotalFreeOrder()
         {
         }
@@ -12843,6 +12871,11 @@ namespace FluentForm\App\Modules\Payments {
         // A quantity must be a whole number within [1, maxQuantity]; INF/overflow (which else wraps the
         // line total to 0) and fractional values are rejected. An omitted/zero optional item still passes.
         public function validatePaymentQuantity($error, $field, $formData)
+        {
+        }
+        // A slider that sets a product's quantity decides the charge and the stock count, and getQuantity()
+        // intval()s it, so 0.5 would drop the item and 1.5 bill 1. Judge the quantity getQuantity() will use.
+        public function validateRangeSliderQuantity($error, $field, $formData, $fields = [], $form = null, $errors = [])
         {
         }
         public function validatePaymentMethod($error, $field, $formData, $fields, $form)
@@ -13928,6 +13961,17 @@ namespace FluentForm\App\Modules\Registerer {
          * Register menu and sub-menus.
          */
         public function register()
+        {
+        }
+        /**
+         * Hosts the entry view may load a submitted image from.
+         *
+         * A submitted image value is any URL the submitter typed, so an image from another host is shown as a
+         * link instead of loading in the admin's browser. Cloud-storage add-ons can add their host.
+         *
+         * @return string[]
+         */
+        private function getEntryImageHosts()
         {
         }
         private function getMenuIcon()
@@ -18215,6 +18259,14 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         public function register()
         {
         }
+        /**
+         * Send the on-submit email notifications for a payment form.
+         *
+         * @param int $submissionId
+         * @param array $submissionData
+         * @param \FluentForm\App\Models\Form|\stdClass $form
+         * @return void
+         */
         public function notifyOnSubmitPaymentForm($submissionId, $submissionData, $form)
         {
         }
@@ -18226,6 +18278,8 @@ namespace FluentForm\App\Services\FormBuilder\Notifications {
         {
         }
         /**
+         * Resolve the local files to attach to a notification email.
+         *
          * @param $emailData
          * @param $formData
          * @param $entry
@@ -18422,7 +18476,8 @@ namespace FluentForm\App\Services\GlobalSettings {
     {
         // Keying material and the gateway secrets it encrypts. Together they let a settings
         // manager decrypt every stored API key offline, so neither is readable here.
-        const DENIED_OPTION_KEYS = ['_fluentform_encryption_key'];
+        // The security salt keys Protector, so reading it would let a caller forge anti-spam and upload tokens.
+        const DENIED_OPTION_KEYS = ['_fluentform_encryption_key', '_fluentform_security_salt'];
         const DENIED_OPTION_PREFIXES = ['fluentform_payment_settings_'];
         private function isAllowedOptionKey($key)
         {
@@ -27357,6 +27412,16 @@ namespace FluentForm\App\Services\Manager {
         public function addManager($attributes = [])
         {
         }
+        /**
+         * A delegated (non-administrator) manager may only hand out or take away access inside
+         * their own reach: never on their own record or an administrator's, and when they are
+         * form-scoped, only for managers who stay within their own forms. Otherwise a scoped
+         * full-access manager could lift any user, including themselves, to every form; removal
+         * counts too, because it hands a delegated-role user back their all-forms role fallback.
+         */
+        private function guardDelegatedGrant($user, $manager = null)
+        {
+        }
         public function removeManager($attributes = [])
         {
         }
@@ -28954,6 +29019,16 @@ namespace FluentForm\App\Services\Settings {
         public function remove($attributes = [])
         {
         }
+        /**
+         * These keys have their own capability-gated routes; block them here so a
+         * lesser capability can't write them through the generic store.
+         *
+         * @param string $key
+         * @return bool
+         */
+        private function isStorableMetaKey($key)
+        {
+        }
         public function conversationalDesign($formId)
         {
         }
@@ -29117,6 +29192,8 @@ namespace FluentForm\App\Services\Submission {
     class SubmissionService
     {
         /**
+         * The submission model the service queries.
+         *
          * @var \FluentForm\App\Models\Submission|\FluentForm\Framework\Database\Query\Builder|\FluentForm\Framework\Database\Orm\Builder
          */
         protected $model;
@@ -29131,12 +29208,10 @@ namespace FluentForm\App\Services\Submission {
         {
         }
         /**
-         * @param array{
-         *     formId?: int,         // Optional when using uidHash
-         *     serialNumber?: int,   // Required if using formId without uidHash
-         *     uidHash?: string,     // Can be used with or without formId
-         *     isHtml?: bool
-         * } $params Either (formId + serialNumber) OR uidHash required
+         * Find a submission by form and serial number, or by its uid hash.
+         * Pass either formId + serialNumber, or uidHash (with or without formId).
+         *
+         * @param array{formId?: int, serialNumber?: int, uidHash?: string, isHtml?: bool} $params
          *
          * @return Submission
          * @throws Exception
